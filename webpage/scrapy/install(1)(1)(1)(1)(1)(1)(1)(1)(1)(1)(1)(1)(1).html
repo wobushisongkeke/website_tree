@@ -1,0 +1,413 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Installation guide — Scrapy 0.18.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.18.4 documentation" href="../index.html" />
+        <link rel="next" title="Scrapy Tutorial" href="tutorial.html" />
+        <link rel="prev" title="Scrapy at a glance" href="overview.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/intro/install.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'intro/install'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pre-requisites">Pre-requisites</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-scrapy">Installing Scrapy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#platform-specific-installation-notes"><span class="toctree-expand"></span>Platform specific installation notes</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#windows"><span class="toctree-expand"></span>Windows</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ubuntu-9-10-or-above">Ubuntu 9.10 or above</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/scrapyd.html">Scrapyd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/djangoitem.html">DjangoItem</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/api.html">Core API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-zskt9atk" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/tEEE4vfoJpRg/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/tEEE4vfoJpRg/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Installation guide</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.18/docs/intro/install.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation-guide">
+<span id="intro-install"></span><h1>Installation guide<a class="headerlink" href="#installation-guide" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="pre-requisites">
+<h2>Pre-requisites<a class="headerlink" href="#pre-requisites" title="Permalink to this headline">¶</a></h2>
+<p>The installation steps assume that you have the following things installed:</p>
+<ul class="simple">
+<li>Python 2.6 or 2.7</li>
+<li>OpenSSL. This comes preinstalled in all operating systems except Windows (see <a class="reference internal" href="#intro-install-platform-notes"><span>Platform specific installation notes</span></a>)</li>
+<li><a class="reference external" href="http://www.pip-installer.org/en/latest/installing.html">pip</a> or <a class="reference external" href="http://pypi.python.org/pypi/setuptools">easy_install</a> Python package managers</li>
+</ul>
+</div>
+<div class="section" id="installing-scrapy">
+<h2>Installing Scrapy<a class="headerlink" href="#installing-scrapy" title="Permalink to this headline">¶</a></h2>
+<p>You can install Scrapy using easy_install or pip (which is the canonical way to
+distribute and install Python packages).</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Check <a class="reference internal" href="#intro-install-platform-notes"><span>Platform specific installation notes</span></a> first.</p>
+</div>
+<p>To install using pip:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>pip install Scrapy
+</pre></div>
+</div>
+<p>To install using easy_install:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>easy_install Scrapy
+</pre></div>
+</div>
+</div>
+<div class="section" id="platform-specific-installation-notes">
+<span id="intro-install-platform-notes"></span><h2>Platform specific installation notes<a class="headerlink" href="#platform-specific-installation-notes" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="windows">
+<h3>Windows<a class="headerlink" href="#windows" title="Permalink to this headline">¶</a></h3>
+<p>After installing Python, follow these steps before installing Scrapy:</p>
+<ul class="simple">
+<li>add the <code class="docutils literal"><span class="pre">C:\python27\Scripts</span></code> and <code class="docutils literal"><span class="pre">C:\python27</span></code> folders to the system
+path by adding those directories to the <code class="docutils literal"><span class="pre">PATH</span></code> environment variable from
+the <a class="reference external" href="http://www.microsoft.com/resources/documentation/windows/xp/all/proddocs/en-us/sysdm_advancd_environmnt_addchange_variable.mspx">Control Panel</a>.</li>
+<li>install OpenSSL by following these steps:<ol class="arabic">
+<li>go to <a class="reference external" href="http://slproweb.com/products/Win32OpenSSL.html">Win32 OpenSSL page</a></li>
+<li>download Visual C++ 2008 redistributables for your Windows and architecture</li>
+<li>download OpenSSL for your Windows and architecture (the regular version, not the light one)</li>
+<li>add the <code class="docutils literal"><span class="pre">c:\openssl-win32\bin</span></code> (or similar) directory to your <code class="docutils literal"><span class="pre">PATH</span></code>, the same way you added <code class="docutils literal"><span class="pre">python27</span></code> in the first step`` in the first step</li>
+</ol>
+</li>
+<li>some binary packages that Scrapy depends on (like Twisted, lxml and pyOpenSSL) require a compiler available to install, and fail if you don’t have Visual Studio installed. You can find Windows installers for those in the following links. Make sure you respect your Python version and Windows architecture.<ul>
+<li>pywin32: <a class="reference external" href="http://sourceforge.net/projects/pywin32/files/">http://sourceforge.net/projects/pywin32/files/</a></li>
+<li>Twisted: <a class="reference external" href="http://twistedmatrix.com/trac/wiki/Downloads">http://twistedmatrix.com/trac/wiki/Downloads</a></li>
+<li>zope.interface: download the egg from <a class="reference external" href="http://pypi.python.org/pypi/zope.interface">zope.interface pypi page</a> and install it by running <code class="docutils literal"><span class="pre">easy_install</span> <span class="pre">file.egg</span></code></li>
+<li>lxml: <a class="reference external" href="http://pypi.python.org/pypi/lxml/">http://pypi.python.org/pypi/lxml/</a></li>
+<li>pyOpenSSL: <a class="reference external" href="https://launchpad.net/pyopenssl">https://launchpad.net/pyopenssl</a></li>
+</ul>
+</li>
+</ul>
+<p>Finally, this page contains many precompiled Python binary libraries, which may
+come handy to fulfill Scrapy dependencies:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.lfd.uci.edu/~gohlke/pythonlibs/">http://www.lfd.uci.edu/~gohlke/pythonlibs/</a></div></blockquote>
+<div class="section" id="ubuntu-9-10-or-above">
+<h4>Ubuntu 9.10 or above<a class="headerlink" href="#ubuntu-9-10-or-above" title="Permalink to this headline">¶</a></h4>
+<p><strong>Don’t</strong> use the <code class="docutils literal"><span class="pre">python-scrapy</span></code> package provided by Ubuntu, they are
+typically too old and slow to catch up with latest Scrapy.</p>
+<p>Instead, use the official <a class="reference internal" href="../topics/ubuntu.html#topics-ubuntu"><span>Ubuntu Packages</span></a>, which already
+solve all dependencies for you and are continuously updated with the latest bug
+fixes.</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="tutorial.html" class="btn btn-neutral float-right" title="Scrapy Tutorial" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="Scrapy at a glance" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-pzwd1fa8h" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2013, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>dc43890b</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.18
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.18/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.18/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.18/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-zhseyyut"></div></body></html>

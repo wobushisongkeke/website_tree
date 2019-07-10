@@ -1,0 +1,1050 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="en"><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Using Firefox for scraping — Scrapy  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://cdnmedia.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="https://cdnmedia.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy  documentation" href="../index.html" />
+        <link rel="next" title="Using Firebug for scraping" href="firebug.html" />
+        <link rel="prev" title="Frequently Asked Questions" href="../faq.html" />
+ 
+<!-- RTD Extra Head -->
+
+
+
+  
+  <!-- 
+  Always link to the latest version, as canonical.
+  http://docs.readthedocs.org/en/latest/canonical.html
+  -->
+  <link rel="canonical" href="http://doc.scrapy.org//en/latest/topics/firefox.html" />
+  
+
+<script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "scrapy",
+    version: "0.10.3",
+    language: "en",
+    page: "topics/firefox",
+    builder: "sphinx",
+    theme: "sphinx_rtd_theme",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "49ffe528a39e29a84246b31097e2e6aa90cbbb8f"
+  }
+  // Old variables
+  var doc_version = "0.10.3";
+  var doc_slug = "scrapy";
+  var page_name = "topics/firefox";
+  var html_theme = "sphinx_rtd_theme";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+  // User Analytics Code
+  _gaq.push(['user._setAccount', 'UA-10231918-2']);
+  _gaq.push(['user._trackPageview']);
+  // End User Analytics Code
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side"><div class="wy-side-scroll"><div class="wy-side-nav-search">
+        
+
+        
+          <a href="../index.html" class="icon icon-home"> Scrapy
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html"><span class="toctree-expand"></span>Scrapy at a glance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#pick-a-website">Pick a website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#define-the-data-you-want-to-scrape">Define the data you want to scrape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#write-a-spider-to-extract-the-data">Write a Spider to extract the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#run-the-spider-to-extract-the-data">Run the spider to extract the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#review-scraped-data">Review scraped data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#what-else">What else?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html"><span class="toctree-expand"></span>Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#step-1-install-python">Step 1. Install Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#step-2-install-required-libraries"><span class="toctree-expand"></span>Step 2. Install required libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#ubuntu-debian">Ubuntu/Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#arch-linux">Arch Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#mac-os-x">Mac OS X</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#step-3-install-scrapy"><span class="toctree-expand"></span>Step 3. Install Scrapy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#installing-an-official-release">Installing an official release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#installing-with-easy-install">Installing with easy_install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#installing-the-development-version">Installing the development version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html"><span class="toctree-expand"></span>Scrapy Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#creating-a-project">Creating a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#defining-our-item">Defining our Item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#our-first-spider"><span class="toctree-expand"></span>Our first Spider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro/tutorial.html#crawling"><span class="toctree-expand"></span>Crawling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#what-just-happened-under-the-hood">What just happened under the hood?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/tutorial.html#extracting-items"><span class="toctree-expand"></span>Extracting Items</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#introduction-to-selectors">Introduction to Selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#trying-selectors-in-the-shell">Trying Selectors in the Shell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/tutorial.html#using-our-item">Using our item</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#storing-the-data-using-an-item-pipeline">Storing the data (using an Item Pipeline)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#finale">Finale</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html"><span class="toctree-expand"></span>Command line tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#using-the-scrapy-tool"><span class="toctree-expand"></span>Using the <code class="docutils literal"><span class="pre">scrapy</span></code> tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#creating-projects">Creating projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#controlling-projects">Controlling projects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#available-tool-commands"><span class="toctree-expand"></span>Available tool commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#startproject">startproject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#genspider">genspider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#crawl">crawl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#runserver">runserver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#list">list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#fetch">fetch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#view">view</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#shell">shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#parse">parse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#settings">settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#runspider">runspider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#queue">queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#version">version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#custom-project-commands"><span class="toctree-expand"></span>Custom project commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands-module">COMMANDS_MODULE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="items.html"><span class="toctree-expand"></span>Items</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="items.html#declaring-items">Declaring Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#item-fields">Item Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#working-with-items"><span class="toctree-expand"></span>Working with Items</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="items.html#creating-items">Creating items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#getting-field-values">Getting field values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#setting-field-values">Setting field values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#accesing-all-populated-values">Accesing all populated values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#other-common-tasks">Other common tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#default-values">Default values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#extending-items">Extending Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#item-objects">Item objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#field-objects">Field objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html"><span class="toctree-expand"></span>Spiders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spiders.html#built-in-spiders-reference"><span class="toctree-expand"></span>Built-in spiders reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#basespider"><span class="toctree-expand"></span>BaseSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#basespider-example">BaseSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#crawlspider"><span class="toctree-expand"></span>CrawlSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#crawling-rules">Crawling rules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#crawlspider-example">CrawlSpider example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#xmlfeedspider"><span class="toctree-expand"></span>XMLFeedSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#xmlfeedspider-example">XMLFeedSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#csvfeedspider"><span class="toctree-expand"></span>CSVFeedSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#csvfeedspider-example">CSVFeedSpider example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html"><span class="toctree-expand"></span>Link Extractors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="link-extractors.html#module-scrapy.contrib.linkextractors"><span class="toctree-expand"></span>Built-in link extractors reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="link-extractors.html#sgmllinkextractor">SgmlLinkExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link-extractors.html#basesgmllinkextractor">BaseSgmlLinkExtractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html"><span class="toctree-expand"></span>XPath Selectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="selectors.html#using-selectors"><span class="toctree-expand"></span>Using selectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#constructing-selectors">Constructing selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#using-selectors-with-xpaths">Using selectors with XPaths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#using-selectors-with-regular-expressions">Using selectors with regular expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#nesting-selectors">Nesting selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#working-with-relative-xpaths">Working with relative XPaths</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selectors.html#module-scrapy.selector"><span class="toctree-expand"></span>Built-in XPath Selectors reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#xpathselector-objects">XPathSelector objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#xpathselectorlist-objects">XPathSelectorList objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#htmlxpathselector-objects"><span class="toctree-expand"></span>HtmlXPathSelector objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="selectors.html#htmlxpathselector-examples">HtmlXPathSelector examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#xmlxpathselector-objects"><span class="toctree-expand"></span>XmlXPathSelector objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="selectors.html#xmlxpathselector-examples">XmlXPathSelector examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html"><span class="toctree-expand"></span>Item Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#using-item-loaders-to-populate-items">Using Item Loaders to populate items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#input-and-output-processors">Input and Output processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#declaring-item-loaders">Declaring Item Loaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#declaring-input-and-output-processors">Declaring Input and Output Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#item-loader-context">Item Loader Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#itemloader-objects">ItemLoader objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#reusing-and-extending-item-loaders">Reusing and extending Item Loaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#module-scrapy.contrib.loader.processor">Available built-in processors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html"><span class="toctree-expand"></span>Scrapy shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#launch-the-shell">Launch the shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#using-the-shell"><span class="toctree-expand"></span>Using the shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shell.html#available-shortcuts">Available Shortcuts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell.html#available-scrapy-objects">Available Scrapy objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#example-of-shell-session">Example of shell session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#invoking-the-shell-from-spiders-to-inspect-responses">Invoking the shell from spiders to inspect responses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html"><span class="toctree-expand"></span>Item Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#writing-your-own-item-pipeline">Writing your own item pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#item-pipeline-example">Item pipeline example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#activating-an-item-pipeline-component">Activating an Item Pipeline component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#item-pipeline-example-with-resources-per-spider">Item pipeline example with resources per spider</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html"><span class="toctree-expand"></span>Feed exports</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#serialization-formats"><span class="toctree-expand"></span>Serialization formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#json">JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#json-lines">JSON lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#csv">CSV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#xml">XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#storages">Storages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#storage-uri-parameters">Storage URI parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#storage-backends"><span class="toctree-expand"></span>Storage backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#local-filesystem">Local filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#ftp">FTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#s3">S3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#standard-output">Standard output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#settings"><span class="toctree-expand"></span>Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-uri">FEED_URI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-format">FEED_FORMAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-store-empty">FEED_STORE_EMPTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-storages">FEED_STORAGES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-storages-base">FEED_STORAGES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-exporters">FEED_EXPORTERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-exporters-base">FEED_EXPORTERS_BASE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html"><span class="toctree-expand"></span>Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#log-levels">Log levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#how-to-set-the-log-level">How to set the log level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#how-to-log-messages">How to log messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logging-from-spiders">Logging from Spiders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#module-scrapy.log">scrapy.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logging-settings">Logging settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html"><span class="toctree-expand"></span>Stats Collection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#common-stats-collector-uses">Common Stats Collector uses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#stats-collector-api">Stats Collector API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#available-stats-collectors"><span class="toctree-expand"></span>Available Stats Collectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="stats.html#memorystatscollector">MemoryStatsCollector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html#dummystatscollector">DummyStatsCollector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html#module-scrapy.contrib.statscol"><span class="toctree-expand"></span>SimpledbStatsCollector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="stats.html#stats-sdb-domain">STATS_SDB_DOMAIN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stats.html#stats-sdb-async">STATS_SDB_ASYNC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#stats-signals">Stats signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="email.html"><span class="toctree-expand"></span>Sending e-mail</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="email.html#quick-example">Quick example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html#mailsender-class-reference">MailSender class reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html#mail-settings"><span class="toctree-expand"></span>Mail settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-from">MAIL_FROM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-host">MAIL_HOST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-port">MAIL_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-user">MAIL_USER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-pass">MAIL_PASS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="email.html#mail-signals">Mail signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html"><span class="toctree-expand"></span>Telnet Console</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#how-to-access-the-telnet-console">How to access the telnet console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#available-variables-in-the-telnet-console">Available variables in the telnet console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#telnet-console-usage-examples"><span class="toctree-expand"></span>Telnet console usage examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="telnetconsole.html#view-engine-status">View engine status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="telnetconsole.html#pause-resume-and-stop-the-scrapy-engine">Pause, resume and stop the Scrapy engine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#telnet-console-signals">Telnet Console signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html"><span class="toctree-expand"></span>Web Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#web-service-resources"><span class="toctree-expand"></span>Web service resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#available-json-rpc-resources"><span class="toctree-expand"></span>Available JSON-RPC resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#module-scrapy.contrib.webservice.crawler">Crawler JSON-RPC resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#module-scrapy.contrib.webservice.stats">Stats Collector JSON-RPC resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#spider-manager-json-rpc-resource">Spider Manager JSON-RPC resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#extension-manager-json-rpc-resource">Extension Manager JSON-RPC resource</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#available-json-resources"><span class="toctree-expand"></span>Available JSON resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#module-scrapy.contrib.webservice.enginestatus">Engine status JSON resource</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#web-service-settings"><span class="toctree-expand"></span>Web service settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-enabled">WEBSERVICE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-logfile">WEBSERVICE_LOGFILE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-port">WEBSERVICE_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-resources">WEBSERVICE_RESOURCES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-resources-base">WEBSERVICE_RESOURCES_BASE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#writing-a-web-service-resource">Writing a web service resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#examples-of-web-service-resources"><span class="toctree-expand"></span>Examples of web service resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#statsresource-json-rpc-resource">StatsResource (JSON-RPC resource)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#enginestatusresource-json-resource">EngineStatusResource (JSON resource)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#example-of-web-service-client"><span class="toctree-expand"></span>Example of web service client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#scrapy-ws-py-script">scrapy-ws.py script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html"><span class="toctree-expand"></span>Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#how-does-scrapy-compare-to-beautifulsoul-or-lxml">How does Scrapy compare to BeautifulSoul or lxml?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#does-scrapy-work-with-python-3-0">Does Scrapy work with Python 3.0?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#did-scrapy-steal-x-from-django">Did Scrapy “steal” X from Django?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#does-scrapy-work-with-http-proxies">Does Scrapy work with HTTP proxies?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#scrapy-crashes-with-importerror-no-module-named-win32api">Scrapy crashes with: ImportError: No module named win32api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#how-can-i-simulate-a-user-login-in-my-spider">How can I simulate a user login in my spider?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-crawl-in-breadth-first-order-instead-of-depth-first-order">Can I crawl in breadth-first order instead of depth-first order?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#my-scrapy-crawler-has-memory-leaks-what-can-i-do">My Scrapy crawler has memory leaks. What can I do?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#how-can-i-make-scrapy-consume-less-memory">How can I make Scrapy consume less memory?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-use-basic-http-authentication-in-my-spiders">Can I use Basic HTTP Authentication in my spiders?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#why-does-scrapy-download-pages-in-english-instead-of-my-native-language">Why does Scrapy download pages in English instead of my native language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#where-can-i-find-some-example-code-using-scrapy">Where can I find some example code using Scrapy?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-run-a-spider-without-creating-a-project">Can I run a spider without creating a project?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#i-get-filtered-offsite-request-messages-how-can-i-fix-them">I get “Filtered offsite request” messages. How can I fix them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#what-is-the-recommended-way-to-deploy-a-scrapy-crawler-in-production">What is the recommended way to deploy a Scrapy crawler in production?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-use-json-for-large-exports">Can I use JSON for large exports?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-return-twisted-deferreds-from-signal-handlers">Can I return (Twisted) deferreds from signal handlers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#what-does-the-response-status-code-999-means">What does the response status code 999 means?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-call-pdb-set-trace-from-my-spiders-to-debug-them">Can I call <code class="docutils literal"><span class="pre">pdb.set_trace()</span></code> from my spiders to debug them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#simplest-way-to-dump-all-my-scraped-items-into-a-json-csv-xml-file">Simplest way to dump all my scraped items into a JSON/CSV/XML file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#what-s-this-huge-cryptic-viewstate-parameter-used-in-some-forms">What’s this huge cryptic <code class="docutils literal"><span class="pre">__VIEWSTATE</span></code> parameter used in some forms?</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Using Firefox for scraping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#caveats-with-inspecting-the-live-browser-dom">Caveats with inspecting the live browser DOM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#useful-firefox-add-ons-for-scraping"><span class="toctree-expand"></span>Useful Firefox add-ons for scraping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#firebug">Firebug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpather">XPather</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpath-checker">XPath Checker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tamper-data">Tamper Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#firecookie">Firecookie</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html"><span class="toctree-expand"></span>Using Firebug for scraping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firebug.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firebug.html#getting-links-to-follow">Getting links to follow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firebug.html#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html"><span class="toctree-expand"></span>Debugging memory leaks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#common-causes-of-memory-leaks">Common causes of memory leaks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#debugging-memory-leaks-with-trackref"><span class="toctree-expand"></span>Debugging memory leaks with <code class="docutils literal"><span class="pre">trackref</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#which-objects-are-tracked">Which objects are tracked?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#a-real-example">A real example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#too-many-spiders">Too many spiders?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#scrapy-utils-trackref-module">scrapy.utils.trackref module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#debugging-memory-leaks-with-guppy">Debugging memory leaks with Guppy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#leaks-without-leaks">Leaks without leaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="images.html"><span class="toctree-expand"></span>Downloading Item Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="images.html#using-the-images-pipeline">Using the Images Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#usage-example">Usage example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#enabling-your-images-pipeline">Enabling your Images Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#images-storage"><span class="toctree-expand"></span>Images Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="images.html#file-system-storage">File system storage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#additional-features"><span class="toctree-expand"></span>Additional features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="images.html#image-expiration">Image expiration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images.html#thumbnail-generation">Thumbnail generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images.html#filtering-out-small-images">Filtering out small images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#module-scrapy.contrib.pipeline.images">Implementing your custom Images Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#custom-images-pipeline-example">Custom Images pipeline example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html"><span class="toctree-expand"></span>Scrapy Service (scrapyd)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#projects-and-versions">Projects and versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#how-scrapyd-works">How Scrapyd works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#starting-scrapyd">Starting Scrapyd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#installing-scrapyd"><span class="toctree-expand"></span>Installing Scrapyd</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#installing-scrapyd-in-ubuntu"><span class="toctree-expand"></span>Installing Scrapyd in Ubuntu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#etc-scrapyd">/etc/scrapyd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-scrapyd-log">/var/log/scrapyd/scrapyd.log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-scrapyd-out">/var/log/scrapyd/scrapyd.out</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-scrapyd-err">/var/log/scrapyd/scrapyd.err</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-slotn-log">/var/log/scrapyd/slotN.log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-lib-scrapyd">/var/lib/scrapyd/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#scrapyd-configuration-file"><span class="toctree-expand"></span>Scrapyd Configuration file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#http-port">http_port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#max-proc">max_proc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#debug">debug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#eggs-dir">eggs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#dbs-dir">dbs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#logs-dir">logs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#egg-runner">egg_runner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#application">application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#example-configuration-file">Example configuration file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#eggifying-your-project"><span class="toctree-expand"></span>Eggifying your project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#egg-caveats">Egg caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#uploading-your-project">Uploading your project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#scheduling-a-spider-run">Scheduling a spider run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#json-api-reference"><span class="toctree-expand"></span>JSON API reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#addversion-json">addversion.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#schedule-json">schedule.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#listprojects-json">listprojects.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#listversions-json">listversions.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#listspiders-json">listspiders.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#delversion-json">delversion.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#delproject-json">delproject.json</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html"><span class="toctree-expand"></span>Architecture overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#components"><span class="toctree-expand"></span>Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#scrapy-engine">Scrapy Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#scheduler">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#downloader">Downloader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#spiders">Spiders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#item-pipeline">Item Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#downloader-middlewares">Downloader middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#spider-middlewares">Spider middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#scheduler-middlewares">Scheduler middlewares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#data-flow">Data flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#event-driven-networking">Event-driven networking</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html"><span class="toctree-expand"></span>Downloader Middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="downloader-middleware.html#activating-a-downloader-middleware">Activating a downloader middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloader-middleware.html#writing-your-own-downloader-middleware">Writing your own downloader middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloader-middleware.html#built-in-downloader-middleware-reference"><span class="toctree-expand"></span>Built-in downloader middleware reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.cookies">CookiesMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.defaultheaders">DefaultHeadersMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.downloadtimeout">DownloadTimeoutMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpauth">HttpAuthMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpcache"><span class="toctree-expand"></span>HttpCacheMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="downloader-middleware.html#file-system-storage">File system storage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="downloader-middleware.html#settings">Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpcompression">HttpCompressionMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpproxy">HttpProxyMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.redirect">RedirectMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.retry">RetryMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.robotstxt">RobotsTxtMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.stats">DownloaderStats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.useragent">UserAgentMiddleware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html"><span class="toctree-expand"></span>Spider Middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spider-middleware.html#activating-a-spider-middleware">Activating a spider middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spider-middleware.html#writing-your-own-spider-middleware">Writing your own spider middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spider-middleware.html#built-in-spider-middleware-reference"><span class="toctree-expand"></span>Built-in spider middleware reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.depth">DepthMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.httperror">HttpErrorMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.offsite">OffsiteMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.referer">RefererMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.requestlimit">RequestLimitMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.urllength">UrlLengthMiddleware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html"><span class="toctree-expand"></span>Extensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#extension-settings">Extension settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#loading-activating-extensions">Loading &amp; activating extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#available-enabled-and-disabled-extensions">Available, enabled and disabled extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#accessing-enabled-extensions">Accessing enabled extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#writing-your-own-extension">Writing your own extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#module-scrapy.extension">Extension Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#built-in-extensions-reference"><span class="toctree-expand"></span>Built-in extensions reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extensions.html#general-purpose-extensions"><span class="toctree-expand"></span>General purpose extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.corestats.corestats">Core Stats extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.webservice">Web service extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.telnet">Telnet console extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.memusage">Memory usage extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.memdebug">Memory debugger extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.closespider">Close spider extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.statsmailer">StatsMailer extension</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="extensions.html#debugging-extensions"><span class="toctree-expand"></span>Debugging extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#stack-trace-dump-extension">Stack trace dump extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#debugger-extension">Debugger extension</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html"><span class="toctree-expand"></span>Requests and Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="request-response.html#request-objects"><span class="toctree-expand"></span>Request objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="request-response.html#passing-arguments-to-callback-functions">Passing arguments to callback functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="request-response.html#request-meta-special-keys">Request.meta special keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request-response.html#request-subclasses"><span class="toctree-expand"></span>Request subclasses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="request-response.html#formrequest-objects">FormRequest objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="request-response.html#request-usage-examples"><span class="toctree-expand"></span>Request usage examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="request-response.html#using-formrequest-to-send-data-via-http-post">Using FormRequest to send data via HTTP POST</a></li>
+<li class="toctree-l4"><a class="reference internal" href="request-response.html#using-formrequest-from-response-to-simulate-a-user-login">Using FormRequest.from_response() to simulate a user login</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="request-response.html#response-objects">Response objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="request-response.html#response-subclasses"><span class="toctree-expand"></span>Response subclasses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="request-response.html#textresponse-objects">TextResponse objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="request-response.html#htmlresponse-objects">HtmlResponse objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="request-response.html#xmlresponse-objects">XmlResponse objects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html"><span class="toctree-expand"></span>Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#designating-the-settings">Designating the settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#populating-the-settings"><span class="toctree-expand"></span>Populating the settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#global-overrides">1. Global overrides</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#environment-variables">2. Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scrapy-settings">3. scrapy_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-settings-per-command">4. Default settings per-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-global-settings">5. Default global settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#how-to-access-settings">How to access settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#rationale-for-setting-names">Rationale for setting names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#built-in-settings-reference"><span class="toctree-expand"></span>Built-in settings reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#aws-access-key-id">AWS_ACCESS_KEY_ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#aws-secret-access-key">AWS_SECRET_ACCESS_KEY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#bot-name">BOT_NAME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#bot-version">BOT_VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#concurrent-items">CONCURRENT_ITEMS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#concurrent-requests-per-spider">CONCURRENT_REQUESTS_PER_SPIDER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#concurrent-spiders">CONCURRENT_SPIDERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#cookies-debug">COOKIES_DEBUG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-item-class">DEFAULT_ITEM_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-request-headers">DEFAULT_REQUEST_HEADERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-response-encoding">DEFAULT_RESPONSE_ENCODING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#depth-limit">DEPTH_LIMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#depth-stats">DEPTH_STATS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-debug">DOWNLOADER_DEBUG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-middlewares">DOWNLOADER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-middlewares-base">DOWNLOADER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-stats">DOWNLOADER_STATS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-delay">DOWNLOAD_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-handlers">DOWNLOAD_HANDLERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-handlers-base">DOWNLOAD_HANDLERS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-timeout">DOWNLOAD_TIMEOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#dupefilter-class">DUPEFILTER_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#encoding-aliases">ENCODING_ALIASES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#encoding-aliases-base">ENCODING_ALIASES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#extensions">EXTENSIONS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#extensions-base">EXTENSIONS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#item-pipelines">ITEM_PIPELINES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-enabled">LOG_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-encoding">LOG_ENCODING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-file">LOG_FILE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-level">LOG_LEVEL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-stdout">LOG_STDOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memdebug-enabled">MEMDEBUG_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memdebug-notify">MEMDEBUG_NOTIFY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-enabled">MEMUSAGE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-limit-mb">MEMUSAGE_LIMIT_MB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-notify-mail">MEMUSAGE_NOTIFY_MAIL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-report">MEMUSAGE_REPORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-warning-mb">MEMUSAGE_WARNING_MB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#newspider-module">NEWSPIDER_MODULE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#randomize-download-delay">RANDOMIZE_DOWNLOAD_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#redirect-max-times">REDIRECT_MAX_TIMES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#redirect-max-metarefresh-delay">REDIRECT_MAX_METAREFRESH_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#redirect-priority-adjust">REDIRECT_PRIORITY_ADJUST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#requests-queue-size">REQUESTS_QUEUE_SIZE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#robotstxt-obey">ROBOTSTXT_OBEY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler">SCHEDULER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler-order">SCHEDULER_ORDER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler-middlewares">SCHEDULER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler-middlewares-base">SCHEDULER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#spider-middlewares">SPIDER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#spider-middlewares-base">SPIDER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#spider-modules">SPIDER_MODULES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#stats-class">STATS_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#stats-dump">STATS_DUMP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#stats-enabled">STATS_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#statsmailer-rcpts">STATSMAILER_RCPTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#telnetconsole-enabled">TELNETCONSOLE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#telnetconsole-port">TELNETCONSOLE_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#templates-dir">TEMPLATES_DIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#urllength-limit">URLLENGTH_LIMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#user-agent">USER_AGENT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html"><span class="toctree-expand"></span>Signals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="signals.html#deferred-signal-handlers">Deferred signal handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signals.html#module-scrapy.signals"><span class="toctree-expand"></span>Built-in signals reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#engine-started">engine_started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#engine-stopped">engine_stopped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#item-scraped">item_scraped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#item-passed">item_passed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#item-dropped">item_dropped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#spider-closed">spider_closed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#spider-opened">spider_opened</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#spider-idle">spider_idle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#request-received">request_received</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#response-received">response_received</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#response-downloaded">response_downloaded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html"><span class="toctree-expand"></span>Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#built-in-exceptions-reference"><span class="toctree-expand"></span>Built-in Exceptions reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#dropitem">DropItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#ignorerequest">IgnoreRequest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#notconfigured">NotConfigured</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#notsupported">NotSupported</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html"><span class="toctree-expand"></span>Item Exporters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exporters.html#using-item-exporters">Using Item Exporters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exporters.html#serialization-of-item-fields"><span class="toctree-expand"></span>Serialization of item fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#declaring-a-serializer-in-the-field">1. Declaring a serializer in the field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#overriding-the-serialize-field-method">2. Overriding the serialize_field() method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exporters.html#built-in-item-exporters-reference"><span class="toctree-expand"></span>Built-in Item Exporters reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#baseitemexporter">BaseItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#xmlitemexporter">XmlItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#csvitemexporter">CsvItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#pickleitemexporter">PickleItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#pprintitemexporter">PprintItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#jsonitemexporter">JsonItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#jsonlinesitemexporter">JsonLinesItemExporter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"><span class="toctree-expand"></span>Contributing to Scrapy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#reporting-bugs">Reporting bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#writing-patches">Writing patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#submitting-patches">Submitting patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#coding-style">Coding style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#documentation-policies">Documentation policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tests"><span class="toctree-expand"></span>Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#writing-tests">Writing tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html"><span class="toctree-expand"></span>Versioning and API Stability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-stability.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-stability.html#id1">API Stability</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html"><span class="toctree-expand"></span>Experimental features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../experimental/djangoitems.html"><span class="toctree-expand"></span>DjangoItem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/djangoitems.html#using-djangoitem">Using DjangoItem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../experimental/crawlspider-v2.html"><span class="toctree-expand"></span>CrawlSpider v2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#rules-matching">Rules Matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-extractors-processors">Request Extractors &amp; Processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#reference"><span class="toctree-expand"></span>Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#crawlspider">CrawlSpider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#rules">Rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-extractors">Request Extractors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-processors">Request Processors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-response-matchers">Request/Response Matchers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div><div id="rtd-9eibmjxy" class="ethical-rtd ethical-dark-theme"></div></div>
+      
+
+      
+       
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Using Firefox for scraping</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.10.3/docs/topics/firefox.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="using-firefox-for-scraping">
+<span id="topics-firefox"></span><h1>Using Firefox for scraping<a class="headerlink" href="#using-firefox-for-scraping" title="Permalink to this headline">¶</a></h1>
+<p>Here is a list of tips and advice on using Firefox for scraping, along with a
+list of useful Firefox add-ons to ease the scraping process.</p>
+<div class="section" id="caveats-with-inspecting-the-live-browser-dom">
+<span id="topics-firefox-livedom"></span><h2>Caveats with inspecting the live browser DOM<a class="headerlink" href="#caveats-with-inspecting-the-live-browser-dom" title="Permalink to this headline">¶</a></h2>
+<p>Since Firefox add-ons operate on a live browser DOM, what you’ll actually see
+when inspecting the page source is not the original HTML, but a modified one
+after applying some browser clean up and executing Javascript code.  Firefox,
+in particular, is known for adding <code class="docutils literal"><span class="pre">&lt;tbody&gt;</span></code> elements to tables.  Scrapy, on
+the other hand, does not modify the original page HTML, so you won’t be able to
+extract any data if you use <code class="docutils literal"><span class="pre">&lt;tbody</span></code> in your XPath expressions.</p>
+<p>Therefore, you should keep in mind the following things when working with
+Firefox and XPath:</p>
+<ul class="simple">
+<li>Disable Firefox Javascript while inspecting the DOM looking for XPaths to be
+used in Scrapy</li>
+<li>Never use full XPath paths, use relative and clever ones based on attributes
+(such as <code class="docutils literal"><span class="pre">id</span></code>, <code class="docutils literal"><span class="pre">class</span></code>, <code class="docutils literal"><span class="pre">width</span></code>, etc) or any identifying features like
+<code class="docutils literal"><span class="pre">contains(@href,</span> <span class="pre">'image')</span></code>.</li>
+<li>Never include <code class="docutils literal"><span class="pre">&lt;tbody&gt;</span></code> elements in your XPath expressions unless you
+really know what you’re doing</li>
+</ul>
+</div>
+<div class="section" id="useful-firefox-add-ons-for-scraping">
+<span id="topics-firefox-addons"></span><h2>Useful Firefox add-ons for scraping<a class="headerlink" href="#useful-firefox-add-ons-for-scraping" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="firebug">
+<h3>Firebug<a class="headerlink" href="#firebug" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://getfirebug.com">Firebug</a> is a widely known tool among web developers and it’s also very
+useful for scraping. In particular, its <a class="reference external" href="http://www.youtube.com/watch?v=-pT_pDe54aA">Inspect Element</a> feature comes very
+handy when you need to construct the XPaths for extracting data because it
+allows you to view the HTML code of each page element while moving your mouse
+over it.</p>
+<p>See <a class="reference internal" href="firebug.html#topics-firebug"><span>Using Firebug for scraping</span></a> for a detailed guide on how to use Firebug with
+Scrapy.</p>
+</div>
+<div class="section" id="xpather">
+<h3>XPather<a class="headerlink" href="#xpather" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://addons.mozilla.org/firefox/addon/1192">XPather</a> allows you to test XPath expressions directly on the pages.</p>
+</div>
+<div class="section" id="xpath-checker">
+<h3>XPath Checker<a class="headerlink" href="#xpath-checker" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://addons.mozilla.org/firefox/addon/1095">XPath Checker</a> is another Firefox add-on for testing XPaths on your pages.</p>
+</div>
+<div class="section" id="tamper-data">
+<h3>Tamper Data<a class="headerlink" href="#tamper-data" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="http://addons.mozilla.org/firefox/addon/966">Tamper Data</a> is a Firefox add-on which allows you to view and modify the HTTP
+request headers sent by Firefox. Firebug also allows to view HTTP headers, but
+not to modify them.</p>
+</div>
+<div class="section" id="firecookie">
+<h3>Firecookie<a class="headerlink" href="#firecookie" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference external" href="https://addons.mozilla.org/firefox/addon/6683">Firecookie</a> makes it easier to view and manage cookies. You can use this
+extension to create a new cookie, delete existing cookies, see a list of cookies
+for the current site, manage cookies permissions and a lot more.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="firebug.html" class="btn btn-neutral float-right" title="Using Firebug for scraping" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../faq.html" class="btn btn-neutral" title="Frequently Asked Questions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-05mzcpv" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2010, Insophia.
+      Last updated on Jul 06, 2015.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.10.3
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/0.8/">0.8</a></dd>
+        
+          <dd><a href="/en/0.7/">0.7</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.10.3/">pdf</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//https://readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//https://readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-6zy6v2y5g"></div></body></html>

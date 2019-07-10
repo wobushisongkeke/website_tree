@@ -1,0 +1,868 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Scrapy Service (scrapyd) — Scrapy 0.12.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.12.0 documentation" href="../index.html" />
+        <link rel="next" title="Architecture overview" href="architecture.html" />
+        <link rel="prev" title="Ubuntu packages" href="ubuntu.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/scrapyd.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/scrapyd'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Scrapy Service (scrapyd)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#projects-and-versions">Projects and versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-scrapyd-works">How Scrapyd works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#starting-scrapyd">Starting Scrapyd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#installing-scrapyd"><span class="toctree-expand"></span>Installing Scrapyd</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#installing-scrapyd-in-ubuntu"><span class="toctree-expand"></span>Installing Scrapyd in Ubuntu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#etc-scrapyd">/etc/scrapyd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#var-log-scrapyd-scrapyd-log">/var/log/scrapyd/scrapyd.log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#var-log-scrapyd-scrapyd-out">/var/log/scrapyd/scrapyd.out</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#var-log-scrapyd-scrapyd-err">/var/log/scrapyd/scrapyd.err</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#var-log-scrapyd-project">/var/log/scrapyd/project</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#var-lib-scrapyd">/var/lib/scrapyd/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scrapyd-configuration-file"><span class="toctree-expand"></span>Scrapyd Configuration file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#http-port">http_port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-proc">max_proc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#max-proc-per-cpu">max_proc_per_cpu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#debug">debug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#eggs-dir">eggs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dbs-dir">dbs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logs-dir">logs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#logs-to-keep">logs_to_keep</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runner">runner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#application">application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#example-configuration-file">Example configuration file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#deploying-your-project"><span class="toctree-expand"></span>Deploying your project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#show-and-define-targets">Show and define targets</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#see-available-projects">See available projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploying-a-project">Deploying a project</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#local-settings">Local settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#egg-caveats">Egg caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#scheduling-a-spider-run">Scheduling a spider run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#web-interface">Web Interface</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#json-api-reference"><span class="toctree-expand"></span>JSON API reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#addversion-json">addversion.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#schedule-json">schedule.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#listprojects-json">listprojects.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#listversions-json">listversions.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#listspiders-json">listspiders.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delversion-json">delversion.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#delproject-json">delproject.json</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-y3cy0wq6" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/0AVWCV2eaAzg/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/0AVWCV2eaAzg/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Scrapy Service (scrapyd)</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.12/docs/topics/scrapyd.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrapy-service-scrapyd">
+<span id="topics-scrapyd"></span><h1>Scrapy Service (scrapyd)<a class="headerlink" href="#scrapy-service-scrapyd" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.10.</span></p>
+</div>
+<p>Scrapy comes with a built-in service, called “Scrapyd”, which allows you to
+deploy (aka. upload) your projects and control their spiders using a JSON web
+service.</p>
+<div class="section" id="projects-and-versions">
+<h2>Projects and versions<a class="headerlink" href="#projects-and-versions" title="Permalink to this headline">¶</a></h2>
+<p>Scrapyd can manage multiple projects and each project can have multiple
+versions uploaded, but only the latest one will be used for launching new
+spiders.</p>
+<p>A common (and useful) convention to use for the version name is the revision
+number of the version control tool you’re using to track your Scrapy project
+code. For example: <code class="docutils literal"><span class="pre">r23</span></code>. The versions are not compared alphabetically but
+using a smarter algorithm (the same <a class="reference external" href="http://docs.python.org/library/distutils.html">distutils</a> uses) so <code class="docutils literal"><span class="pre">r10</span></code> compares
+greater to <code class="docutils literal"><span class="pre">r9</span></code>, for example.</p>
+</div>
+<div class="section" id="how-scrapyd-works">
+<h2>How Scrapyd works<a class="headerlink" href="#how-scrapyd-works" title="Permalink to this headline">¶</a></h2>
+<p>Scrapyd is an application (typically run as a daemon) that continually polls
+for spiders that need to run.</p>
+<p>When a spider needs to run, a process is started to crawl the spider:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy crawl myspider
+</pre></div>
+</div>
+<p>Scrapyd also runs multiple processes in parallel, allocating them in a fixed
+number of slots given by the <a class="reference internal" href="#max-proc">max_proc</a> and <a class="reference internal" href="#max-proc-per-cpu">max_proc_per_cpu</a> options,
+starting as many processes as possible to handle the load.</p>
+<p>In addition to dispatching and managing processes, Scrapyd provides a
+<a class="reference internal" href="#topics-scrapyd-jsonapi"><span>JSON web service</span></a> to upload new project versions
+(as eggs) and schedule spiders. This feature is optional and can be disabled if
+you want to implement your own custom Scrapyd. The components are pluggable and
+can be changed, if you’re familiar with the <a class="reference external" href="http://twistedmatrix.com/documents/current/core/howto/application.html">Twisted Application Framework</a>
+which Scrapyd is implemented in.</p>
+<p>Starting from 0.11, Scrapyd also provides a minimal <a class="reference internal" href="#topics-scrapyd-webui"><span>web interface</span></a>.</p>
+</div>
+<div class="section" id="starting-scrapyd">
+<h2>Starting Scrapyd<a class="headerlink" href="#starting-scrapyd" title="Permalink to this headline">¶</a></h2>
+<p>Scrapyd is implemented using the standard <a class="reference external" href="http://twistedmatrix.com/documents/current/core/howto/application.html">Twisted Application Framework</a>. To
+start the service, use the <code class="docutils literal"><span class="pre">extras/scrapyd.tac</span></code> file provided in the Scrapy
+distribution, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>twistd -ny extras/scrapyd.tac
+</pre></div>
+</div>
+<p>That should get your Scrapyd started.</p>
+<p>Or, if you want to start Scrapyd from inside a Scrapy project you can use the
+<a class="reference internal" href="commands.html#std:command-server"><code class="xref std std-command docutils literal"><span class="pre">server</span></code></a> command, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy server
+</pre></div>
+</div>
+</div>
+<div class="section" id="installing-scrapyd">
+<h2>Installing Scrapyd<a class="headerlink" href="#installing-scrapyd" title="Permalink to this headline">¶</a></h2>
+<p>How to deploy Scrapyd on your servers depends on the platform your’re using.
+Scrapy comes with Ubuntu packages for Scrapyd ready for deploying it as a
+system service, to ease the installation and administration, but you can create
+packages for other distribution or operating systems (including Windows). If
+you do so, and want to contribute them, send a message to
+<a class="reference external" href="mailto:scrapy-developers%40googlegroups.com">scrapy-developers<span>@</span>googlegroups<span>.</span>com</a> and say hi. The community will appreciate
+it.</p>
+<div class="section" id="installing-scrapyd-in-ubuntu">
+<span id="topics-scrapyd-ubuntu"></span><h3>Installing Scrapyd in Ubuntu<a class="headerlink" href="#installing-scrapyd-in-ubuntu" title="Permalink to this headline">¶</a></h3>
+<p>When deploying Scrapyd, it’s very useful to have a version already packaged for
+your system. For this reason, Scrapyd comes with Ubuntu packages ready to use
+in your Ubuntu servers.</p>
+<p>So, if you plan to deploy Scrapyd on a Ubuntu server, just add the Ubuntu
+repositories as described in <a class="reference internal" href="ubuntu.html#topics-ubuntu"><span>Ubuntu packages</span></a> and then run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>aptitude install scrapyd-0.12
+</pre></div>
+</div>
+<p>This will install Scrapyd in your Ubuntu server creating a <code class="docutils literal"><span class="pre">scrapy</span></code> user
+which Scrapyd will run as. It will also create some directories and files that
+are listed below:</p>
+<div class="section" id="etc-scrapyd">
+<h4>/etc/scrapyd<a class="headerlink" href="#etc-scrapyd" title="Permalink to this headline">¶</a></h4>
+<p>Scrapyd configuration files. See <a class="reference internal" href="#topics-scrapyd-config"><span>Scrapyd Configuration file</span></a>.</p>
+</div>
+<div class="section" id="var-log-scrapyd-scrapyd-log">
+<h4>/var/log/scrapyd/scrapyd.log<a class="headerlink" href="#var-log-scrapyd-scrapyd-log" title="Permalink to this headline">¶</a></h4>
+<p>Scrapyd main log file.</p>
+</div>
+<div class="section" id="var-log-scrapyd-scrapyd-out">
+<h4>/var/log/scrapyd/scrapyd.out<a class="headerlink" href="#var-log-scrapyd-scrapyd-out" title="Permalink to this headline">¶</a></h4>
+<p>The standard output captured from Scrapyd process and any
+sub-process spawned from it.</p>
+</div>
+<div class="section" id="var-log-scrapyd-scrapyd-err">
+<h4>/var/log/scrapyd/scrapyd.err<a class="headerlink" href="#var-log-scrapyd-scrapyd-err" title="Permalink to this headline">¶</a></h4>
+<p>The standard error captured from Scrapyd and any sub-process spawned
+from it. Remember to check this file if you’re having problems, as the errors
+may not get logged to the <code class="docutils literal"><span class="pre">scrapyd.log</span></code> file.</p>
+</div>
+<div class="section" id="var-log-scrapyd-project">
+<h4>/var/log/scrapyd/project<a class="headerlink" href="#var-log-scrapyd-project" title="Permalink to this headline">¶</a></h4>
+<p>Besides the main service log file, Scrapyd stores one log file per crawling
+process in:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>/var/log/scrapyd/PROJECT/SPIDER/ID.log
+</pre></div>
+</div>
+<p>Where <code class="docutils literal"><span class="pre">ID</span></code> is a unique id for the run.</p>
+</div>
+<div class="section" id="var-lib-scrapyd">
+<h4>/var/lib/scrapyd/<a class="headerlink" href="#var-lib-scrapyd" title="Permalink to this headline">¶</a></h4>
+<p>Directory used to store data files (uploaded eggs and spider queues).</p>
+</div>
+</div>
+</div>
+<div class="section" id="scrapyd-configuration-file">
+<span id="topics-scrapyd-config"></span><h2>Scrapyd Configuration file<a class="headerlink" href="#scrapyd-configuration-file" title="Permalink to this headline">¶</a></h2>
+<p>Scrapyd searches for configuration files in the following locations, and parses
+them in order with the latest ones taking more priority:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">/etc/scrapyd/scrapyd.conf</span></code> (Unix)</li>
+<li><code class="docutils literal"><span class="pre">c:\scrapyd\scrapyd.conf</span></code> (Windows)</li>
+<li><code class="docutils literal"><span class="pre">/etc/scrapyd/conf.d/*</span></code> (in alphabetical order, Unix)</li>
+<li><code class="docutils literal"><span class="pre">scrapyd.conf</span></code></li>
+</ul>
+<p>The configuration file supports the following options (see default values in
+the <a class="reference internal" href="#topics-scrapyd-config-example"><span>example</span></a>).</p>
+<div class="section" id="http-port">
+<h3>http_port<a class="headerlink" href="#http-port" title="Permalink to this headline">¶</a></h3>
+<p>The TCP port where the HTTP JSON API will listen. Defaults to <code class="docutils literal"><span class="pre">6800</span></code>.</p>
+</div>
+<div class="section" id="max-proc">
+<h3>max_proc<a class="headerlink" href="#max-proc" title="Permalink to this headline">¶</a></h3>
+<p>The maximum number of concurrent Scrapy process that will be started. If unset
+or <code class="docutils literal"><span class="pre">0</span></code> it will use the number of cpus available in the system mulitplied by
+the value in <code class="docutils literal"><span class="pre">max_proc_per_cpu</span></code> option. Defaults to <code class="docutils literal"><span class="pre">0</span></code>.</p>
+</div>
+<div class="section" id="max-proc-per-cpu">
+<h3>max_proc_per_cpu<a class="headerlink" href="#max-proc-per-cpu" title="Permalink to this headline">¶</a></h3>
+<p>The maximum number of concurrent Scrapy process that will be started per cpu.
+Defaults to <code class="docutils literal"><span class="pre">4</span></code>.</p>
+</div>
+<div class="section" id="debug">
+<h3>debug<a class="headerlink" href="#debug" title="Permalink to this headline">¶</a></h3>
+<p>Whether debug mode is enabled. Defaults to <code class="docutils literal"><span class="pre">off</span></code>. When debug mode is enabled
+the full Python traceback will be returned (as plain text responses) when there
+is an error processing a JSON API call.</p>
+</div>
+<div class="section" id="eggs-dir">
+<h3>eggs_dir<a class="headerlink" href="#eggs-dir" title="Permalink to this headline">¶</a></h3>
+<p>The directory where the project eggs will be stored.</p>
+</div>
+<div class="section" id="dbs-dir">
+<h3>dbs_dir<a class="headerlink" href="#dbs-dir" title="Permalink to this headline">¶</a></h3>
+<p>The directory where the project databases will be stored (this includes the
+spider queues).</p>
+</div>
+<div class="section" id="logs-dir">
+<h3>logs_dir<a class="headerlink" href="#logs-dir" title="Permalink to this headline">¶</a></h3>
+<p>The directory where the Scrapy processes logs will be stored.</p>
+</div>
+<div class="section" id="logs-to-keep">
+<h3>logs_to_keep<a class="headerlink" href="#logs-to-keep" title="Permalink to this headline">¶</a></h3>
+<p>The number of logs to keep per spider. Defaults to <code class="docutils literal"><span class="pre">5</span></code>.</p>
+</div>
+<div class="section" id="runner">
+<h3>runner<a class="headerlink" href="#runner" title="Permalink to this headline">¶</a></h3>
+<p>The module that will be used for launching sub-processes. You can customize the
+Scrapy processes launched from Scrapyd by using your own module.</p>
+</div>
+<div class="section" id="application">
+<h3>application<a class="headerlink" href="#application" title="Permalink to this headline">¶</a></h3>
+<p>A function that returns the (Twisted) Application object to use. This can be
+used if you want to extend Scrapyd by adding and removing your own components
+and services.</p>
+<p>For more info see <a class="reference external" href="http://twistedmatrix.com/documents/current/core/howto/application.html">Twisted Application Framework</a></p>
+</div>
+<div class="section" id="example-configuration-file">
+<span id="topics-scrapyd-config-example"></span><h3>Example configuration file<a class="headerlink" href="#example-configuration-file" title="Permalink to this headline">¶</a></h3>
+<p>Here is an example configuration file with all the defaults:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">scrapyd</span><span class="p">]</span>
+<span class="n">eggs_dir</span>    <span class="o">=</span> <span class="n">eggs</span>
+<span class="n">logs_dir</span>    <span class="o">=</span> <span class="n">logs</span>
+<span class="n">logs_to_keep</span> <span class="o">=</span> <span class="mi">5</span>
+<span class="n">dbs_dir</span>     <span class="o">=</span> <span class="n">dbs</span>
+<span class="n">max_proc</span>    <span class="o">=</span> <span class="mi">0</span>
+<span class="n">max_proc_per_cpu</span> <span class="o">=</span> <span class="mi">4</span>
+<span class="n">http_port</span>   <span class="o">=</span> <span class="mi">6800</span>
+<span class="n">debug</span>       <span class="o">=</span> <span class="n">off</span>
+<span class="n">runner</span>      <span class="o">=</span> <span class="n">scrapyd</span><span class="o">.</span><span class="n">runner</span>
+<span class="n">application</span> <span class="o">=</span> <span class="n">scrapyd</span><span class="o">.</span><span class="n">app</span><span class="o">.</span><span class="n">application</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="deploying-your-project">
+<span id="topics-deploying"></span><h2>Deploying your project<a class="headerlink" href="#deploying-your-project" title="Permalink to this headline">¶</a></h2>
+<p>Deploying your project into a Scrapyd server typically involves two steps:</p>
+<ol class="arabic simple">
+<li>building a <a class="reference external" href="http://peak.telecommunity.com/DevCenter/PythonEggs">Python egg</a> of your project. This is called “eggifying” your
+project. You’ll need to install <a class="reference external" href="http://pypi.python.org/pypi/setuptools">setuptools</a> for this. See
+<a class="reference internal" href="#topics-egg-caveats"><span>Egg caveats</span></a> below.</li>
+<li>uploading the egg to the Scrapyd server</li>
+</ol>
+<p>The simplest way to deploy your project is by using the <a class="reference internal" href="commands.html#std:command-deploy"><code class="xref std std-command docutils literal"><span class="pre">deploy</span></code></a>
+command, which automates the process of building the egg uploading it using the
+Scrapyd HTTP JSON API.</p>
+<p>The <a class="reference internal" href="commands.html#std:command-deploy"><code class="xref std std-command docutils literal"><span class="pre">deploy</span></code></a> command supports multiple targets (Scrapyd servers that
+can host your project) and each target supports multiple projects.</p>
+<p>Each time you deploy a new version of a project, you can name it for later
+reference.</p>
+<div class="section" id="show-and-define-targets">
+<h3>Show and define targets<a class="headerlink" href="#show-and-define-targets" title="Permalink to this headline">¶</a></h3>
+<p>To see all available targets type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy deploy -l
+</pre></div>
+</div>
+<p>This will return a list of available targets and their URLs. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapyd              http://localhost:6800/
+</pre></div>
+</div>
+<p>You can define targets by adding them to your project’s <code class="docutils literal"><span class="pre">scrapy.cfg</span></code> file,
+or any other supported location like <code class="docutils literal"><span class="pre">~/.scrapy.cfg</span></code>, <code class="docutils literal"><span class="pre">/etc/scrapy.cfg</span></code>,
+or <code class="docutils literal"><span class="pre">c:\scrapy\scrapy.cfg</span></code> (in Windows).</p>
+<p>Here’s an example of defining a new target <code class="docutils literal"><span class="pre">scrapyd2</span></code> with restricted access
+through HTTP basic authentication:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>[deploy:scrapyd2]
+url = http://scrapyd.mydomain.com/api/scrapyd/
+username = john
+password = secret
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The <a class="reference internal" href="commands.html#std:command-deploy"><code class="xref std std-command docutils literal"><span class="pre">deploy</span></code></a> command also supports netrc for getting the
+credentials.</p>
+</div>
+<p>Now, if you type <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">deploy</span> <span class="pre">-l</span></code> you’ll see:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapyd              http://localhost:6800/
+scrapyd2             http://scrapyd.mydomain.com/api/scrapyd/
+</pre></div>
+</div>
+</div>
+<div class="section" id="see-available-projects">
+<h3>See available projects<a class="headerlink" href="#see-available-projects" title="Permalink to this headline">¶</a></h3>
+<p>To see all available projets in a specific target use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy deploy -L scrapyd
+</pre></div>
+</div>
+<p>It would return something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">project1</span>
+<span class="n">project2</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="deploying-a-project">
+<h3>Deploying a project<a class="headerlink" href="#deploying-a-project" title="Permalink to this headline">¶</a></h3>
+<p>Finally, to deploy your project use:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy deploy scrapyd -p project1
+</pre></div>
+</div>
+<p>This will eggify your project and upload it to the target, printing the JSON
+response returned from the Scrapyd server. If you have a <code class="docutils literal"><span class="pre">setup.py</span></code> file in
+your project, that one will be used. Otherwise a <code class="docutils literal"><span class="pre">setup.py</span></code> file will be
+created automatically (based on a simple template) that you can edit later.</p>
+<p>After running that command you will see something like this, meaning your
+project was uploaded successfully:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Deploying myproject-1287453519 to http://localhost:6800/addversion.json
+Server response (200):
+{"status": "ok", "spiders": ["spider1", "spider2"]}
+</pre></div>
+</div>
+<p>By default <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">deploy</span></code> uses the current timestamp for generating the
+project version, as you can see in the output above. However, you can pass a
+custom version with the <code class="docutils literal"><span class="pre">--version</span></code> option:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy deploy scrapyd -p project1 --version 54
+</pre></div>
+</div>
+<p>Also, if you use Mercurial for tracking your project source code, you can use
+<code class="docutils literal"><span class="pre">HG</span></code> for the version which will be replaced by the current Mercurial
+revision, for example <code class="docutils literal"><span class="pre">r382</span></code>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy deploy scrapyd -p project1 --version HG
+</pre></div>
+</div>
+<p>Support for other version discovery sources may be added in the future.</p>
+<p>Finally, if you don’t want to specify the target, project and version every
+time you run <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">deploy</span></code> you can define the defaults in the
+<code class="docutils literal"><span class="pre">scrapy.cfg</span></code> file. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>[deploy]
+url = http://scrapyd.mydomain.com/api/scrapyd/
+username = john
+password = secret
+project = project1
+version = HG
+</pre></div>
+</div>
+<p>This way, you can deploy your project just by using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy deploy
+</pre></div>
+</div>
+</div>
+<div class="section" id="local-settings">
+<h3>Local settings<a class="headerlink" href="#local-settings" title="Permalink to this headline">¶</a></h3>
+<p>Sometimes, while your working on your projects, you may want to override your
+certain settings with certain local settings that shouldn’t be deployed to
+Scrapyd, but only used locally to develop and debug your spiders.</p>
+<p>One way to deal with this is to have a <code class="docutils literal"><span class="pre">local_settings.py</span></code> at the root of
+your project (where the <code class="docutils literal"><span class="pre">scrapy.cfg</span></code> file resides) and add these lines to the
+end of your project settings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">try</span><span class="p">:</span>
+    <span class="kn">from</span> <span class="nn">local_settings</span> <span class="kn">import</span> <span class="o">*</span>
+<span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">deploy</span></code> won’t deploy anything outside the project module so the
+<code class="docutils literal"><span class="pre">local_settings.py</span></code> file won’t be deployed.</p>
+<p>Here’s the directory structure, to illustrate:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy.cfg
+local_settings.py
+myproject/
+    __init__.py
+    settings.py
+    spiders/
+        ...
+</pre></div>
+</div>
+</div>
+<div class="section" id="egg-caveats">
+<span id="topics-egg-caveats"></span><h3>Egg caveats<a class="headerlink" href="#egg-caveats" title="Permalink to this headline">¶</a></h3>
+<p>There are some things to keep in mind when building eggs of your Scrapy
+project:</p>
+<ul class="simple">
+<li>make sure no local development settings are included in the egg when you
+build it. The <code class="docutils literal"><span class="pre">find_packages</span></code> function may be picking up your custom
+settings. In most cases you want to upload the egg with the default project
+settings.</li>
+<li>you shouldn’t use <code class="docutils literal"><span class="pre">__file__</span></code> in your project code as it doesn’t play well
+with eggs. Consider using <a class="reference external" href="http://docs.python.org/library/pkgutil.html#pkgutil.get_data">pkgutil.get_data()</a> instead.</li>
+<li>be careful when writing to disk in your project (in any spider, extension or
+middleware) as Scrapyd will probably run with a different user which may not
+have write access to certain directories. If you can, avoid writing to disk
+and always use <a class="reference external" href="http://docs.python.org/library/tempfile.html">tempfile</a> for temporary files.</li>
+</ul>
+</div>
+</div>
+<div class="section" id="scheduling-a-spider-run">
+<h2>Scheduling a spider run<a class="headerlink" href="#scheduling-a-spider-run" title="Permalink to this headline">¶</a></h2>
+<p>To schedule a spider run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/schedule.json -d project=myproject -d spider=spider2
+{"status": "ok"}
+</pre></div>
+</div>
+<p>For more resources see: <a class="reference internal" href="#topics-scrapyd-jsonapi"><span>JSON API reference</span></a> for more available resources.</p>
+</div>
+<div class="section" id="web-interface">
+<span id="topics-scrapyd-webui"></span><h2>Web Interface<a class="headerlink" href="#web-interface" title="Permalink to this headline">¶</a></h2>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.11.</span></p>
+</div>
+<p>Scrapyd comes with a minimal web interface (for monitoring running processes
+and accessing logs) which can be accessed at <a class="reference external" href="http://localhost:6800/">http://localhost:6800/</a></p>
+</div>
+<div class="section" id="json-api-reference">
+<span id="topics-scrapyd-jsonapi"></span><h2>JSON API reference<a class="headerlink" href="#json-api-reference" title="Permalink to this headline">¶</a></h2>
+<p>The following section describes the available resources in Scrapyd JSON API.</p>
+<div class="section" id="addversion-json">
+<h3>addversion.json<a class="headerlink" href="#addversion-json" title="Permalink to this headline">¶</a></h3>
+<p>Add a version to a project, creating the project if it doesn’t exist.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">POST</span></code></li>
+<li>Parameters:<ul>
+<li><code class="docutils literal"><span class="pre">project</span></code> (string, required) - the project name</li>
+<li><code class="docutils literal"><span class="pre">version</span></code> (string, required) - the project version</li>
+<li><code class="docutils literal"><span class="pre">egg</span></code> (file, required) - a Python egg containing the project’s code</li>
+</ul>
+</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/addversion.json -F project=myproject -F version=r23 -F egg=@myproject.egg
+</pre></div>
+</div>
+<p>Example reponse:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"spiders"</span><span class="p">:</span> <span class="mi">3</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="schedule-json">
+<h3>schedule.json<a class="headerlink" href="#schedule-json" title="Permalink to this headline">¶</a></h3>
+<p>Schedule a spider run.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">POST</span></code></li>
+<li>Parameters:
+* <code class="docutils literal"><span class="pre">project</span></code> (string, required) - the project name
+* <code class="docutils literal"><span class="pre">spider</span></code> (string, required) - the spider name
+* any other parameter is passed as spider argument</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/schedule.json -d project=myproject -d spider=somespider
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listprojects-json">
+<h3>listprojects.json<a class="headerlink" href="#listprojects-json" title="Permalink to this headline">¶</a></h3>
+<p>Get the list of projects uploaded to this Scrapy server.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">GET</span></code></li>
+<li>Parameters: none</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/listprojects.json
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"projects"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"myproject"</span><span class="p">,</span> <span class="s2">"otherproject"</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listversions-json">
+<h3>listversions.json<a class="headerlink" href="#listversions-json" title="Permalink to this headline">¶</a></h3>
+<p>Get the list of versions available for some project. The versions are returned
+in order, the last one is the currently used version.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">GET</span></code></li>
+<li>Parameters:
+* <code class="docutils literal"><span class="pre">project</span></code> (string, required) - the project name</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/listversions.json?project=myproject
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"versions"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"r99"</span><span class="p">,</span> <span class="s2">"r156"</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="listspiders-json">
+<h3>listspiders.json<a class="headerlink" href="#listspiders-json" title="Permalink to this headline">¶</a></h3>
+<p>Get the list of spiders available in the last version of some project.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">GET</span></code></li>
+<li>Parameters:
+* <code class="docutils literal"><span class="pre">project</span></code> (string, required) - the project name</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/listspiders.json?project=myproject
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">,</span> <span class="s2">"spiders"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"spider1"</span><span class="p">,</span> <span class="s2">"spider2"</span><span class="p">,</span> <span class="s2">"spider3"</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delversion-json">
+<h3>delversion.json<a class="headerlink" href="#delversion-json" title="Permalink to this headline">¶</a></h3>
+<p>Delete a project version. If there are no more versions available for a given
+project, that project will be deleted too.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">POST</span></code></li>
+<li>Parameters:
+* <code class="docutils literal"><span class="pre">project</span></code> (string, required) - the project name
+* <code class="docutils literal"><span class="pre">version</span></code> (string, required) - the project version</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/delversion.json -d project=myproject -d version=r99
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="delproject-json">
+<h3>delproject.json<a class="headerlink" href="#delproject-json" title="Permalink to this headline">¶</a></h3>
+<p>Delete a project and all its uploaded versions.</p>
+<ul class="simple">
+<li>Supported Request Methods: <code class="docutils literal"><span class="pre">POST</span></code></li>
+<li>Parameters:
+* <code class="docutils literal"><span class="pre">project</span></code> (string, required) - the project name</li>
+</ul>
+<p>Example request:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ curl http://localhost:6800/delproject.json -d project=myproject
+</pre></div>
+</div>
+<p>Example response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span><span class="s2">"status"</span><span class="p">:</span> <span class="s2">"ok"</span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Architecture overview" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="ubuntu.html" class="btn btn-neutral" title="Ubuntu packages" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-ahw8fi3wh" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2011, Insophia.
+      
+        <span class="commit">
+          Revision <code>fac5e5ea</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.12
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.12/">pdf</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.12.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-kg3gs1ya"></div></body></html>

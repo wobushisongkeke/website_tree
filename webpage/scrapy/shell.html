@@ -1,0 +1,730 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Scrapy shell — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Item Pipeline" href="item-pipeline.html" />
+    <link rel="prev" title="Item Loaders" href="loaders.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/topics/shell.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/shell'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Scrapy shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#configuring-the-shell">Configuring the shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#launch-the-shell">Launch the shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-shell"><span class="toctree-expand"></span>Using the shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-shortcuts">Available Shortcuts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#available-scrapy-objects">Available Scrapy objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#example-of-shell-session">Example of shell session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#invoking-the-shell-from-spiders-to-inspect-responses">Invoking the shell from spiders to inspect responses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-wboe1hts" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/G6CmFufuSwd6/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/G6CmFufuSwd6/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Scrapy shell</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/origin/1.6/docs/topics/shell.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrapy-shell">
+<span id="topics-shell"></span><h1>Scrapy shell<a class="headerlink" href="#scrapy-shell" title="Permalink to this headline">¶</a></h1>
+<p>The Scrapy shell is an interactive shell where you can try and debug your
+scraping code very quickly, without having to run the spider. It’s meant to be
+used for testing data extraction code, but you can actually use it for testing
+any kind of code as it is also a regular Python shell.</p>
+<p>The shell is used for testing XPath or CSS expressions and see how they work
+and what data they extract from the web pages you’re trying to scrape. It
+allows you to interactively test your expressions while you’re writing your
+spider, without having to run the spider to test every change.</p>
+<p>Once you get familiarized with the Scrapy shell, you’ll see that it’s an
+invaluable tool for developing and debugging your spiders.</p>
+<div class="section" id="configuring-the-shell">
+<h2>Configuring the shell<a class="headerlink" href="#configuring-the-shell" title="Permalink to this headline">¶</a></h2>
+<p>If you have <a class="reference external" href="https://ipython.org/">IPython</a> installed, the Scrapy shell will use it (instead of the
+standard Python console). The <a class="reference external" href="https://ipython.org/">IPython</a> console is much more powerful and
+provides smart auto-completion and colorized output, among other things.</p>
+<p>We highly recommend you install <a class="reference external" href="https://ipython.org/">IPython</a>, specially if you’re working on
+Unix systems (where <a class="reference external" href="https://ipython.org/">IPython</a> excels). See the <a class="reference external" href="https://ipython.org/install.html">IPython installation guide</a>
+for more info.</p>
+<p>Scrapy also has support for <a class="reference external" href="https://www.bpython-interpreter.org/">bpython</a>, and will try to use it where <a class="reference external" href="https://ipython.org/">IPython</a>
+is unavailable.</p>
+<p>Through scrapy’s settings you can configure it to use any one of
+<code class="docutils literal notranslate"><span class="pre">ipython</span></code>, <code class="docutils literal notranslate"><span class="pre">bpython</span></code> or the standard <code class="docutils literal notranslate"><span class="pre">python</span></code> shell, regardless of which
+are installed. This is done by setting the <code class="docutils literal notranslate"><span class="pre">SCRAPY_PYTHON_SHELL</span></code> environment
+variable; or by defining it in your <a class="reference internal" href="commands.html#topics-config-settings"><span class="std std-ref">scrapy.cfg</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">settings</span><span class="p">]</span>
+<span class="n">shell</span> <span class="o">=</span> <span class="n">bpython</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="launch-the-shell">
+<h2>Launch the shell<a class="headerlink" href="#launch-the-shell" title="Permalink to this headline">¶</a></h2>
+<p>To launch the Scrapy shell you can use the <a class="reference internal" href="commands.html#std:command-shell"><code class="xref std std-command docutils literal notranslate"><span class="pre">shell</span></code></a> command like
+this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">shell</span> <span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>Where the <code class="docutils literal notranslate"><span class="pre">&lt;url&gt;</span></code> is the URL you want to scrape.</p>
+<p><a class="reference internal" href="commands.html#std:command-shell"><code class="xref std std-command docutils literal notranslate"><span class="pre">shell</span></code></a> also works for local files. This can be handy if you want
+to play around with a local copy of a web page. <a class="reference internal" href="commands.html#std:command-shell"><code class="xref std std-command docutils literal notranslate"><span class="pre">shell</span></code></a> understands
+the following syntaxes for local files:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># UNIX-style</span>
+<span class="n">scrapy</span> <span class="n">shell</span> <span class="o">./</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">html</span>
+<span class="n">scrapy</span> <span class="n">shell</span> <span class="o">../</span><span class="n">other</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">html</span>
+<span class="n">scrapy</span> <span class="n">shell</span> <span class="o">/</span><span class="n">absolute</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">html</span>
+
+<span class="c1"># File URI</span>
+<span class="n">scrapy</span> <span class="n">shell</span> <span class="n">file</span><span class="p">:</span><span class="o">///</span><span class="n">absolute</span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">file</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>When using relative file paths, be explicit and prepend them
+with <code class="docutils literal notranslate"><span class="pre">./</span></code> (or <code class="docutils literal notranslate"><span class="pre">../</span></code> when relevant).
+<code class="docutils literal notranslate"><span class="pre">scrapy</span> <span class="pre">shell</span> <span class="pre">index.html</span></code> will not work as one might expect (and
+this is by design, not a bug).</p>
+<p>Because <a class="reference internal" href="commands.html#std:command-shell"><code class="xref std std-command docutils literal notranslate"><span class="pre">shell</span></code></a> favors HTTP URLs over File URIs,
+and <code class="docutils literal notranslate"><span class="pre">index.html</span></code> being syntactically similar to <code class="docutils literal notranslate"><span class="pre">example.com</span></code>,
+<a class="reference internal" href="commands.html#std:command-shell"><code class="xref std std-command docutils literal notranslate"><span class="pre">shell</span></code></a> will treat <code class="docutils literal notranslate"><span class="pre">index.html</span></code> as a domain name and trigger
+a DNS lookup error:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ scrapy shell index.html
+[ ... scrapy shell starts ... ]
+[ ... traceback ... ]
+twisted.internet.error.DNSLookupError: DNS lookup failed:
+address 'index.html' not found: [Errno -5] No address associated with hostname.
+</pre></div>
+</div>
+<p class="last"><a class="reference internal" href="commands.html#std:command-shell"><code class="xref std std-command docutils literal notranslate"><span class="pre">shell</span></code></a> will not test beforehand if a file called <code class="docutils literal notranslate"><span class="pre">index.html</span></code>
+exists in the current directory. Again, be explicit.</p>
+</div>
+</div>
+<div class="section" id="using-the-shell">
+<h2>Using the shell<a class="headerlink" href="#using-the-shell" title="Permalink to this headline">¶</a></h2>
+<p>The Scrapy shell is just a regular Python console (or <a class="reference external" href="https://ipython.org/">IPython</a> console if you
+have it available) which provides some additional shortcut functions for
+convenience.</p>
+<div class="section" id="available-shortcuts">
+<h3>Available Shortcuts<a class="headerlink" href="#available-shortcuts" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">shelp()</span></code> - print a help with the list of available objects and shortcuts</li>
+<li><code class="docutils literal notranslate"><span class="pre">fetch(url[,</span> <span class="pre">redirect=True])</span></code> - fetch a new response from the given
+URL and update all related objects accordingly. You can optionaly ask for
+HTTP 3xx redirections to not be followed by passing <code class="docutils literal notranslate"><span class="pre">redirect=False</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">fetch(request)</span></code> - fetch a new response from the given request and
+update all related objects accordingly.</li>
+<li><code class="docutils literal notranslate"><span class="pre">view(response)</span></code> - open the given response in your local web browser, for
+inspection. This will add a <a class="reference external" href="https://developer.mozilla.org/en-US/docs/Web/HTML/Element/base">&lt;base&gt; tag</a> to the response body in order
+for external links (such as images and style sheets) to display properly.
+Note, however, that this will create a temporary file in your computer,
+which won’t be removed automatically.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="available-scrapy-objects">
+<h3>Available Scrapy objects<a class="headerlink" href="#available-scrapy-objects" title="Permalink to this headline">¶</a></h3>
+<p>The Scrapy shell automatically creates some convenient objects from the
+downloaded page, like the <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a> object and the
+<a class="reference internal" href="selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> objects (for both HTML and XML
+content).</p>
+<p>Those objects are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">crawler</span></code> - the current <a class="reference internal" href="api.html#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Crawler</span></code></a> object.</li>
+<li><code class="docutils literal notranslate"><span class="pre">spider</span></code> - the Spider which is known to handle the URL, or a
+<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spider</span></code></a> object if there is no spider found for
+the current URL</li>
+<li><code class="docutils literal notranslate"><span class="pre">request</span></code> - a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> object of the last fetched
+page. You can modify this request using <a class="reference internal" href="request-response.html#scrapy.http.Request.replace" title="scrapy.http.Request.replace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">replace()</span></code></a>
+or fetch a new request (without leaving the shell) using the <code class="docutils literal notranslate"><span class="pre">fetch</span></code>
+shortcut.</li>
+<li><code class="docutils literal notranslate"><span class="pre">response</span></code> - a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a> object containing the last
+fetched page</li>
+<li><code class="docutils literal notranslate"><span class="pre">settings</span></code> - the current <a class="reference internal" href="settings.html#topics-settings"><span class="std std-ref">Scrapy settings</span></a></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="example-of-shell-session">
+<h2>Example of shell session<a class="headerlink" href="#example-of-shell-session" title="Permalink to this headline">¶</a></h2>
+<p>Here’s an example of a typical shell session where we start by scraping the
+<a class="reference external" href="https://scrapy.org">https://scrapy.org</a> page, and then proceed to scrape the <a class="reference external" href="https://reddit.com">https://reddit.com</a>
+page. Finally, we modify the (Reddit) request method to POST and re-fetch it
+getting an error. We end the session by typing Ctrl-D (in Unix systems) or
+Ctrl-Z in Windows.</p>
+<p>Keep in mind that the data extracted here may not be the same when you try it,
+as those pages are not static and could have changed by the time you test this.
+The only purpose of this example is to get you familiarized with how the Scrapy
+shell works.</p>
+<p>First, we launch the shell:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">shell</span> <span class="s1">'https://scrapy.org'</span> <span class="o">--</span><span class="n">nolog</span>
+</pre></div>
+</div>
+<p>Then, the shell fetches the URL (using the Scrapy downloader) and prints the
+list of available objects and useful shortcuts (you’ll notice that these lines
+all start with the <code class="docutils literal notranslate"><span class="pre">[s]</span></code> prefix):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="n">Available</span> <span class="n">Scrapy</span> <span class="n">objects</span><span class="p">:</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">scrapy</span>     <span class="n">scrapy</span> <span class="n">module</span> <span class="p">(</span><span class="n">contains</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">,</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Selector</span><span class="p">,</span> <span class="n">etc</span><span class="p">)</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">crawler</span>    <span class="o">&lt;</span><span class="n">scrapy</span><span class="o">.</span><span class="n">crawler</span><span class="o">.</span><span class="n">Crawler</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f07395dd690</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">item</span>       <span class="p">{}</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">request</span>    <span class="o">&lt;</span><span class="n">GET</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">scrapy</span><span class="o">.</span><span class="n">org</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">response</span>   <span class="o">&lt;</span><span class="mi">200</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">scrapy</span><span class="o">.</span><span class="n">org</span><span class="o">/&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">settings</span>   <span class="o">&lt;</span><span class="n">scrapy</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">Settings</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x7f07395dd710</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">spider</span>     <span class="o">&lt;</span><span class="n">DefaultSpider</span> <span class="s1">'default'</span> <span class="n">at</span> <span class="mh">0x7f0735891690</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="n">Useful</span> <span class="n">shortcuts</span><span class="p">:</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">fetch</span><span class="p">(</span><span class="n">url</span><span class="p">[,</span> <span class="n">redirect</span><span class="o">=</span><span class="kc">True</span><span class="p">])</span> <span class="n">Fetch</span> <span class="n">URL</span> <span class="ow">and</span> <span class="n">update</span> <span class="n">local</span> <span class="n">objects</span> <span class="p">(</span><span class="n">by</span> <span class="n">default</span><span class="p">,</span> <span class="n">redirects</span> <span class="n">are</span> <span class="n">followed</span><span class="p">)</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">fetch</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>                  <span class="n">Fetch</span> <span class="n">a</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span> <span class="ow">and</span> <span class="n">update</span> <span class="n">local</span> <span class="n">objects</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">shelp</span><span class="p">()</span>           <span class="n">Shell</span> <span class="n">help</span> <span class="p">(</span><span class="nb">print</span> <span class="n">this</span> <span class="n">help</span><span class="p">)</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">view</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>    <span class="n">View</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">browser</span>
+
+<span class="o">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>After that, we can start playing with the objects:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">'Scrapy | A Fast and Powerful Scraping and Web Crawling Framework'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fetch</span><span class="p">(</span><span class="s2">"https://reddit.com"</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">'reddit: the front page of the internet'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">request</span> <span class="o">=</span> <span class="n">request</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="n">method</span><span class="o">=</span><span class="s2">"POST"</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fetch</span><span class="p">(</span><span class="n">request</span><span class="p">)</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">status</span>
+<span class="go">404</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">)</span>
+<span class="go">{'Accept-Ranges': ['bytes'],</span>
+<span class="go"> 'Cache-Control': ['max-age=0, must-revalidate'],</span>
+<span class="go"> 'Content-Type': ['text/html; charset=UTF-8'],</span>
+<span class="go"> 'Date': ['Thu, 08 Dec 2016 16:21:19 GMT'],</span>
+<span class="go"> 'Server': ['snooserv'],</span>
+<span class="go"> 'Set-Cookie': ['loid=KqNLou0V9SKMX4qb4n; Domain=reddit.com; Max-Age=63071999; Path=/; expires=Sat, 08-Dec-2018 16:21:19 GMT; secure',</span>
+<span class="go">                'loidcreated=2016-12-08T16%3A21%3A19.445Z; Domain=reddit.com; Max-Age=63071999; Path=/; expires=Sat, 08-Dec-2018 16:21:19 GMT; secure',</span>
+<span class="go">                'loid=vi0ZVe4NkxNWdlH7r7; Domain=reddit.com; Max-Age=63071999; Path=/; expires=Sat, 08-Dec-2018 16:21:19 GMT; secure',</span>
+<span class="go">                'loidcreated=2016-12-08T16%3A21%3A19.459Z; Domain=reddit.com; Max-Age=63071999; Path=/; expires=Sat, 08-Dec-2018 16:21:19 GMT; secure'],</span>
+<span class="go"> 'Vary': ['accept-encoding'],</span>
+<span class="go"> 'Via': ['1.1 varnish'],</span>
+<span class="go"> 'X-Cache': ['MISS'],</span>
+<span class="go"> 'X-Cache-Hits': ['0'],</span>
+<span class="go"> 'X-Content-Type-Options': ['nosniff'],</span>
+<span class="go"> 'X-Frame-Options': ['SAMEORIGIN'],</span>
+<span class="go"> 'X-Moose': ['majestic'],</span>
+<span class="go"> 'X-Served-By': ['cache-cdg8730-CDG'],</span>
+<span class="go"> 'X-Timer': ['S1481214079.394283,VS0,VE159'],</span>
+<span class="go"> 'X-Ua-Compatible': ['IE=edge'],</span>
+<span class="go"> 'X-Xss-Protection': ['1; mode=block']}</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="invoking-the-shell-from-spiders-to-inspect-responses">
+<span id="topics-shell-inspect-response"></span><h2>Invoking the shell from spiders to inspect responses<a class="headerlink" href="#invoking-the-shell-from-spiders-to-inspect-responses" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you want to inspect the responses that are being processed in a
+certain point of your spider, if only to check that response you expect is
+getting there.</p>
+<p>This can be achieved by using the <code class="docutils literal notranslate"><span class="pre">scrapy.shell.inspect_response</span></code> function.</p>
+<p>Here’s an example of how you would call it from your spider:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"myspider"</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://example.com"</span><span class="p">,</span>
+        <span class="s2">"http://example.org"</span><span class="p">,</span>
+        <span class="s2">"http://example.net"</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="c1"># We want to inspect one specific response.</span>
+        <span class="k">if</span> <span class="s2">".org"</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">:</span>
+            <span class="kn">from</span> <span class="nn">scrapy.shell</span> <span class="k">import</span> <span class="n">inspect_response</span>
+            <span class="n">inspect_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span>
+
+        <span class="c1"># Rest of parsing code.</span>
+</pre></div>
+</div>
+<p>When you run the spider, you will get something similar to this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">17</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">31</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">engine</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Crawled</span> <span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">referer</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">17</span><span class="p">:</span><span class="mi">48</span><span class="p">:</span><span class="mi">31</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">engine</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Crawled</span> <span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">org</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">referer</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="n">Available</span> <span class="n">Scrapy</span> <span class="n">objects</span><span class="p">:</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">crawler</span>    <span class="o">&lt;</span><span class="n">scrapy</span><span class="o">.</span><span class="n">crawler</span><span class="o">.</span><span class="n">Crawler</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x1e16b50</span><span class="o">&gt;</span>
+<span class="o">...</span>
+
+<span class="o">&gt;&gt;&gt;</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+<span class="s1">'http://example.org'</span>
+</pre></div>
+</div>
+<p>Then, you can check if the extraction code is working:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//h1[@class="fn"]'</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>Nope, it doesn’t. So you can open the response in your web browser and see if
+it’s the response you were expecting:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">view</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>Finally you hit Ctrl-D (or Ctrl-Z in Windows) to exit the shell and resume the
+crawling:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="o">^</span><span class="n">D</span>
+<span class="go">2014-01-23 17:50:03-0400 [scrapy.core.engine] DEBUG: Crawled (200) &lt;GET http://example.net&gt; (referer: None)</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+<p>Note that you can’t use the <code class="docutils literal notranslate"><span class="pre">fetch</span></code> shortcut here since the Scrapy engine is
+blocked by the shell. However, after you leave the shell, the spider will
+continue crawling where it stopped, as shown above.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="item-pipeline.html" class="btn btn-neutral float-right" title="Item Pipeline" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="loaders.html" class="btn btn-neutral" title="Item Loaders" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-n4rewre8" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>a9254127</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/shell.html">latest</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/shell.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/shell.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/shell.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/shell.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/shell.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/shell.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/shell.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/shell.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/shell.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/shell.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/shell.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/latest/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/latest/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/latest/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/origin/1.6/docs/topics/shell.rst">View</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.6.0',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-3nfy3fung"></div></body></html>

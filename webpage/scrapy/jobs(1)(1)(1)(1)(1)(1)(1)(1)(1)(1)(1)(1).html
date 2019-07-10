@@ -1,0 +1,547 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Jobs: pausing and resuming crawls — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Architecture overview" href="architecture.html" />
+    <link rel="prev" title="Benchmarking" href="benchmarking.html" /> 
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/topics/jobs.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "topics/jobs"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic-content.html">Selecting dynamically-loaded content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Jobs: pausing and resuming crawls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#job-directory">Job directory</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-use-it">How to use it</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#keeping-persistent-state-between-batches">Keeping persistent state between batches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#persistence-gotchas"><span class="toctree-expand"></span>Persistence gotchas</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#cookies-expiration">Cookies expiration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#request-serialization">Request serialization</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-ha0c6hamf" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/3K5NAxZRhm9y/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/3K5NAxZRhm9y/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div><img src="https://readthedocs.org/sustainability/view/194/3K5NAxZRhm9y/" style="display: none;" /></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Jobs: pausing and resuming crawls</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/master/docs/topics/jobs.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="jobs-pausing-and-resuming-crawls">
+<span id="topics-jobs"></span><h1>Jobs: pausing and resuming crawls<a class="headerlink" href="#jobs-pausing-and-resuming-crawls" title="Permalink to this headline">¶</a></h1>
+<p>Sometimes, for big sites, it’s desirable to pause crawls and be able to resume
+them later.</p>
+<p>Scrapy supports this functionality out of the box by providing the following
+facilities:</p>
+<ul class="simple">
+<li>a scheduler that persists scheduled requests on disk</li>
+<li>a duplicates filter that persists visited requests on disk</li>
+<li>an extension that keeps some spider state (key/value pairs) persistent
+between batches</li>
+</ul>
+<div class="section" id="job-directory">
+<h2>Job directory<a class="headerlink" href="#job-directory" title="Permalink to this headline">¶</a></h2>
+<p>To enable persistence support you just need to define a <em>job directory</em> through
+the <code class="docutils literal notranslate"><span class="pre">JOBDIR</span></code> setting. This directory will be for storing all required data to
+keep the state of a single job (ie. a spider run).  It’s important to note that
+this directory must not be shared by different spiders, or even different
+jobs/runs of the same spider, as it’s meant to be used for storing the state of
+a <em>single</em> job.</p>
+</div>
+<div class="section" id="how-to-use-it">
+<h2>How to use it<a class="headerlink" href="#how-to-use-it" title="Permalink to this headline">¶</a></h2>
+<p>To start a spider with persistence support enabled, run it like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">somespider</span> <span class="o">-</span><span class="n">s</span> <span class="n">JOBDIR</span><span class="o">=</span><span class="n">crawls</span><span class="o">/</span><span class="n">somespider</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+<p>Then, you can stop the spider safely at any time (by pressing Ctrl-C or sending
+a signal), and resume it later by issuing the same command:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">somespider</span> <span class="o">-</span><span class="n">s</span> <span class="n">JOBDIR</span><span class="o">=</span><span class="n">crawls</span><span class="o">/</span><span class="n">somespider</span><span class="o">-</span><span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="keeping-persistent-state-between-batches">
+<h2>Keeping persistent state between batches<a class="headerlink" href="#keeping-persistent-state-between-batches" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you’ll want to keep some persistent spider state between pause/resume
+batches. You can use the <code class="docutils literal notranslate"><span class="pre">spider.state</span></code> attribute for that, which should be a
+dict. There’s a built-in extension that takes care of serializing, storing and
+loading that attribute from the job directory, when the spider starts and
+stops.</p>
+<p>Here’s an example of a callback that uses the spider state (other spider code
+is omitted for brevity):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="c1"># parse item here</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="p">[</span><span class="s1">'items_count'</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">state</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'items_count'</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="mi">1</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="persistence-gotchas">
+<h2>Persistence gotchas<a class="headerlink" href="#persistence-gotchas" title="Permalink to this headline">¶</a></h2>
+<p>There are a few things to keep in mind if you want to be able to use the Scrapy
+persistence support:</p>
+<div class="section" id="cookies-expiration">
+<h3>Cookies expiration<a class="headerlink" href="#cookies-expiration" title="Permalink to this headline">¶</a></h3>
+<p>Cookies may expire. So, if you don’t resume your spider quickly the requests
+scheduled may no longer work. This won’t be an issue if you spider doesn’t rely
+on cookies.</p>
+</div>
+<div class="section" id="request-serialization">
+<h3>Request serialization<a class="headerlink" href="#request-serialization" title="Permalink to this headline">¶</a></h3>
+<p>Requests must be serializable by the <code class="docutils literal notranslate"><span class="pre">pickle</span></code> module, in order for persistence
+to work, so you should make sure that your requests are serializable.</p>
+<p>The most common issue here is to use <code class="docutils literal notranslate"><span class="pre">lambda</span></code> functions on request callbacks that
+can’t be persisted.</p>
+<p>So, for example, this won’t work:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">some_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="n">somearg</span> <span class="o">=</span> <span class="s1">'test'</span>
+    <span class="k">return</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">'http://www.example.com'</span><span class="p">,</span>
+                          <span class="n">callback</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_callback</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">somearg</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">other_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">somearg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"the argument passed is: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">somearg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But this will:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">some_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="n">somearg</span> <span class="o">=</span> <span class="s1">'test'</span>
+    <span class="k">return</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">'http://www.example.com'</span><span class="p">,</span>
+                          <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">other_callback</span><span class="p">,</span> <span class="n">cb_kwargs</span><span class="o">=</span><span class="p">{</span><span class="s1">'somearg'</span><span class="p">:</span> <span class="n">somearg</span><span class="p">})</span>
+
+<span class="k">def</span> <span class="nf">other_callback</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">somearg</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">"the argument passed is: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">somearg</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you wish to log the requests that couldn’t be serialized, you can set the
+<a class="reference internal" href="settings.html#std:setting-SCHEDULER_DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SCHEDULER_DEBUG</span></code></a> setting to <code class="docutils literal notranslate"><span class="pre">True</span></code> in the project’s settings page.
+It is <code class="docutils literal notranslate"><span class="pre">False</span></code> by default.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Architecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="benchmarking.html" class="btn btn-neutral float-left" title="Benchmarking" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-o9yms252" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>68d898d4</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: master
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/jobs.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/jobs.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/jobs.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/jobs.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/jobs.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/jobs.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/jobs.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/jobs.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/jobs.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/jobs.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/jobs.html">0.20</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/master/topics/jobs.html">master</a></dd>
+         </strong> 
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/master/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/master/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/master/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/master/docs/topics/jobs.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/master/docs/topics/jobs.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-ew40lv34"></div></body></html>

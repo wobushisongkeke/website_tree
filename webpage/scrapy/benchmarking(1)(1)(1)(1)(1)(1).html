@@ -1,0 +1,527 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Benchmarking — Scrapy 1.1.3 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Scrapy 1.1.3 documentation" href="../index.html" />
+        <link rel="next" title="Jobs: pausing and resuming crawls" href="jobs.html" />
+        <link rel="prev" title="AutoThrottle extension" href="autothrottle.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/benchmarking.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/benchmarking' 		
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.1
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-0xazds4si" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Benchmarking</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.1/docs/topics/benchmarking.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/topics/benchmarking.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="benchmarking">
+<span id="id1"></span><h1>Benchmarking<a class="headerlink" href="#benchmarking" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.17.</span></p>
+</div>
+<p>Scrapy comes with a simple benchmarking suite that spawns a local HTTP server
+and crawls it at the maximum possible speed. The goal of this benchmarking is
+to get an idea of how Scrapy performs in your hardware, in order to have a
+common baseline for comparisons. It uses a simple spider that does nothing and
+just follows links.</p>
+<p>To run it use:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">bench</span>
+</pre></div>
+</div>
+<p>You should see an output like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">46</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Scrapy</span> <span class="mf">0.17</span><span class="o">.</span><span class="mi">0</span> <span class="n">started</span> <span class="p">(</span><span class="n">bot</span><span class="p">:</span> <span class="n">scrapybot</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">47</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Spider</span> <span class="n">opened</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">47</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">0</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">48</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">74</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">4440</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">49</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">143</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">4140</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">50</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">210</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">4020</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">51</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">274</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">3840</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">52</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">343</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">4140</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">53</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">410</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">4020</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">54</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">474</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">3840</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">55</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">538</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">3840</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">56</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">602</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">3840</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Closing</span> <span class="n">spider</span> <span class="p">(</span><span class="n">closespider_timeout</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Crawled</span> <span class="mi">666</span> <span class="n">pages</span> <span class="p">(</span><span class="n">at</span> <span class="mi">3840</span> <span class="n">pages</span><span class="o">/</span><span class="nb">min</span><span class="p">),</span> <span class="n">scraped</span> <span class="mi">0</span> <span class="n">items</span> <span class="p">(</span><span class="n">at</span> <span class="mi">0</span> <span class="n">items</span><span class="o">/</span><span class="nb">min</span><span class="p">)</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Dumping</span> <span class="n">Scrapy</span> <span class="n">stats</span><span class="p">:</span>
+    <span class="p">{</span><span class="s1">'downloader/request_bytes'</span><span class="p">:</span> <span class="mi">231508</span><span class="p">,</span>
+     <span class="s1">'downloader/request_count'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'downloader/request_method_count/GET'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'downloader/response_bytes'</span><span class="p">:</span> <span class="mi">1172802</span><span class="p">,</span>
+     <span class="s1">'downloader/response_count'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'downloader/response_status_count/200'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'finish_reason'</span><span class="p">:</span> <span class="s1">'closespider_timeout'</span><span class="p">,</span>
+     <span class="s1">'finish_time'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">57</span><span class="p">,</span> <span class="mi">985539</span><span class="p">),</span>
+     <span class="s1">'log_count/INFO'</span><span class="p">:</span> <span class="mi">14</span><span class="p">,</span>
+     <span class="s1">'request_depth_max'</span><span class="p">:</span> <span class="mi">34</span><span class="p">,</span>
+     <span class="s1">'response_received_count'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'scheduler/dequeued'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'scheduler/dequeued/memory'</span><span class="p">:</span> <span class="mi">682</span><span class="p">,</span>
+     <span class="s1">'scheduler/enqueued'</span><span class="p">:</span> <span class="mi">12767</span><span class="p">,</span>
+     <span class="s1">'scheduler/enqueued/memory'</span><span class="p">:</span> <span class="mi">12767</span><span class="p">,</span>
+     <span class="s1">'start_time'</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="p">(</span><span class="mi">2013</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">16</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">47</span><span class="p">,</span> <span class="mi">676539</span><span class="p">)}</span>
+<span class="mi">2013</span><span class="o">-</span><span class="mi">05</span><span class="o">-</span><span class="mi">16</span> <span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="p">:</span><span class="mi">57</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Spider</span> <span class="n">closed</span> <span class="p">(</span><span class="n">closespider_timeout</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That tells you that Scrapy is able to crawl about 3900 pages per minute in the
+hardware where you run it. Note that this is a very simple spider intended to
+follow links, any custom spider you write will probably do more stuff which
+results in slower crawl rates. How slower depends on how much your spider does
+and how well it’s written.</p>
+<p>In the future, more cases will be added to the benchmarking suite to cover
+other common scenarios.</p>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="jobs.html" class="btn btn-neutral float-right" title="Jobs: pausing and resuming crawls" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="autothrottle.html" class="btn btn-neutral" title="AutoThrottle extension" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-vrgru6m9" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>b9d22807</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.1
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/benchmarking.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/benchmarking.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/benchmarking.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/benchmarking.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/benchmarking.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/benchmarking.html">1.2</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/benchmarking.html">1.1</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/benchmarking.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/benchmarking.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/benchmarking.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/benchmarking.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/benchmarking.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.1/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.1/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.1/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.1/docs/topics/benchmarking.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.1/docs/topics/benchmarking.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.1.3',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-jgcy1fej"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/GOGq0hXDEf89/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/GOGq0hXDEf89/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/GOGq0hXDEf89/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

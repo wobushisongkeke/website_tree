@@ -1,0 +1,605 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Spiders Contracts — Scrapy 1.5.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Common Practices" href="practices.html" />
+    <link rel="prev" title="Debugging Spiders" href="debug.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/contracts.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/contracts'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Spiders Contracts</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#custom-contracts">Custom Contracts</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-i9gjnjuq" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/ZrBmFxSr9kN1/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/ZrBmFxSr9kN1/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Spiders Contracts</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/contracts.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/topics/contracts.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spiders-contracts">
+<span id="topics-contracts"></span><h1>Spiders Contracts<a class="headerlink" href="#spiders-contracts" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.15.</span></p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This is a new feature (introduced in Scrapy 0.15) and may be subject
+to minor functionality/API updates. Check the <a class="reference internal" href="../news.html#news"><span class="std std-ref">release notes</span></a> to
+be notified of updates.</p>
+</div>
+<p>Testing spiders can get particularly annoying and while nothing prevents you
+from writing unit tests the task gets cumbersome quickly. Scrapy offers an
+integrated way of testing your spiders by the means of contracts.</p>
+<p>This allows you to test each callback of your spider by hardcoding a sample url
+and check various constraints for how the callback processes the response. Each
+contract is prefixed with an <code class="docutils literal notranslate"><span class="pre">@</span></code> and included in the docstring. See the
+following example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="sd">""" This function parses a sample response. Some contracts are mingled</span>
+<span class="sd">    with this docstring.</span>
+
+<span class="sd">    @url http://www.amazon.com/s?field-keywords=selfish+gene</span>
+<span class="sd">    @returns items 1 16</span>
+<span class="sd">    @returns requests 0 0</span>
+<span class="sd">    @scrapes Title Author Year Price</span>
+<span class="sd">    """</span>
+</pre></div>
+</div>
+<p>This callback is tested using three built-in contracts:</p>
+<span class="target" id="module-scrapy.contracts.default"></span><dl class="class">
+<dt id="scrapy.contracts.default.UrlContract">
+<em class="property">class </em><code class="descclassname">scrapy.contracts.default.</code><code class="descname">UrlContract</code><a class="headerlink" href="#scrapy.contracts.default.UrlContract" title="Permalink to this definition">¶</a></dt>
+<dd><p>This contract (<code class="docutils literal notranslate"><span class="pre">@url</span></code>) sets the sample url used when checking other
+contract conditions for this spider. This contract is mandatory. All
+callbacks lacking this contract are ignored when running the checks:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@url</span> <span class="n">url</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="scrapy.contracts.default.ReturnsContract">
+<em class="property">class </em><code class="descclassname">scrapy.contracts.default.</code><code class="descname">ReturnsContract</code><a class="headerlink" href="#scrapy.contracts.default.ReturnsContract" title="Permalink to this definition">¶</a></dt>
+<dd><p>This contract (<code class="docutils literal notranslate"><span class="pre">@returns</span></code>) sets lower and upper bounds for the items and
+requests returned by the spider. The upper bound is optional:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@returns</span> <span class="n">item</span><span class="p">(</span><span class="n">s</span><span class="p">)</span><span class="o">|</span><span class="n">request</span><span class="p">(</span><span class="n">s</span><span class="p">)</span> <span class="p">[</span><span class="nb">min</span> <span class="p">[</span><span class="nb">max</span><span class="p">]]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="class">
+<dt id="scrapy.contracts.default.ScrapesContract">
+<em class="property">class </em><code class="descclassname">scrapy.contracts.default.</code><code class="descname">ScrapesContract</code><a class="headerlink" href="#scrapy.contracts.default.ScrapesContract" title="Permalink to this definition">¶</a></dt>
+<dd><p>This contract (<code class="docutils literal notranslate"><span class="pre">@scrapes</span></code>) checks that all the items returned by the
+callback have the specified fields:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@scrapes</span> <span class="n">field_1</span> <span class="n">field_2</span> <span class="o">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Use the <a class="reference internal" href="commands.html#std:command-check"><code class="xref std std-command docutils literal notranslate"><span class="pre">check</span></code></a> command to run the contract checks.</p>
+<div class="section" id="custom-contracts">
+<h2>Custom Contracts<a class="headerlink" href="#custom-contracts" title="Permalink to this headline">¶</a></h2>
+<p>If you find you need more power than the built-in scrapy contracts you can
+create and load your own contracts in the project by using the
+<a class="reference internal" href="settings.html#std:setting-SPIDER_CONTRACTS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SPIDER_CONTRACTS</span></code></a> setting:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SPIDER_CONTRACTS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'myproject.contracts.ResponseCheck'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">'myproject.contracts.ItemValidate'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Each contract must inherit from <a class="reference internal" href="#scrapy.contracts.Contract" title="scrapy.contracts.Contract"><code class="xref py py-class docutils literal notranslate"><span class="pre">scrapy.contracts.Contract</span></code></a> and can
+override three methods:</p>
+<span class="target" id="module-scrapy.contracts"></span><dl class="class">
+<dt id="scrapy.contracts.Contract">
+<em class="property">class </em><code class="descclassname">scrapy.contracts.</code><code class="descname">Contract</code><span class="sig-paren">(</span><em>method</em>, <em>*args</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contracts.Contract" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>method</strong> (<em>function</em>) – callback function to which the contract is associated</li>
+<li><strong>args</strong> (<em>list</em>) – list of arguments passed into the docstring (whitespace
+separated)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="method">
+<dt id="scrapy.contracts.Contract.adjust_request_args">
+<code class="descname">adjust_request_args</code><span class="sig-paren">(</span><em>args</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contracts.Contract.adjust_request_args" title="Permalink to this definition">¶</a></dt>
+<dd><p>This receives a <code class="docutils literal notranslate"><span class="pre">dict</span></code> as an argument containing default arguments
+for <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> object. Must return the same or a
+modified version of it.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.contracts.Contract.pre_process">
+<code class="descname">pre_process</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contracts.Contract.pre_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>This allows hooking in various checks on the response received from the
+sample request, before it’s being passed to the callback.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.contracts.Contract.post_process">
+<code class="descname">post_process</code><span class="sig-paren">(</span><em>output</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contracts.Contract.post_process" title="Permalink to this definition">¶</a></dt>
+<dd><p>This allows processing the output of the callback. Iterators are
+converted listified before being passed to this hook.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Here is a demo contract which checks the presence of a custom header in the
+response received. Raise <code class="xref py py-class docutils literal notranslate"><span class="pre">scrapy.exceptions.ContractFail</span></code> in order to
+get the failures pretty printed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.contracts</span> <span class="k">import</span> <span class="n">Contract</span>
+<span class="kn">from</span> <span class="nn">scrapy.exceptions</span> <span class="k">import</span> <span class="n">ContractFail</span>
+
+<span class="k">class</span> <span class="nc">HasHeaderContract</span><span class="p">(</span><span class="n">Contract</span><span class="p">):</span>
+    <span class="sd">""" Demo contract which checks the presence of a custom header</span>
+<span class="sd">        @has_header X-CustomHeader</span>
+<span class="sd">    """</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'has_header'</span>
+
+    <span class="k">def</span> <span class="nf">pre_process</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">header</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">args</span><span class="p">:</span>
+            <span class="k">if</span> <span class="n">header</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">headers</span><span class="p">:</span>
+                <span class="k">raise</span> <span class="n">ContractFail</span><span class="p">(</span><span class="s1">'X-CustomHeader not present'</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="practices.html" class="btn btn-neutral float-right" title="Common Practices" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="debug.html" class="btn btn-neutral" title="Debugging Spiders" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-z20149vu" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>2ff27774</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/contracts.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/contracts.html">1.6</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/contracts.html">1.5</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/contracts.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/contracts.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/contracts.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/contracts.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/contracts.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/contracts.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/contracts.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/contracts.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/contracts.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.5/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.5/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.5/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/contracts.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.5/docs/topics/contracts.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.5.2',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-m0o58vbc"></div></body></html>

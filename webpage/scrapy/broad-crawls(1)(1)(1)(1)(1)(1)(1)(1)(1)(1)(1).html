@@ -1,0 +1,614 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Broad Crawls — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Using your browser’s Developer Tools for scraping" href="developer-tools.html" />
+    <link rel="prev" title="Common Practices" href="practices.html" /> 
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/topics/broad-crawls.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "topics/broad-crawls"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Broad Crawls</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#use-the-right-scheduler-priority-queue">Use the right <code class="docutils literal notranslate"><span class="pre">SCHEDULER_PRIORITY_QUEUE</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#increase-concurrency">Increase concurrency</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#increase-twisted-io-thread-pool-maximum-size">Increase Twisted IO thread pool maximum size</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#setup-your-own-dns">Setup your own DNS</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reduce-log-level">Reduce log level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disable-cookies">Disable cookies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disable-retries">Disable retries</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reduce-download-timeout">Reduce download timeout</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#disable-redirects">Disable redirects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#enable-crawling-of-ajax-crawlable-pages">Enable crawling of “Ajax Crawlable Pages”</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="dynamic-content.html">Selecting dynamically-loaded content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-i3d11rva" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/44zHUUsm97Mf/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/44zHUUsm97Mf/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Broad Crawls</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/master/docs/topics/broad-crawls.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="broad-crawls">
+<span id="topics-broad-crawls"></span><h1>Broad Crawls<a class="headerlink" href="#broad-crawls" title="Permalink to this headline">¶</a></h1>
+<p>Scrapy defaults are optimized for crawling specific sites. These sites are
+often handled by a single Scrapy spider, although this is not necessary or
+required (for example, there are generic spiders that handle any given site
+thrown at them).</p>
+<p>In addition to this “focused crawl”, there is another common type of crawling
+which covers a large (potentially unlimited) number of domains, and is only
+limited by time or other arbitrary constraint, rather than stopping when the
+domain was crawled to completion or when there are no more requests to perform.
+These are called “broad crawls” and is the typical crawlers employed by search
+engines.</p>
+<p>These are some common properties often found in broad crawls:</p>
+<ul class="simple">
+<li>they crawl many domains (often, unbounded) instead of a specific set of sites</li>
+<li>they don’t necessarily crawl domains to completion, because it would be
+impractical (or impossible) to do so, and instead limit the crawl by time or
+number of pages crawled</li>
+<li>they are simpler in logic (as opposed to very complex spiders with many
+extraction rules) because data is often post-processed in a separate stage</li>
+<li>they crawl many domains concurrently, which allows them to achieve faster
+crawl speeds by not being limited by any particular site constraint (each site
+is crawled slowly to respect politeness, but many sites are crawled in
+parallel)</li>
+</ul>
+<p>As said above, Scrapy default settings are optimized for focused crawls, not
+broad crawls. However, due to its asynchronous architecture, Scrapy is very
+well suited for performing fast broad crawls. This page summarizes some things
+you need to keep in mind when using Scrapy for doing broad crawls, along with
+concrete suggestions of Scrapy settings to tune in order to achieve an
+efficient broad crawl.</p>
+<div class="section" id="use-the-right-scheduler-priority-queue">
+<h2>Use the right <a class="reference internal" href="settings.html#std:setting-SCHEDULER_PRIORITY_QUEUE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">SCHEDULER_PRIORITY_QUEUE</span></code></a><a class="headerlink" href="#use-the-right-scheduler-priority-queue" title="Permalink to this headline">¶</a></h2>
+<p>Scrapy’s default scheduler priority queue is <code class="docutils literal notranslate"><span class="pre">'scrapy.pqueues.ScrapyPriorityQueue'</span></code>.
+It works best during single-domain crawl. It does not work well with crawling
+many different domains in parallel</p>
+<p>To apply the recommended priority queue use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">SCHEDULER_PRIORITY_QUEUE</span> <span class="o">=</span> <span class="s1">'scrapy.pqueues.DownloaderAwarePriorityQueue'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="increase-concurrency">
+<h2>Increase concurrency<a class="headerlink" href="#increase-concurrency" title="Permalink to this headline">¶</a></h2>
+<p>Concurrency is the number of requests that are processed in parallel. There is
+a global limit and a per-domain limit.</p>
+<p>The default global concurrency limit in Scrapy is not suitable for crawling
+many different domains in parallel, so you will want to increase it. How much
+to increase it will depend on how much CPU you crawler will have available. A
+good starting point is <code class="docutils literal notranslate"><span class="pre">100</span></code>, but the best way to find out is by doing some
+trials and identifying at what concurrency your Scrapy process gets CPU
+bounded. For optimum performance, you should pick a concurrency where CPU usage
+is at 80-90%.</p>
+<p>To increase the global concurrency use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CONCURRENT_REQUESTS</span> <span class="o">=</span> <span class="mi">100</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="increase-twisted-io-thread-pool-maximum-size">
+<h2>Increase Twisted IO thread pool maximum size<a class="headerlink" href="#increase-twisted-io-thread-pool-maximum-size" title="Permalink to this headline">¶</a></h2>
+<p>Currently Scrapy does DNS resolution in a blocking way with usage of thread
+pool. With higher concurrency levels the crawling could be slow or even fail
+hitting DNS resolver timeouts. Possible solution to increase the number of
+threads handling DNS queries. The DNS queue will be processed faster speeding
+up establishing of connection and crawling overall.</p>
+<p>To increase maximum thread pool size use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">REACTOR_THREADPOOL_MAXSIZE</span> <span class="o">=</span> <span class="mi">20</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setup-your-own-dns">
+<h2>Setup your own DNS<a class="headerlink" href="#setup-your-own-dns" title="Permalink to this headline">¶</a></h2>
+<p>If you have multiple crawling processes and single central DNS, it can act
+like DoS attack on the DNS server resulting to slow down of entire network or
+even blocking your machines. To avoid this setup your own DNS server with
+local cache and upstream to some large DNS like OpenDNS or Verizon.</p>
+</div>
+<div class="section" id="reduce-log-level">
+<h2>Reduce log level<a class="headerlink" href="#reduce-log-level" title="Permalink to this headline">¶</a></h2>
+<p>When doing broad crawls you are often only interested in the crawl rates you
+get and any errors found. These stats are reported by Scrapy when using the
+<code class="docutils literal notranslate"><span class="pre">INFO</span></code> log level. In order to save CPU (and log storage requirements) you
+should not use <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> log level when preforming large broad crawls in
+production. Using <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> level when developing your (broad) crawler may be
+fine though.</p>
+<p>To set the log level use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">LOG_LEVEL</span> <span class="o">=</span> <span class="s1">'INFO'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disable-cookies">
+<h2>Disable cookies<a class="headerlink" href="#disable-cookies" title="Permalink to this headline">¶</a></h2>
+<p>Disable cookies unless you <em>really</em> need. Cookies are often not needed when
+doing broad crawls (search engine crawlers ignore them), and they improve
+performance by saving some CPU cycles and reducing the memory footprint of your
+Scrapy crawler.</p>
+<p>To disable cookies use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">COOKIES_ENABLED</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disable-retries">
+<h2>Disable retries<a class="headerlink" href="#disable-retries" title="Permalink to this headline">¶</a></h2>
+<p>Retrying failed HTTP requests can slow down the crawls substantially, specially
+when sites causes are very slow (or fail) to respond, thus causing a timeout
+error which gets retried many times, unnecessarily, preventing crawler capacity
+to be reused for other domains.</p>
+<p>To disable retries use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">RETRY_ENABLED</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reduce-download-timeout">
+<h2>Reduce download timeout<a class="headerlink" href="#reduce-download-timeout" title="Permalink to this headline">¶</a></h2>
+<p>Unless you are crawling from a very slow connection (which shouldn’t be the
+case for broad crawls) reduce the download timeout so that stuck requests are
+discarded quickly and free up capacity to process the next ones.</p>
+<p>To reduce the download timeout use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DOWNLOAD_TIMEOUT</span> <span class="o">=</span> <span class="mi">15</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="disable-redirects">
+<h2>Disable redirects<a class="headerlink" href="#disable-redirects" title="Permalink to this headline">¶</a></h2>
+<p>Consider disabling redirects, unless you are interested in following them. When
+doing broad crawls it’s common to save redirects and resolve them when
+revisiting the site at a later crawl. This also help to keep the number of
+request constant per crawl batch, otherwise redirect loops may cause the
+crawler to dedicate too many resources on any specific domain.</p>
+<p>To disable redirects use:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">REDIRECT_ENABLED</span> <span class="o">=</span> <span class="kc">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="enable-crawling-of-ajax-crawlable-pages">
+<h2>Enable crawling of “Ajax Crawlable Pages”<a class="headerlink" href="#enable-crawling-of-ajax-crawlable-pages" title="Permalink to this headline">¶</a></h2>
+<p>Some pages (up to 1%, based on empirical data from year 2013) declare
+themselves as <a class="reference external" href="https://developers.google.com/webmasters/ajax-crawling/docs/getting-started">ajax crawlable</a>. This means they provide plain HTML
+version of content that is usually available only via AJAX.
+Pages can indicate it in two ways:</p>
+<ol class="arabic simple">
+<li>by using <code class="docutils literal notranslate"><span class="pre">#!</span></code> in URL - this is the default way;</li>
+<li>by using a special meta tag - this way is used on
+“main”, “index” website pages.</li>
+</ol>
+<p>Scrapy handles (1) automatically; to handle (2) enable
+<a class="reference internal" href="downloader-middleware.html#ajaxcrawl-middleware"><span class="std std-ref">AjaxCrawlMiddleware</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">AJAXCRAWL_ENABLED</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<p>When doing broad crawls it’s common to crawl a lot of “index” web pages;
+AjaxCrawlMiddleware helps to crawl them correctly.
+It is turned OFF by default because it has some performance overhead,
+and enabling it for focused crawls doesn’t make much sense.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="developer-tools.html" class="btn btn-neutral float-right" title="Using your browser’s Developer Tools for scraping" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="practices.html" class="btn btn-neutral float-left" title="Common Practices" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-5sr7lsnd" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>68d898d4</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: master
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/broad-crawls.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/broad-crawls.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/broad-crawls.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/broad-crawls.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/broad-crawls.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/broad-crawls.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/broad-crawls.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/broad-crawls.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/broad-crawls.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/broad-crawls.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/broad-crawls.html">0.20</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/master/topics/broad-crawls.html">master</a></dd>
+         </strong> 
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/master/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/master/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/master/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/master/docs/topics/broad-crawls.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/master/docs/topics/broad-crawls.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-7k885ifs"></div></body></html>

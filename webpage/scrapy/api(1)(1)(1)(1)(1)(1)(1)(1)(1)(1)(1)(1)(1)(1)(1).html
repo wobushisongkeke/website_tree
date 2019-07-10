@@ -1,0 +1,1229 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Core API — Scrapy 1.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Scrapy 1.4.0 documentation" href="../index.html" />
+        <link rel="next" title="Signals" href="signals.html" />
+        <link rel="prev" title="Extensions" href="extensions.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/api.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/api' 		
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                xpath-tutorial
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xpath-tutorial.html">XPath Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Core API</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#crawler-api">Crawler API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.settings">Settings API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.loader">SpiderLoader API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.signalmanager">Signals API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stats-collector-api">Stats Collector API</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-sfqb6vnkk" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/aPQ1gZE6o5lB/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/aPQ1gZE6o5lB/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Core API</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/xpath-tutorial/docs/topics/api.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="core-api">
+<span id="topics-api"></span><h1>Core API<a class="headerlink" href="#core-api" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.15.</span></p>
+</div>
+<p>This section documents the Scrapy core API, and it’s intended for developers of
+extensions and middlewares.</p>
+<div class="section" id="crawler-api">
+<span id="topics-api-crawler"></span><h2>Crawler API<a class="headerlink" href="#crawler-api" title="Permalink to this headline">¶</a></h2>
+<p>The main entry point to Scrapy API is the <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a>
+object, passed to extensions through the <code class="docutils literal"><span class="pre">from_crawler</span></code> class method. This
+object provides access to all Scrapy core components, and it’s the only way for
+extensions to access them and hook their functionality into Scrapy.</p>
+<span class="target" id="module-scrapy.crawler"></span><p>The Extension Manager is responsible for loading and keeping track of installed
+extensions and it’s configured through the <a class="reference internal" href="settings.html#std:setting-EXTENSIONS"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS</span></code></a> setting which
+contains a dictionary of all available extensions and their order similar to
+how you <a class="reference internal" href="downloader-middleware.html#topics-downloader-middleware-setting"><span class="std std-ref">configure the downloader middlewares</span></a>.</p>
+<dl class="class">
+<dt id="scrapy.crawler.Crawler">
+<em class="property">class </em><code class="descclassname">scrapy.crawler.</code><code class="descname">Crawler</code><span class="sig-paren">(</span><em>spidercls</em>, <em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.Crawler" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Crawler object must be instantiated with a
+<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">scrapy.spiders.Spider</span></code></a> subclass and a
+<a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">scrapy.settings.Settings</span></code></a> object.</p>
+<dl class="attribute">
+<dt id="scrapy.crawler.Crawler.settings">
+<code class="descname">settings</code><a class="headerlink" href="#scrapy.crawler.Crawler.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>The settings manager of this crawler.</p>
+<p>This is used by extensions &amp; middlewares to access the Scrapy settings
+of this crawler.</p>
+<p>For an introduction on Scrapy settings see <a class="reference internal" href="settings.html#topics-settings"><span class="std std-ref">Settings</span></a>.</p>
+<p>For the API see <a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.Crawler.signals">
+<code class="descname">signals</code><a class="headerlink" href="#scrapy.crawler.Crawler.signals" title="Permalink to this definition">¶</a></dt>
+<dd><p>The signals manager of this crawler.</p>
+<p>This is used by extensions &amp; middlewares to hook themselves into Scrapy
+functionality.</p>
+<p>For an introduction on signals see <a class="reference internal" href="signals.html#topics-signals"><span class="std std-ref">Signals</span></a>.</p>
+<p>For the API see <a class="reference internal" href="#scrapy.signalmanager.SignalManager" title="scrapy.signalmanager.SignalManager"><code class="xref py py-class docutils literal"><span class="pre">SignalManager</span></code></a> class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.Crawler.stats">
+<code class="descname">stats</code><a class="headerlink" href="#scrapy.crawler.Crawler.stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>The stats collector of this crawler.</p>
+<p>This is used from extensions &amp; middlewares to record stats of their
+behaviour, or access stats collected by other extensions.</p>
+<p>For an introduction on stats collection see <a class="reference internal" href="stats.html#topics-stats"><span class="std std-ref">Stats Collection</span></a>.</p>
+<p>For the API see <a class="reference internal" href="#scrapy.statscollectors.StatsCollector" title="scrapy.statscollectors.StatsCollector"><code class="xref py py-class docutils literal"><span class="pre">StatsCollector</span></code></a> class.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.Crawler.extensions">
+<code class="descname">extensions</code><a class="headerlink" href="#scrapy.crawler.Crawler.extensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>The extension manager that keeps track of enabled extensions.</p>
+<p>Most extensions won’t need to access this attribute.</p>
+<p>For an introduction on extensions and a list of available extensions on
+Scrapy see <a class="reference internal" href="extensions.html#topics-extensions"><span class="std std-ref">Extensions</span></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.Crawler.engine">
+<code class="descname">engine</code><a class="headerlink" href="#scrapy.crawler.Crawler.engine" title="Permalink to this definition">¶</a></dt>
+<dd><p>The execution engine, which coordinates the core crawling logic
+between the scheduler, downloader and spiders.</p>
+<p>Some extension may want to access the Scrapy engine, to inspect  or
+modify the downloader and scheduler behaviour, although this is an
+advanced use and this API is not yet stable.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.Crawler.spider">
+<code class="descname">spider</code><a class="headerlink" href="#scrapy.crawler.Crawler.spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Spider currently being crawled. This is an instance of the spider class
+provided while constructing the crawler, and it is created after the
+arguments given in the <a class="reference internal" href="#scrapy.crawler.Crawler.crawl" title="scrapy.crawler.Crawler.crawl"><code class="xref py py-meth docutils literal"><span class="pre">crawl()</span></code></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.Crawler.crawl">
+<code class="descname">crawl</code><span class="sig-paren">(</span><em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.Crawler.crawl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts the crawler by instantiating its spider class with the given
+<cite>args</cite> and <cite>kwargs</cite> arguments, while setting the execution engine in
+motion.</p>
+<p>Returns a deferred that is fired when the crawl is finished.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="scrapy.crawler.CrawlerRunner">
+<em class="property">class </em><code class="descclassname">scrapy.crawler.</code><code class="descname">CrawlerRunner</code><span class="sig-paren">(</span><em>settings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerRunner" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is a convenient helper class that keeps track of, manages and runs
+crawlers inside an already setup Twisted <a class="reference external" href="https://twistedmatrix.com/documents/current/core/howto/reactor-basics.html">reactor</a>.</p>
+<p>The CrawlerRunner object must be instantiated with a
+<a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> object.</p>
+<p>This class shouldn’t be needed (since Scrapy is responsible of using it
+accordingly) unless writing scripts that manually handle the crawling
+process. See <a class="reference internal" href="practices.html#run-from-script"><span class="std std-ref">Run Scrapy from a script</span></a> for an example.</p>
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerRunner.crawl">
+<code class="descname">crawl</code><span class="sig-paren">(</span><em>crawler_or_spidercls</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerRunner.crawl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a crawler with the provided arguments.</p>
+<p>It will call the given Crawler’s <a class="reference internal" href="#scrapy.crawler.Crawler.crawl" title="scrapy.crawler.Crawler.crawl"><code class="xref py py-meth docutils literal"><span class="pre">crawl()</span></code></a> method, while
+keeping track of it so it can be stopped later.</p>
+<p>If <cite>crawler_or_spidercls</cite> isn’t a <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a>
+instance, this method will try to create one using this parameter as
+the spider class given to it.</p>
+<p>Returns a deferred that is fired when the crawling is finished.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crawler_or_spidercls</strong> (<a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a> instance,
+<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">Spider</span></code></a> subclass or string) – already created crawler, or a spider class
+or spider’s name inside the project to create it</li>
+<li><strong>args</strong> (<a class="reference internal" href="#scrapy.loader.SpiderLoader.list" title="scrapy.loader.SpiderLoader.list"><em>list</em></a>) – arguments to initialize the spider</li>
+<li><strong>kwargs</strong> (<em>dict</em>) – keyword arguments to initialize the spider</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.CrawlerRunner.crawlers">
+<code class="descname">crawlers</code><a class="headerlink" href="#scrapy.crawler.CrawlerRunner.crawlers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">crawlers</span></code></a> started by <a class="reference internal" href="#scrapy.crawler.CrawlerRunner.crawl" title="scrapy.crawler.CrawlerRunner.crawl"><code class="xref py py-meth docutils literal"><span class="pre">crawl()</span></code></a> and managed by this class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerRunner.create_crawler">
+<code class="descname">create_crawler</code><span class="sig-paren">(</span><em>crawler_or_spidercls</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerRunner.create_crawler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a> object.</p>
+<ul class="simple">
+<li>If <cite>crawler_or_spidercls</cite> is a Crawler, it is returned as-is.</li>
+<li>If <cite>crawler_or_spidercls</cite> is a Spider subclass, a new Crawler
+is constructed for it.</li>
+<li>If <cite>crawler_or_spidercls</cite> is a string, this function finds
+a spider with this name in a Scrapy project (using spider loader),
+then creates a Crawler instance for it.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerRunner.join">
+<code class="descname">join</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerRunner.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a deferred that is fired when all managed <a class="reference internal" href="#scrapy.crawler.CrawlerRunner.crawlers" title="scrapy.crawler.CrawlerRunner.crawlers"><code class="xref py py-attr docutils literal"><span class="pre">crawlers</span></code></a> have
+completed their executions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerRunner.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerRunner.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops simultaneously all the crawling jobs taking place.</p>
+<p>Returns a deferred that is fired when they all have ended.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="class">
+<dt id="scrapy.crawler.CrawlerProcess">
+<em class="property">class </em><code class="descclassname">scrapy.crawler.</code><code class="descname">CrawlerProcess</code><span class="sig-paren">(</span><em>settings=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerProcess" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#scrapy.crawler.CrawlerRunner" title="scrapy.crawler.CrawlerRunner"><code class="xref py py-class docutils literal"><span class="pre">scrapy.crawler.CrawlerRunner</span></code></a></p>
+<p>A class to run multiple scrapy crawlers in a process simultaneously.</p>
+<p>This class extends <a class="reference internal" href="#scrapy.crawler.CrawlerRunner" title="scrapy.crawler.CrawlerRunner"><code class="xref py py-class docutils literal"><span class="pre">CrawlerRunner</span></code></a> by adding support
+for starting a Twisted <a class="reference external" href="https://twistedmatrix.com/documents/current/core/howto/reactor-basics.html">reactor</a> and handling shutdown signals, like the
+keyboard interrupt command Ctrl-C. It also configures top-level logging.</p>
+<p>This utility should be a better fit than
+<a class="reference internal" href="#scrapy.crawler.CrawlerRunner" title="scrapy.crawler.CrawlerRunner"><code class="xref py py-class docutils literal"><span class="pre">CrawlerRunner</span></code></a> if you aren’t running another
+Twisted <a class="reference external" href="https://twistedmatrix.com/documents/current/core/howto/reactor-basics.html">reactor</a> within your application.</p>
+<p>The CrawlerProcess object must be instantiated with a
+<a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> object.</p>
+<p>This class shouldn’t be needed (since Scrapy is responsible of using it
+accordingly) unless writing scripts that manually handle the crawling
+process. See <a class="reference internal" href="practices.html#run-from-script"><span class="std std-ref">Run Scrapy from a script</span></a> for an example.</p>
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerProcess.crawl">
+<code class="descname">crawl</code><span class="sig-paren">(</span><em>crawler_or_spidercls</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerProcess.crawl" title="Permalink to this definition">¶</a></dt>
+<dd><p>Run a crawler with the provided arguments.</p>
+<p>It will call the given Crawler’s <a class="reference internal" href="#scrapy.crawler.Crawler.crawl" title="scrapy.crawler.Crawler.crawl"><code class="xref py py-meth docutils literal"><span class="pre">crawl()</span></code></a> method, while
+keeping track of it so it can be stopped later.</p>
+<p>If <cite>crawler_or_spidercls</cite> isn’t a <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a>
+instance, this method will try to create one using this parameter as
+the spider class given to it.</p>
+<p>Returns a deferred that is fired when the crawling is finished.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crawler_or_spidercls</strong> (<a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a> instance,
+<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">Spider</span></code></a> subclass or string) – already created crawler, or a spider class
+or spider’s name inside the project to create it</li>
+<li><strong>args</strong> (<a class="reference internal" href="#scrapy.loader.SpiderLoader.list" title="scrapy.loader.SpiderLoader.list"><em>list</em></a>) – arguments to initialize the spider</li>
+<li><strong>kwargs</strong> (<em>dict</em>) – keyword arguments to initialize the spider</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.crawler.CrawlerProcess.crawlers">
+<code class="descname">crawlers</code><a class="headerlink" href="#scrapy.crawler.CrawlerProcess.crawlers" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set of <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">crawlers</span></code></a> started by <a class="reference internal" href="#scrapy.crawler.CrawlerProcess.crawl" title="scrapy.crawler.CrawlerProcess.crawl"><code class="xref py py-meth docutils literal"><span class="pre">crawl()</span></code></a> and managed by this class.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerProcess.create_crawler">
+<code class="descname">create_crawler</code><span class="sig-paren">(</span><em>crawler_or_spidercls</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerProcess.create_crawler" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a <a class="reference internal" href="#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal"><span class="pre">Crawler</span></code></a> object.</p>
+<ul class="simple">
+<li>If <cite>crawler_or_spidercls</cite> is a Crawler, it is returned as-is.</li>
+<li>If <cite>crawler_or_spidercls</cite> is a Spider subclass, a new Crawler
+is constructed for it.</li>
+<li>If <cite>crawler_or_spidercls</cite> is a string, this function finds
+a spider with this name in a Scrapy project (using spider loader),
+then creates a Crawler instance for it.</li>
+</ul>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerProcess.join">
+<code class="descname">join</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerProcess.join" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a deferred that is fired when all managed <a class="reference internal" href="#scrapy.crawler.CrawlerProcess.crawlers" title="scrapy.crawler.CrawlerProcess.crawlers"><code class="xref py py-attr docutils literal"><span class="pre">crawlers</span></code></a> have
+completed their executions.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerProcess.start">
+<code class="descname">start</code><span class="sig-paren">(</span><em>stop_after_crawl=True</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerProcess.start" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method starts a Twisted <a class="reference external" href="https://twistedmatrix.com/documents/current/core/howto/reactor-basics.html">reactor</a>, adjusts its pool size to
+<a class="reference internal" href="settings.html#std:setting-REACTOR_THREADPOOL_MAXSIZE"><code class="xref std std-setting docutils literal"><span class="pre">REACTOR_THREADPOOL_MAXSIZE</span></code></a>, and installs a DNS cache based
+on <a class="reference internal" href="settings.html#std:setting-DNSCACHE_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">DNSCACHE_ENABLED</span></code></a> and <a class="reference internal" href="settings.html#std:setting-DNSCACHE_SIZE"><code class="xref std std-setting docutils literal"><span class="pre">DNSCACHE_SIZE</span></code></a>.</p>
+<p>If <cite>stop_after_crawl</cite> is True, the reactor will be stopped after all
+crawlers have finished, using <a class="reference internal" href="#scrapy.crawler.CrawlerProcess.join" title="scrapy.crawler.CrawlerProcess.join"><code class="xref py py-meth docutils literal"><span class="pre">join()</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>stop_after_crawl</strong> (<em>boolean</em>) – stop or not the reactor when all
+crawlers have finished</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.crawler.CrawlerProcess.stop">
+<code class="descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.crawler.CrawlerProcess.stop" title="Permalink to this definition">¶</a></dt>
+<dd><p>Stops simultaneously all the crawling jobs taking place.</p>
+<p>Returns a deferred that is fired when they all have ended.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.settings">
+<span id="settings-api"></span><span id="topics-api-settings"></span><h2>Settings API<a class="headerlink" href="#module-scrapy.settings" title="Permalink to this headline">¶</a></h2>
+<dl class="attribute">
+<dt id="scrapy.settings.SETTINGS_PRIORITIES">
+<code class="descclassname">scrapy.settings.</code><code class="descname">SETTINGS_PRIORITIES</code><a class="headerlink" href="#scrapy.settings.SETTINGS_PRIORITIES" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dictionary that sets the key name and priority level of the default
+settings priorities used in Scrapy.</p>
+<p>Each item defines a settings entry point, giving it a code name for
+identification and an integer priority. Greater priorities take more
+precedence over lesser ones when setting and retrieving values in the
+<a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> class.</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SETTINGS_PRIORITIES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'default'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'command'</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+    <span class="s1">'project'</span><span class="p">:</span> <span class="mi">20</span><span class="p">,</span>
+    <span class="s1">'spider'</span><span class="p">:</span> <span class="mi">30</span><span class="p">,</span>
+    <span class="s1">'cmdline'</span><span class="p">:</span> <span class="mi">40</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>For a detailed explanation on each settings sources, see:
+<a class="reference internal" href="settings.html#topics-settings"><span class="std std-ref">Settings</span></a>.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scrapy.settings.get_settings_priority">
+<code class="descclassname">scrapy.settings.</code><code class="descname">get_settings_priority</code><span class="sig-paren">(</span><em>priority</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.get_settings_priority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Small helper function that looks up a given string priority in the
+<a class="reference internal" href="#scrapy.settings.SETTINGS_PRIORITIES" title="scrapy.settings.SETTINGS_PRIORITIES"><code class="xref py py-attr docutils literal"><span class="pre">SETTINGS_PRIORITIES</span></code></a> dictionary and returns its
+numerical value, or directly returns a given numerical priority.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="scrapy.settings.Settings">
+<em class="property">class </em><code class="descclassname">scrapy.settings.</code><code class="descname">Settings</code><span class="sig-paren">(</span><em>values=None</em>, <em>priority='project'</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.Settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#scrapy.settings.BaseSettings" title="scrapy.settings.BaseSettings"><code class="xref py py-class docutils literal"><span class="pre">scrapy.settings.BaseSettings</span></code></a></p>
+<p>This object stores Scrapy settings for the configuration of internal
+components, and can be used for any further customization.</p>
+<p>It is a direct subclass and supports all methods of
+<a class="reference internal" href="#scrapy.settings.BaseSettings" title="scrapy.settings.BaseSettings"><code class="xref py py-class docutils literal"><span class="pre">BaseSettings</span></code></a>. Additionally, after instantiation
+of this class, the new object will have the global default settings
+described on <a class="reference internal" href="settings.html#topics-settings-ref"><span class="std std-ref">Built-in settings reference</span></a> already populated.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="scrapy.settings.BaseSettings">
+<em class="property">class </em><code class="descclassname">scrapy.settings.</code><code class="descname">BaseSettings</code><span class="sig-paren">(</span><em>values=None</em>, <em>priority='project'</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Instances of this class behave like dictionaries, but store priorities
+along with their <code class="docutils literal"><span class="pre">(key,</span> <span class="pre">value)</span></code> pairs, and can be frozen (i.e. marked
+immutable).</p>
+<p>Key-value entries can be passed on initialization with the <code class="docutils literal"><span class="pre">values</span></code>
+argument, and they would take the <code class="docutils literal"><span class="pre">priority</span></code> level (unless <code class="docutils literal"><span class="pre">values</span></code> is
+already an instance of <a class="reference internal" href="#scrapy.settings.BaseSettings" title="scrapy.settings.BaseSettings"><code class="xref py py-class docutils literal"><span class="pre">BaseSettings</span></code></a>, in which
+case the existing priority levels will be kept).  If the <code class="docutils literal"><span class="pre">priority</span></code>
+argument is a string, the priority name will be looked up in
+<a class="reference internal" href="#scrapy.settings.SETTINGS_PRIORITIES" title="scrapy.settings.SETTINGS_PRIORITIES"><code class="xref py py-attr docutils literal"><span class="pre">SETTINGS_PRIORITIES</span></code></a>. Otherwise, a specific integer
+should be provided.</p>
+<p>Once the object is created, new settings can be loaded or updated with the
+<a class="reference internal" href="#scrapy.settings.BaseSettings.set" title="scrapy.settings.BaseSettings.set"><code class="xref py py-meth docutils literal"><span class="pre">set()</span></code></a> method, and can be accessed with
+the square bracket notation of dictionaries, or with the
+<a class="reference internal" href="#scrapy.settings.BaseSettings.get" title="scrapy.settings.BaseSettings.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a> method of the instance and its
+value conversion variants. When requesting a stored key, the value with the
+highest priority will be retrieved.</p>
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a deep copy of current settings.</p>
+<p>This method returns a new instance of the <a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> class,
+populated with the same values and their priorities.</p>
+<p>Modifications to the new object won’t be reflected on the original
+settings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.copy_to_dict">
+<code class="descname">copy_to_dict</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.copy_to_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a copy of current settings and convert to a dict.</p>
+<p>This method returns a new dict populated with the same values
+and their priorities as the current settings.</p>
+<p>Modifications to the returned dict won’t be reflected on the original
+settings.</p>
+<p>This method can be useful for example for printing settings
+in Scrapy shell.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.freeze">
+<code class="descname">freeze</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.freeze" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disable further changes to the current settings.</p>
+<p>After calling this method, the present state of the settings will become
+immutable. Trying to change values through the <a class="reference internal" href="#scrapy.settings.BaseSettings.set" title="scrapy.settings.BaseSettings.set"><code class="xref py py-meth docutils literal"><span class="pre">set()</span></code></a> method and
+its variants won’t be possible and will be alerted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.frozencopy">
+<code class="descname">frozencopy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.frozencopy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an immutable copy of the current settings.</p>
+<p>Alias for a <a class="reference internal" href="#scrapy.settings.BaseSettings.freeze" title="scrapy.settings.BaseSettings.freeze"><code class="xref py py-meth docutils literal"><span class="pre">freeze()</span></code></a> call in the object returned by <a class="reference internal" href="#scrapy.settings.BaseSettings.copy" title="scrapy.settings.BaseSettings.copy"><code class="xref py py-meth docutils literal"><span class="pre">copy()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.get">
+<code class="descname">get</code><span class="sig-paren">(</span><em>name</em>, <em>default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.get" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a setting value without affecting its original type.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>default</strong> (<em>any</em>) – the value to return if no setting is found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getbool">
+<code class="descname">getbool</code><span class="sig-paren">(</span><em>name</em>, <em>default=False</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getbool" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a setting value as a boolean.</p>
+<p><code class="docutils literal"><span class="pre">1</span></code>, <code class="docutils literal"><span class="pre">'1'</span></code>, <cite>True`</cite> and <code class="docutils literal"><span class="pre">'True'</span></code> return <code class="docutils literal"><span class="pre">True</span></code>,
+while <code class="docutils literal"><span class="pre">0</span></code>, <code class="docutils literal"><span class="pre">'0'</span></code>, <code class="docutils literal"><span class="pre">False</span></code>, <code class="docutils literal"><span class="pre">'False'</span></code> and <code class="docutils literal"><span class="pre">None</span></code> return <code class="docutils literal"><span class="pre">False</span></code>.</p>
+<p>For example, settings populated through environment variables set to
+<code class="docutils literal"><span class="pre">'0'</span></code> will return <code class="docutils literal"><span class="pre">False</span></code> when using this method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>default</strong> (<em>any</em>) – the value to return if no setting is found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getdict">
+<code class="descname">getdict</code><span class="sig-paren">(</span><em>name</em>, <em>default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getdict" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a setting value as a dictionary. If the setting original type is a
+dictionary, a copy of it will be returned. If it is a string it will be
+evaluated as a JSON dictionary. In the case that it is a
+<a class="reference internal" href="#scrapy.settings.BaseSettings" title="scrapy.settings.BaseSettings"><code class="xref py py-class docutils literal"><span class="pre">BaseSettings</span></code></a> instance itself, it will be
+converted to a dictionary, containing all its current settings values
+as they would be returned by <a class="reference internal" href="#scrapy.settings.BaseSettings.get" title="scrapy.settings.BaseSettings.get"><code class="xref py py-meth docutils literal"><span class="pre">get()</span></code></a>,
+and losing all information about priority and mutability.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>default</strong> (<em>any</em>) – the value to return if no setting is found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getfloat">
+<code class="descname">getfloat</code><span class="sig-paren">(</span><em>name</em>, <em>default=0.0</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getfloat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a setting value as a float.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>default</strong> (<em>any</em>) – the value to return if no setting is found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getint">
+<code class="descname">getint</code><span class="sig-paren">(</span><em>name</em>, <em>default=0</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getint" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a setting value as an int.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>default</strong> (<em>any</em>) – the value to return if no setting is found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getlist">
+<code class="descname">getlist</code><span class="sig-paren">(</span><em>name</em>, <em>default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getlist" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a setting value as a list. If the setting original type is a list, a
+copy of it will be returned. If it’s a string it will be split by ”,”.</p>
+<p>For example, settings populated through environment variables set to
+<code class="docutils literal"><span class="pre">'one,two'</span></code> will return a list [‘one’, ‘two’] when using this method.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>default</strong> (<em>any</em>) – the value to return if no setting is found</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getpriority">
+<code class="descname">getpriority</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getpriority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the current numerical priority value of a setting, or <code class="docutils literal"><span class="pre">None</span></code> if
+the given <code class="docutils literal"><span class="pre">name</span></code> does not exist.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) – the setting name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.getwithbase">
+<code class="descname">getwithbase</code><span class="sig-paren">(</span><em>name</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.getwithbase" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get a composition of a dictionary-like setting and its <cite>_BASE</cite>
+counterpart.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>name</strong> (<em>string</em>) – name of the dictionary-like setting</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.maxpriority">
+<code class="descname">maxpriority</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.maxpriority" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the numerical value of the highest priority present throughout
+all settings, or the numerical value for <code class="docutils literal"><span class="pre">default</span></code> from
+<a class="reference internal" href="#scrapy.settings.SETTINGS_PRIORITIES" title="scrapy.settings.SETTINGS_PRIORITIES"><code class="xref py py-attr docutils literal"><span class="pre">SETTINGS_PRIORITIES</span></code></a> if there are no settings
+stored.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.set">
+<code class="descname">set</code><span class="sig-paren">(</span><em>name</em>, <em>value</em>, <em>priority='project'</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.set" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store a key/value attribute with a given priority.</p>
+<p>Settings should be populated <em>before</em> configuring the Crawler object
+(through the <code class="xref py py-meth docutils literal"><span class="pre">configure()</span></code> method),
+otherwise they won’t have any effect.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>name</strong> (<em>string</em>) – the setting name</li>
+<li><strong>value</strong> (<em>any</em>) – the value to associate with the setting</li>
+<li><strong>priority</strong> (<em>string</em><em> or </em><em>int</em>) – the priority of the setting. Should be a key of
+<a class="reference internal" href="#scrapy.settings.SETTINGS_PRIORITIES" title="scrapy.settings.SETTINGS_PRIORITIES"><code class="xref py py-attr docutils literal"><span class="pre">SETTINGS_PRIORITIES</span></code></a> or an integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.setmodule">
+<code class="descname">setmodule</code><span class="sig-paren">(</span><em>module</em>, <em>priority='project'</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.setmodule" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store settings from a module with a given priority.</p>
+<p>This is a helper function that calls
+<a class="reference internal" href="#scrapy.settings.BaseSettings.set" title="scrapy.settings.BaseSettings.set"><code class="xref py py-meth docutils literal"><span class="pre">set()</span></code></a> for every globally declared
+uppercase variable of <code class="docutils literal"><span class="pre">module</span></code> with the provided <code class="docutils literal"><span class="pre">priority</span></code>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>module</strong> (<em>module object</em><em> or </em><em>string</em>) – the module or the path of the module</li>
+<li><strong>priority</strong> (<em>string</em><em> or </em><em>int</em>) – the priority of the settings. Should be a key of
+<a class="reference internal" href="#scrapy.settings.SETTINGS_PRIORITIES" title="scrapy.settings.SETTINGS_PRIORITIES"><code class="xref py py-attr docutils literal"><span class="pre">SETTINGS_PRIORITIES</span></code></a> or an integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.settings.BaseSettings.update">
+<code class="descname">update</code><span class="sig-paren">(</span><em>values</em>, <em>priority='project'</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.settings.BaseSettings.update" title="Permalink to this definition">¶</a></dt>
+<dd><p>Store key/value pairs with a given priority.</p>
+<p>This is a helper function that calls
+<a class="reference internal" href="#scrapy.settings.BaseSettings.set" title="scrapy.settings.BaseSettings.set"><code class="xref py py-meth docutils literal"><span class="pre">set()</span></code></a> for every item of <code class="docutils literal"><span class="pre">values</span></code>
+with the provided <code class="docutils literal"><span class="pre">priority</span></code>.</p>
+<p>If <code class="docutils literal"><span class="pre">values</span></code> is a string, it is assumed to be JSON-encoded and parsed
+into a dict with <code class="docutils literal"><span class="pre">json.loads()</span></code> first. If it is a
+<a class="reference internal" href="#scrapy.settings.BaseSettings" title="scrapy.settings.BaseSettings"><code class="xref py py-class docutils literal"><span class="pre">BaseSettings</span></code></a> instance, the per-key priorities
+will be used and the <code class="docutils literal"><span class="pre">priority</span></code> parameter ignored. This allows
+inserting/updating settings with different priorities with a single
+command.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>values</strong> (dict or string or <a class="reference internal" href="#scrapy.settings.BaseSettings" title="scrapy.settings.BaseSettings"><code class="xref py py-class docutils literal"><span class="pre">BaseSettings</span></code></a>) – the settings names and values</li>
+<li><strong>priority</strong> (<em>string</em><em> or </em><em>int</em>) – the priority of the settings. Should be a key of
+<a class="reference internal" href="#scrapy.settings.SETTINGS_PRIORITIES" title="scrapy.settings.SETTINGS_PRIORITIES"><code class="xref py py-attr docutils literal"><span class="pre">SETTINGS_PRIORITIES</span></code></a> or an integer</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.loader">
+<span id="spiderloader-api"></span><span id="topics-api-spiderloader"></span><h2>SpiderLoader API<a class="headerlink" href="#module-scrapy.loader" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.loader.SpiderLoader">
+<em class="property">class </em><code class="descclassname">scrapy.loader.</code><code class="descname">SpiderLoader</code><a class="headerlink" href="#scrapy.loader.SpiderLoader" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class is in charge of retrieving and handling the spider classes
+defined across the project.</p>
+<p>Custom spider loaders can be employed by specifying their path in the
+<a class="reference internal" href="settings.html#std:setting-SPIDER_LOADER_CLASS"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_LOADER_CLASS</span></code></a> project setting. They must fully implement
+the <code class="xref py py-class docutils literal"><span class="pre">scrapy.interfaces.ISpiderLoader</span></code> interface to guarantee an
+errorless execution.</p>
+<dl class="method">
+<dt id="scrapy.loader.SpiderLoader.from_settings">
+<code class="descname">from_settings</code><span class="sig-paren">(</span><em>settings</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.loader.SpiderLoader.from_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>This class method is used by Scrapy to create an instance of the class.
+It’s called with the current project settings, and it loads the spiders
+found recursively in the modules of the <a class="reference internal" href="settings.html#std:setting-SPIDER_MODULES"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MODULES</span></code></a>
+setting.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>settings</strong> (<a class="reference internal" href="#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> instance) – project settings</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.loader.SpiderLoader.load">
+<code class="descname">load</code><span class="sig-paren">(</span><em>spider_name</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.loader.SpiderLoader.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the Spider class with the given name. It’ll look into the previously
+loaded spiders for a spider class with name <cite>spider_name</cite> and will raise
+a KeyError if not found.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spider_name</strong> (<em>str</em>) – spider class name</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.loader.SpiderLoader.list">
+<code class="descname">list</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.loader.SpiderLoader.list" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the names of the available spiders in the project.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.loader.SpiderLoader.find_by_request">
+<code class="descname">find_by_request</code><span class="sig-paren">(</span><em>request</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.loader.SpiderLoader.find_by_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>List the spiders’ names that can handle the given request. Will try to
+match the request’s url against the domains of the spiders.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>request</strong> (<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> instance) – queried request</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.signalmanager">
+<span id="signals-api"></span><span id="topics-api-signals"></span><h2>Signals API<a class="headerlink" href="#module-scrapy.signalmanager" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.signalmanager.SignalManager">
+<em class="property">class </em><code class="descclassname">scrapy.signalmanager.</code><code class="descname">SignalManager</code><span class="sig-paren">(</span><em>sender=_Anonymous</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signalmanager.SignalManager" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="scrapy.signalmanager.SignalManager.connect">
+<code class="descname">connect</code><span class="sig-paren">(</span><em>receiver</em>, <em>signal</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signalmanager.SignalManager.connect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Connect a receiver function to a signal.</p>
+<p>The signal can be any object, although Scrapy comes with some
+predefined signals that are documented in the <a class="reference internal" href="signals.html#topics-signals"><span class="std std-ref">Signals</span></a>
+section.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>receiver</strong> (<em>callable</em>) – the function to be connected</li>
+<li><strong>signal</strong> (<em>object</em>) – the signal to connect to</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.signalmanager.SignalManager.disconnect">
+<code class="descname">disconnect</code><span class="sig-paren">(</span><em>receiver</em>, <em>signal</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signalmanager.SignalManager.disconnect" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect a receiver function from a signal. This has the
+opposite effect of the <a class="reference internal" href="#scrapy.signalmanager.SignalManager.connect" title="scrapy.signalmanager.SignalManager.connect"><code class="xref py py-meth docutils literal"><span class="pre">connect()</span></code></a> method, and the arguments
+are the same.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.signalmanager.SignalManager.disconnect_all">
+<code class="descname">disconnect_all</code><span class="sig-paren">(</span><em>signal</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signalmanager.SignalManager.disconnect_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Disconnect all receivers from the given signal.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>signal</strong> (<em>object</em>) – the signal to disconnect from</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.signalmanager.SignalManager.send_catch_log">
+<code class="descname">send_catch_log</code><span class="sig-paren">(</span><em>signal</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signalmanager.SignalManager.send_catch_log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Send a signal, catch exceptions and log them.</p>
+<p>The keyword arguments are passed to the signal handlers (connected
+through the <a class="reference internal" href="#scrapy.signalmanager.SignalManager.connect" title="scrapy.signalmanager.SignalManager.connect"><code class="xref py py-meth docutils literal"><span class="pre">connect()</span></code></a> method).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.signalmanager.SignalManager.send_catch_log_deferred">
+<code class="descname">send_catch_log_deferred</code><span class="sig-paren">(</span><em>signal</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signalmanager.SignalManager.send_catch_log_deferred" title="Permalink to this definition">¶</a></dt>
+<dd><p>Like <a class="reference internal" href="#scrapy.signalmanager.SignalManager.send_catch_log" title="scrapy.signalmanager.SignalManager.send_catch_log"><code class="xref py py-meth docutils literal"><span class="pre">send_catch_log()</span></code></a> but supports returning <a class="reference external" href="http://twistedmatrix.com/documents/current/core/howto/defer.html">deferreds</a> from
+signal handlers.</p>
+<p>Returns a Deferred that gets fired once all signal handlers
+deferreds were fired. Send a signal, catch exceptions and log them.</p>
+<p>The keyword arguments are passed to the signal handlers (connected
+through the <a class="reference internal" href="#scrapy.signalmanager.SignalManager.connect" title="scrapy.signalmanager.SignalManager.connect"><code class="xref py py-meth docutils literal"><span class="pre">connect()</span></code></a> method).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="stats-collector-api">
+<span id="topics-api-stats"></span><h2>Stats Collector API<a class="headerlink" href="#stats-collector-api" title="Permalink to this headline">¶</a></h2>
+<p>There are several Stats Collectors available under the
+<a class="reference internal" href="stats.html#module-scrapy.statscollectors" title="scrapy.statscollectors: Stats Collectors"><code class="xref py py-mod docutils literal"><span class="pre">scrapy.statscollectors</span></code></a> module and they all implement the Stats
+Collector API defined by the <a class="reference internal" href="#scrapy.statscollectors.StatsCollector" title="scrapy.statscollectors.StatsCollector"><code class="xref py py-class docutils literal"><span class="pre">StatsCollector</span></code></a>
+class (which they all inherit from).</p>
+<span class="target" id="module-scrapy.statscollectors"></span><dl class="class">
+<dt id="scrapy.statscollectors.StatsCollector">
+<em class="property">class </em><code class="descclassname">scrapy.statscollectors.</code><code class="descname">StatsCollector</code><a class="headerlink" href="#scrapy.statscollectors.StatsCollector" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>key</em>, <em>default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value for the given stats key or default if it doesn’t exist.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.get_stats">
+<code class="descname">get_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.get_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all stats from the currently running spider as a dict.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.set_value">
+<code class="descname">set_value</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given value for the given stats key.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.set_stats">
+<code class="descname">set_stats</code><span class="sig-paren">(</span><em>stats</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.set_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Override the current stats with the dict passed in <code class="docutils literal"><span class="pre">stats</span></code> argument.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.inc_value">
+<code class="descname">inc_value</code><span class="sig-paren">(</span><em>key</em>, <em>count=1</em>, <em>start=0</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.inc_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the value of the given stats key, by the given count,
+assuming the start value given (when it’s not set).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.max_value">
+<code class="descname">max_value</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.max_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given value for the given key only if current value for the
+same key is lower than value. If there is no current value for the
+given key, the value is always set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.min_value">
+<code class="descname">min_value</code><span class="sig-paren">(</span><em>key</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.min_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given value for the given key only if current value for the
+same key is greater than value. If there is no current value for the
+given key, the value is always set.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.clear_stats">
+<code class="descname">clear_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.clear_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all stats.</p>
+</dd></dl>
+
+<p>The following methods are not part of the stats collection api but instead
+used when implementing custom stats collectors:</p>
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.open_spider">
+<code class="descname">open_spider</code><span class="sig-paren">(</span><em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.open_spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the given spider for stats collection.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscollectors.StatsCollector.close_spider">
+<code class="descname">close_spider</code><span class="sig-paren">(</span><em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscollectors.StatsCollector.close_spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the given spider. After this is called, no more specific stats
+can be accessed or collected.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="signals.html" class="btn btn-neutral float-right" title="Signals" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="extensions.html" class="btn btn-neutral" title="Extensions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-gorw4mzc" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>12eea9e7</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: xpath-tutorial
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/1.4/">1.4</a></dd>
+        
+          <dd><a href="/en/1.3/">1.3</a></dd>
+        
+          <dd><a href="/en/1.2/">1.2</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/xpath-tutorial/">xpath-tutorial</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/xpath-tutorial/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/xpath-tutorial/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/xpath-tutorial/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.4.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript" src="../_static/jquery.xpath.min.js"></script>
+<script type="text/javascript" src="../_static/xpathdemo.js"></script>
+<link rel="stylesheet" href="../_static/xpathdemo.css" type="text/css" />
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-c2h839zf"></div></body></html>

@@ -1,0 +1,552 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Items — Scrapy 0.14.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.14.4 documentation" href="../index.html" />
+        <link rel="next" title="Spiders" href="spiders.html" />
+        <link rel="prev" title="Command line tool" href="commands.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/items.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/items'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.14
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Items</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#declaring-items">Declaring Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#item-fields">Item Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#working-with-items"><span class="toctree-expand"></span>Working with Items</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-items">Creating items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getting-field-values">Getting field values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setting-field-values">Setting field values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#accesing-all-populated-values">Accesing all populated values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#other-common-tasks">Other common tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#extending-items">Extending Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#item-objects">Item objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#field-objects">Field objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapy Service (scrapyd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-tni6pwt1" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/kpGU4RXxVmwh/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/kpGU4RXxVmwh/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Items</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.14/docs/topics/items.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-scrapy.item">
+<span id="items"></span><span id="topics-items"></span><h1>Items<a class="headerlink" href="#module-scrapy.item" title="Permalink to this headline">¶</a></h1>
+<p>The main goal in scraping is to extract structured data from unstructured
+sources, typically, web pages. Scrapy provides the <a class="reference internal" href="#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> class for this
+purpose.</p>
+<p><a class="reference internal" href="#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects are simple containers used to collect the scraped data.
+They provide a <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict">dictionary-like</a> API with a convenient syntax for declaring
+their available fields.</p>
+<div class="section" id="declaring-items">
+<span id="topics-items-declaring"></span><h2>Declaring Items<a class="headerlink" href="#declaring-items" title="Permalink to this headline">¶</a></h2>
+<p>Items are declared using a simple class definition syntax and <a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a>
+objects. Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.item</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">stock</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">last_updated</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">serializer</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Those familiar with <a class="reference external" href="http://www.djangoproject.com/">Django</a> will notice that Scrapy Items are
+declared similar to <a class="reference external" href="http://docs.djangoproject.com/en/dev/topics/db/models/">Django Models</a>, except that Scrapy Items are much
+simpler as there is no concept of different field types.</p>
+</div>
+</div>
+<div class="section" id="item-fields">
+<span id="topics-items-fields"></span><h2>Item Fields<a class="headerlink" href="#item-fields" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects are used to specify metadata for each field. For
+example, the serializer function for the <code class="docutils literal"><span class="pre">last_updated</span></code> field illustrated in
+the example above.</p>
+<p>You can specify any kind of metadata for each field. There is no restriction on
+the values accepted by <a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects. For this same
+reason, there isn’t a reference list of all available metadata keys. Each key
+defined in <a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects could be used by a different components, and
+only those components know about it. You can also define and use any other
+<a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> key in your project too, for your own needs. The main goal of
+<a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects is to provide a way to define all field metadata in one
+place. Typically, those components whose behaviour depends on each field use
+certain field keys to configure that behaviour. You must refer to their
+documentation to see which metadata keys are used by each component.</p>
+<p>It’s important to note that the <a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects used to declare the item
+do not stay assigned as class attributes. Instead, they can be accesed through
+the <a class="reference internal" href="#scrapy.item.Item.fields" title="scrapy.item.Item.fields"><code class="xref py py-attr docutils literal"><span class="pre">Item.fields</span></code></a> attribute.</p>
+<p>And that’s all you need to know about declaring items.</p>
+</div>
+<div class="section" id="working-with-items">
+<h2>Working with Items<a class="headerlink" href="#working-with-items" title="Permalink to this headline">¶</a></h2>
+<p>Here are some examples of common tasks performed with items, using the
+<code class="docutils literal"><span class="pre">Product</span></code> item <a class="reference internal" href="#topics-items-declaring"><span>declared above</span></a>. You will
+notice the API is very similar to the <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict">dict API</a>.</p>
+<div class="section" id="creating-items">
+<h3>Creating items<a class="headerlink" href="#creating-items" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'Desktop PC'</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">product</span>
+<span class="go">Product(name='Desktop PC', price=1000)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="getting-field-values">
+<h3>Getting field values<a class="headerlink" href="#getting-field-values" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+<span class="go">Desktop PC</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span>
+<span class="go">Desktop PC</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'price'</span><span class="p">]</span>
+<span class="go">1000</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'last_updated'</span><span class="p">]</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">KeyError</span>: <span class="n">'last_updated'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'last_updated'</span><span class="p">,</span> <span class="s1">'not set'</span><span class="p">)</span>
+<span class="go">not set</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'lala'</span><span class="p">]</span> <span class="c1"># getting unknown field</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">KeyError</span>: <span class="n">'lala'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">'lala'</span><span class="p">,</span> <span class="s1">'unknown field'</span><span class="p">)</span>
+<span class="go">'unknown field'</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'name'</span> <span class="ow">in</span> <span class="n">product</span>  <span class="c1"># is name field populated?</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'last_updated'</span> <span class="ow">in</span> <span class="n">product</span>  <span class="c1"># is last_updated populated?</span>
+<span class="go">False</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'last_updated'</span> <span class="ow">in</span> <span class="n">product</span><span class="o">.</span><span class="n">fields</span>  <span class="c1"># is last_updated a declared field?</span>
+<span class="go">True</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="s1">'lala'</span> <span class="ow">in</span> <span class="n">product</span><span class="o">.</span><span class="n">fields</span>  <span class="c1"># is lala a declared field?</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="setting-field-values">
+<h3>Setting field values<a class="headerlink" href="#setting-field-values" title="Permalink to this headline">¶</a></h3>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'last_updated'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'today'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'last_updated'</span><span class="p">]</span>
+<span class="go">today</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="p">[</span><span class="s1">'lala'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'test'</span> <span class="c1"># setting unknown field</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">KeyError</span>: <span class="n">'Product does not support field: lala'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="accesing-all-populated-values">
+<h3>Accesing all populated values<a class="headerlink" href="#accesing-all-populated-values" title="Permalink to this headline">¶</a></h3>
+<p>To access all populated values, just use the typical <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict">dict API</a>:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="o">.</span><span class="n">keys</span><span class="p">()</span>
+<span class="go">['price', 'name']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">product</span><span class="o">.</span><span class="n">items</span><span class="p">()</span>
+<span class="go">[('price', 1000), ('name', 'Desktop PC')]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="other-common-tasks">
+<h3>Other common tasks<a class="headerlink" href="#other-common-tasks" title="Permalink to this headline">¶</a></h3>
+<p>Copying items:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">product2</span> <span class="o">=</span> <span class="n">Product</span><span class="p">(</span><span class="n">product</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">product2</span>
+<span class="go">Product(name='Desktop PC', price=1000)</span>
+</pre></div>
+</div>
+<p>Creating dicts from items:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="nb">dict</span><span class="p">(</span><span class="n">product</span><span class="p">)</span> <span class="c1"># create a dict from all populated values</span>
+<span class="go">{'price': 1000, 'name': 'Desktop PC'}</span>
+</pre></div>
+</div>
+<p>Creating items from dicts:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">Product</span><span class="p">({</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Laptop PC'</span><span class="p">,</span> <span class="s1">'price'</span><span class="p">:</span> <span class="mi">1500</span><span class="p">})</span>
+<span class="go">Product(price=1500, name='Laptop PC')</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Product</span><span class="p">({</span><span class="s1">'name'</span><span class="p">:</span> <span class="s1">'Laptop PC'</span><span class="p">,</span> <span class="s1">'lala'</span><span class="p">:</span> <span class="mi">1500</span><span class="p">})</span> <span class="c1"># warning: unknown field in dict</span>
+<span class="gt">Traceback (most recent call last):</span>
+    <span class="o">...</span>
+<span class="gr">KeyError</span>: <span class="n">'Product does not support field: lala'</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="extending-items">
+<h2>Extending Items<a class="headerlink" href="#extending-items" title="Permalink to this headline">¶</a></h2>
+<p>You can extend Items (to add more fields or to change some metadata for some
+fields) by declaring a subclass of your original Item.</p>
+<p>For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">DiscountedProduct</span><span class="p">(</span><span class="n">Product</span><span class="p">):</span>
+    <span class="n">discount_percent</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">serializer</span><span class="o">=</span><span class="nb">str</span><span class="p">)</span>
+    <span class="n">discount_expiration_date</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>You can also extend field metadata by using the previous field metadata and
+appending more values, or changing existing values, like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">SpecificProduct</span><span class="p">(</span><span class="n">Product</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">(</span><span class="n">Product</span><span class="o">.</span><span class="n">fields</span><span class="p">[</span><span class="s1">'name'</span><span class="p">],</span> <span class="n">serializer</span><span class="o">=</span><span class="n">my_serializer</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That adds (or replaces) the <code class="docutils literal"><span class="pre">serializer</span></code> metadata key for the <code class="docutils literal"><span class="pre">name</span></code> field,
+keeping all the previously existing metadata values.</p>
+</div>
+<div class="section" id="item-objects">
+<h2>Item objects<a class="headerlink" href="#item-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.item.Item">
+<em class="property">class </em><code class="descclassname">scrapy.item.</code><code class="descname">Item</code><span class="sig-paren">(</span><span class="optional">[</span><em>arg</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.item.Item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new Item optionally initialized from the given argument.</p>
+<p>Items replicate the standard <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict">dict API</a>, including its constructor. The
+only additional attribute provided by Items is:</p>
+<dl class="attribute">
+<dt id="scrapy.item.Item.fields">
+<code class="descname">fields</code><a class="headerlink" href="#scrapy.item.Item.fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary containing <em>all declared fields</em> for this Item, not only
+those populated. The keys are the field names and the values are the
+<a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects used in the <a class="reference internal" href="#topics-items-declaring"><span>Item declaration</span></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="field-objects">
+<h2>Field objects<a class="headerlink" href="#field-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.item.Field">
+<em class="property">class </em><code class="descclassname">scrapy.item.</code><code class="descname">Field</code><span class="sig-paren">(</span><span class="optional">[</span><em>arg</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.item.Field" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> class is just an alias to the built-in <a class="reference external" href="http://docs.python.org/library/stdtypes.html#dict">dict</a> class and
+doesn’t provide any extra functionality or attributes. In other words,
+<a class="reference internal" href="#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">Field</span></code></a> objects are plain-old Python dicts. A separate class is used
+to support the <a class="reference internal" href="#topics-items-declaring"><span>item declaration syntax</span></a>
+based on class attributes.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spiders.html" class="btn btn-neutral float-right" title="Spiders" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="commands.html" class="btn btn-neutral" title="Command line tool" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-du67k24s" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2011, Insophia.
+      
+        <span class="commit">
+          Revision <code>f8eb4709</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.14
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.14/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.14/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.14/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.14.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-3mj4zq3b"></div></body></html>

@@ -1,0 +1,649 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Stats Collection — Scrapy 0.14.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.14.4 documentation" href="../index.html" />
+        <link rel="next" title="Sending e-mail" href="email.html" />
+        <link rel="prev" title="Logging" href="logging.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/stats.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/stats'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.14
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Stats Collection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#common-stats-collector-uses">Common Stats Collector uses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#stats-collector-api">Stats Collector API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-stats-collectors"><span class="toctree-expand"></span>Available Stats Collectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#memorystatscollector">MemoryStatsCollector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dummystatscollector">DummyStatsCollector</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#stats-signals">Stats signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapy Service (scrapyd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-i0fhuoww" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Stats Collection</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.14/docs/topics/stats.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="stats-collection">
+<span id="topics-stats"></span><h1>Stats Collection<a class="headerlink" href="#stats-collection" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="overview">
+<h2>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h2>
+<p>Scrapy provides a convenient service for collecting stats in the form of
+key/values, both globally and per spider. It’s called the Stats Collector, and
+it’s a singleton which can be imported and used quickly, as illustrated by the
+examples in the <a class="reference internal" href="#topics-stats-usecases"><span>Common Stats Collector uses</span></a> section below.</p>
+<p>The stats collection is enabled by default but can be disabled through the
+<a class="reference internal" href="settings.html#std:setting-STATS_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">STATS_ENABLED</span></code></a> setting.</p>
+<p>However, the Stats Collector is always available, so you can always import it
+in your module and use its API (to increment or set new stat keys), regardless
+of whether the stats collection is enabled or not. If it’s disabled, the API
+will still work but it won’t collect anything. This is aimed at simplifying the
+stats collector usage: you should spend no more than one line of code for
+collecting stats in your spider, Scrapy extension, or whatever code you’re
+using the Stats Collector from.</p>
+<p>Another feature of the Stats Collector is that it’s very efficient (when
+enabled) and extremely efficient (almost unnoticeable) when disabled.</p>
+<p>The Stats Collector keeps one stats table per open spider and one global stats
+table. You can’t set or get stats from a closed spider, but the spider-specific
+stats table is automatically opened when the spider is opened, and closed when
+the spider is closed.</p>
+</div>
+<div class="section" id="common-stats-collector-uses">
+<span id="topics-stats-usecases"></span><h2>Common Stats Collector uses<a class="headerlink" href="#common-stats-collector-uses" title="Permalink to this headline">¶</a></h2>
+<p>Import the stats collector:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.stats</span> <span class="kn">import</span> <span class="n">stats</span>
+</pre></div>
+</div>
+<p>Set global stat value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s1">'hostname'</span><span class="p">,</span> <span class="n">socket</span><span class="o">.</span><span class="n">gethostname</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>Increment global stat value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">inc_value</span><span class="p">(</span><span class="s1">'spiders_crawled'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set global stat value only if greater than previous:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">max_value</span><span class="p">(</span><span class="s1">'max_items_scraped'</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set global stat value only if lower than previous:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">min_value</span><span class="p">(</span><span class="s1">'min_free_memory_percent'</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get global stat value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s1">'spiders_crawled'</span><span class="p">)</span>
+<span class="go">8</span>
+</pre></div>
+</div>
+<p>Get all global stats (ie. not particular to any spider):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">get_stats</span><span class="p">()</span>
+<span class="go">{'hostname': 'localhost', 'spiders_crawled': 8}</span>
+</pre></div>
+</div>
+<p>Set spider specific stat value (spider stats must be opened first, but this
+task is handled automatically by the Scrapy engine):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">set_value</span><span class="p">(</span><span class="s1">'start_time'</span><span class="p">,</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">(),</span> <span class="n">spider</span><span class="o">=</span><span class="n">some_spider</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Where <code class="docutils literal"><span class="pre">some_spider</span></code> is a <a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider" title="scrapy.spider.BaseSpider"><code class="xref py py-class docutils literal"><span class="pre">BaseSpider</span></code></a> object.</p>
+<p>Increment spider-specific stat value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">inc_value</span><span class="p">(</span><span class="s1">'pages_crawled'</span><span class="p">,</span> <span class="n">spider</span><span class="o">=</span><span class="n">some_spider</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set spider-specific stat value only if greater than previous:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">max_value</span><span class="p">(</span><span class="s1">'max_items_scraped'</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">spider</span><span class="o">=</span><span class="n">some_spider</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Set spider-specific stat value only if lower than previous:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">stats</span><span class="o">.</span><span class="n">min_value</span><span class="p">(</span><span class="s1">'min_free_memory_percent'</span><span class="p">,</span> <span class="n">value</span><span class="p">,</span> <span class="n">spider</span><span class="o">=</span><span class="n">some_spider</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Get spider-specific stat value:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">get_value</span><span class="p">(</span><span class="s1">'pages_crawled'</span><span class="p">,</span> <span class="n">spider</span><span class="o">=</span><span class="n">some_spider</span><span class="p">)</span>
+<span class="go">1238</span>
+</pre></div>
+</div>
+<p>Get all stats from a given spider:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">stats</span><span class="o">.</span><span class="n">get_stats</span><span class="p">(</span><span class="n">spider</span><span class="o">=</span><span class="n">some_spider</span><span class="p">)</span>
+<span class="go">{'pages_crawled': 1238, 'start_time': datetime.datetime(2009, 7, 14, 21, 47, 28, 977139)}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stats-collector-api">
+<span id="topics-stats-ref"></span><h2>Stats Collector API<a class="headerlink" href="#stats-collector-api" title="Permalink to this headline">¶</a></h2>
+<p>There are several Stats Collectors available under the
+<a class="reference internal" href="#module-scrapy.statscol" title="scrapy.statscol: Basic Stats Collectors"><code class="xref py py-mod docutils literal"><span class="pre">scrapy.statscol</span></code></a> module and they all implement the Stats
+Collector API defined by the <a class="reference internal" href="#scrapy.statscol.StatsCollector" title="scrapy.statscol.StatsCollector"><code class="xref py py-class docutils literal"><span class="pre">StatsCollector</span></code></a>
+class (which they all inherit from).</p>
+<span class="target" id="module-scrapy.statscol"></span><dl class="class">
+<dt id="scrapy.statscol.StatsCollector">
+<em class="property">class </em><code class="descclassname">scrapy.statscol.</code><code class="descname">StatsCollector</code><a class="headerlink" href="#scrapy.statscol.StatsCollector" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="scrapy.statscol.StatsCollector.get_value">
+<code class="descname">get_value</code><span class="sig-paren">(</span><em>key</em>, <em>default=None</em>, <em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.get_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the value for the given stats key or default if it doesn’t exist.
+If spider is <code class="docutils literal"><span class="pre">None</span></code> the global stats table is consulted, otherwise the
+spider specific one is. If the spider is not yet opened a <code class="docutils literal"><span class="pre">KeyError</span></code>
+exception is raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.get_stats">
+<code class="descname">get_stats</code><span class="sig-paren">(</span><em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.get_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all stats from the given spider (if spider is given) or all global
+stats otherwise, as a dict. If spider is not opened <code class="docutils literal"><span class="pre">KeyError</span></code> is
+raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.set_value">
+<code class="descname">set_value</code><span class="sig-paren">(</span><em>key</em>, <em>value</em>, <em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.set_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given value for the given stats key on the global stats (if
+spider is not given) or the spider-specific stats (if spider is given),
+which must be opened or a <code class="docutils literal"><span class="pre">KeyError</span></code> will be raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.set_stats">
+<code class="descname">set_stats</code><span class="sig-paren">(</span><em>stats</em>, <em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.set_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given stats (as a dict) for the given spider. If the spider is
+not opened a <code class="docutils literal"><span class="pre">KeyError</span></code> will be raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.inc_value">
+<code class="descname">inc_value</code><span class="sig-paren">(</span><em>key</em>, <em>count=1</em>, <em>start=0</em>, <em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.inc_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Increment the value of the given stats key, by the given count,
+assuming the start value given (when it’s not set). If spider is not
+given the global stats table is used, otherwise the spider-specific
+stats table is used, which must be opened or a <code class="docutils literal"><span class="pre">KeyError</span></code> will be
+raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.max_value">
+<code class="descname">max_value</code><span class="sig-paren">(</span><em>key</em>, <em>value</em>, <em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.max_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given value for the given key only if current value for the
+same key is lower than value. If there is no current value for the
+given key, the value is always set. If spider is not given, the global
+stats table is used, otherwise the spider-specific stats table is used,
+which must be opened or a KeyError will be raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.min_value">
+<code class="descname">min_value</code><span class="sig-paren">(</span><em>key</em>, <em>value</em>, <em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.min_value" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the given value for the given key only if current value for the
+same key is greater than value. If there is no current value for the
+given key, the value is always set. If spider is not given, the global
+stats table is used, otherwise the spider-specific stats table is used,
+which must be opened or a KeyError will be raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.clear_stats">
+<code class="descname">clear_stats</code><span class="sig-paren">(</span><em>spider=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.clear_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Clear all global stats (if spider is not given) or all spider-specific
+stats if spider is given, in which case it must be opened or a
+<code class="docutils literal"><span class="pre">KeyError</span></code> will be raised.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.iter_spider_stats">
+<code class="descname">iter_spider_stats</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.iter_spider_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a iterator over <code class="docutils literal"><span class="pre">(spider,</span> <span class="pre">spider_stats)</span></code> for each open spider
+currently tracked by the stats collector, where <code class="docutils literal"><span class="pre">spider_stats</span></code> is the
+dict containing all spider-specific stats.</p>
+<p>Global stats are not included in the iterator. If you want to get
+those, use <a class="reference internal" href="#scrapy.statscol.StatsCollector.get_stats" title="scrapy.statscol.StatsCollector.get_stats"><code class="xref py py-meth docutils literal"><span class="pre">get_stats()</span></code></a> method.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.open_spider">
+<code class="descname">open_spider</code><span class="sig-paren">(</span><em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.open_spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Open the given spider for stats collection. This method must be called
+prior to working with any stats specific to that spider, but this task
+is handled automatically by the Scrapy engine.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.close_spider">
+<code class="descname">close_spider</code><span class="sig-paren">(</span><em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.close_spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>Close the given spider. After this is called, no more specific stats
+for this spider can be accessed. This method is called automatically on
+the <a class="reference internal" href="signals.html#std:signal-spider_closed"><code class="xref std std-signal docutils literal"><span class="pre">spider_closed</span></code></a> signal.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.statscol.StatsCollector.engine_stopped">
+<code class="descname">engine_stopped</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.statscol.StatsCollector.engine_stopped" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called after the engine is stopped, to dump or persist global stats.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="available-stats-collectors">
+<h2>Available Stats Collectors<a class="headerlink" href="#available-stats-collectors" title="Permalink to this headline">¶</a></h2>
+<p>Besides the basic <a class="reference internal" href="#scrapy.statscol.StatsCollector" title="scrapy.statscol.StatsCollector"><code class="xref py py-class docutils literal"><span class="pre">StatsCollector</span></code></a> there are other Stats Collectors
+available in Scrapy which extend the basic Stats Collector. You can select
+which Stats Collector to use through the <a class="reference internal" href="settings.html#std:setting-STATS_CLASS"><code class="xref std std-setting docutils literal"><span class="pre">STATS_CLASS</span></code></a> setting. The
+default Stats Collector used is the <a class="reference internal" href="#scrapy.statscol.MemoryStatsCollector" title="scrapy.statscol.MemoryStatsCollector"><code class="xref py py-class docutils literal"><span class="pre">MemoryStatsCollector</span></code></a>.</p>
+<p>When stats are disabled (through the <a class="reference internal" href="settings.html#std:setting-STATS_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">STATS_ENABLED</span></code></a> setting) the
+<a class="reference internal" href="settings.html#std:setting-STATS_CLASS"><code class="xref std std-setting docutils literal"><span class="pre">STATS_CLASS</span></code></a> setting is ignored and the <a class="reference internal" href="#scrapy.statscol.DummyStatsCollector" title="scrapy.statscol.DummyStatsCollector"><code class="xref py py-class docutils literal"><span class="pre">DummyStatsCollector</span></code></a>
+is used.</p>
+<div class="section" id="memorystatscollector">
+<h3>MemoryStatsCollector<a class="headerlink" href="#memorystatscollector" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.statscol.MemoryStatsCollector">
+<em class="property">class </em><code class="descclassname">scrapy.statscol.</code><code class="descname">MemoryStatsCollector</code><a class="headerlink" href="#scrapy.statscol.MemoryStatsCollector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A simple stats collector that keeps the stats of the last scraping run (for
+each spider) in memory, after they’re closed. The stats can be accessed
+through the <a class="reference internal" href="#scrapy.statscol.MemoryStatsCollector.spider_stats" title="scrapy.statscol.MemoryStatsCollector.spider_stats"><code class="xref py py-attr docutils literal"><span class="pre">spider_stats</span></code></a> attribute, which is a dict keyed by spider
+domain name.</p>
+<p>This is the default Stats Collector used in Scrapy.</p>
+<dl class="attribute">
+<dt id="scrapy.statscol.MemoryStatsCollector.spider_stats">
+<code class="descname">spider_stats</code><a class="headerlink" href="#scrapy.statscol.MemoryStatsCollector.spider_stats" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict of dicts (keyed by spider name) containing the stats of the last
+scraping run for each spider.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="dummystatscollector">
+<h3>DummyStatsCollector<a class="headerlink" href="#dummystatscollector" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.statscol.DummyStatsCollector">
+<em class="property">class </em><code class="descclassname">scrapy.statscol.</code><code class="descname">DummyStatsCollector</code><a class="headerlink" href="#scrapy.statscol.DummyStatsCollector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A Stats collector which does nothing but is very efficient. This is the
+Stats Collector used when stats are disabled (through the
+<a class="reference internal" href="settings.html#std:setting-STATS_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">STATS_ENABLED</span></code></a> setting).</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="stats-signals">
+<h2>Stats signals<a class="headerlink" href="#stats-signals" title="Permalink to this headline">¶</a></h2>
+<p>The Stats Collector provides some signals for extending the stats collection
+functionality:</p>
+<span class="target" id="std:signal-stats_spider_opened"></span><dl class="function">
+<dt id="scrapy.signals.stats_spider_opened">
+<code class="descclassname">scrapy.signals.</code><code class="descname">stats_spider_opened</code><span class="sig-paren">(</span><em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signals.stats_spider_opened" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sent right after the stats spider is opened. You can use this signal to add
+startup stats for the spider (example: start time).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>spider</strong> (<em>str</em>) – the stats spider just opened</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="std:signal-stats_spider_closing"></span><dl class="function">
+<dt id="scrapy.signals.stats_spider_closing">
+<code class="descclassname">scrapy.signals.</code><code class="descname">stats_spider_closing</code><span class="sig-paren">(</span><em>spider</em>, <em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signals.stats_spider_closing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sent just before the stats spider is closed. You can use this signal to add
+some closing stats (example: finish time).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>spider</strong> (<em>str</em>) – the stats spider about to be closed</li>
+<li><strong>reason</strong> (<em>str</em>) – the reason why the spider is being closed. See
+<a class="reference internal" href="signals.html#std:signal-spider_closed"><code class="xref std std-signal docutils literal"><span class="pre">spider_closed</span></code></a> signal for more info.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<span class="target" id="std:signal-stats_spider_closed"></span><dl class="function">
+<dt id="scrapy.signals.stats_spider_closed">
+<code class="descclassname">scrapy.signals.</code><code class="descname">stats_spider_closed</code><span class="sig-paren">(</span><em>spider</em>, <em>reason</em>, <em>spider_stats</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.signals.stats_spider_closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sent right after the stats spider is closed. You can use this signal to
+collect resources, but not to add any more stats as the stats spider has
+already been closed (use <a class="reference internal" href="#std:signal-stats_spider_closing"><code class="xref std std-signal docutils literal"><span class="pre">stats_spider_closing</span></code></a> for that instead).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>spider</strong> (<em>str</em>) – the stats spider just closed</li>
+<li><strong>reason</strong> (<em>dict</em>) – the reason why the spider was closed. See
+<a class="reference internal" href="signals.html#std:signal-spider_closed"><code class="xref std std-signal docutils literal"><span class="pre">spider_closed</span></code></a> signal for more info.</li>
+<li><strong>spider_stats</strong> – the stats of the spider just closed.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="email.html" class="btn btn-neutral float-right" title="Sending e-mail" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="logging.html" class="btn btn-neutral" title="Logging" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-3wgfmvfg" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2011, Insophia.
+      
+        <span class="commit">
+          Revision <code>f8eb4709</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.14
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.14/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.14/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.14/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.14.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-dfhzl6bw"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/LYqovAdYE4VS/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/LYqovAdYE4VS/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/LYqovAdYE4VS/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

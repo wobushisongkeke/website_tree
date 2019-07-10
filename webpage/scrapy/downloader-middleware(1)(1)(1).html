@@ -1,0 +1,1333 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Downloader Middleware — Scrapy 1.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Scrapy 1.4.0 documentation" href="../index.html" />
+        <link rel="next" title="Spider Middleware" href="spider-middleware.html" />
+        <link rel="prev" title="Architecture overview" href="architecture.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/downloader-middleware.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/downloader-middleware' 		
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.4
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Downloader Middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#activating-a-downloader-middleware">Activating a downloader middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-your-own-downloader-middleware">Writing your own downloader middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-downloader-middleware-reference"><span class="toctree-expand"></span>Built-in downloader middleware reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.cookies"><span class="toctree-expand"></span>CookiesMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#multiple-cookie-sessions-per-spider">Multiple cookie sessions per spider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cookies-enabled">COOKIES_ENABLED</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#cookies-debug">COOKIES_DEBUG</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.defaultheaders">DefaultHeadersMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.downloadtimeout">DownloadTimeoutMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.httpauth">HttpAuthMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.httpcache"><span class="toctree-expand"></span>HttpCacheMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#dummy-policy-default">Dummy policy (default)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#rfc2616-policy">RFC2616 policy</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#filesystem-storage-backend-default">Filesystem storage backend (default)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dbm-storage-backend">DBM storage backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#leveldb-storage-backend">LevelDB storage backend</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#httpcache-middleware-settings">HTTPCache middleware settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.httpcompression"><span class="toctree-expand"></span>HttpCompressionMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#httpcompressionmiddleware-settings">HttpCompressionMiddleware Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.httpproxy">HttpProxyMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.redirect"><span class="toctree-expand"></span>RedirectMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#redirectmiddleware-settings">RedirectMiddleware settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#metarefreshmiddleware"><span class="toctree-expand"></span>MetaRefreshMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#metarefreshmiddleware-settings">MetaRefreshMiddleware settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.retry"><span class="toctree-expand"></span>RetryMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#retrymiddleware-settings">RetryMiddleware Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.robotstxt">RobotsTxtMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.stats">DownloaderStats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.useragent">UserAgentMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.downloadermiddlewares.ajaxcrawl"><span class="toctree-expand"></span>AjaxCrawlMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#ajaxcrawlmiddleware-settings">AjaxCrawlMiddleware Settings</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#httpproxymiddleware-settings">HttpProxyMiddleware settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-zqbwzpfu" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/IzkC5f40ALBw/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/IzkC5f40ALBw/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Downloader Middleware</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.4/docs/topics/downloader-middleware.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/topics/downloader-middleware.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="downloader-middleware">
+<span id="topics-downloader-middleware"></span><h1>Downloader Middleware<a class="headerlink" href="#downloader-middleware" title="Permalink to this headline">¶</a></h1>
+<p>The downloader middleware is a framework of hooks into Scrapy’s
+request/response processing.  It’s a light, low-level system for globally
+altering Scrapy’s requests and responses.</p>
+<div class="section" id="activating-a-downloader-middleware">
+<span id="topics-downloader-middleware-setting"></span><h2>Activating a downloader middleware<a class="headerlink" href="#activating-a-downloader-middleware" title="Permalink to this headline">¶</a></h2>
+<p>To activate a downloader middleware component, add it to the
+<a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES</span></code></a> setting, which is a dict whose keys are the
+middleware class paths and their values are the middleware orders.</p>
+<p>Here’s an example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DOWNLOADER_MIDDLEWARES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'myproject.middlewares.CustomDownloaderMiddleware'</span><span class="p">:</span> <span class="mi">543</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES</span></code></a> setting is merged with the
+<a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES_BASE</span></code></a> setting defined in Scrapy (and not meant
+to be overridden) and then sorted by order to get the final sorted list of
+enabled middlewares: the first middleware is the one closer to the engine and
+the last is the one closer to the downloader. In other words,
+the <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_request" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_request"><code class="xref py py-meth docutils literal"><span class="pre">process_request()</span></code></a>
+method of each middleware will be invoked in increasing
+middleware order (100, 200, 300, ...) and the <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_response" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_response"><code class="xref py py-meth docutils literal"><span class="pre">process_response()</span></code></a> method
+of each middleware will be invoked in decreasing order.</p>
+<p>To decide which order to assign to your middleware see the
+<a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES_BASE</span></code></a> setting and pick a value according to
+where you want to insert the middleware. The order does matter because each
+middleware performs a different action and your middleware could depend on some
+previous (or subsequent) middleware being applied.</p>
+<p>If you want to disable a built-in middleware (the ones defined in
+<a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES_BASE</span></code></a> and enabled by default) you must define it
+in your project’s <a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES</span></code></a> setting and assign <cite>None</cite>
+as its value.  For example, if you want to disable the user-agent middleware:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">DOWNLOADER_MIDDLEWARES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'myproject.middlewares.CustomDownloaderMiddleware'</span><span class="p">:</span> <span class="mi">543</span><span class="p">,</span>
+    <span class="s1">'scrapy.downloadermiddlewares.useragent.UserAgentMiddleware'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, keep in mind that some middlewares may need to be enabled through a
+particular setting. See each middleware documentation for more info.</p>
+</div>
+<div class="section" id="writing-your-own-downloader-middleware">
+<h2>Writing your own downloader middleware<a class="headerlink" href="#writing-your-own-downloader-middleware" title="Permalink to this headline">¶</a></h2>
+<p>Each middleware component is a Python class that defines one or
+more of the following methods:</p>
+<span class="target" id="module-scrapy.downloadermiddlewares"></span><dl class="class">
+<dt id="scrapy.downloadermiddlewares.DownloaderMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.</code><code class="descname">DownloaderMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.DownloaderMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Any of the downloader middleware methods may also return a deferred.</p>
+</div>
+<dl class="method">
+<dt id="scrapy.downloadermiddlewares.DownloaderMiddleware.process_request">
+<code class="descname">process_request</code><span class="sig-paren">(</span><em>request</em>, <em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_request" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for each request that goes through the download
+middleware.</p>
+<p><a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_request" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_request"><code class="xref py py-meth docutils literal"><span class="pre">process_request()</span></code></a> should either: return <code class="docutils literal"><span class="pre">None</span></code>, return a
+<a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object, return a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a>
+object, or raise <a class="reference internal" href="exceptions.html#scrapy.exceptions.IgnoreRequest" title="scrapy.exceptions.IgnoreRequest"><code class="xref py py-exc docutils literal"><span class="pre">IgnoreRequest</span></code></a>.</p>
+<p>If it returns <code class="docutils literal"><span class="pre">None</span></code>, Scrapy will continue processing this request, executing all
+other middlewares until, finally, the appropriate downloader handler is called
+the request performed (and its response downloaded).</p>
+<p>If it returns a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object, Scrapy won’t bother
+calling <em>any</em> other <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_request" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_request"><code class="xref py py-meth docutils literal"><span class="pre">process_request()</span></code></a> or <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> methods,
+or the appropriate download function; it’ll return that response. The <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_response" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_response"><code class="xref py py-meth docutils literal"><span class="pre">process_response()</span></code></a>
+methods of installed middleware is always called on every response.</p>
+<p>If it returns a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object, Scrapy will stop calling
+process_request methods and reschedule the returned request. Once the newly returned
+request is performed, the appropriate middleware chain will be called on
+the downloaded response.</p>
+<p>If it raises an <a class="reference internal" href="exceptions.html#scrapy.exceptions.IgnoreRequest" title="scrapy.exceptions.IgnoreRequest"><code class="xref py py-exc docutils literal"><span class="pre">IgnoreRequest</span></code></a> exception, the
+<a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> methods of installed downloader middleware will be called.
+If none of them handle the exception, the errback function of the request
+(<code class="docutils literal"><span class="pre">Request.errback</span></code>) is called. If no code handles the raised exception, it is
+ignored and not logged (unlike other exceptions).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>request</strong> (<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object) – the request being processed</li>
+<li><strong>spider</strong> (<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">Spider</span></code></a> object) – the spider for which this request is intended</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.downloadermiddlewares.DownloaderMiddleware.process_response">
+<code class="descname">process_response</code><span class="sig-paren">(</span><em>request</em>, <em>response</em>, <em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_response" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_response" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_response"><code class="xref py py-meth docutils literal"><span class="pre">process_response()</span></code></a> should either: return a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a>
+object, return a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object or
+raise a <a class="reference internal" href="exceptions.html#scrapy.exceptions.IgnoreRequest" title="scrapy.exceptions.IgnoreRequest"><code class="xref py py-exc docutils literal"><span class="pre">IgnoreRequest</span></code></a> exception.</p>
+<p>If it returns a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> (it could be the same given
+response, or a brand-new one), that response will continue to be processed
+with the <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_response" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_response"><code class="xref py py-meth docutils literal"><span class="pre">process_response()</span></code></a> of the next middleware in the chain.</p>
+<p>If it returns a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object, the middleware chain is
+halted and the returned request is rescheduled to be downloaded in the future.
+This is the same behavior as if a request is returned from <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_request" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_request"><code class="xref py py-meth docutils literal"><span class="pre">process_request()</span></code></a>.</p>
+<p>If it raises an <a class="reference internal" href="exceptions.html#scrapy.exceptions.IgnoreRequest" title="scrapy.exceptions.IgnoreRequest"><code class="xref py py-exc docutils literal"><span class="pre">IgnoreRequest</span></code></a> exception, the errback
+function of the request (<code class="docutils literal"><span class="pre">Request.errback</span></code>) is called. If no code handles the raised
+exception, it is ignored and not logged (unlike other exceptions).</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>request</strong> (is a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object) – the request that originated the response</li>
+<li><strong>response</strong> (<a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object) – the response being processed</li>
+<li><strong>spider</strong> (<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">Spider</span></code></a> object) – the spider for which this response is intended</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception">
+<code class="descname">process_exception</code><span class="sig-paren">(</span><em>request</em>, <em>exception</em>, <em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Scrapy calls <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> when a download handler
+or a <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_request" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_request"><code class="xref py py-meth docutils literal"><span class="pre">process_request()</span></code></a> (from a downloader middleware) raises an
+exception (including an <a class="reference internal" href="exceptions.html#scrapy.exceptions.IgnoreRequest" title="scrapy.exceptions.IgnoreRequest"><code class="xref py py-exc docutils literal"><span class="pre">IgnoreRequest</span></code></a> exception)</p>
+<p><a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> should return: either <code class="docutils literal"><span class="pre">None</span></code>,
+a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object, or a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object.</p>
+<p>If it returns <code class="docutils literal"><span class="pre">None</span></code>, Scrapy will continue processing this exception,
+executing any other <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> methods of installed middleware,
+until no middleware is left and the default exception handling kicks in.</p>
+<p>If it returns a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object, the <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_response" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_response"><code class="xref py py-meth docutils literal"><span class="pre">process_response()</span></code></a>
+method chain of installed middleware is started, and Scrapy won’t bother calling
+any other <a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> methods of middleware.</p>
+<p>If it returns a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object, the returned request is
+rescheduled to be downloaded in the future. This stops the execution of
+<a class="reference internal" href="#scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception" title="scrapy.downloadermiddlewares.DownloaderMiddleware.process_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_exception()</span></code></a> methods of the middleware the same as returning a
+response would.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>request</strong> (is a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object) – the request that generated the exception</li>
+<li><strong>exception</strong> (an <code class="docutils literal"><span class="pre">Exception</span></code> object) – the raised exception</li>
+<li><strong>spider</strong> (<a class="reference internal" href="spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">Spider</span></code></a> object) – the spider for which this request is intended</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="built-in-downloader-middleware-reference">
+<span id="topics-downloader-middleware-ref"></span><h2>Built-in downloader middleware reference<a class="headerlink" href="#built-in-downloader-middleware-reference" title="Permalink to this headline">¶</a></h2>
+<p>This page describes all downloader middleware components that come with
+Scrapy. For information on how to use them and how to write your own downloader
+middleware, see the <a class="reference internal" href="#topics-downloader-middleware"><span class="std std-ref">downloader middleware usage guide</span></a>.</p>
+<p>For a list of the components enabled by default (and their orders) see the
+<a class="reference internal" href="settings.html#std:setting-DOWNLOADER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES_BASE</span></code></a> setting.</p>
+<div class="section" id="module-scrapy.downloadermiddlewares.cookies">
+<span id="cookiesmiddleware"></span><span id="cookies-mw"></span><h3>CookiesMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.cookies" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.cookies.CookiesMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.cookies.</code><code class="descname">CookiesMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.cookies.CookiesMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware enables working with sites that require cookies, such as
+those that use sessions. It keeps track of cookies sent by web servers, and
+send them back on subsequent requests (from that spider), just like web
+browsers do.</p>
+</dd></dl>
+
+<p>The following settings can be used to configure the cookie middleware:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-COOKIES_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">COOKIES_ENABLED</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-COOKIES_DEBUG"><code class="xref std std-setting docutils literal"><span class="pre">COOKIES_DEBUG</span></code></a></li>
+</ul>
+<div class="section" id="multiple-cookie-sessions-per-spider">
+<span id="std:reqmeta-cookiejar"></span><h4>Multiple cookie sessions per spider<a class="headerlink" href="#multiple-cookie-sessions-per-spider" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.15.</span></p>
+</div>
+<p>There is support for keeping multiple cookie sessions per spider by using the
+<a class="reference internal" href="#std:reqmeta-cookiejar"><code class="xref std std-reqmeta docutils literal"><span class="pre">cookiejar</span></code></a> Request meta key. By default it uses a single cookie jar
+(session), but you can pass an identifier to use different ones.</p>
+<p>For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">url</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">urls</span><span class="p">):</span>
+    <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s1">'cookiejar'</span><span class="p">:</span> <span class="n">i</span><span class="p">},</span>
+        <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_page</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Keep in mind that the <a class="reference internal" href="#std:reqmeta-cookiejar"><code class="xref std std-reqmeta docutils literal"><span class="pre">cookiejar</span></code></a> meta key is not “sticky”. You need to keep
+passing it along on subsequent requests. For example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="c1"># do some processing</span>
+    <span class="k">return</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s2">"http://www.example.com/otherpage"</span><span class="p">,</span>
+        <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s1">'cookiejar'</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s1">'cookiejar'</span><span class="p">]},</span>
+        <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_other_page</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="cookies-enabled">
+<span id="std:setting-COOKIES_ENABLED"></span><h4>COOKIES_ENABLED<a class="headerlink" href="#cookies-enabled" title="Permalink to this headline">¶</a></h4>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether to enable the cookies middleware. If disabled, no cookies will be sent
+to web servers.</p>
+</div>
+<div class="section" id="cookies-debug">
+<span id="std:setting-COOKIES_DEBUG"></span><h4>COOKIES_DEBUG<a class="headerlink" href="#cookies-debug" title="Permalink to this headline">¶</a></h4>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>If enabled, Scrapy will log all cookies sent in requests (ie. <code class="docutils literal"><span class="pre">Cookie</span></code>
+header) and all cookies received in responses (ie. <code class="docutils literal"><span class="pre">Set-Cookie</span></code> header).</p>
+<p>Here’s an example of a log with <a class="reference internal" href="#std:setting-COOKIES_DEBUG"><code class="xref std std-setting docutils literal"><span class="pre">COOKIES_DEBUG</span></code></a> enabled:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2011</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">06</span> <span class="mi">14</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">10</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">engine</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Spider</span> <span class="n">opened</span>
+<span class="mi">2011</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">06</span> <span class="mi">14</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">10</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">downloadermiddlewares</span><span class="o">.</span><span class="n">cookies</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Sending</span> <span class="n">cookies</span> <span class="n">to</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">diningcity</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">netherlands</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="o">&gt;</span>
+        <span class="n">Cookie</span><span class="p">:</span> <span class="n">clientlanguage_nl</span><span class="o">=</span><span class="n">en_EN</span>
+<span class="mi">2011</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">06</span> <span class="mi">14</span><span class="p">:</span><span class="mi">35</span><span class="p">:</span><span class="mi">14</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">downloadermiddlewares</span><span class="o">.</span><span class="n">cookies</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Received</span> <span class="n">cookies</span> <span class="n">from</span><span class="p">:</span> <span class="o">&lt;</span><span class="mi">200</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">diningcity</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">netherlands</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="o">&gt;</span>
+        <span class="n">Set</span><span class="o">-</span><span class="n">Cookie</span><span class="p">:</span> <span class="n">JSESSIONID</span><span class="o">=</span><span class="n">B</span><span class="o">~</span><span class="n">FA4DC0C496C8762AE4F1A620EAB34F38</span><span class="p">;</span> <span class="n">Path</span><span class="o">=/</span>
+        <span class="n">Set</span><span class="o">-</span><span class="n">Cookie</span><span class="p">:</span> <span class="n">ip_isocode</span><span class="o">=</span><span class="n">US</span>
+        <span class="n">Set</span><span class="o">-</span><span class="n">Cookie</span><span class="p">:</span> <span class="n">clientlanguage_nl</span><span class="o">=</span><span class="n">en_EN</span><span class="p">;</span> <span class="n">Expires</span><span class="o">=</span><span class="n">Thu</span><span class="p">,</span> <span class="mi">07</span><span class="o">-</span><span class="n">Apr</span><span class="o">-</span><span class="mi">2011</span> <span class="mi">21</span><span class="p">:</span><span class="mi">21</span><span class="p">:</span><span class="mi">34</span> <span class="n">GMT</span><span class="p">;</span> <span class="n">Path</span><span class="o">=/</span>
+<span class="mi">2011</span><span class="o">-</span><span class="mi">04</span><span class="o">-</span><span class="mi">06</span> <span class="mi">14</span><span class="p">:</span><span class="mi">49</span><span class="p">:</span><span class="mi">50</span><span class="o">-</span><span class="mi">0300</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">core</span><span class="o">.</span><span class="n">engine</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Crawled</span> <span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">diningcity</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">netherlands</span><span class="o">/</span><span class="n">index</span><span class="o">.</span><span class="n">html</span><span class="o">&gt;</span> <span class="p">(</span><span class="n">referer</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="p">[</span><span class="o">...</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.defaultheaders">
+<span id="defaultheadersmiddleware"></span><h3>DefaultHeadersMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.defaultheaders" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.defaultheaders.</code><code class="descname">DefaultHeadersMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.defaultheaders.DefaultHeadersMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware sets all default requests headers specified in the
+<a class="reference internal" href="settings.html#std:setting-DEFAULT_REQUEST_HEADERS"><code class="xref std std-setting docutils literal"><span class="pre">DEFAULT_REQUEST_HEADERS</span></code></a> setting.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.downloadtimeout">
+<span id="downloadtimeoutmiddleware"></span><h3>DownloadTimeoutMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.downloadtimeout" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.downloadtimeout.</code><code class="descname">DownloadTimeoutMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.downloadtimeout.DownloadTimeoutMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware sets the download timeout for requests specified in the
+<a class="reference internal" href="settings.html#std:setting-DOWNLOAD_TIMEOUT"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOAD_TIMEOUT</span></code></a> setting or <code class="xref py py-attr docutils literal"><span class="pre">download_timeout</span></code>
+spider attribute.</p>
+</dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can also set download timeout per-request using
+<a class="reference internal" href="request-response.html#std:reqmeta-download_timeout"><code class="xref std std-reqmeta docutils literal"><span class="pre">download_timeout</span></code></a> Request.meta key; this is supported
+even when DownloadTimeoutMiddleware is disabled.</p>
+</div>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.httpauth">
+<span id="httpauthmiddleware"></span><h3>HttpAuthMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.httpauth" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.httpauth.</code><code class="descname">HttpAuthMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware authenticates all requests generated from certain spiders
+using <a class="reference external" href="https://en.wikipedia.org/wiki/Basic_access_authentication">Basic access authentication</a> (aka. HTTP auth).</p>
+<p>To enable HTTP authentication from certain spiders, set the <code class="docutils literal"><span class="pre">http_user</span></code>
+and <code class="docutils literal"><span class="pre">http_pass</span></code> attributes of those spiders.</p>
+<p>Example:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">CrawlSpider</span>
+
+<span class="k">class</span> <span class="nc">SomeIntranetSiteSpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+
+    <span class="n">http_user</span> <span class="o">=</span> <span class="s1">'someuser'</span>
+    <span class="n">http_pass</span> <span class="o">=</span> <span class="s1">'somepass'</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'intranet.example.com'</span>
+
+    <span class="c1"># .. rest of the spider code omitted ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.httpcache">
+<span id="httpcachemiddleware"></span><h3>HttpCacheMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.httpcache" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.httpcache.</code><code class="descname">HttpCacheMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware provides low-level cache to all HTTP requests and responses.
+It has to be combined with a cache storage backend as well as a cache policy.</p>
+<p>Scrapy ships with three HTTP cache storage backends:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#httpcache-storage-fs"><span class="std std-ref">Filesystem storage backend (default)</span></a></li>
+<li><a class="reference internal" href="#httpcache-storage-dbm"><span class="std std-ref">DBM storage backend</span></a></li>
+<li><a class="reference internal" href="#httpcache-storage-leveldb"><span class="std std-ref">LevelDB storage backend</span></a></li>
+</ul>
+</div></blockquote>
+<p>You can change the HTTP cache storage backend with the <a class="reference internal" href="#std:setting-HTTPCACHE_STORAGE"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_STORAGE</span></code></a>
+setting. Or you can also implement your own storage backend.</p>
+<p>Scrapy ships with two HTTP cache policies:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#httpcache-policy-rfc2616"><span class="std std-ref">RFC2616 policy</span></a></li>
+<li><a class="reference internal" href="#httpcache-policy-dummy"><span class="std std-ref">Dummy policy (default)</span></a></li>
+</ul>
+</div></blockquote>
+<p>You can change the HTTP cache policy with the <a class="reference internal" href="#std:setting-HTTPCACHE_POLICY"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_POLICY</span></code></a>
+setting. Or you can also implement your own policy.</p>
+<p id="std:reqmeta-dont_cache">You can also avoid caching a response on every policy using <a class="reference internal" href="#std:reqmeta-dont_cache"><code class="xref std std-reqmeta docutils literal"><span class="pre">dont_cache</span></code></a> meta key equals <cite>True</cite>.</p>
+</dd></dl>
+
+<div class="section" id="dummy-policy-default">
+<span id="httpcache-policy-dummy"></span><h4>Dummy policy (default)<a class="headerlink" href="#dummy-policy-default" title="Permalink to this headline">¶</a></h4>
+<p>This policy has no awareness of any HTTP Cache-Control directives.
+Every request and its corresponding response are cached.  When the same
+request is seen again, the response is returned without transferring
+anything from the Internet.</p>
+<p>The Dummy policy is useful for testing spiders faster (without having
+to wait for downloads every time) and for trying your spider offline,
+when an Internet connection is not available. The goal is to be able to
+“replay” a spider run <em>exactly as it ran before</em>.</p>
+<p>In order to use this policy, set:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-HTTPCACHE_POLICY"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_POLICY</span></code></a> to <code class="docutils literal"><span class="pre">scrapy.extensions.httpcache.DummyPolicy</span></code></li>
+</ul>
+</div>
+<div class="section" id="rfc2616-policy">
+<span id="httpcache-policy-rfc2616"></span><h4>RFC2616 policy<a class="headerlink" href="#rfc2616-policy" title="Permalink to this headline">¶</a></h4>
+<p>This policy provides a RFC2616 compliant HTTP cache, i.e. with HTTP
+Cache-Control awareness, aimed at production and used in continuous
+runs to avoid downloading unmodified data (to save bandwidth and speed up crawls).</p>
+<p>what is implemented:</p>
+<ul>
+<li><p class="first">Do not attempt to store responses/requests with <cite>no-store</cite> cache-control directive set</p>
+</li>
+<li><p class="first">Do not serve responses from cache if <cite>no-cache</cite> cache-control directive is set even for fresh responses</p>
+</li>
+<li><p class="first">Compute freshness lifetime from <cite>max-age</cite> cache-control directive</p>
+</li>
+<li><p class="first">Compute freshness lifetime from <cite>Expires</cite> response header</p>
+</li>
+<li><p class="first">Compute freshness lifetime from <cite>Last-Modified</cite> response header (heuristic used by Firefox)</p>
+</li>
+<li><p class="first">Compute current age from <cite>Age</cite> response header</p>
+</li>
+<li><p class="first">Compute current age from <cite>Date</cite> header</p>
+</li>
+<li><p class="first">Revalidate stale responses based on <cite>Last-Modified</cite> response header</p>
+</li>
+<li><p class="first">Revalidate stale responses based on <cite>ETag</cite> response header</p>
+</li>
+<li><p class="first">Set <cite>Date</cite> header for any received response missing it</p>
+</li>
+<li><p class="first">Support <cite>max-stale</cite> cache-control directive in requests</p>
+<p>This allows spiders to be configured with the full RFC2616 cache policy,
+but avoid revalidation on a request-by-request basis, while remaining
+conformant with the HTTP spec.</p>
+<p>Example:</p>
+<p>Add <cite>Cache-Control: max-stale=600</cite> to Request headers to accept responses that
+have exceeded their expiration time by no more than 600 seconds.</p>
+<p>See also: RFC2616, 14.9.3</p>
+</li>
+</ul>
+<p>what is missing:</p>
+<ul class="simple">
+<li><cite>Pragma: no-cache</cite> support <a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1">https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.9.1</a></li>
+<li><cite>Vary</cite> header support <a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.6">https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.6</a></li>
+<li>Invalidation after updates or deletes <a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.10">https://www.w3.org/Protocols/rfc2616/rfc2616-sec13.html#sec13.10</a></li>
+<li>... probably others ..</li>
+</ul>
+<p>In order to use this policy, set:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-HTTPCACHE_POLICY"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_POLICY</span></code></a> to <code class="docutils literal"><span class="pre">scrapy.extensions.httpcache.RFC2616Policy</span></code></li>
+</ul>
+</div>
+<div class="section" id="filesystem-storage-backend-default">
+<span id="httpcache-storage-fs"></span><h4>Filesystem storage backend (default)<a class="headerlink" href="#filesystem-storage-backend-default" title="Permalink to this headline">¶</a></h4>
+<p>File system storage backend is available for the HTTP cache middleware.</p>
+<p>In order to use this storage backend, set:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-HTTPCACHE_STORAGE"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_STORAGE</span></code></a> to <code class="docutils literal"><span class="pre">scrapy.extensions.httpcache.FilesystemCacheStorage</span></code></li>
+</ul>
+<p>Each request/response pair is stored in a different directory containing
+the following files:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">request_body</span></code> - the plain request body</li>
+<li><code class="docutils literal"><span class="pre">request_headers</span></code> - the request headers (in raw HTTP format)</li>
+<li><code class="docutils literal"><span class="pre">response_body</span></code> - the plain response body</li>
+<li><code class="docutils literal"><span class="pre">response_headers</span></code> - the request headers (in raw HTTP format)</li>
+<li><code class="docutils literal"><span class="pre">meta</span></code> - some metadata of this cache resource in Python <code class="docutils literal"><span class="pre">repr()</span></code> format
+(grep-friendly format)</li>
+<li><code class="docutils literal"><span class="pre">pickled_meta</span></code> - the same metadata in <code class="docutils literal"><span class="pre">meta</span></code> but pickled for more
+efficient deserialization</li>
+</ul>
+</div></blockquote>
+<p>The directory name is made from the request fingerprint (see
+<code class="docutils literal"><span class="pre">scrapy.utils.request.fingerprint</span></code>), and one level of subdirectories is
+used to avoid creating too many files into the same directory (which is
+inefficient in many file systems). An example directory could be:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">path</span><span class="o">/</span><span class="n">to</span><span class="o">/</span><span class="n">cache</span><span class="o">/</span><span class="nb">dir</span><span class="o">/</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="mi">72</span><span class="o">/</span><span class="mi">72811</span><span class="n">f648e718090f041317756c03adb0ada46c7</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dbm-storage-backend">
+<span id="httpcache-storage-dbm"></span><h4>DBM storage backend<a class="headerlink" href="#dbm-storage-backend" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.13.</span></p>
+</div>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Dbm">DBM</a> storage backend is also available for the HTTP cache middleware.</p>
+<p>By default, it uses the <a class="reference external" href="https://docs.python.org/2/library/anydbm.html">anydbm</a> module, but you can change it with the
+<a class="reference internal" href="#std:setting-HTTPCACHE_DBM_MODULE"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_DBM_MODULE</span></code></a> setting.</p>
+<p>In order to use this storage backend, set:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-HTTPCACHE_STORAGE"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_STORAGE</span></code></a> to <code class="docutils literal"><span class="pre">scrapy.extensions.httpcache.DbmCacheStorage</span></code></li>
+</ul>
+</div>
+<div class="section" id="leveldb-storage-backend">
+<span id="httpcache-storage-leveldb"></span><h4>LevelDB storage backend<a class="headerlink" href="#leveldb-storage-backend" title="Permalink to this headline">¶</a></h4>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.23.</span></p>
+</div>
+<p>A <a class="reference external" href="https://github.com/google/leveldb">LevelDB</a> storage backend is also available for the HTTP cache middleware.</p>
+<p>This backend is not recommended for development because only one process can
+access LevelDB databases at the same time, so you can’t run a crawl and open
+the scrapy shell in parallel for the same spider.</p>
+<p>In order to use this storage backend:</p>
+<ul class="simple">
+<li>set <a class="reference internal" href="#std:setting-HTTPCACHE_STORAGE"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_STORAGE</span></code></a> to <code class="docutils literal"><span class="pre">scrapy.extensions.httpcache.LeveldbCacheStorage</span></code></li>
+<li>install <a class="reference external" href="https://pypi.python.org/pypi/leveldb">LevelDB python bindings</a> like <code class="docutils literal"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">leveldb</span></code></li>
+</ul>
+</div>
+<div class="section" id="httpcache-middleware-settings">
+<h4>HTTPCache middleware settings<a class="headerlink" href="#httpcache-middleware-settings" title="Permalink to this headline">¶</a></h4>
+<p>The <a class="reference internal" href="#scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware" title="scrapy.downloadermiddlewares.httpcache.HttpCacheMiddleware"><code class="xref py py-class docutils literal"><span class="pre">HttpCacheMiddleware</span></code></a> can be configured through the following
+settings:</p>
+<div class="section" id="httpcache-enabled">
+<span id="std:setting-HTTPCACHE_ENABLED"></span><h5>HTTPCACHE_ENABLED<a class="headerlink" href="#httpcache-enabled" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.11.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Whether the HTTP cache will be enabled.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 0.11: </span>Before 0.11, <a class="reference internal" href="#std:setting-HTTPCACHE_DIR"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_DIR</span></code></a> was used to enable cache.</p>
+</div>
+</div>
+<div class="section" id="httpcache-expiration-secs">
+<span id="std:setting-HTTPCACHE_EXPIRATION_SECS"></span><h5>HTTPCACHE_EXPIRATION_SECS<a class="headerlink" href="#httpcache-expiration-secs" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>Expiration time for cached requests, in seconds.</p>
+<p>Cached requests older than this time will be re-downloaded. If zero, cached
+requests will never expire.</p>
+<div class="versionchanged">
+<p><span class="versionmodified">Changed in version 0.11: </span>Before 0.11, zero meant cached requests always expire.</p>
+</div>
+</div>
+<div class="section" id="httpcache-dir">
+<span id="std:setting-HTTPCACHE_DIR"></span><h5>HTTPCACHE_DIR<a class="headerlink" href="#httpcache-dir" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">'httpcache'</span></code></p>
+<p>The directory to use for storing the (low-level) HTTP cache. If empty, the HTTP
+cache will be disabled. If a relative path is given, is taken relative to the
+project data dir. For more info see: <a class="reference internal" href="commands.html#topics-project-structure"><span class="std std-ref">Default structure of Scrapy projects</span></a>.</p>
+</div>
+<div class="section" id="httpcache-ignore-http-codes">
+<span id="std:setting-HTTPCACHE_IGNORE_HTTP_CODES"></span><h5>HTTPCACHE_IGNORE_HTTP_CODES<a class="headerlink" href="#httpcache-ignore-http-codes" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.10.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">[]</span></code></p>
+<p>Don’t cache response with these HTTP codes.</p>
+</div>
+<div class="section" id="httpcache-ignore-missing">
+<span id="std:setting-HTTPCACHE_IGNORE_MISSING"></span><h5>HTTPCACHE_IGNORE_MISSING<a class="headerlink" href="#httpcache-ignore-missing" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>If enabled, requests not found in the cache will be ignored instead of downloaded.</p>
+</div>
+<div class="section" id="httpcache-ignore-schemes">
+<span id="std:setting-HTTPCACHE_IGNORE_SCHEMES"></span><h5>HTTPCACHE_IGNORE_SCHEMES<a class="headerlink" href="#httpcache-ignore-schemes" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.10.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">['file']</span></code></p>
+<p>Don’t cache responses with these URI schemes.</p>
+</div>
+<div class="section" id="httpcache-storage">
+<span id="std:setting-HTTPCACHE_STORAGE"></span><h5>HTTPCACHE_STORAGE<a class="headerlink" href="#httpcache-storage" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapy.extensions.httpcache.FilesystemCacheStorage'</span></code></p>
+<p>The class which implements the cache storage backend.</p>
+</div>
+<div class="section" id="httpcache-dbm-module">
+<span id="std:setting-HTTPCACHE_DBM_MODULE"></span><h5>HTTPCACHE_DBM_MODULE<a class="headerlink" href="#httpcache-dbm-module" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.13.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">'anydbm'</span></code></p>
+<p>The database module to use in the <a class="reference internal" href="#httpcache-storage-dbm"><span class="std std-ref">DBM storage backend</span></a>. This setting is specific to the DBM backend.</p>
+</div>
+<div class="section" id="httpcache-policy">
+<span id="std:setting-HTTPCACHE_POLICY"></span><h5>HTTPCACHE_POLICY<a class="headerlink" href="#httpcache-policy" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.18.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapy.extensions.httpcache.DummyPolicy'</span></code></p>
+<p>The class which implements the cache policy.</p>
+</div>
+<div class="section" id="httpcache-gzip">
+<span id="std:setting-HTTPCACHE_GZIP"></span><h5>HTTPCACHE_GZIP<a class="headerlink" href="#httpcache-gzip" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.0.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>If enabled, will compress all cached data with gzip.
+This setting is specific to the Filesystem backend.</p>
+</div>
+<div class="section" id="httpcache-always-store">
+<span id="std:setting-HTTPCACHE_ALWAYS_STORE"></span><h5>HTTPCACHE_ALWAYS_STORE<a class="headerlink" href="#httpcache-always-store" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.1.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>If enabled, will cache pages unconditionally.</p>
+<p>A spider may wish to have all responses available in the cache, for
+future use with <cite>Cache-Control: max-stale</cite>, for instance. The
+DummyPolicy caches all responses but never revalidates them, and
+sometimes a more nuanced policy is desirable.</p>
+<p>This setting still respects <cite>Cache-Control: no-store</cite> directives in responses.
+If you don’t want that, filter <cite>no-store</cite> out of the Cache-Control headers in
+responses you feedto the cache middleware.</p>
+</div>
+<div class="section" id="httpcache-ignore-response-cache-controls">
+<span id="std:setting-HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS"></span><h5>HTTPCACHE_IGNORE_RESPONSE_CACHE_CONTROLS<a class="headerlink" href="#httpcache-ignore-response-cache-controls" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 1.1.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">[]</span></code></p>
+<p>List of Cache-Control directives in responses to be ignored.</p>
+<p>Sites often set “no-store”, “no-cache”, “must-revalidate”, etc., but get
+upset at the traffic a spider can generate if it respects those
+directives. This allows to selectively ignore Cache-Control directives
+that are known to be unimportant for the sites being crawled.</p>
+<p>We assume that the spider will not issue Cache-Control directives
+in requests unless it actually needs them, so directives in requests are
+not filtered.</p>
+</div>
+</div>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.httpcompression">
+<span id="httpcompressionmiddleware"></span><h3>HttpCompressionMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.httpcompression" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.httpcompression.</code><code class="descname">HttpCompressionMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.httpcompression.HttpCompressionMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware allows compressed (gzip, deflate) traffic to be
+sent/received from web sites.</p>
+<p>This middleware also supports decoding <a class="reference external" href="https://www.ietf.org/rfc/rfc7932.txt">brotli-compressed</a> responses,
+provided <a class="reference external" href="https://pypi.python.org/pypi/brotlipy">brotlipy</a> is installed.</p>
+</dd></dl>
+
+<div class="section" id="httpcompressionmiddleware-settings">
+<h4>HttpCompressionMiddleware Settings<a class="headerlink" href="#httpcompressionmiddleware-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="compression-enabled">
+<span id="std:setting-COMPRESSION_ENABLED"></span><h5>COMPRESSION_ENABLED<a class="headerlink" href="#compression-enabled" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether the Compression middleware will be enabled.</p>
+</div>
+</div>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.httpproxy">
+<span id="httpproxymiddleware"></span><h3>HttpProxyMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.httpproxy" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.8.</span></p>
+</div>
+<span class="target" id="std:reqmeta-proxy"></span><dl class="class">
+<dt id="scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.httpproxy.</code><code class="descname">HttpProxyMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware sets the HTTP proxy to use for requests, by setting the
+<code class="docutils literal"><span class="pre">proxy</span></code> meta value for <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> objects.</p>
+<p>Like the Python standard library modules <a class="reference external" href="https://docs.python.org/2/library/urllib.html">urllib</a> and <a class="reference external" href="https://docs.python.org/2/library/urllib2.html">urllib2</a>, it obeys
+the following environment variables:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">http_proxy</span></code></li>
+<li><code class="docutils literal"><span class="pre">https_proxy</span></code></li>
+<li><code class="docutils literal"><span class="pre">no_proxy</span></code></li>
+</ul>
+<p>You can also set the meta key <code class="docutils literal"><span class="pre">proxy</span></code> per-request, to a value like
+<code class="docutils literal"><span class="pre">http://some_proxy_server:port</span></code> or <code class="docutils literal"><span class="pre">http://username:password@some_proxy_server:port</span></code>.
+Keep in mind this value will take precedence over <code class="docutils literal"><span class="pre">http_proxy</span></code>/<code class="docutils literal"><span class="pre">https_proxy</span></code>
+environment variables, and it will also ignore <code class="docutils literal"><span class="pre">no_proxy</span></code> environment variable.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.redirect">
+<span id="redirectmiddleware"></span><h3>RedirectMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.redirect" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.redirect.RedirectMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.redirect.</code><code class="descname">RedirectMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.redirect.RedirectMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware handles redirection of requests based on response status.</p>
+</dd></dl>
+
+<p id="std:reqmeta-redirect_urls">The urls which the request goes through (while being redirected) can be found
+in the <code class="docutils literal"><span class="pre">redirect_urls</span></code> <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> key.</p>
+<p>The <a class="reference internal" href="#scrapy.downloadermiddlewares.redirect.RedirectMiddleware" title="scrapy.downloadermiddlewares.redirect.RedirectMiddleware"><code class="xref py py-class docutils literal"><span class="pre">RedirectMiddleware</span></code></a> can be configured through the following
+settings (see the settings documentation for more info):</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-REDIRECT_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">REDIRECT_ENABLED</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-REDIRECT_MAX_TIMES"><code class="xref std std-setting docutils literal"><span class="pre">REDIRECT_MAX_TIMES</span></code></a></li>
+</ul>
+<p id="std:reqmeta-dont_redirect">If <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> has <code class="docutils literal"><span class="pre">dont_redirect</span></code>
+key set to True, the request will be ignored by this middleware.</p>
+<p>If you want to handle some redirect status codes in your spider, you can
+specify these in the <code class="docutils literal"><span class="pre">handle_httpstatus_list</span></code> spider attribute.</p>
+<p>For example, if you want the redirect middleware to ignore 301 and 302
+responses (and pass them through to your spider) you can do this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="n">handle_httpstatus_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">301</span><span class="p">,</span> <span class="mi">302</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">handle_httpstatus_list</span></code> key of <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> can also be used to specify which response codes to
+allow on a per-request basis. You can also set the meta key
+<code class="docutils literal"><span class="pre">handle_httpstatus_all</span></code> to <code class="docutils literal"><span class="pre">True</span></code> if you want to allow any response code
+for a request.</p>
+<div class="section" id="redirectmiddleware-settings">
+<h4>RedirectMiddleware settings<a class="headerlink" href="#redirectmiddleware-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="redirect-enabled">
+<span id="std:setting-REDIRECT_ENABLED"></span><h5>REDIRECT_ENABLED<a class="headerlink" href="#redirect-enabled" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.13.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether the Redirect middleware will be enabled.</p>
+</div>
+<div class="section" id="redirect-max-times">
+<span id="std:setting-REDIRECT_MAX_TIMES"></span><h5>REDIRECT_MAX_TIMES<a class="headerlink" href="#redirect-max-times" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">20</span></code></p>
+<p>The maximum number of redirections that will be followed for a single request.</p>
+</div>
+</div>
+</div>
+<div class="section" id="metarefreshmiddleware">
+<h3>MetaRefreshMiddleware<a class="headerlink" href="#metarefreshmiddleware" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.redirect.</code><code class="descname">MetaRefreshMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware handles redirection of requests based on meta-refresh html tag.</p>
+</dd></dl>
+
+<p>The <a class="reference internal" href="#scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware" title="scrapy.downloadermiddlewares.redirect.MetaRefreshMiddleware"><code class="xref py py-class docutils literal"><span class="pre">MetaRefreshMiddleware</span></code></a> can be configured through the following
+settings (see the settings documentation for more info):</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-METAREFRESH_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">METAREFRESH_ENABLED</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-METAREFRESH_MAXDELAY"><code class="xref std std-setting docutils literal"><span class="pre">METAREFRESH_MAXDELAY</span></code></a></li>
+</ul>
+<p>This middleware obey <a class="reference internal" href="settings.html#std:setting-REDIRECT_MAX_TIMES"><code class="xref std std-setting docutils literal"><span class="pre">REDIRECT_MAX_TIMES</span></code></a> setting, <a class="reference internal" href="#std:reqmeta-dont_redirect"><code class="xref std std-reqmeta docutils literal"><span class="pre">dont_redirect</span></code></a>
+and <a class="reference internal" href="#std:reqmeta-redirect_urls"><code class="xref std std-reqmeta docutils literal"><span class="pre">redirect_urls</span></code></a> request meta keys as described for <a class="reference internal" href="#scrapy.downloadermiddlewares.redirect.RedirectMiddleware" title="scrapy.downloadermiddlewares.redirect.RedirectMiddleware"><code class="xref py py-class docutils literal"><span class="pre">RedirectMiddleware</span></code></a></p>
+<div class="section" id="metarefreshmiddleware-settings">
+<h4>MetaRefreshMiddleware settings<a class="headerlink" href="#metarefreshmiddleware-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="metarefresh-enabled">
+<span id="std:setting-METAREFRESH_ENABLED"></span><h5>METAREFRESH_ENABLED<a class="headerlink" href="#metarefresh-enabled" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.17.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether the Meta Refresh middleware will be enabled.</p>
+</div>
+<div class="section" id="metarefresh-maxdelay">
+<span id="std:setting-METAREFRESH_MAXDELAY"></span><h5>METAREFRESH_MAXDELAY<a class="headerlink" href="#metarefresh-maxdelay" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">100</span></code></p>
+<p>The maximum meta-refresh delay (in seconds) to follow the redirection.
+Some sites use meta-refresh for redirecting to a session expired page, so we
+restrict automatic redirection to the maximum delay.</p>
+</div>
+</div>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.retry">
+<span id="retrymiddleware"></span><h3>RetryMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.retry" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.retry.RetryMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.retry.</code><code class="descname">RetryMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.retry.RetryMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>A middleware to retry failed requests that are potentially caused by
+temporary problems such as a connection timeout or HTTP 500 error.</p>
+</dd></dl>
+
+<p>Failed pages are collected on the scraping process and rescheduled at the
+end, once the spider has finished crawling all regular (non failed) pages.
+Once there are no more failed pages to retry, this middleware sends a signal
+(retry_complete), so other extensions could connect to that signal.</p>
+<p>The <a class="reference internal" href="#scrapy.downloadermiddlewares.retry.RetryMiddleware" title="scrapy.downloadermiddlewares.retry.RetryMiddleware"><code class="xref py py-class docutils literal"><span class="pre">RetryMiddleware</span></code></a> can be configured through the following
+settings (see the settings documentation for more info):</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-RETRY_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">RETRY_ENABLED</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-RETRY_TIMES"><code class="xref std std-setting docutils literal"><span class="pre">RETRY_TIMES</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-RETRY_HTTP_CODES"><code class="xref std std-setting docutils literal"><span class="pre">RETRY_HTTP_CODES</span></code></a></li>
+</ul>
+<p id="std:reqmeta-dont_retry">If <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> has <code class="docutils literal"><span class="pre">dont_retry</span></code> key
+set to True, the request will be ignored by this middleware.</p>
+<div class="section" id="retrymiddleware-settings">
+<h4>RetryMiddleware Settings<a class="headerlink" href="#retrymiddleware-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="retry-enabled">
+<span id="std:setting-RETRY_ENABLED"></span><h5>RETRY_ENABLED<a class="headerlink" href="#retry-enabled" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.13.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether the Retry middleware will be enabled.</p>
+</div>
+<div class="section" id="retry-times">
+<span id="std:setting-RETRY_TIMES"></span><h5>RETRY_TIMES<a class="headerlink" href="#retry-times" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">2</span></code></p>
+<p>Maximum number of times to retry, in addition to the first download.</p>
+<p>Maximum number of retries can also be specified per-request using
+<a class="reference internal" href="request-response.html#std:reqmeta-max_retry_times"><code class="xref std std-reqmeta docutils literal"><span class="pre">max_retry_times</span></code></a> attribute of <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a>.
+When initialized, the <a class="reference internal" href="request-response.html#std:reqmeta-max_retry_times"><code class="xref std std-reqmeta docutils literal"><span class="pre">max_retry_times</span></code></a> meta key takes higher
+precedence over the <a class="reference internal" href="#std:setting-RETRY_TIMES"><code class="xref std std-setting docutils literal"><span class="pre">RETRY_TIMES</span></code></a> setting.</p>
+</div>
+<div class="section" id="retry-http-codes">
+<span id="std:setting-RETRY_HTTP_CODES"></span><h5>RETRY_HTTP_CODES<a class="headerlink" href="#retry-http-codes" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">[500,</span> <span class="pre">502,</span> <span class="pre">503,</span> <span class="pre">504,</span> <span class="pre">408]</span></code></p>
+<p>Which HTTP response codes to retry. Other errors (DNS lookup issues,
+connections lost, etc) are always retried.</p>
+<p>In some cases you may want to add 400 to <a class="reference internal" href="#std:setting-RETRY_HTTP_CODES"><code class="xref std std-setting docutils literal"><span class="pre">RETRY_HTTP_CODES</span></code></a> because
+it is a common code used to indicate server overload. It is not included by
+default because HTTP specs say so.</p>
+</div>
+</div>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.robotstxt">
+<span id="robotstxtmiddleware"></span><span id="topics-dlmw-robots"></span><h3>RobotsTxtMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.robotstxt" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.robotstxt.</code><code class="descname">RobotsTxtMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.robotstxt.RobotsTxtMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>This middleware filters out requests forbidden by the robots.txt exclusion
+standard.</p>
+<p>To make sure Scrapy respects robots.txt make sure the middleware is enabled
+and the <a class="reference internal" href="settings.html#std:setting-ROBOTSTXT_OBEY"><code class="xref std std-setting docutils literal"><span class="pre">ROBOTSTXT_OBEY</span></code></a> setting is enabled.</p>
+</dd></dl>
+
+<p id="std:reqmeta-dont_obey_robotstxt">If <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> has
+<code class="docutils literal"><span class="pre">dont_obey_robotstxt</span></code> key set to True
+the request will be ignored by this middleware even if
+<a class="reference internal" href="settings.html#std:setting-ROBOTSTXT_OBEY"><code class="xref std std-setting docutils literal"><span class="pre">ROBOTSTXT_OBEY</span></code></a> is enabled.</p>
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.stats">
+<span id="downloaderstats"></span><h3>DownloaderStats<a class="headerlink" href="#module-scrapy.downloadermiddlewares.stats" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.stats.DownloaderStats">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.stats.</code><code class="descname">DownloaderStats</code><a class="headerlink" href="#scrapy.downloadermiddlewares.stats.DownloaderStats" title="Permalink to this definition">¶</a></dt>
+<dd><p>Middleware that stores stats of all requests, responses and exceptions that
+pass through it.</p>
+<p>To use this middleware you must enable the <a class="reference internal" href="settings.html#std:setting-DOWNLOADER_STATS"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_STATS</span></code></a>
+setting.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.useragent">
+<span id="useragentmiddleware"></span><h3>UserAgentMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.useragent" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.useragent.UserAgentMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.useragent.</code><code class="descname">UserAgentMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.useragent.UserAgentMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Middleware that allows spiders to override the default user agent.</p>
+<p>In order for a spider to override the default user agent, its <cite>user_agent</cite>
+attribute must be set.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.downloadermiddlewares.ajaxcrawl">
+<span id="ajaxcrawlmiddleware"></span><span id="ajaxcrawl-middleware"></span><h3>AjaxCrawlMiddleware<a class="headerlink" href="#module-scrapy.downloadermiddlewares.ajaxcrawl" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.downloadermiddlewares.ajaxcrawl.</code><code class="descname">AjaxCrawlMiddleware</code><a class="headerlink" href="#scrapy.downloadermiddlewares.ajaxcrawl.AjaxCrawlMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Middleware that finds ‘AJAX crawlable’ page variants based
+on meta-fragment html tag. See
+<a class="reference external" href="https://developers.google.com/webmasters/ajax-crawling/docs/getting-started">https://developers.google.com/webmasters/ajax-crawling/docs/getting-started</a>
+for more info.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Scrapy finds ‘AJAX crawlable’ pages for URLs like
+<code class="docutils literal"><span class="pre">'http://example.com/!#foo=bar'</span></code> even without this middleware.
+AjaxCrawlMiddleware is necessary when URL doesn’t contain <code class="docutils literal"><span class="pre">'!#'</span></code>.
+This is often a case for ‘index’ or ‘main’ website pages.</p>
+</div>
+</dd></dl>
+
+<div class="section" id="ajaxcrawlmiddleware-settings">
+<h4>AjaxCrawlMiddleware Settings<a class="headerlink" href="#ajaxcrawlmiddleware-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="ajaxcrawl-enabled">
+<span id="std:setting-AJAXCRAWL_ENABLED"></span><h5>AJAXCRAWL_ENABLED<a class="headerlink" href="#ajaxcrawl-enabled" title="Permalink to this headline">¶</a></h5>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.21.</span></p>
+</div>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Whether the AjaxCrawlMiddleware will be enabled. You may want to
+enable it for <a class="reference internal" href="broad-crawls.html#topics-broad-crawls"><span class="std std-ref">broad crawls</span></a>.</p>
+</div>
+</div>
+<div class="section" id="httpproxymiddleware-settings">
+<h4>HttpProxyMiddleware settings<a class="headerlink" href="#httpproxymiddleware-settings" title="Permalink to this headline">¶</a></h4>
+<span class="target" id="std:setting-HTTPPROXY_ENABLED"></span><div class="section" id="httpproxy-enabled">
+<span id="std:setting-HTTPPROXY_AUTH_ENCODING"></span><h5>HTTPPROXY_ENABLED<a class="headerlink" href="#httpproxy-enabled" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether or not to enable the <code class="xref py py-class docutils literal"><span class="pre">HttpProxyMiddleware</span></code>.</p>
+</div>
+<div class="section" id="httpproxy-auth-encoding">
+<h5>HTTPPROXY_AUTH_ENCODING<a class="headerlink" href="#httpproxy-auth-encoding" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">"latin-1"</span></code></p>
+<p>The default encoding for proxy authentication on <code class="xref py py-class docutils literal"><span class="pre">HttpProxyMiddleware</span></code>.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="spider-middleware.html" class="btn btn-neutral float-right" title="Spider Middleware" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="architecture.html" class="btn btn-neutral" title="Architecture overview" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-cgtki7mq" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>65ac0b06</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.4
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/downloader-middleware.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/downloader-middleware.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/downloader-middleware.html">1.5</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/downloader-middleware.html">1.4</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/downloader-middleware.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/downloader-middleware.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/downloader-middleware.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/downloader-middleware.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/downloader-middleware.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/downloader-middleware.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/downloader-middleware.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/downloader-middleware.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.4/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.4/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.4/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.4/docs/topics/downloader-middleware.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.4/docs/topics/downloader-middleware.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.4.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-oyvyqlmd"></div></body></html>

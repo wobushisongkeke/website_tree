@@ -1,0 +1,541 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Scrapy at a glance — Scrapy 0.12.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.12.0 documentation" href="../index.html" />
+        <link rel="next" title="Installation guide" href="install.html" />
+        <link rel="prev" title="Scrapy 0.12 documentation" href="../index.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/intro/overview.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'intro/overview'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Scrapy at a glance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#pick-a-website">Pick a website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#define-the-data-you-want-to-scrape">Define the data you want to scrape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#write-a-spider-to-extract-the-data">Write a Spider to extract the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#run-the-spider-to-extract-the-data">Run the spider to extract the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#review-scraped-data">Review scraped data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-else">What else?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Scrapy Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/feed-exports.html">Feed exports</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/scrapyd.html">Scrapy Service (scrapyd)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-cduhhaff" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/JbEOcxjZvNSp/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/JbEOcxjZvNSp/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Scrapy at a glance</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.12/docs/intro/overview.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrapy-at-a-glance">
+<span id="intro-overview"></span><h1>Scrapy at a glance<a class="headerlink" href="#scrapy-at-a-glance" title="Permalink to this headline">¶</a></h1>
+<p>Scrapy is an application framework for crawling web sites and extracting
+structured data which can be used for a wide range of useful applications, like
+data mining, information processing or historical archival.</p>
+<p>Even though Scrapy was originally designed for <a class="reference external" href="http://en.wikipedia.org/wiki/Screen_scraping">screen scraping</a> (more
+precisely, <a class="reference external" href="http://en.wikipedia.org/wiki/Web_scraping">web scraping</a>), it can also be used to extract data using APIs
+(such as <a class="reference external" href="http://aws.amazon.com/associates/">Amazon Associates Web Services</a>) or as a general purpose web
+crawler.</p>
+<p>The purpose of this document is to introduce you to the concepts behind Scrapy
+so you can get an idea of how it works and decide if Scrapy is what you need.</p>
+<p>When you’re ready to start a project, you can <a class="reference internal" href="tutorial.html#intro-tutorial"><span>start with the tutorial</span></a>.</p>
+<div class="section" id="pick-a-website">
+<h2>Pick a website<a class="headerlink" href="#pick-a-website" title="Permalink to this headline">¶</a></h2>
+<p>So you need to extract some information from a website, but the website doesn’t
+provide any API or mechanism to access that info programmatically.  Scrapy can
+help you extract that information.</p>
+<p>Let’s say we want to extract the URL, name, description and size of all torrent
+files added today in the <a class="reference external" href="http://www.mininova.org">Mininova</a> site.</p>
+<p>The list of all torrents added today can be found on this page:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.mininova.org/today">http://www.mininova.org/today</a></div></blockquote>
+</div>
+<div class="section" id="define-the-data-you-want-to-scrape">
+<span id="intro-overview-item"></span><h2>Define the data you want to scrape<a class="headerlink" href="#define-the-data-you-want-to-scrape" title="Permalink to this headline">¶</a></h2>
+<p>The first thing is to define the data we want to scrape. In Scrapy, this is
+done through <a class="reference internal" href="../topics/items.html#topics-items"><span>Scrapy Items</span></a> (Torrent files, in this case).</p>
+<p>This would be our Item:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.item</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="k">class</span> <span class="nc">Torrent</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">size</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="write-a-spider-to-extract-the-data">
+<h2>Write a Spider to extract the data<a class="headerlink" href="#write-a-spider-to-extract-the-data" title="Permalink to this headline">¶</a></h2>
+<p>The next thing is to write a Spider which defines the start URL
+(<a class="reference external" href="http://www.mininova.org/today">http://www.mininova.org/today</a>), the rules for following links and the rules
+for extracting the data from pages.</p>
+<p>If we take a look at that page content we’ll see that all torrent URLs are like
+<a class="reference external" href="http://www.mininova.org/tor/NUMBER">http://www.mininova.org/tor/NUMBER</a> where <code class="docutils literal"><span class="pre">NUMBER</span></code> is an integer. We’ll use
+that to construct the regular expression for the links to follow: <code class="docutils literal"><span class="pre">/tor/\d+</span></code>.</p>
+<p>We’ll use <a class="reference external" href="http://www.w3.org/TR/xpath">XPath</a> for selecting the data to extract from the web page HTML
+source. Let’s take one of those torrent pages:</p>
+<blockquote>
+<div><a class="reference external" href="http://www.mininova.org/tor/2657665">http://www.mininova.org/tor/2657665</a></div></blockquote>
+<p>And look at the page HTML source to construct the XPath to select the data we
+want which is: torrent name, description and size.</p>
+<p>By looking at the page HTML source we can see that the file name is contained
+inside a <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code> tag:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>Home[2009][Eng]XviD-ovd<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>An XPath expression to extract the name could be:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//h1/text()
+</pre></div>
+</div>
+<p>And the description is contained inside a <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> tag with <code class="docutils literal"><span class="pre">id="description"</span></code>:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">h2</span><span class="p">&gt;</span>Description:<span class="p">&lt;/</span><span class="nt">h2</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"description"</span><span class="p">&gt;</span>
+"HOME" - a documentary film by Yann Arthus-Bertrand
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+***
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+<span class="p">&lt;</span><span class="nt">br</span><span class="p">/&gt;</span>
+"We are living in exceptional times. Scientists tell us that we have 10 years to change the way we live, avert the depletion of natural resources and the catastrophic evolution of the Earth's climate.
+
+...
+</pre></div>
+</div>
+<p>An XPath expression to select the description could be:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//div[@id='description']
+</pre></div>
+</div>
+<p>Finally, the file size is contained in the second <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> tag inside the <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code>
+tag with <code class="docutils literal"><span class="pre">id=specifications</span></code>:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">"specifications"</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Category:<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"/cat/4"</span><span class="p">&gt;</span>Movies<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span> <span class="ni">&amp;gt;</span> <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">"/sub/35"</span><span class="p">&gt;</span>Documentary<span class="p">&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+
+<span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">strong</span><span class="p">&gt;</span>Total size:<span class="p">&lt;/</span><span class="nt">strong</span><span class="p">&gt;</span>
+699.79<span class="ni">&amp;nbsp;</span>megabyte<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>An XPath expression to select the description could be:</p>
+<div class="highlight-none"><div class="highlight"><pre><span></span>//div[@id='specifications']/p[2]/text()[2]
+</pre></div>
+</div>
+<p>For more information about XPath see the <a class="reference external" href="http://www.w3.org/TR/xpath">XPath reference</a>.</p>
+<p>Finally, here’s the spider code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MininovaSpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'mininova.org'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'mininova.org'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.mininova.org/today'</span><span class="p">]</span>
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">[</span><span class="n">Rule</span><span class="p">(</span><span class="n">SgmlLinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="p">[</span><span class="s1">'/tor/\d+'</span><span class="p">]),</span> <span class="s1">'parse_torrent'</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">parse_torrent</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">x</span> <span class="o">=</span> <span class="n">HtmlXPathSelector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+
+        <span class="n">torrent</span> <span class="o">=</span> <span class="n">TorrentItem</span><span class="p">()</span>
+        <span class="n">torrent</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+        <span class="n">torrent</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//h1/text()"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">torrent</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//div[@id='description']"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">torrent</span><span class="p">[</span><span class="s1">'size'</span><span class="p">]</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//div[@id='info-left']/p[2]/text()[2]"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">torrent</span>
+</pre></div>
+</div>
+<p>For brevity’s sake, we intentionally left out the import statements. The
+Torrent item is <a class="reference internal" href="#intro-overview-item"><span>defined above</span></a>.</p>
+</div>
+<div class="section" id="run-the-spider-to-extract-the-data">
+<h2>Run the spider to extract the data<a class="headerlink" href="#run-the-spider-to-extract-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Finally, we’ll run the spider to crawl the site an output file
+<code class="docutils literal"><span class="pre">scraped_data.json</span></code> with the scraped data in JSON format:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy crawl mininova.org --set FEED_URI=scraped_data.json --set FEED_FORMAT=json
+</pre></div>
+</div>
+<p>This uses <a class="reference internal" href="../topics/feed-exports.html#topics-feed-exports"><span>feed exports</span></a> to generate the JSON file.
+You can easily change the export format (XML or CSV, for example) or the
+storage backend (FTP or <a class="reference external" href="http://aws.amazon.com/s3/">Amazon S3</a>, for example).</p>
+<p>You can also write an <a class="reference internal" href="../topics/item-pipeline.html#topics-item-pipeline"><span>item pipeline</span></a> to store the
+items in a database very easily.</p>
+</div>
+<div class="section" id="review-scraped-data">
+<h2>Review scraped data<a class="headerlink" href="#review-scraped-data" title="Permalink to this headline">¶</a></h2>
+<p>If you check the <code class="docutils literal"><span class="pre">scraped_data.json</span></code> file after the process finishes, you’ll
+see the scraped items there:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[{</span><span class="s2">"url"</span><span class="p">:</span> <span class="s2">"http://www.mininova.org/tor/2657665"</span><span class="p">,</span> <span class="s2">"name"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"Home[2009][Eng]XviD-ovd"</span><span class="p">],</span> <span class="s2">"description"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"HOME - a documentary film by ..."</span><span class="p">],</span> <span class="s2">"size"</span><span class="p">:</span> <span class="p">[</span><span class="s2">"699.69 megabyte"</span><span class="p">]},</span>
+<span class="c1"># ... other items ...</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+<p>You’ll notice that all field values (except for the <code class="docutils literal"><span class="pre">url</span></code> which was assigned
+directly) are actually lists. This is because the <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span>selectors</span></a> return lists. You may want to store single values, or
+perform some additional parsing/cleansing to the values. That’s what
+<a class="reference internal" href="../topics/loaders.html#topics-loaders"><span>Item Loaders</span></a> are for.</p>
+</div>
+<div class="section" id="what-else">
+<h2>What else?<a class="headerlink" href="#what-else" title="Permalink to this headline">¶</a></h2>
+<p>You’ve seen how to extract and store items from a website using Scrapy, but
+this is just the surface. Scrapy provides a lot of powerful features for making
+scraping easy and efficient, such as:</p>
+<ul class="simple">
+<li>Built-in support for <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span>selecting and extracting</span></a> data
+from HTML and XML sources</li>
+<li>Built-in support for cleaning and sanitizing the scraped data using a
+collection of reusable filters (called <a class="reference internal" href="../topics/loaders.html#topics-loaders"><span>Item Loaders</span></a>)
+shared between all the spiders.</li>
+<li>Built-in support for <a class="reference internal" href="../topics/feed-exports.html#topics-feed-exports"><span>generating feed exports</span></a> in
+multiple formats (JSON, CSV, XML) and storing them in multiple backends (FTP,
+S3, local filesystem)</li>
+<li>A media pipeline for <a class="reference internal" href="../topics/images.html#topics-images"><span>automatically downloading images</span></a>
+(or any other media) associated with the scraped items</li>
+<li>Support for <a class="reference internal" href="../index.html#extending-scrapy"><span>extending Scrapy</span></a> by plugging
+your own functionality using <a class="reference internal" href="../topics/signals.html#topics-signals"><span>signals</span></a> and a
+well-defined API (middlewares, <a class="reference internal" href="../topics/extensions.html#topics-extensions"><span>extensions</span></a>, and
+<a class="reference internal" href="../topics/item-pipeline.html#topics-item-pipeline"><span>pipelines</span></a>).</li>
+<li>Wide range of built-in middlewares and extensions for:<ul>
+<li>cookies and session handling</li>
+<li>HTTP compression</li>
+<li>HTTP authentication</li>
+<li>HTTP cache</li>
+<li>user-agent spoofing</li>
+<li>robots.txt</li>
+<li>crawl depth restriction</li>
+<li>and more</li>
+</ul>
+</li>
+<li>Robust encoding support and auto-detection, for dealing with foreign,
+non-standard and broken encoding declarations.</li>
+<li>Extensible <a class="reference internal" href="../topics/stats.html#topics-stats"><span>stats collection</span></a> for multiple spider
+metrics, useful for monitoring the performance of your spiders and detecting
+when they get broken</li>
+<li>An <a class="reference internal" href="../topics/shell.html#topics-shell"><span>Interactive shell console</span></a> for trying XPaths, very
+useful for writing and debugging your spiders</li>
+<li>A <a class="reference internal" href="../topics/scrapyd.html#topics-scrapyd"><span>System service</span></a> designed to ease the deployment and
+run of your spiders in production.</li>
+<li>A built-in <a class="reference internal" href="../topics/webservice.html#topics-webservice"><span>Web service</span></a> for monitoring and
+controlling your bot</li>
+<li>A <a class="reference internal" href="../topics/telnetconsole.html#topics-telnetconsole"><span>Telnet console</span></a> for hooking into a Python
+console running inside your Scrapy process, to introspect and debug your
+crawler</li>
+<li><a class="reference internal" href="../topics/logging.html#topics-logging"><span>Logging</span></a> facility that you can hook on to for catching
+errors during the scraping process.</li>
+</ul>
+</div>
+<div class="section" id="what-s-next">
+<h2>What’s next?<a class="headerlink" href="#what-s-next" title="Permalink to this headline">¶</a></h2>
+<p>The next obvious steps are for you to <a class="reference external" href="http://scrapy.org/download/">download Scrapy</a>, read <a class="reference internal" href="tutorial.html#intro-tutorial"><span>the
+tutorial</span></a> and join <a class="reference external" href="http://scrapy.org/community/">the community</a>. Thanks for your
+interest!</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="install.html" class="btn btn-neutral float-right" title="Installation guide" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../index.html" class="btn btn-neutral" title="Scrapy 0.12 documentation" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-v2e5bquv" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2011, Insophia.
+      
+        <span class="commit">
+          Revision <code>fac5e5ea</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.12
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.12/">pdf</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.12.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-k4pxhici"></div></body></html>

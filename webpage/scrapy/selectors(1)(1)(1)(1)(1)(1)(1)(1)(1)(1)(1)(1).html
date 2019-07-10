@@ -1,0 +1,781 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Selectors — Scrapy 0.18.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.18.4 documentation" href="../index.html" />
+        <link rel="next" title="Item Loaders" href="loaders.html" />
+        <link rel="prev" title="Link Extractors" href="link-extractors.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/selectors.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/selectors'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Selectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-selectors"><span class="toctree-expand"></span>Using selectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constructing-selectors">Constructing selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-selectors-with-xpaths">Using selectors with XPaths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-selectors-with-regular-expressions">Using selectors with regular expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nesting-selectors">Nesting selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-relative-xpaths">Working with relative XPaths</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.selector"><span class="toctree-expand"></span>Built-in XPath Selectors reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xpathselector-objects">XPathSelector objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpathselectorlist-objects">XPathSelectorList objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#htmlxpathselector-objects"><span class="toctree-expand"></span>HtmlXPathSelector objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#htmlxpathselector-examples">HtmlXPathSelector examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#xmlxpathselector-objects"><span class="toctree-expand"></span>XmlXPathSelector objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#xmlxpathselector-examples">XmlXPathSelector examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#removing-namespaces">Removing namespaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapyd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="djangoitem.html">DjangoItem</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-67c2jrh2" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Selectors</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.18/docs/topics/selectors.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="selectors">
+<span id="topics-selectors"></span><h1>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h1>
+<p>When you’re scraping web pages, the most common task you need to perform is
+to extract data from the HTML source. There are several libraries available to
+achieve this:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="http://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> is a very popular screen scraping library among Python
+programmers which constructs a Python object based on the
+structure of the HTML code and also deals with bad markup reasonably well,
+but it has one drawback: it’s slow.</li>
+<li><a class="reference external" href="http://codespeak.net/lxml/">lxml</a> is a XML parsing library (which also parses HTML) with a pythonic
+API based on <a class="reference external" href="http://docs.python.org/library/xml.etree.elementtree.html">ElementTree</a> (which is not part of the Python standard
+library).</li>
+</ul>
+</div></blockquote>
+<p>Scrapy comes with its own mechanism for extracting data. They’re called XPath
+selectors (or just “selectors”, for short) because they “select” certain parts
+of the HTML document specified by <a class="reference external" href="http://www.w3.org/TR/xpath">XPath</a> expressions.</p>
+<p><a class="reference external" href="http://www.w3.org/TR/xpath">XPath</a> is a language for selecting nodes in XML documents, which can also be used with HTML.</p>
+<p>Both <a class="reference external" href="http://codespeak.net/lxml/">lxml</a> and Scrapy Selectors are built over the <a class="reference external" href="http://xmlsoft.org/">libxml2</a> library, which
+means they’re very similar in speed and parsing accuracy.</p>
+<p>This page explains how selectors work and describes their API which is very
+small and simple, unlike the <a class="reference external" href="http://codespeak.net/lxml/">lxml</a> API which is much bigger because the
+<a class="reference external" href="http://codespeak.net/lxml/">lxml</a> library can be used for many other tasks, besides selecting markup
+documents.</p>
+<p>For a complete reference of the selectors API see the <a class="reference internal" href="#topics-selectors-ref"><span>XPath selector
+reference</span></a>.</p>
+<div class="section" id="using-selectors">
+<h2>Using selectors<a class="headerlink" href="#using-selectors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constructing-selectors">
+<h3>Constructing selectors<a class="headerlink" href="#constructing-selectors" title="Permalink to this headline">¶</a></h3>
+<p>There are two types of selectors bundled with Scrapy. Those are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#scrapy.selector.HtmlXPathSelector" title="scrapy.selector.HtmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">HtmlXPathSelector</span></code></a> - for working with HTML documents</li>
+<li><a class="reference internal" href="#scrapy.selector.XmlXPathSelector" title="scrapy.selector.XmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XmlXPathSelector</span></code></a> - for working with XML documents</li>
+</ul>
+</div></blockquote>
+<p>Both share the same selector API, and are constructed with a Response object as
+their first parameter. This is the Response they’re going to be “selecting”.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hxs</span> <span class="o">=</span> <span class="n">HtmlXPathSelector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1"># a HTML selector</span>
+<span class="n">xxs</span> <span class="o">=</span> <span class="n">XmlXPathSelector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span> <span class="c1"># a XML selector</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-selectors-with-xpaths">
+<h3>Using selectors with XPaths<a class="headerlink" href="#using-selectors-with-xpaths" title="Permalink to this headline">¶</a></h3>
+<p>To explain how to use the selectors we’ll use the <cite>Scrapy shell</cite> (which
+provides interactive testing) and an example page located in the Scrapy
+documentation server:</p>
+<blockquote>
+<div><a class="reference external" href="http://doc.scrapy.org/en/latest/_static/selectors-sample1.html">http://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></div></blockquote>
+<p id="topics-selectors-htmlcode">Here’s its HTML code:</p>
+<div class="highlight-html"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">base</span> <span class="na">href</span><span class="o">=</span><span class="s">'http://example.com/'</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Example website<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+ <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'images'</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image1.html'</span><span class="p">&gt;</span>Name: My image 1 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image1_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image2.html'</span><span class="p">&gt;</span>Name: My image 2 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image2_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image3.html'</span><span class="p">&gt;</span>Name: My image 3 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image3_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image4.html'</span><span class="p">&gt;</span>Name: My image 4 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image4_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image5.html'</span><span class="p">&gt;</span>Name: My image 5 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image5_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+ <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>First, let’s open the shell:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>scrapy shell http://doc.scrapy.org/en/latest/_static/selectors-sample1.html
+</pre></div>
+</div>
+<p>Then, after the shell loads, you’ll have some selectors already instantiated and
+ready to use.</p>
+<p>Since we’re dealing with HTML, we’ll be using the
+<a class="reference internal" href="#scrapy.selector.HtmlXPathSelector" title="scrapy.selector.HtmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">HtmlXPathSelector</span></code></a> object which is found, by default, in
+the <code class="docutils literal"><span class="pre">hxs</span></code> shell variable.</p>
+<p>So, by looking at the <a class="reference internal" href="#topics-selectors-htmlcode"><span>HTML code</span></a> of that page,
+let’s construct an XPath (using an HTML selector) for selecting the text inside
+the title tag:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span>
+<span class="go">[&lt;HtmlXPathSelector (text) xpath=//title/text()&gt;]</span>
+</pre></div>
+</div>
+<p>As you can see, the select() method returns an XPathSelectorList, which is a list of
+new selectors. This API can be used quickly for extracting nested data.</p>
+<p>To actually extract the textual data, you must call the selector <code class="docutils literal"><span class="pre">extract()</span></code>
+method, as follows:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'Example website']</span>
+</pre></div>
+</div>
+<p>Now we’re going to get the base URL and some image links:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//base/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'http://example.com/']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1.html',</span>
+<span class="go"> u'image2.html',</span>
+<span class="go"> u'image3.html',</span>
+<span class="go"> u'image4.html',</span>
+<span class="go"> u'image5.html']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/img/@src'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1_thumb.jpg',</span>
+<span class="go"> u'image2_thumb.jpg',</span>
+<span class="go"> u'image3_thumb.jpg',</span>
+<span class="go"> u'image4_thumb.jpg',</span>
+<span class="go"> u'image5_thumb.jpg']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-selectors-with-regular-expressions">
+<h3>Using selectors with regular expressions<a class="headerlink" href="#using-selectors-with-regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p>Selectors also have a <code class="docutils literal"><span class="pre">re()</span></code> method for extracting data using regular
+expressions. However, unlike using the <code class="docutils literal"><span class="pre">select()</span></code> method, the <code class="docutils literal"><span class="pre">re()</span></code> method
+does not return a list of <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> objects, so you
+can’t construct nested <code class="docutils literal"><span class="pre">.re()</span></code> calls.</p>
+<p>Here’s an example used to extract images names from the <a class="reference internal" href="#topics-selectors-htmlcode"><span>HTML code</span></a> above:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">re</span><span class="p">(</span><span class="s1">r'Name:\s*(.*)'</span><span class="p">)</span>
+<span class="go">[u'My image 1',</span>
+<span class="go"> u'My image 2',</span>
+<span class="go"> u'My image 3',</span>
+<span class="go"> u'My image 4',</span>
+<span class="go"> u'My image 5']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nesting-selectors">
+<span id="topics-selectors-nesting-selectors"></span><h3>Nesting selectors<a class="headerlink" href="#nesting-selectors" title="Permalink to this headline">¶</a></h3>
+<p>The <code class="docutils literal"><span class="pre">select()</span></code> selector method returns a list of selectors, so you can call the
+<code class="docutils literal"><span class="pre">select()</span></code> for those selectors too. Here’s an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">links</span> <span class="o">=</span> <span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">links</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'&lt;a href="image1.html"&gt;Name: My image 1 &lt;br&gt;&lt;img src="image1_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image2.html"&gt;Name: My image 2 &lt;br&gt;&lt;img src="image2_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image3.html"&gt;Name: My image 3 &lt;br&gt;&lt;img src="image3_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image4.html"&gt;Name: My image 4 &lt;br&gt;&lt;img src="image4_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image5.html"&gt;Name: My image 5 &lt;br&gt;&lt;img src="image5_thumb.jpg"&gt;&lt;/a&gt;']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
+<span class="go">        args = (index, link.select('@href').extract(), link.select('img/@src').extract())</span>
+<span class="go">        print 'Link number %d points to url %s and image %s' % args</span>
+
+<span class="go">Link number 0 points to url [u'image1.html'] and image [u'image1_thumb.jpg']</span>
+<span class="go">Link number 1 points to url [u'image2.html'] and image [u'image2_thumb.jpg']</span>
+<span class="go">Link number 2 points to url [u'image3.html'] and image [u'image3_thumb.jpg']</span>
+<span class="go">Link number 3 points to url [u'image4.html'] and image [u'image4_thumb.jpg']</span>
+<span class="go">Link number 4 points to url [u'image5.html'] and image [u'image5_thumb.jpg']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-relative-xpaths">
+<span id="topics-selectors-relative-xpaths"></span><h3>Working with relative XPaths<a class="headerlink" href="#working-with-relative-xpaths" title="Permalink to this headline">¶</a></h3>
+<p>Keep in mind that if you are nesting XPathSelectors and use an XPath that
+starts with <code class="docutils literal"><span class="pre">/</span></code>, that XPath will be absolute to the document and not relative
+to the <code class="docutils literal"><span class="pre">XPathSelector</span></code> you’re calling it from.</p>
+<p>For example, suppose you want to extract all <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> elements inside <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code>
+elements. First, you would get all <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> elements:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">divs</span> <span class="o">=</span> <span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//div'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At first, you may be tempted to use the following approach, which is wrong, as
+it actually extracts all <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> elements from the document, not only those
+inside <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> elements:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">divs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//p'</span><span class="p">)</span> <span class="c1"># this is wrong - gets all &lt;p&gt; from the whole document</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is the proper way to do it (note the dot prefixing the <code class="docutils literal"><span class="pre">.//p</span></code> XPath):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">divs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'.//p'</span><span class="p">)</span> <span class="c1"># extracts all &lt;p&gt; inside</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Another common case would be to extract all direct <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> children:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">divs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'p'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more details about relative XPaths see the <a class="reference external" href="http://www.w3.org/TR/xpath#location-paths">Location Paths</a> section in the
+XPath specification.</p>
+</div>
+</div>
+<div class="section" id="module-scrapy.selector">
+<span id="built-in-xpath-selectors-reference"></span><span id="topics-selectors-ref"></span><h2>Built-in XPath Selectors reference<a class="headerlink" href="#module-scrapy.selector" title="Permalink to this headline">¶</a></h2>
+<p>There are two types of selectors bundled with Scrapy:
+<a class="reference internal" href="#scrapy.selector.HtmlXPathSelector" title="scrapy.selector.HtmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">HtmlXPathSelector</span></code></a> and <a class="reference internal" href="#scrapy.selector.XmlXPathSelector" title="scrapy.selector.XmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XmlXPathSelector</span></code></a>. Both of them
+implement the same <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> interface. The only different is that
+one is used to process HTML data and the other XML data.</p>
+<div class="section" id="xpathselector-objects">
+<h3>XPathSelector objects<a class="headerlink" href="#xpathselector-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.selector.XPathSelector">
+<em class="property">class </em><code class="descclassname">scrapy.selector.</code><code class="descname">XPathSelector</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> object is a wrapper over response to select
+certain parts of its content.</p>
+<p><code class="docutils literal"><span class="pre">response</span></code> is a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object that will be used
+for selecting and extracting data</p>
+<dl class="method">
+<dt id="scrapy.selector.XPathSelector.select">
+<code class="descname">select</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the given XPath relative to this XPathSelector and return a list
+of <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> objects (ie. a <a class="reference internal" href="#scrapy.selector.XPathSelectorList" title="scrapy.selector.XPathSelectorList"><code class="xref py py-class docutils literal"><span class="pre">XPathSelectorList</span></code></a>) with
+the result.</p>
+<p><code class="docutils literal"><span class="pre">xpath</span></code> is a string containing the XPath to apply</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelector.re">
+<code class="descname">re</code><span class="sig-paren">(</span><em>regex</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector.re" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the given regex and return a list of unicode strings with the
+matches.</p>
+<p><code class="docutils literal"><span class="pre">regex</span></code> can be either a compiled regular expression or a string which
+will be compiled to a regular expression using <code class="docutils literal"><span class="pre">re.compile(regex)</span></code></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelector.extract">
+<code class="descname">extract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a unicode string with the content of this <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a>
+object.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelector.register_namespace">
+<code class="descname">register_namespace</code><span class="sig-paren">(</span><em>prefix</em>, <em>uri</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector.register_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register the given namespace to be used in this <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a>.
+Without registering namespaces you can’t select or extract data from
+non-standard namespaces. See examples below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelector.remove_namespaces">
+<code class="descname">remove_namespaces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector.remove_namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all namespaces, allowing to traverse the document using
+namespace-less xpaths. See example below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelector.__nonzero__">
+<code class="descname">__nonzero__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelector.__nonzero__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal"><span class="pre">True</span></code> if there is any real content selected by this
+<a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> or <code class="docutils literal"><span class="pre">False</span></code> otherwise.  In other words, the boolean
+value of an XPathSelector is given by the contents it selects.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="xpathselectorlist-objects">
+<h3>XPathSelectorList objects<a class="headerlink" href="#xpathselectorlist-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.selector.XPathSelectorList">
+<em class="property">class </em><code class="descclassname">scrapy.selector.</code><code class="descname">XPathSelectorList</code><a class="headerlink" href="#scrapy.selector.XPathSelectorList" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.selector.XPathSelectorList" title="scrapy.selector.XPathSelectorList"><code class="xref py py-class docutils literal"><span class="pre">XPathSelectorList</span></code></a> class is subclass of the builtin <code class="docutils literal"><span class="pre">list</span></code>
+class, which provides a few additional methods.</p>
+<dl class="method">
+<dt id="scrapy.selector.XPathSelectorList.select">
+<code class="descname">select</code><span class="sig-paren">(</span><em>xpath</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelectorList.select" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <a class="reference internal" href="#scrapy.selector.XPathSelector.select" title="scrapy.selector.XPathSelector.select"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.select()</span></code></a> method for all <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a>
+objects in this list and return their results flattened, as a new
+<a class="reference internal" href="#scrapy.selector.XPathSelectorList" title="scrapy.selector.XPathSelectorList"><code class="xref py py-class docutils literal"><span class="pre">XPathSelectorList</span></code></a>.</p>
+<p><code class="docutils literal"><span class="pre">xpath</span></code> is the same argument as the one in <a class="reference internal" href="#scrapy.selector.XPathSelector.select" title="scrapy.selector.XPathSelector.select"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.select()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelectorList.re">
+<code class="descname">re</code><span class="sig-paren">(</span><em>regex</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelectorList.re" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <a class="reference internal" href="#scrapy.selector.XPathSelector.re" title="scrapy.selector.XPathSelector.re"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.re()</span></code></a> method for all <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a>
+objects in this list and return their results flattened, as a list of
+unicode strings.</p>
+<p><code class="docutils literal"><span class="pre">regex</span></code> is the same argument as the one in <a class="reference internal" href="#scrapy.selector.XPathSelector.re" title="scrapy.selector.XPathSelector.re"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.re()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelectorList.extract">
+<code class="descname">extract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelectorList.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <a class="reference internal" href="#scrapy.selector.XPathSelector.extract" title="scrapy.selector.XPathSelector.extract"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.extract()</span></code></a> method for all <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a>
+objects in this list and return their results flattened, as a list of
+unicode strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.XPathSelectorList.extract_unquoted">
+<code class="descname">extract_unquoted</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XPathSelectorList.extract_unquoted" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.extract_unoquoted()</span></code> method for all
+<a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> objects in this list and return their results
+flattened, as a list of unicode strings. This method should not be applied
+to all kinds of XPathSelectors. For more info see
+<code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.extract_unoquoted()</span></code>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="htmlxpathselector-objects">
+<h3>HtmlXPathSelector objects<a class="headerlink" href="#htmlxpathselector-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.selector.HtmlXPathSelector">
+<em class="property">class </em><code class="descclassname">scrapy.selector.</code><code class="descname">HtmlXPathSelector</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.HtmlXPathSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> for working with HTML content. It uses
+the <a class="reference external" href="http://xmlsoft.org/">libxml2</a> HTML parser. See the <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> API for more info.</p>
+</dd></dl>
+
+<div class="section" id="htmlxpathselector-examples">
+<h4>HtmlXPathSelector examples<a class="headerlink" href="#htmlxpathselector-examples" title="Permalink to this headline">¶</a></h4>
+<p>Here’s a couple of <a class="reference internal" href="#scrapy.selector.HtmlXPathSelector" title="scrapy.selector.HtmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">HtmlXPathSelector</span></code></a> examples to illustrate several
+concepts.  In all cases, we assume there is already an <code class="xref py py-class docutils literal"><span class="pre">HtmlPathSelector</span></code>
+instantiated with a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">HtmlXPathSelector</span><span class="p">(</span><span class="n">html_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">Select all <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code> elements from a HTML response body, returning a list of
+<a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> objects (ie. a <a class="reference internal" href="#scrapy.selector.XPathSelectorList" title="scrapy.selector.XPathSelectorList"><code class="xref py py-class docutils literal"><span class="pre">XPathSelectorList</span></code></a> object):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//h1"</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Extract the text of all <code class="docutils literal"><span class="pre">&lt;h1&gt;</span></code> elements from a HTML response body,
+returning a list of unicode strings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//h1"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>         <span class="c1"># this includes the h1 tag</span>
+<span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//h1/text()"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>  <span class="c1"># this excludes the h1 tag</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Iterate over all <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> tags and print their class attribute:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>for node in x.select("//p"):
+...    print node.select("@href")
+</pre></div>
+</div>
+</li>
+<li><p class="first">Extract textual data from all <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> tags without entities, as a list of
+unicode strings:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//p/text()"</span><span class="p">)</span><span class="o">.</span><span class="n">extract_unquoted</span><span class="p">()</span>
+
+<span class="c1"># the following line is wrong. extract_unquoted() should only be used</span>
+<span class="c1"># with textual XPathSelectors</span>
+<span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//p"</span><span class="p">)</span><span class="o">.</span><span class="n">extract_unquoted</span><span class="p">()</span>  <span class="c1"># it may work but output is unpredictable</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="section" id="xmlxpathselector-objects">
+<h3>XmlXPathSelector objects<a class="headerlink" href="#xmlxpathselector-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.selector.XmlXPathSelector">
+<em class="property">class </em><code class="descclassname">scrapy.selector.</code><code class="descname">XmlXPathSelector</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.XmlXPathSelector" title="Permalink to this definition">¶</a></dt>
+<dd><p>A subclass of <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> for working with XML content. It uses
+the <a class="reference external" href="http://xmlsoft.org/">libxml2</a> XML parser. See the <a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> API for more info.</p>
+</dd></dl>
+
+<div class="section" id="xmlxpathselector-examples">
+<h4>XmlXPathSelector examples<a class="headerlink" href="#xmlxpathselector-examples" title="Permalink to this headline">¶</a></h4>
+<p>Here’s a couple of <a class="reference internal" href="#scrapy.selector.XmlXPathSelector" title="scrapy.selector.XmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XmlXPathSelector</span></code></a> examples to illustrate several
+concepts.  In both cases we assume there is already an <a class="reference internal" href="#scrapy.selector.XmlXPathSelector" title="scrapy.selector.XmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XmlXPathSelector</span></code></a>
+instantiated with a <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">XmlXPathSelector</span><span class="p">(</span><span class="n">xml_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">Select all <code class="docutils literal"><span class="pre">&lt;product&gt;</span></code> elements from a XML response body, returning a list of
+<a class="reference internal" href="#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a> objects (ie. a <a class="reference internal" href="#scrapy.selector.XPathSelectorList" title="scrapy.selector.XPathSelectorList"><code class="xref py py-class docutils literal"><span class="pre">XPathSelectorList</span></code></a> object):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//product"</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Extract all prices from a <a class="reference external" href="http://base.google.com/support/bin/answer.py?hl=en&amp;answer=59461">Google Base XML feed</a> which requires registering
+a namespace:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">x</span><span class="o">.</span><span class="n">register_namespace</span><span class="p">(</span><span class="s2">"g"</span><span class="p">,</span> <span class="s2">"http://base.google.com/ns/1.0"</span><span class="p">)</span>
+<span class="n">x</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//g:price"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="removing-namespaces">
+<span id="id2"></span><h4>Removing namespaces<a class="headerlink" href="#removing-namespaces" title="Permalink to this headline">¶</a></h4>
+<p>When dealing with scraping projects, it is often quite convenient to get rid of
+namespaces altogether and just work with element names, to write more
+simple/convenient XPaths. You can use the
+<a class="reference internal" href="#scrapy.selector.XPathSelector.remove_namespaces" title="scrapy.selector.XPathSelector.remove_namespaces"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.remove_namespaces()</span></code></a> method for that.</p>
+<p>Let’s show an example that illustrates this with Github blog atom feed.</p>
+<p>First, we open the shell with the url we want to scrape:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy shell https://github.com/blog.atom
+</pre></div>
+</div>
+<p>Once in the shell we can try selecting all <code class="docutils literal"><span class="pre">&lt;link&gt;</span></code> objects and see that it
+doesn’t work (because the Atom XML namespace is obfuscating those nodes):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//link"</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>But once we call the <a class="reference internal" href="#scrapy.selector.XPathSelector.remove_namespaces" title="scrapy.selector.XPathSelector.remove_namespaces"><code class="xref py py-meth docutils literal"><span class="pre">XPathSelector.remove_namespaces()</span></code></a> method, all
+nodes can be accessed directly by their names:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xxs</span><span class="o">.</span><span class="n">remove_namespaces</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s2">"//link"</span><span class="p">)</span>
+<span class="go">[&lt;XmlXPathSelector xpath='//link' data=u'&lt;link xmlns="http://www.w3.org/2005/Atom'&gt;,</span>
+<span class="go"> &lt;XmlXPathSelector xpath='//link' data=u'&lt;link xmlns="http://www.w3.org/2005/Atom'&gt;,</span>
+<span class="go"> ...</span>
+</pre></div>
+</div>
+<p>If you wonder why the namespace removal procedure is not always called, instead
+of having to call it manually. This is because of two reasons which, in order
+of relevance, are:</p>
+<ol class="arabic simple">
+<li>removing namespaces requires to iterate and modify all nodes in the
+document, which is a reasonably expensive operation to performs for all
+documents crawled by Scrapy</li>
+<li>there could be some cases where using namespaces is actually required, in
+case some element names clash between namespaces. These cases are very rare
+though.</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="loaders.html" class="btn btn-neutral float-right" title="Item Loaders" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="link-extractors.html" class="btn btn-neutral" title="Link Extractors" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-5ij73g09" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2013, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>dc43890b</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.18
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.18/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.18/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.18/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-ccnyr8wu"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/tP5TvvJUikf3/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/tP5TvvJUikf3/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/tP5TvvJUikf3/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

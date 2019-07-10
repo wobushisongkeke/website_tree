@@ -1,0 +1,749 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Scrapy Tutorial — Scrapy 0.12.0 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.12.0 documentation" href="../index.html" />
+        <link rel="next" title="Command line tool" href="../topics/commands.html" />
+        <link rel="prev" title="Installation guide" href="install.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/intro/tutorial.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'intro/tutorial'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.12
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Scrapy Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-project">Creating a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-our-item">Defining our Item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#our-first-spider"><span class="toctree-expand"></span>Our first Spider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crawling"><span class="toctree-expand"></span>Crawling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-just-happened-under-the-hood">What just happened under the hood?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-items"><span class="toctree-expand"></span>Extracting Items</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction-to-selectors">Introduction to Selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trying-selectors-in-the-shell">Trying Selectors in the Shell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-our-item">Using our item</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-the-scraped-data">Storing the scraped data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#finale">Finale</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/feed-exports.html">Feed exports</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/scrapyd.html">Scrapy Service (scrapyd)</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-84ts5abgf" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/oqV2eQXXAMqh/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/oqV2eQXXAMqh/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Scrapy Tutorial</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.12/docs/intro/tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrapy-tutorial">
+<span id="intro-tutorial"></span><h1>Scrapy Tutorial<a class="headerlink" href="#scrapy-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we’ll assume that Scrapy is already installed on your system.
+If that’s not the case, see <a class="reference internal" href="install.html#intro-install"><span>Installation guide</span></a>.</p>
+<p>We are going to use <a class="reference external" href="http://www.dmoz.org/">Open directory project (dmoz)</a> as
+our example domain to scrape.</p>
+<p>This tutorial will walk you through these tasks:</p>
+<ol class="arabic simple">
+<li>Creating a new Scrapy project</li>
+<li>Defining the Items you will extract</li>
+<li>Writing a <a class="reference internal" href="../topics/spiders.html#topics-spiders"><span>spider</span></a> to crawl a site and extract
+<a class="reference internal" href="../topics/items.html#topics-items"><span>Items</span></a></li>
+<li>Writing an <a class="reference internal" href="../topics/item-pipeline.html#topics-item-pipeline"><span>Item Pipeline</span></a> to store the
+extracted Items</li>
+</ol>
+<p>Scrapy is written in <a class="reference external" href="http://www.python.org">Python</a>. If you’re new to the language you might want to
+start by getting an idea of what the language is like, to get the most out of
+Scrapy.  If you’re already familiar with other languages, and want to learn
+Python quickly, we recommend <a class="reference external" href="http://www.diveintopython.org">Dive Into Python</a>.  If you’re new to programming
+and want to start with Python, take a look at <a class="reference external" href="http://wiki.python.org/moin/BeginnersGuide/NonProgrammers">this list of Python resources
+for non-programmers</a>.</p>
+<div class="section" id="creating-a-project">
+<h2>Creating a project<a class="headerlink" href="#creating-a-project" title="Permalink to this headline">¶</a></h2>
+<p>Before you start scraping, you will have set up a new Scrapy project. Enter a
+directory where you’d like to store your code and then run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy startproject dmoz
+</pre></div>
+</div>
+<p>This will create a <code class="docutils literal"><span class="pre">dmoz</span></code> directory with the following contents:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>dmoz/
+    scrapy.cfg
+    dmoz/
+        __init__.py
+        items.py
+        pipelines.py
+        settings.py
+        spiders/
+            __init__.py
+            ...
+</pre></div>
+</div>
+<p>These are basically:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">scrapy.cfg</span></code>: the project configuration file</li>
+<li><code class="docutils literal"><span class="pre">dmoz/</span></code>: the project’s python module, you’ll later import your code from
+here.</li>
+<li><code class="docutils literal"><span class="pre">dmoz/items.py</span></code>: the project’s items file.</li>
+<li><code class="docutils literal"><span class="pre">dmoz/pipelines.py</span></code>: the project’s pipelines file.</li>
+<li><code class="docutils literal"><span class="pre">dmoz/settings.py</span></code>: the project’s settings file.</li>
+<li><code class="docutils literal"><span class="pre">dmoz/spiders/</span></code>: a directory where you’ll later put your spiders.</li>
+</ul>
+</div>
+<div class="section" id="defining-our-item">
+<h2>Defining our Item<a class="headerlink" href="#defining-our-item" title="Permalink to this headline">¶</a></h2>
+<p><cite>Items</cite> are containers that will be loaded with the scraped data; they work
+like simple python dicts but they offer some additional features like providing
+default values.</p>
+<p>They are declared by creating an <a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">scrapy.item.Item</span></code></a> class an defining
+its attributes as <a class="reference internal" href="../topics/items.html#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">scrapy.item.Field</span></code></a> objects, like you will in an ORM
+(don’t worry if you’re not familiar with ORMs, you will see that this is an
+easy task).</p>
+<p>We begin by modeling the item that we will use to hold the sites data obtained
+from dmoz.org, as we want to capture the name, url and description of the
+sites, we define fields for each of these three attributes. To do that, we edit
+items.py, found in the dmoz directory. Our Item class looks like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="c1"># Define here the models for your scraped items</span>
+
+<span class="kn">from</span> <span class="nn">scrapy.item</span> <span class="kn">import</span> <span class="n">Item</span><span class="p">,</span> <span class="n">Field</span>
+
+<span class="k">class</span> <span class="nc">DmozItem</span><span class="p">(</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="n">Field</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This may seem complicated at first, but defining the item allows you to use other handy
+components of Scrapy that need to know how your item looks like.</p>
+</div>
+<div class="section" id="our-first-spider">
+<h2>Our first Spider<a class="headerlink" href="#our-first-spider" title="Permalink to this headline">¶</a></h2>
+<p>Spiders are user-written classes used to scrape information from a domain (or group
+of domains).</p>
+<p>They define an initial list of URLs to download, how to follow links, and how
+to parse the contents of those pages to extract <a class="reference internal" href="../topics/items.html#topics-items"><span>items</span></a>.</p>
+<p>To create a Spider, you must subclass <a class="reference internal" href="../topics/spiders.html#scrapy.spider.BaseSpider" title="scrapy.spider.BaseSpider"><code class="xref py py-class docutils literal"><span class="pre">scrapy.spider.BaseSpider</span></code></a>, and
+define the three main, mandatory, attributes:</p>
+<ul>
+<li><p class="first"><a class="reference internal" href="../topics/spiders.html#scrapy.spider.BaseSpider.name" title="scrapy.spider.BaseSpider.name"><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></a>: identifies the Spider. It must be
+unique, that is, you can’t set the same name for different Spiders.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../topics/spiders.html#scrapy.spider.BaseSpider.start_urls" title="scrapy.spider.BaseSpider.start_urls"><code class="xref py py-attr docutils literal"><span class="pre">start_urls</span></code></a>: is a list of URLs where the
+Spider will begin to crawl from.  So, the first pages downloaded will be those
+listed here. The subsequent URLs will be generated successively from data
+contained in the start URLs.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../topics/spiders.html#scrapy.spider.BaseSpider.parse" title="scrapy.spider.BaseSpider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> is a method of the spider, which will
+be called with the downloaded <a class="reference internal" href="../topics/request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object of each
+start URL. The response is passed to the method as the first and only
+argument.</p>
+<p>This method is responsible for parsing the response data and extracting
+scraped data (as scraped items) and more URLs to follow.</p>
+<p>The <a class="reference internal" href="../topics/spiders.html#scrapy.spider.BaseSpider.parse" title="scrapy.spider.BaseSpider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> method is in charge of processing
+the response and returning scraped data (as <a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a>
+objects) and more URLs to follow (as <a class="reference internal" href="../topics/request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> objects).</p>
+</li>
+</ul>
+<p>This is the code for our first Spider; save it in a file named
+<code class="docutils literal"><span class="pre">dmoz_spider.py</span></code> under the <code class="docutils literal"><span class="pre">dmoz/spiders</span></code> directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spider</span> <span class="kn">import</span> <span class="n">BaseSpider</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">BaseSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz.org"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span><span class="p">,</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span>
+        <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="crawling">
+<h3>Crawling<a class="headerlink" href="#crawling" title="Permalink to this headline">¶</a></h3>
+<p>To put our spider to work, go to the project’s top level directory and run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy crawl dmoz.org
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">crawl</span> <span class="pre">dmoz.org</span></code> command runs the spider for the <code class="docutils literal"><span class="pre">dmoz.org</span></code> domain. You
+will get an output similar to this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>2008-08-20 03:51:13-0300 [scrapy] INFO: Started project: dmoz
+2008-08-20 03:51:13-0300 [dmoz] INFO: Enabled extensions: ...
+2008-08-20 03:51:13-0300 [dmoz] INFO: Enabled scheduler middlewares: ...
+2008-08-20 03:51:13-0300 [dmoz] INFO: Enabled downloader middlewares: ...
+2008-08-20 03:51:13-0300 [dmoz] INFO: Enabled spider middlewares: ...
+2008-08-20 03:51:13-0300 [dmoz] INFO: Enabled item pipelines: ...
+2008-08-20 03:51:14-0300 [dmoz.org] INFO: Spider opened
+2008-08-20 03:51:14-0300 [dmoz.org] DEBUG: Crawled &lt;http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/&gt; (referer: &lt;None&gt;)
+2008-08-20 03:51:14-0300 [dmoz.org] DEBUG: Crawled &lt;http://www.dmoz.org/Computers/Programming/Languages/Python/Books/&gt; (referer: &lt;None&gt;)
+2008-08-20 03:51:14-0300 [dmoz.org] INFO: Spider closed (finished)
+</pre></div>
+</div>
+<p>Pay attention to the lines containing <code class="docutils literal"><span class="pre">[dmoz.org]</span></code>, which corresponds to
+our spider (identified by the domain <code class="docutils literal"><span class="pre">"dmoz.org"</span></code>). You can see a log line
+for each URL defined in <code class="docutils literal"><span class="pre">start_urls</span></code>. Because these URLs are the starting
+ones, they have no referrers, which is shown at the end of the log line,
+where it says <code class="docutils literal"><span class="pre">(referer:</span> <span class="pre">&lt;None&gt;)</span></code>.</p>
+<p>But more interesting, as our <code class="docutils literal"><span class="pre">parse</span></code> method instructs, two files have been
+created: <em>Books</em> and <em>Resources</em>, with the content of both URLs.</p>
+<div class="section" id="what-just-happened-under-the-hood">
+<h4>What just happened under the hood?<a class="headerlink" href="#what-just-happened-under-the-hood" title="Permalink to this headline">¶</a></h4>
+<p>Scrapy creates <a class="reference internal" href="../topics/request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">scrapy.http.Request</span></code></a> objects for each URL in the
+<code class="docutils literal"><span class="pre">start_urls</span></code> attribute of the Spider, and assigns them the <code class="docutils literal"><span class="pre">parse</span></code> method of
+the spider as their callback function.</p>
+<p>These Requests are scheduled, then executed, and
+<a class="reference internal" href="../topics/request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">scrapy.http.Response</span></code></a> objects are returned and then fed back to the
+spider, through the <a class="reference internal" href="../topics/spiders.html#scrapy.spider.BaseSpider.parse" title="scrapy.spider.BaseSpider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> method.</p>
+</div>
+</div>
+<div class="section" id="extracting-items">
+<h3>Extracting Items<a class="headerlink" href="#extracting-items" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="introduction-to-selectors">
+<h4>Introduction to Selectors<a class="headerlink" href="#introduction-to-selectors" title="Permalink to this headline">¶</a></h4>
+<p>There are several ways to extract data from web pages. Scrapy uses a mechanism
+based on <a class="reference external" href="http://www.w3.org/TR/xpath">XPath</a> expressions called <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span>XPath selectors</span></a>.
+For more information about selectors and other extraction mechanisms see the
+<a class="reference internal" href="../topics/selectors.html#topics-selectors"><span>XPath selectors documentation</span></a>.</p>
+<p>Here are some examples of XPath expressions and their meanings:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">/html/head/title</span></code>: selects the <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> element, inside the <code class="docutils literal"><span class="pre">&lt;head&gt;</span></code>
+element of a HTML document</li>
+<li><code class="docutils literal"><span class="pre">/html/head/title/text()</span></code>: selects the text inside the aforementioned
+<code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> element.</li>
+<li><code class="docutils literal"><span class="pre">//td</span></code>: selects all the <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements</li>
+<li><code class="docutils literal"><span class="pre">//div[@class="mine"]</span></code>: selects all <code class="docutils literal"><span class="pre">div</span></code> elements which contain an
+attribute <code class="docutils literal"><span class="pre">class="mine"</span></code></li>
+</ul>
+<p>These are just a couple of simple examples of what you can do with XPath, but
+XPath expressions are indeed much more powerful. To learn more about XPath we
+recommend <a class="reference external" href="http://www.w3schools.com/XPath/default.asp">this XPath tutorial</a>.</p>
+<p>For working with XPaths, Scrapy provides a <a class="reference internal" href="../topics/selectors.html#scrapy.selector.XPathSelector" title="scrapy.selector.XPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XPathSelector</span></code></a>
+class, which comes in two flavours, <a class="reference internal" href="../topics/selectors.html#scrapy.selector.HtmlXPathSelector" title="scrapy.selector.HtmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">HtmlXPathSelector</span></code></a>
+(for HTML data) and <a class="reference internal" href="../topics/selectors.html#scrapy.selector.XmlXPathSelector" title="scrapy.selector.XmlXPathSelector"><code class="xref py py-class docutils literal"><span class="pre">XmlXPathSelector</span></code></a> (for XML data). In
+order to use them you must instantiate the desired class with a
+<a class="reference internal" href="../topics/request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object.</p>
+<p>You can see selectors as objects that represent nodes in the document
+structure. So, the first instantiated selectors are associated to the root
+node, or the entire document.</p>
+<p>Selectors have three methods (click on the method to see the complete API
+documentation).</p>
+<ul>
+<li><p class="first"><a class="reference internal" href="../topics/selectors.html#scrapy.selector.XPathSelector.select" title="scrapy.selector.XPathSelector.select"><code class="xref py py-meth docutils literal"><span class="pre">select()</span></code></a>: returns a list of selectors, each of
+them representing the nodes selected by the xpath expression given as
+argument.</p>
+</li>
+<li><dl class="first docutils">
+<dt><a class="reference internal" href="../topics/selectors.html#scrapy.selector.XPathSelector.extract" title="scrapy.selector.XPathSelector.extract"><code class="xref py py-meth docutils literal"><span class="pre">extract()</span></code></a>: returns a unicode string with</dt>
+<dd><p class="first last">the data selected by the XPath selector.</p>
+</dd>
+</dl>
+</li>
+<li><p class="first"><a class="reference internal" href="../topics/selectors.html#scrapy.selector.XPathSelector.re" title="scrapy.selector.XPathSelector.re"><code class="xref py py-meth docutils literal"><span class="pre">re()</span></code></a>: returns a list of unicode strings
+extracted by applying the regular expression given as argument.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="trying-selectors-in-the-shell">
+<h4>Trying Selectors in the Shell<a class="headerlink" href="#trying-selectors-in-the-shell" title="Permalink to this headline">¶</a></h4>
+<p>To illustrate the use of Selectors we’re going to use the built-in <a class="reference internal" href="../topics/shell.html#topics-shell"><span>Scrapy
+shell</span></a>, which also requires IPython (an extended Python console)
+installed on your system.</p>
+<p>To start a shell, you must go to the project’s top level directory and run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy shell http://www.dmoz.org/Computers/Programming/Languages/Python/Books/
+</pre></div>
+</div>
+<p>This is what the shell looks like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>[ ... Scrapy log here ... ]
+
+[s] Available Scrapy objects:
+[s] 2010-08-19 21:45:59-0300 [default] INFO: Spider closed (finished)
+[s]   hxs        &lt;HtmlXPathSelector (http://www.dmoz.org/Computers/Programming/Languages/Python/Books/) xpath=None&gt;
+[s]   item       Item()
+[s]   request    &lt;GET http://www.dmoz.org/Computers/Programming/Languages/Python/Books/&gt;
+[s]   response   &lt;200 http://www.dmoz.org/Computers/Programming/Languages/Python/Books/&gt;
+[s]   spider     &lt;BaseSpider 'default' at 0x1b6c2d0&gt;
+[s]   xxs        &lt;XmlXPathSelector (http://www.dmoz.org/Computers/Programming/Languages/Python/Books/) xpath=None&gt;
+[s] Useful shortcuts:
+[s]   shelp()           Print this help
+[s]   fetch(req_or_url) Fetch a new request or URL and update shell objects
+[s]   view(response)    View response in a browser
+
+In [1]:
+</pre></div>
+</div>
+<p>After the shell loads, you will have the response fetched in a local
+<code class="docutils literal"><span class="pre">response</span></code> variable, so if you type <code class="docutils literal"><span class="pre">response.body</span></code> you will see the body
+of the response, or you can type <code class="docutils literal"><span class="pre">response.headers</span></code> to see its headers.</p>
+<p>The shell also instantiates two selectors, one for HTML (in the <code class="docutils literal"><span class="pre">hxs</span></code>
+variable) and one for XML (in the <code class="docutils literal"><span class="pre">xxs</span></code> variable) with this response. So let’s
+try them:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>In [1]: hxs.select('/html/head/title')
+Out[1]: [&lt;HtmlXPathSelector (title) xpath=/html/head/title&gt;]
+
+In [2]: hxs.select('/html/head/title').extract()
+Out[2]: [u'&lt;title&gt;Open Directory - Computers: Programming: Languages: Python: Books&lt;/title&gt;']
+
+In [3]: hxs.select('/html/head/title/text()')
+Out[3]: [&lt;HtmlXPathSelector (text) xpath=/html/head/title/text()&gt;]
+
+In [4]: hxs.select('/html/head/title/text()').extract()
+Out[4]: [u'Open Directory - Computers: Programming: Languages: Python: Books']
+
+In [5]: hxs.select('/html/head/title/text()').re('(\w+):')
+Out[5]: [u'Computers', u'Programming', u'Languages', u'Python']
+</pre></div>
+</div>
+</div>
+<div class="section" id="extracting-the-data">
+<h4>Extracting the data<a class="headerlink" href="#extracting-the-data" title="Permalink to this headline">¶</a></h4>
+<p>Now, let’s try to extract some real information from those pages.</p>
+<p>You could type <code class="docutils literal"><span class="pre">response.body</span></code> in the console, and inspect the source code to
+figure out the XPaths you need to use. However, inspecting the raw HTML code
+there could become a very tedious task. To make this an easier task, you can
+use some Firefox extensions like Firebug. For more information see
+<a class="reference internal" href="../topics/firebug.html#topics-firebug"><span>Using Firebug for scraping</span></a> and <a class="reference internal" href="../topics/firefox.html#topics-firefox"><span>Using Firefox for scraping</span></a>.</p>
+<p>After inspecting the page source, you’ll find that the web sites information
+is inside a <code class="docutils literal"><span class="pre">&lt;ul&gt;</span></code> element, in fact the <em>second</em> <code class="docutils literal"><span class="pre">&lt;ul&gt;</span></code> element.</p>
+<p>So we can select each <code class="docutils literal"><span class="pre">&lt;li&gt;</span></code> element belonging to the sites list with this
+code:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And from them, the sites descriptions:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The sites titles:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li/a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And the sites links:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li/a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As we said before, each <code class="docutils literal"><span class="pre">select()</span></code> call returns a list of selectors, so we can
+concatenate further <code class="docutils literal"><span class="pre">select()</span></code> calls to dig deeper into a node. We are going to use
+that property here, so:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">sites</span> <span class="o">=</span> <span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">)</span>
+<span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">:</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+    <span class="k">print</span> <span class="n">title</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">desc</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For a more detailed description of using nested selectors, see
+<a class="reference internal" href="../topics/selectors.html#topics-selectors-nesting-selectors"><span>Nesting selectors</span></a> and
+<a class="reference internal" href="../topics/selectors.html#topics-selectors-relative-xpaths"><span>Working with relative XPaths</span></a> in the <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span>XPath Selectors</span></a>
+documentation</p>
+</div>
+<p>Let’s add this code to our spider:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spider</span> <span class="kn">import</span> <span class="n">BaseSpider</span>
+<span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">HtmlXPathSelector</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">BaseSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz.org"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span><span class="p">,</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">hxs</span> <span class="o">=</span> <span class="n">HtmlXPathSelector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+        <span class="n">sites</span> <span class="o">=</span> <span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">:</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="k">print</span> <span class="n">title</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">desc</span>
+</pre></div>
+</div>
+<p>Now try crawling the dmoz.org domain again and you’ll see sites being printed
+in your output, run:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy crawl dmoz.org
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-our-item">
+<h3>Using our item<a class="headerlink" href="#using-our-item" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects are custom python dicts; you can access the
+values of their fields (attributes of the class we defined earlier) using the
+standard dict syntax like:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">item</span> <span class="o">=</span> <span class="n">DmozItem</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Example title'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span>
+<span class="go">'Example title'</span>
+</pre></div>
+</div>
+<p>Spiders are expected to return their scraped data inside
+<a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects, so to actually return the data we’ve
+scraped so far, the code for our Spider should be like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spider</span> <span class="kn">import</span> <span class="n">BaseSpider</span>
+<span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">HtmlXPathSelector</span>
+
+<span class="kn">from</span> <span class="nn">dmoz.items</span> <span class="kn">import</span> <span class="n">DmozItem</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">BaseSpider</span><span class="p">):</span>
+   <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz.org"</span>
+   <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+   <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+       <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span><span class="p">,</span>
+       <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"</span>
+   <span class="p">]</span>
+
+   <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+       <span class="n">hxs</span> <span class="o">=</span> <span class="n">HtmlXPathSelector</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>
+       <span class="n">sites</span> <span class="o">=</span> <span class="n">hxs</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">)</span>
+       <span class="n">items</span> <span class="o">=</span> <span class="p">[]</span>
+       <span class="k">for</span> <span class="n">site</span> <span class="ow">in</span> <span class="n">sites</span><span class="p">:</span>
+           <span class="n">item</span> <span class="o">=</span> <span class="n">DmozItem</span><span class="p">()</span>
+           <span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+           <span class="n">item</span><span class="p">[</span><span class="s1">'link'</span><span class="p">]</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+           <span class="n">item</span><span class="p">[</span><span class="s1">'desc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">site</span><span class="o">.</span><span class="n">select</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+           <span class="n">items</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+       <span class="k">return</span> <span class="n">items</span>
+</pre></div>
+</div>
+<p>Now doing a crawl on the dmoz.org domain yields <code class="docutils literal"><span class="pre">DmozItem</span></code>‘s:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>[dmoz.org] DEBUG: Scraped DmozItem(desc=[u' - By David Mertz; Addison Wesley. Book in progress, full text, ASCII format. Asks for feedback. [author website, Gnosis Software, Inc.]\n'], link=[u'http://gnosis.cx/TPiP/'], title=[u'Text Processing in Python']) in &lt;http://www.dmoz.org/Computers/Programming/Languages/Python/Books/&gt;
+[dmoz.org] DEBUG: Scraped DmozItem(desc=[u' - By Sean McGrath; Prentice Hall PTR, 2000, ISBN 0130211192, has CD-ROM. Methods to build XML applications fast, Python tutorial, DOM and SAX, new Pyxie open source XML processing library. [Prentice Hall PTR]\n'], link=[u'http://www.informit.com/store/product.aspx?isbn=0130211192'], title=[u'XML Processing with Python']) in &lt;http://www.dmoz.org/Computers/Programming/Languages/Python/Books/&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="storing-the-scraped-data">
+<h2>Storing the scraped data<a class="headerlink" href="#storing-the-scraped-data" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to store the scraped data is by using the <a class="reference internal" href="../topics/feed-exports.html#topics-feed-exports"><span>Feed exports</span></a>, with the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy crawl dmoz.org --set FEED_URI=items.json --set FEED_FORMAT=json
+</pre></div>
+</div>
+<p>That will generate a <code class="docutils literal"><span class="pre">items.json</span></code> file containing all scraped items,
+serialized in <a class="reference external" href="http://en.wikipedia.org/wiki/JSON">JSON</a>.</p>
+<p>In small projects (like the one in this tutorial), that should be enough.
+However, if you want to perform more complex things with the scraped items, you
+can write an <a class="reference internal" href="../topics/item-pipeline.html#topics-item-pipeline"><span>Item Pipeline</span></a>. As with Items, a
+placeholder file for Item Pipelines has been set up for you when the project is
+created, in <code class="docutils literal"><span class="pre">dmoz/pipelines.py</span></code>. Though you don’t need to implement any item
+pipeline if you just want to store the scraped items.</p>
+</div>
+<div class="section" id="finale">
+<h2>Finale<a class="headerlink" href="#finale" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial covers only the basics of Scrapy, but there’s a lot of other
+features not mentioned here. We recommend you continue reading the section
+<a class="reference internal" href="../index.html#topics-index"><span>Scrapy 0.12 documentation</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../topics/commands.html" class="btn btn-neutral float-right" title="Command line tool" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral" title="Installation guide" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-dhfiqytri" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2011, Insophia.
+      
+        <span class="commit">
+          Revision <code>fac5e5ea</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.12
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.12/">pdf</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.12.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-p5as5cy4"></div></body></html>

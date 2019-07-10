@@ -1,0 +1,816 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Feed exports — Scrapy 1.5.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Requests and Responses" href="request-response.html" />
+    <link rel="prev" title="Item Pipeline" href="item-pipeline.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/feed-exports.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/feed-exports'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Feed exports</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#serialization-formats"><span class="toctree-expand"></span>Serialization formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#json">JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#json-lines">JSON lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#csv">CSV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xml">XML</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pickle">Pickle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#marshal">Marshal</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#storages">Storages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storage-uri-parameters">Storage URI parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storage-backends"><span class="toctree-expand"></span>Storage backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#local-filesystem">Local filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#ftp">FTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#s3">S3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#standard-output">Standard output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#settings"><span class="toctree-expand"></span>Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#feed-uri">FEED_URI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-format">FEED_FORMAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-export-encoding">FEED_EXPORT_ENCODING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-export-fields">FEED_EXPORT_FIELDS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-export-indent">FEED_EXPORT_INDENT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-store-empty">FEED_STORE_EMPTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-storages">FEED_STORAGES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-storages-base">FEED_STORAGES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-exporters">FEED_EXPORTERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#feed-exporters-base">FEED_EXPORTERS_BASE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-kwl9s9r5" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Feed exports</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/feed-exports.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/topics/feed-exports.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="feed-exports">
+<span id="topics-feed-exports"></span><h1>Feed exports<a class="headerlink" href="#feed-exports" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.10.</span></p>
+</div>
+<p>One of the most frequently required features when implementing scrapers is
+being able to store the scraped data properly and, quite often, that means
+generating an “export file” with the scraped data (commonly called “export
+feed”) to be consumed by other systems.</p>
+<p>Scrapy provides this functionality out of the box with the Feed Exports, which
+allows you to generate a feed with the scraped items, using multiple
+serialization formats and storage backends.</p>
+<div class="section" id="serialization-formats">
+<span id="topics-feed-format"></span><h2>Serialization formats<a class="headerlink" href="#serialization-formats" title="Permalink to this headline">¶</a></h2>
+<p>For serializing the scraped data, the feed exports use the <a class="reference internal" href="exporters.html#topics-exporters"><span class="std std-ref">Item exporters</span></a>. These formats are supported out of the box:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#topics-feed-format-json"><span class="std std-ref">JSON</span></a></li>
+<li><a class="reference internal" href="#topics-feed-format-jsonlines"><span class="std std-ref">JSON lines</span></a></li>
+<li><a class="reference internal" href="#topics-feed-format-csv"><span class="std std-ref">CSV</span></a></li>
+<li><a class="reference internal" href="#topics-feed-format-xml"><span class="std std-ref">XML</span></a></li>
+</ul>
+</div></blockquote>
+<p>But you can also extend the supported format through the
+<a class="reference internal" href="#std:setting-FEED_EXPORTERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORTERS</span></code></a> setting.</p>
+<div class="section" id="json">
+<span id="topics-feed-format-json"></span><h3>JSON<a class="headerlink" href="#json" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a>: <code class="docutils literal notranslate"><span class="pre">json</span></code></li>
+<li>Exporter used: <a class="reference internal" href="exporters.html#scrapy.exporters.JsonItemExporter" title="scrapy.exporters.JsonItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonItemExporter</span></code></a></li>
+<li>See <a class="reference internal" href="exporters.html#json-with-large-data"><span class="std std-ref">this warning</span></a> if you’re using JSON with
+large feeds.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="json-lines">
+<span id="topics-feed-format-jsonlines"></span><h3>JSON lines<a class="headerlink" href="#json-lines" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a>: <code class="docutils literal notranslate"><span class="pre">jsonlines</span></code></li>
+<li>Exporter used: <a class="reference internal" href="exporters.html#scrapy.exporters.JsonLinesItemExporter" title="scrapy.exporters.JsonLinesItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonLinesItemExporter</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="csv">
+<span id="topics-feed-format-csv"></span><h3>CSV<a class="headerlink" href="#csv" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a>: <code class="docutils literal notranslate"><span class="pre">csv</span></code></li>
+<li>Exporter used: <a class="reference internal" href="exporters.html#scrapy.exporters.CsvItemExporter" title="scrapy.exporters.CsvItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvItemExporter</span></code></a></li>
+<li>To specify columns to export and their order use
+<a class="reference internal" href="#std:setting-FEED_EXPORT_FIELDS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORT_FIELDS</span></code></a>. Other feed exporters can also use this
+option, but it is important for CSV because unlike many other export
+formats CSV uses a fixed header.</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="xml">
+<span id="topics-feed-format-xml"></span><h3>XML<a class="headerlink" href="#xml" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a>: <code class="docutils literal notranslate"><span class="pre">xml</span></code></li>
+<li>Exporter used: <a class="reference internal" href="exporters.html#scrapy.exporters.XmlItemExporter" title="scrapy.exporters.XmlItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlItemExporter</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="pickle">
+<span id="topics-feed-format-pickle"></span><h3>Pickle<a class="headerlink" href="#pickle" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a>: <code class="docutils literal notranslate"><span class="pre">pickle</span></code></li>
+<li>Exporter used: <a class="reference internal" href="exporters.html#scrapy.exporters.PickleItemExporter" title="scrapy.exporters.PickleItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">PickleItemExporter</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="marshal">
+<span id="topics-feed-format-marshal"></span><h3>Marshal<a class="headerlink" href="#marshal" title="Permalink to this headline">¶</a></h3>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a>: <code class="docutils literal notranslate"><span class="pre">marshal</span></code></li>
+<li>Exporter used: <code class="xref py py-class docutils literal notranslate"><span class="pre">MarshalItemExporter</span></code></li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="storages">
+<span id="topics-feed-storage"></span><h2>Storages<a class="headerlink" href="#storages" title="Permalink to this headline">¶</a></h2>
+<p>When using the feed exports you define where to store the feed using a <a class="reference external" href="https://en.wikipedia.org/wiki/Uniform_Resource_Identifier">URI</a>
+(through the <a class="reference internal" href="#std:setting-FEED_URI"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_URI</span></code></a> setting). The feed exports supports multiple
+storage backend types which are defined by the URI scheme.</p>
+<p>The storages backends supported out of the box are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#topics-feed-storage-fs"><span class="std std-ref">Local filesystem</span></a></li>
+<li><a class="reference internal" href="#topics-feed-storage-ftp"><span class="std std-ref">FTP</span></a></li>
+<li><a class="reference internal" href="#topics-feed-storage-s3"><span class="std std-ref">S3</span></a> (requires <a class="reference external" href="https://github.com/boto/botocore">botocore</a> or <a class="reference external" href="https://github.com/boto/boto">boto</a>)</li>
+<li><a class="reference internal" href="#topics-feed-storage-stdout"><span class="std std-ref">Standard output</span></a></li>
+</ul>
+</div></blockquote>
+<p>Some storage backends may be unavailable if the required external libraries are
+not available. For example, the S3 backend is only available if the <a class="reference external" href="https://github.com/boto/botocore">botocore</a>
+or <a class="reference external" href="https://github.com/boto/boto">boto</a> library is installed (Scrapy supports <a class="reference external" href="https://github.com/boto/boto">boto</a> only on Python 2).</p>
+</div>
+<div class="section" id="storage-uri-parameters">
+<span id="topics-feed-uri-params"></span><h2>Storage URI parameters<a class="headerlink" href="#storage-uri-parameters" title="Permalink to this headline">¶</a></h2>
+<p>The storage URI can also contain parameters that get replaced when the feed is
+being created. These parameters are:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">%(time)s</span></code> - gets replaced by a timestamp when the feed is being created</li>
+<li><code class="docutils literal notranslate"><span class="pre">%(name)s</span></code> - gets replaced by the spider name</li>
+</ul>
+</div></blockquote>
+<p>Any other named parameter gets replaced by the spider attribute of the same
+name. For example, <code class="docutils literal notranslate"><span class="pre">%(site_id)s</span></code> would get replaced by the <code class="docutils literal notranslate"><span class="pre">spider.site_id</span></code>
+attribute the moment the feed is being created.</p>
+<p>Here are some examples to illustrate:</p>
+<blockquote>
+<div><ul class="simple">
+<li>Store in FTP using one directory per spider:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">ftp://user:password@ftp.example.com/scraping/feeds/%(name)s/%(time)s.json</span></code></li>
+</ul>
+</li>
+<li>Store in S3 using one directory per spider:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">s3://mybucket/scraping/feeds/%(name)s/%(time)s.json</span></code></li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="storage-backends">
+<span id="topics-feed-storage-backends"></span><h2>Storage backends<a class="headerlink" href="#storage-backends" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="local-filesystem">
+<span id="topics-feed-storage-fs"></span><h3>Local filesystem<a class="headerlink" href="#local-filesystem" title="Permalink to this headline">¶</a></h3>
+<p>The feeds are stored in the local filesystem.</p>
+<blockquote>
+<div><ul class="simple">
+<li>URI scheme: <code class="docutils literal notranslate"><span class="pre">file</span></code></li>
+<li>Example URI: <code class="docutils literal notranslate"><span class="pre">file:///tmp/export.csv</span></code></li>
+<li>Required external libraries: none</li>
+</ul>
+</div></blockquote>
+<p>Note that for the local filesystem storage (only) you can omit the scheme if
+you specify an absolute path like <code class="docutils literal notranslate"><span class="pre">/tmp/export.csv</span></code>. This only works on Unix
+systems though.</p>
+</div>
+<div class="section" id="ftp">
+<span id="topics-feed-storage-ftp"></span><h3>FTP<a class="headerlink" href="#ftp" title="Permalink to this headline">¶</a></h3>
+<p>The feeds are stored in a FTP server.</p>
+<blockquote>
+<div><ul class="simple">
+<li>URI scheme: <code class="docutils literal notranslate"><span class="pre">ftp</span></code></li>
+<li>Example URI: <code class="docutils literal notranslate"><span class="pre">ftp://user:pass@ftp.example.com/path/to/export.csv</span></code></li>
+<li>Required external libraries: none</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="s3">
+<span id="topics-feed-storage-s3"></span><h3>S3<a class="headerlink" href="#s3" title="Permalink to this headline">¶</a></h3>
+<p>The feeds are stored on <a class="reference external" href="https://aws.amazon.com/s3/">Amazon S3</a>.</p>
+<blockquote>
+<div><ul class="simple">
+<li>URI scheme: <code class="docutils literal notranslate"><span class="pre">s3</span></code></li>
+<li>Example URIs:<ul>
+<li><code class="docutils literal notranslate"><span class="pre">s3://mybucket/path/to/export.csv</span></code></li>
+<li><code class="docutils literal notranslate"><span class="pre">s3://aws_key:aws_secret@mybucket/path/to/export.csv</span></code></li>
+</ul>
+</li>
+<li>Required external libraries: <a class="reference external" href="https://github.com/boto/botocore">botocore</a> (Python 2 and Python 3) or <a class="reference external" href="https://github.com/boto/boto">boto</a> (Python 2 only)</li>
+</ul>
+</div></blockquote>
+<p>The AWS credentials can be passed as user/password in the URI, or they can be
+passed through the following settings:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="settings.html#std:setting-AWS_ACCESS_KEY_ID"><code class="xref std std-setting docutils literal notranslate"><span class="pre">AWS_ACCESS_KEY_ID</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-AWS_SECRET_ACCESS_KEY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">AWS_SECRET_ACCESS_KEY</span></code></a></li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="standard-output">
+<span id="topics-feed-storage-stdout"></span><h3>Standard output<a class="headerlink" href="#standard-output" title="Permalink to this headline">¶</a></h3>
+<p>The feeds are written to the standard output of the Scrapy process.</p>
+<blockquote>
+<div><ul class="simple">
+<li>URI scheme: <code class="docutils literal notranslate"><span class="pre">stdout</span></code></li>
+<li>Example URI: <code class="docutils literal notranslate"><span class="pre">stdout:</span></code></li>
+<li>Required external libraries: none</li>
+</ul>
+</div></blockquote>
+</div>
+</div>
+<div class="section" id="settings">
+<h2>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h2>
+<p>These are the settings used for configuring the feed exports:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="#std:setting-FEED_URI"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_URI</span></code></a> (mandatory)</li>
+<li><a class="reference internal" href="#std:setting-FEED_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_FORMAT</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-FEED_STORAGES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_STORAGES</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-FEED_EXPORTERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORTERS</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-FEED_STORE_EMPTY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_STORE_EMPTY</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-FEED_EXPORT_ENCODING"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORT_ENCODING</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-FEED_EXPORT_FIELDS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORT_FIELDS</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-FEED_EXPORT_INDENT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORT_INDENT</span></code></a></li>
+</ul>
+</div></blockquote>
+<div class="section" id="feed-uri">
+<span id="std:setting-FEED_URI"></span><h3>FEED_URI<a class="headerlink" href="#feed-uri" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<p>The URI of the export feed. See <a class="reference internal" href="#topics-feed-storage-backends"><span class="std std-ref">Storage backends</span></a> for
+supported URI schemes.</p>
+<p>This setting is required for enabling the feed exports.</p>
+</div>
+<div class="section" id="feed-format">
+<span id="std:setting-FEED_FORMAT"></span><h3>FEED_FORMAT<a class="headerlink" href="#feed-format" title="Permalink to this headline">¶</a></h3>
+<p>The serialization format to be used for the feed. See
+<a class="reference internal" href="#topics-feed-format"><span class="std std-ref">Serialization formats</span></a> for possible values.</p>
+</div>
+<div class="section" id="feed-export-encoding">
+<span id="std:setting-FEED_EXPORT_ENCODING"></span><h3>FEED_EXPORT_ENCODING<a class="headerlink" href="#feed-export-encoding" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<p>The encoding to be used for the feed.</p>
+<p>If unset or set to <code class="docutils literal notranslate"><span class="pre">None</span></code> (default) it uses UTF-8 for everything except JSON output,
+which uses safe numeric encoding (<code class="docutils literal notranslate"><span class="pre">\uXXXX</span></code> sequences) for historic reasons.</p>
+<p>Use <code class="docutils literal notranslate"><span class="pre">utf-8</span></code> if you want UTF-8 for JSON too.</p>
+</div>
+<div class="section" id="feed-export-fields">
+<span id="std:setting-FEED_EXPORT_FIELDS"></span><h3>FEED_EXPORT_FIELDS<a class="headerlink" href="#feed-export-fields" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<p>A list of fields to export, optional.
+Example: <code class="docutils literal notranslate"><span class="pre">FEED_EXPORT_FIELDS</span> <span class="pre">=</span> <span class="pre">["foo",</span> <span class="pre">"bar",</span> <span class="pre">"baz"]</span></code>.</p>
+<p>Use FEED_EXPORT_FIELDS option to define fields to export and their order.</p>
+<p>When FEED_EXPORT_FIELDS is empty or None (default), Scrapy uses fields
+defined in dicts or <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> subclasses a spider is yielding.</p>
+<p>If an exporter requires a fixed set of fields (this is the case for
+<a class="reference internal" href="#topics-feed-format-csv"><span class="std std-ref">CSV</span></a> export format) and FEED_EXPORT_FIELDS
+is empty or None, then Scrapy tries to infer field names from the
+exported data - currently it uses field names from the first item.</p>
+</div>
+<div class="section" id="feed-export-indent">
+<span id="std:setting-FEED_EXPORT_INDENT"></span><h3>FEED_EXPORT_INDENT<a class="headerlink" href="#feed-export-indent" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">0</span></code></p>
+<p>Amount of spaces used to indent the output on each level. If <code class="docutils literal notranslate"><span class="pre">FEED_EXPORT_INDENT</span></code>
+is a non-negative integer, then array elements and object members will be pretty-printed
+with that indent level. An indent level of <code class="docutils literal notranslate"><span class="pre">0</span></code> (the default), or negative,
+will put each item on a new line. <code class="docutils literal notranslate"><span class="pre">None</span></code> selects the most compact representation.</p>
+<p>Currently implemented only by <a class="reference internal" href="exporters.html#scrapy.exporters.JsonItemExporter" title="scrapy.exporters.JsonItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonItemExporter</span></code></a>
+and <a class="reference internal" href="exporters.html#scrapy.exporters.XmlItemExporter" title="scrapy.exporters.XmlItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlItemExporter</span></code></a>, i.e. when you are exporting
+to <code class="docutils literal notranslate"><span class="pre">.json</span></code> or <code class="docutils literal notranslate"><span class="pre">.xml</span></code>.</p>
+</div>
+<div class="section" id="feed-store-empty">
+<span id="std:setting-FEED_STORE_EMPTY"></span><h3>FEED_STORE_EMPTY<a class="headerlink" href="#feed-store-empty" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">False</span></code></p>
+<p>Whether to export empty feeds (ie. feeds with no items).</p>
+</div>
+<div class="section" id="feed-storages">
+<span id="std:setting-FEED_STORAGES"></span><h3>FEED_STORAGES<a class="headerlink" href="#feed-storages" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">{}</span></code></p>
+<p>A dict containing additional feed storage backends supported by your project.
+The keys are URI schemes and the values are paths to storage classes.</p>
+</div>
+<div class="section" id="feed-storages-base">
+<span id="std:setting-FEED_STORAGES_BASE"></span><h3>FEED_STORAGES_BASE<a class="headerlink" href="#feed-storages-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">''</span><span class="p">:</span> <span class="s1">'scrapy.extensions.feedexport.FileFeedStorage'</span><span class="p">,</span>
+    <span class="s1">'file'</span><span class="p">:</span> <span class="s1">'scrapy.extensions.feedexport.FileFeedStorage'</span><span class="p">,</span>
+    <span class="s1">'stdout'</span><span class="p">:</span> <span class="s1">'scrapy.extensions.feedexport.StdoutFeedStorage'</span><span class="p">,</span>
+    <span class="s1">'s3'</span><span class="p">:</span> <span class="s1">'scrapy.extensions.feedexport.S3FeedStorage'</span><span class="p">,</span>
+    <span class="s1">'ftp'</span><span class="p">:</span> <span class="s1">'scrapy.extensions.feedexport.FTPFeedStorage'</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A dict containing the built-in feed storage backends supported by Scrapy. You
+can disable any of these backends by assigning <code class="docutils literal notranslate"><span class="pre">None</span></code> to their URI scheme in
+<a class="reference internal" href="#std:setting-FEED_STORAGES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_STORAGES</span></code></a>. E.g., to disable the built-in FTP storage backend
+(without replacement), place this in your <code class="docutils literal notranslate"><span class="pre">settings.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FEED_STORAGES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'ftp'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="feed-exporters">
+<span id="std:setting-FEED_EXPORTERS"></span><h3>FEED_EXPORTERS<a class="headerlink" href="#feed-exporters" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">{}</span></code></p>
+<p>A dict containing additional exporters supported by your project. The keys are
+serialization formats and the values are paths to <a class="reference internal" href="exporters.html#topics-exporters"><span class="std std-ref">Item exporter</span></a> classes.</p>
+</div>
+<div class="section" id="feed-exporters-base">
+<span id="std:setting-FEED_EXPORTERS_BASE"></span><h3>FEED_EXPORTERS_BASE<a class="headerlink" href="#feed-exporters-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'json'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.JsonItemExporter'</span><span class="p">,</span>
+    <span class="s1">'jsonlines'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.JsonLinesItemExporter'</span><span class="p">,</span>
+    <span class="s1">'jl'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.JsonLinesItemExporter'</span><span class="p">,</span>
+    <span class="s1">'csv'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.CsvItemExporter'</span><span class="p">,</span>
+    <span class="s1">'xml'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.XmlItemExporter'</span><span class="p">,</span>
+    <span class="s1">'marshal'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.MarshalItemExporter'</span><span class="p">,</span>
+    <span class="s1">'pickle'</span><span class="p">:</span> <span class="s1">'scrapy.exporters.PickleItemExporter'</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A dict containing the built-in feed exporters supported by Scrapy. You can
+disable any of these exporters by assigning <code class="docutils literal notranslate"><span class="pre">None</span></code> to their serialization
+format in <a class="reference internal" href="#std:setting-FEED_EXPORTERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">FEED_EXPORTERS</span></code></a>. E.g., to disable the built-in CSV exporter
+(without replacement), place this in your <code class="docutils literal notranslate"><span class="pre">settings.py</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">FEED_EXPORTERS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'csv'</span><span class="p">:</span> <span class="kc">None</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="request-response.html" class="btn btn-neutral float-right" title="Requests and Responses" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="item-pipeline.html" class="btn btn-neutral" title="Item Pipeline" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-f31cb7lr" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>2ff27774</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/feed-exports.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/feed-exports.html">1.6</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/feed-exports.html">1.5</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/feed-exports.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/feed-exports.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/feed-exports.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/feed-exports.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/feed-exports.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/feed-exports.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/feed-exports.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/feed-exports.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/feed-exports.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.5/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.5/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.5/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/feed-exports.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.5/docs/topics/feed-exports.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.5.2',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-6y1tkflb"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/548/EQv5Iy7zSd0C/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/548/EQv5Iy7zSd0C/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/548/EQv5Iy7zSd0C/" rel="nofollow" target="_blank">Hiring Python devs? Read the Docs can help!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

@@ -1,0 +1,857 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head>
+    <meta charset="utf-8" />
+
+    <title>Scrapy | Resources</title>
+    <meta name="description" content="" />
+	<link rel="apple-touch-icon" sizes="57x57" href="/favicons/apple-touch-icon-57x57.png" />
+	<link rel="apple-touch-icon" sizes="114x114" href="/favicons/apple-touch-icon-114x114.png" />
+	<link rel="apple-touch-icon" sizes="72x72" href="/favicons/apple-touch-icon-72x72.png" />
+	<link rel="apple-touch-icon" sizes="144x144" href="/favicons/apple-touch-icon-144x144.png" />
+	<link rel="apple-touch-icon" sizes="60x60" href="/favicons/apple-touch-icon-60x60.png" />
+	<link rel="apple-touch-icon" sizes="120x120" href="/favicons/apple-touch-icon-120x120.png" />
+	<link rel="apple-touch-icon" sizes="76x76" href="/favicons/apple-touch-icon-76x76.png" />
+	<link rel="apple-touch-icon" sizes="152x152" href="/favicons/apple-touch-icon-152x152.png" />
+	<link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon-180x180.png" />
+	<link rel="icon" type="image/png" href="/favicons/favicon-192x192.png" sizes="192x192" />
+	<link rel="icon" type="image/png" href="/favicons/favicon-160x160.png" sizes="160x160" />
+	<link rel="icon" type="image/png" href="/favicons/favicon-96x96.png" sizes="96x96" />
+	<link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16" />
+	<link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32" />
+	<meta name="msapplication-TileColor" content="#da532c" />
+	<meta name="msapplication-TileImage" content="/favicons/mstile-144x144.png" />
+    <meta name="viewport" content="width=980" />
+
+    <link rel="stylesheet" href="/css/main.css" />
+    <link rel="stylesheet" href="/css/font-awesome.min.css" />
+
+    <link href="https://fonts.googleapis.com/css?family=Bitter:400,700,400italic" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Bitter" rel="stylesheet" type="text/css" />
+	<script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script id="twitter-wjs" src="https://platform.twitter.com/widgets.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script>
+(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+})(window,document,'script','https://www.google-analytics.com/analytics.js','gaScrapy');
+
+gaScrapy('create', 'UA-10231918-1', 'auto');
+gaScrapy('send', 'pageview');
+</script>
+
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+    <meta name="google-site-verification" content="yxZDsO9N9GjO2Bf5VnB6WlCJyg4-TH6NDIDQgxLv1f4" />
+
+</head>
+
+
+  <body>
+
+    <div class="header">
+
+<div class="container">
+
+  <a href="https://scrapy.org" id="link-logo"><div class="logo"></div></a>
+
+
+
+  
+    <input class="menu-toggle" id="menu-toggle" type="checkbox" />
+    <label class="menu-toggle-button" for="menu-toggle"><i class="fa fa-bars"></i></label>
+    <ul class="navigation">
+      
+        
+        
+
+        <a class="" href="../download/" id="link-download">
+          <li class="first  ">
+            Download
+          </li>
+        </a>
+      
+        
+        
+
+        <a class="" href="../doc/" id="link-documentation">
+          <li class="  ">
+            Documentation
+          </li>
+        </a>
+      
+        
+        
+
+        <a class="current" href="../resources/" id="link-resources">
+          <li class=" current ">
+            Resources
+          </li>
+        </a>
+      
+        
+        
+
+        <a class="" href="../community/" id="link-community">
+          <li class="  ">
+            Community
+          </li>
+        </a>
+      
+        
+        
+
+        <a class="" href="../jobs/" id="link-jobs">
+          <li class="  ">
+            Jobs
+          </li>
+        </a>
+      
+        
+        
+
+        <a class="" href="../companies/" id="link-commercial-support">
+          <li class="  last">
+            Commercial Support
+          </li>
+        </a>
+      
+      <a href="http://docs.scrapy.org/en/latest/faq.html" id="link-faq"><li>FAQ</li></a>
+      <a href="https://github.com/scrapy/scrapy" id="link-github">
+      <li><i class="fa fa-code-fork fa-lg"></i> <span class="github-text">Fork on Github</span></li>
+      </a>
+    </ul>
+  
+
+</div>
+
+</div>
+
+
+    <div class="page-content">
+      <div class="wrapper">
+        
+
+
+
+
+
+<div class="container">
+
+  <h1>Curated Resources</h1>
+
+  <div class="resources-section">
+
+    <h2>Articles and Blog posts</h2>
+    <div class="resources">
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.analyticsvidhya.com/blog/2017/07/web-scraping-in-python-using-scrapy/">Web Scraping in Python using Scrapy (with multiple examples)</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Mohd Sanad Zaki Rizvi</span>
+          (July 2017)
+        </div>
+
+        <div class="comments">
+          <p>Explains scrapy from scratch. Also gives examples on scraping Reddit, XML site and an e-commerce website(downloading images along with data)</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://python.gotrained.com/scrapy-tutorial-web-scraping-craigslist/">Scrapy Tutorial: Web Scraping Craigslist</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">GoTrained</span>
+          (May 2017)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://sangaline.com/post/wayback-machine-scraper/">Internet Archaeology: Scraping time series data from Archive.org</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Evan Sangaline</span>
+          (April 2017)
+        </div>
+
+        <div class="comments">
+          <p>Explains downloader middlewares through a pretty interesting use case.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://sangaline.com/post/advanced-web-scraping-tutorial/">Advanced Web Scraping: Bypassing "403 Forbidden", captchas, and more</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Evan Sangaline</span>
+          (March 2017)
+        </div>
+
+        <div class="comments">
+          <p>Comprehensive article on how to bypass the most common anti-bot mechanisms.
+Demonstrates good practices by implementing reusable components, such as middlewares.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+          
+            
+              
+                <a href="https://realpython.com/blog/python/web-scraping-with-scrapy-and-mongodb/">Web Scraping With Scrapy and MongoDB [Part 1]</a>
+              
+            
+              
+                -- <a href="https://realpython.com/blog/python/web-scraping-and-crawling-with-scrapy-and-mongodb/">[Part 2]</a>
+              
+            
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">RealPython.com</span>
+          (September 2016)
+        </div>
+
+        <div class="comments">
+          <p>Written for Scrapy 1.0.x, does not use modern idioms (e.g. <code class="highlighter-rouge">extract()[0]</code>)
+but shows an example custom MongoDB item pipeline.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.digitalocean.com/community/tutorials/how-to-crawl-a-web-page-with-scrapy-and-python-3">How To Crawl A Web Page with Scrapy and Python 3</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Justin Duke</span>
+          (September 2016)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://blog.siliconstraits.vn/building-web-crawler-scrapy/">Building a Web Crawler with Scrapy</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Hoài Thương</span>
+          (August 2016)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://blog.scrapinghub.com/2016/05/18/scrapy-tips-from-the-pros-may-2016-edition/">How to Debug your Scrapy Spiders</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Valdir Stumm Jr</span>
+          (May 2016)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://medium.com/@kaismh/extracting-data-from-websites-using-scrapy-e1e1e357651a">Extracting data from websites using Scrapy</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Kais Hassan</span>
+          (April 2016)
+        </div>
+
+        <div class="comments">
+          <p>Uses Scrapy 1.0 and Python 2, but still relevant.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.seckintozlu.com/1148-how-to-run-scrapy-spiders-on-the-cloud-using-heroku-and-redis.html">How to Run Scrapy Spiders on Cloud Using Heroku and Redis</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Seçkin Tozlu</span>
+          (January 2015)
+        </div>
+
+        <div class="comments">
+          <p>Not the prettiest spider, but article shows how to use scrapy-redis,
+scrapy-heroku and scrapyd to run a periodic crawler on Heroku.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://eliasdorneles.github.io/2014/08/30/web-scraping-with-scrapy---first-steps.html">Web Scraping with Scrapy - first steps</a>
+          
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Elias Dorneles</span>
+          (August 2014)
+        </div>
+
+        <div class="comments">
+          <p>Old but good. Uses <code class="highlighter-rouge">[0].extract()</code>, you should now use <code class="highlighter-rouge">.extract_first()</code>.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+          
+            
+              
+                <a href="http://pkmishra.github.io/blog/2013/03/18/how-to-run-scrapy-with-TOR-and-multiple-browser-agents-part-1-mac/">Scrapy: Run Using TOR and Multiple Agents [Part 1]</a>
+              
+            
+              
+                -- <a href="https://pkmishra.github.io/blog/2013/04/16/scrapy-run-using-tor-and-multiple-agents-part-2-ubuntu/">[Part 2]</a>
+              
+            
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Pradeep Kumar Mishra</span>
+          (April 2013)
+        </div>
+
+        <div class="comments">
+          <p>Old articles but still relevant on how to configure polipo
+as an HTTP proxy to integrate a crawler with Tor network.</p>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <h2>Books</h2>
+
+    <div class="resources">
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.packtpub.com/big-data-and-business-intelligence/learning-scrapy">Learning Scrapy</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Dimitrios Kouzis-Loukas</span>
+          (Packt, January 2016)
+        </div>
+
+        <div class="comments">
+          <p>Very in-depth book on Scrapy. It shows Scrapy 1.0.x, and is Python 2 only.</p>
+
+<p>It explains practically every component and setting to get you started with Scrapy,
+and dive deeper if needed.
+There’s <a href="https://github.com/scalingexcellence/scrapy-apperyio/blob/master/scrapyapperyio.py">a very cool example of asynchronous sending of items</a>,
+using <code class="highlighter-rouge">engine.download</code> and <code class="highlighter-rouge">inlineCallback</code>.
+It also shows how to deploy a Scrapy project to Scrapinghub’s platform.
+The book even includes a quite intense introduction to Twisted
+and nonblocking I/O programming (a very good one).</p>
+
+<p>The book has a <a href="http://scrapybook.com/">companion website</a>
+which has videos for some chapters.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://shop.oreilly.com/product/0636920037057.do">Data Visualization with Python and JavaScript: Scrape, Clean, Explore &amp; Transform Your Data</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Kyran Dale</span>
+          (O'Reilly Media, June 2016)
+        </div>
+
+        <div class="comments">
+          <p>This book is not only about Scrapy but it has a whole chapter on Scrapy,
+“Chapter 6. Heavyweight Scraping with Scrapy”.</p>
+
+<p>It suggests using Anaconda, but make sure to use conda-forge channel instead.
+There’s a nice introduction to XPath and how to use scrapy shell to test selectors.
+It also introduces <code class="highlighter-rouge">ImagesPipeline</code> to grab Nobel Prize winners pics,
+which is pretty cool, right?</p>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <h2>Courses</h2>
+
+    <div class="resources">
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.udemy.com/scrapy-tutorial-web-scraping-with-python/?couponCode=SCRAPY">Scrapy: Powerful Web Scraping &amp; Crawling with Python</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">GoTrained Academy</span>
+          (on Udemy, 4 hours)
+        </div>
+
+        <div class="comments">
+          <p><em>Python Scrapy Tutorial - Learn how to scrape websites and build a
+powerful web crawler using Scrapy and Python.</em></p>
+
+<p>Use coupon code <code class="highlighter-rouge">"SCRAPY"</code> to get 90% discount, or just follow the link above.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.udemy.com/python-scrapy/">Python Scrapy: Scrape Web Data Using Python</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Stone River eLearning</span>
+          (on Udemy, 1 hour)
+        </div>
+
+        <div class="comments">
+          <p><em>Free and open source web crawling framework, written in Python.</em></p>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <h2>Videos</h2>
+
+    <div class="resources">
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.youtube.com/playlist?list=PLZyvi_9gamL-EE3zQJbU5N3nzJcfNeFHU">Learn Scrapy</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Scrapinghub</span>
+          
+        </div>
+
+        <div class="comments">
+          <p>Learn how to scrape the web using the Scrapy framework with this series of short videos.
+<a href="https://github.com/scrapinghub/learn-scrapy">Companion code</a>.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.youtube.com/watch?v=0VssOTV5eoc">Scrapy Workshop</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Karthik Ananth</span>
+          (PyData NYC 2015, in English)
+        </div>
+
+        <div class="comments">
+          <p><em>This workshop will provide an overview of Scrapy, starting from the
+fundamentals and working through each new topic with hands-on examples.
+Participants will come away with a good understanding of Scrapy,
+the principles behind its design, and how to apply the best practices
+encouraged by Scrapy to any scraping task.</em></p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://pyvideo.org/europython-2015/dive-into-scrapy.html">Dive into Scrapy</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Juan Riaza</span>
+          (EuroPython 2015, in English)
+        </div>
+
+        <div class="comments">
+          <p><em>Understand why its necessary to Scrapy-ify early on,
+Anatomy of a Scrapy Spider,
+Using the interactive shell,
+What are items and how to use item loaders,
+Examples of pipelines and middlewares,
+Techniques to avoid getting banned,
+How to deploy Scrapy projects.</em></p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.youtube.com/watch?v=CsaqVQ4NIEU">Scrapy - Overview and Demo (web crawling and scraping)</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Melvin L</span>
+          (2016)
+        </div>
+
+        <div class="comments">
+          <p>Scrapy tutorial video provides  covers the following:
+What is Scrapy,
+Why use Scrapy - alternatives to Scrapy,
+Architecture, components &amp; performance,
+Quick demo.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://pyvideo.org/pycon-us-2013/scrapy-it-gets-the-web.html">Scrapy: it GETs the web</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Asheesh Laroia</span>
+          (PyCon US 2013, in English)
+        </div>
+
+        <div class="comments">
+          <p><em>Scrapy lets you straightforwardly pull data out of the web.
+It helps you retry if the site is down, extract content from pages
+using CSS selectors (or XPath), and cover your code with tests.
+It downloads asynchronously with high performance.
+You program to a simple model, and it’s good for web APIs, too.</em></p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://www.youtube.com/watch?v=eD8XVXLlUTE">Python Scrapy: Scrape Web Data Using Python</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Dave McLain</span>
+          (PyTexas 2013, in English)
+        </div>
+
+        <div class="comments">
+          <p><em>Python has great tools like Django and Flask for taking your database
+and turning it into html pages, but what if you want to take somebody
+else’s html pages and build a database from them? Scrapy is a library
+for building web spiders that will simplify your web scraping tasks immensely.
+Friends don’t let friends use raw urllib2.</em></p>
+
+        </div>
+      </div>
+      
+    </div>
+
+    <h2>Slides</h2>
+
+    <div class="resources">
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://speakerdeck.com/amontalenti/web-crawling-and-metadata-extraction-in-python">Web Crawling &amp; Metadata Extraction in Python</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Andrew Montalenti</span>
+          (in English, October 2012)
+        </div>
+
+        <div class="comments">
+          <p>This talk presents two key technologies that can be used:
+Scrapy, an open source &amp; scalable web crawling framework,
+and Mr. Schemato, a new, open source semantic web validator and distiller.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.slideshare.net/federicof/crawling-the-web-for-fun-and-profit">Crawling the web for fun and profit</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Federico Feroldi</span>
+          (in English, May 2010)
+        </div>
+
+        <div class="comments">
+          <p>Crawling technology are the basis for search engines but they also
+have many applications for business and for fun.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.slideshare.net/previa/scrapyfordummies-15277988">Scrapy for dummies</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Chandler Huang</span>
+          (in English, May 2010)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.slideshare.net/sammyfung/web-scraping-1-23-with-python-scrapy-summer-barcamphk-2012-version">Web scraping 1 2-3 with python + scrapy (Summer BarCampHK 2012 version)</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Sammy Fung</span>
+          (in English, July 2012)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.slideshare.net/jimmy_lai/when-big-data-meet-python">When big data meet python</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Jimmy Lai</span>
+          (in English, COSCUP 2011)
+        </div>
+
+        <div class="comments">
+          <p>In this slides, the author shares how to solve Big Data
+issues using Python open source tools.</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://scribd.com/doc/153755386/How-to-Scrap-Any-Website-s-content-using-Scrapy">How to scrape any website's content using Scrapy</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Anton Rifco</span>
+          (in English, July 2013)
+        </div>
+
+        <div class="comments">
+          <p>Tutorial of How to scrape (crawling) website’s content using Scrapy Python</p>
+
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.slideshare.net/dbertinat1/scrapy">Scrapy workshop</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Daniel Bertinat</span>
+          (in Spanish, November 2012)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="https://docs.google.com/presentation/d/1oNCZPxXQTmWFbtaMGRwrnNd20MIB5ecRwNrRISJjRk4/edit?usp=sharing">Scrapy - an agile framework for web spider development</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Pablo Hoffman</span>
+          (in Spanish, 2011)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://www.slideshare.net/zenyuhao/ss-7188268">Scrapy+WebKit+MySQL+Redis integration</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">zenyuhao</span>
+          (in Chinese, March 2011)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+      <div class="resource">
+        <div class="title">
+          
+            <a href="http://slides.com/tiagogoncalves/scrapy-portuguese">Scrapy in five minutes</a>
+          
+        </div>
+
+        <div class="resource-metadata">
+          by <span class="author">Tiago de Assis Gonçalves</span>
+          (in Portuguese, October 2013)
+        </div>
+
+        <div class="comments">
+          
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+</div>
+
+      </div>
+    </div>
+
+    <div class="footer">
+	<iframe src="https://ghbtns.com/github-btn.html?user=scrapy&amp;repo=scrapy&amp;type=watch&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+	<iframe src="https://ghbtns.com/github-btn.html?user=scrapy&amp;repo=scrapy&amp;type=fork&amp;count=true" allowtransparency="true" frameborder="0" scrolling="0" width="110" height="20"></iframe>
+	<a class="twitter-follow-button" href="https://twitter.com/ScrapyProject" data-show-count="true" data-show-screen-name="false" data-lang="en">
+	@ScrapyProject
+	</a>
+	<script type="text/javascript">
+	window.twttr = (function (d, s, id) {
+	  var t, js, fjs = d.getElementsByTagName(s)[0];
+	  if (d.getElementById(id)) return;
+	  js = d.createElement(s); js.id = id;
+	  js.src= "https://platform.twitter.com/widgets.js";
+	  fjs.parentNode.insertBefore(js, fjs);
+	  return window.twttr || (t = { _e: [], ready: function (f) { t._e.push(f) } });
+	}(document, "script", "twitter-wjs"));
+	</script>
+
+ 	<p>Maintained by <a href="https://scrapinghub.com/">Scrapinghub</a> and <a href="https://github.com/scrapy/scrapy/graphs/contributors">many other contributors</a></p>
+</div>
+
+
+  
+
+
+</body></html>

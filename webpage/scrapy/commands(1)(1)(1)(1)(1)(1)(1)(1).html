@@ -1,0 +1,810 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Command line tool — Scrapy 0.24.6 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.24.6 documentation" href="../index.html" />
+        <link rel="next" title="Items" href="items.html" />
+        <link rel="prev" title="Examples" href="../intro/examples.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/commands.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/commands'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.24
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Command line tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#default-structure-of-scrapy-projects">Default structure of Scrapy projects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-scrapy-tool"><span class="toctree-expand"></span>Using the <code class="docutils literal"><span class="pre">scrapy</span></code> tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#creating-projects">Creating projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#controlling-projects">Controlling projects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#available-tool-commands"><span class="toctree-expand"></span>Available tool commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#startproject">startproject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#genspider">genspider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#crawl">crawl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#check">check</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#list">list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#edit">edit</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#fetch">fetch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#view">view</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#shell">shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#parse">parse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#settings">settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#runspider">runspider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#version">version</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deploy">deploy</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bench">bench</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#custom-project-commands"><span class="toctree-expand"></span>Custom project commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#commands-module">COMMANDS_MODULE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapyd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="djangoitem.html">DjangoItem</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-ymcsmmao" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Command line tool</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.24/docs/topics/commands.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="command-line-tool">
+<span id="topics-commands"></span><h1>Command line tool<a class="headerlink" href="#command-line-tool" title="Permalink to this headline">¶</a></h1>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.10.</span></p>
+</div>
+<p>Scrapy is controlled through the <code class="docutils literal"><span class="pre">scrapy</span></code> command-line tool, to be referred
+here as the “Scrapy tool” to differentiate it from the sub-commands, which we
+just call “commands” or “Scrapy commands”.</p>
+<p>The Scrapy tool provides several commands, for multiple purposes, and each one
+accepts a different set of arguments and options.</p>
+<div class="section" id="default-structure-of-scrapy-projects">
+<span id="topics-project-structure"></span><h2>Default structure of Scrapy projects<a class="headerlink" href="#default-structure-of-scrapy-projects" title="Permalink to this headline">¶</a></h2>
+<p>Before delving into the command-line tool and its sub-commands, let’s first
+understand the directory structure of a Scrapy project.</p>
+<p>Though it can be modified, all Scrapy projects have the same file
+structure by default, similar to this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy.cfg
+myproject/
+    __init__.py
+    items.py
+    pipelines.py
+    settings.py
+    spiders/
+        __init__.py
+        spider1.py
+        spider2.py
+        ...
+</pre></div>
+</div>
+<p>The directory where the <code class="docutils literal"><span class="pre">scrapy.cfg</span></code> file resides is known as the <em>project
+root directory</em>. That file contains the name of the python module that defines
+the project settings. Here is an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">settings</span><span class="p">]</span>
+<span class="n">default</span> <span class="o">=</span> <span class="n">myproject</span><span class="o">.</span><span class="n">settings</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-the-scrapy-tool">
+<h2>Using the <code class="docutils literal"><span class="pre">scrapy</span></code> tool<a class="headerlink" href="#using-the-scrapy-tool" title="Permalink to this headline">¶</a></h2>
+<p>You can start by running the Scrapy tool with no arguments and it will print
+some usage help and the available commands:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Scrapy X.Y - no active project
+
+Usage:
+  scrapy &lt;command&gt; [options] [args]
+
+Available commands:
+  crawl         Run a spider
+  fetch         Fetch a URL using the Scrapy downloader
+[...]
+</pre></div>
+</div>
+<p>The first line will print the currently active project, if you’re inside a
+Scrapy project. In this, it was run from outside a project. If run from inside
+a project it would have printed something like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Scrapy X.Y - project: myproject
+
+Usage:
+  scrapy &lt;command&gt; [options] [args]
+
+[...]
+</pre></div>
+</div>
+<div class="section" id="creating-projects">
+<h3>Creating projects<a class="headerlink" href="#creating-projects" title="Permalink to this headline">¶</a></h3>
+<p>The first thing you typically do with the <code class="docutils literal"><span class="pre">scrapy</span></code> tool is create your Scrapy
+project:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy startproject myproject
+</pre></div>
+</div>
+<p>That will create a Scrapy project under the <code class="docutils literal"><span class="pre">myproject</span></code> directory.</p>
+<p>Next, you go inside the new project directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>cd myproject
+</pre></div>
+</div>
+<p>And you’re ready to use the <code class="docutils literal"><span class="pre">scrapy</span></code> command to manage and control your
+project from there.</p>
+</div>
+<div class="section" id="controlling-projects">
+<h3>Controlling projects<a class="headerlink" href="#controlling-projects" title="Permalink to this headline">¶</a></h3>
+<p>You use the <code class="docutils literal"><span class="pre">scrapy</span></code> tool from inside your projects to control and manage
+them.</p>
+<p>For example, to create a new spider:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy genspider mydomain mydomain.com
+</pre></div>
+</div>
+<p>Some Scrapy commands (like <a class="reference internal" href="#std:command-crawl"><code class="xref std std-command docutils literal"><span class="pre">crawl</span></code></a>) must be run from inside a Scrapy
+project. See the <a class="reference internal" href="#topics-commands-ref"><span>commands reference</span></a> below for more
+information on which commands must be run from inside projects, and which not.</p>
+<p>Also keep in mind that some commands may have slightly different behaviours
+when running them from inside projects. For example, the fetch command will use
+spider-overridden behaviours (such as the <code class="docutils literal"><span class="pre">user_agent</span></code> attribute to override
+the user-agent) if the url being fetched is associated with some specific
+spider. This is intentional, as the <code class="docutils literal"><span class="pre">fetch</span></code> command is meant to be used to
+check how spiders are downloading pages.</p>
+</div>
+</div>
+<div class="section" id="available-tool-commands">
+<span id="topics-commands-ref"></span><h2>Available tool commands<a class="headerlink" href="#available-tool-commands" title="Permalink to this headline">¶</a></h2>
+<p>This section contains a list of the available built-in commands with a
+description and some usage examples. Remember you can always get more info
+about each command by running:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>And you can see all available commands with:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>There are two kinds of commands, those that only work from inside a Scrapy
+project (Project-specific commands) and those that also work without an active
+Scrapy project (Global commands), though they may behave slightly different
+when running from inside a project (as they would use the project overridden
+settings).</p>
+<p>Global commands:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:command-startproject"><code class="xref std std-command docutils literal"><span class="pre">startproject</span></code></a></li>
+<li><a class="reference internal" href="#std:command-settings"><code class="xref std std-command docutils literal"><span class="pre">settings</span></code></a></li>
+<li><a class="reference internal" href="#std:command-runspider"><code class="xref std std-command docutils literal"><span class="pre">runspider</span></code></a></li>
+<li><a class="reference internal" href="#std:command-shell"><code class="xref std std-command docutils literal"><span class="pre">shell</span></code></a></li>
+<li><a class="reference internal" href="#std:command-fetch"><code class="xref std std-command docutils literal"><span class="pre">fetch</span></code></a></li>
+<li><a class="reference internal" href="#std:command-view"><code class="xref std std-command docutils literal"><span class="pre">view</span></code></a></li>
+<li><a class="reference internal" href="#std:command-version"><code class="xref std std-command docutils literal"><span class="pre">version</span></code></a></li>
+</ul>
+<p>Project-only commands:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:command-crawl"><code class="xref std std-command docutils literal"><span class="pre">crawl</span></code></a></li>
+<li><a class="reference internal" href="#std:command-check"><code class="xref std std-command docutils literal"><span class="pre">check</span></code></a></li>
+<li><a class="reference internal" href="#std:command-list"><code class="xref std std-command docutils literal"><span class="pre">list</span></code></a></li>
+<li><a class="reference internal" href="#std:command-edit"><code class="xref std std-command docutils literal"><span class="pre">edit</span></code></a></li>
+<li><a class="reference internal" href="#std:command-parse"><code class="xref std std-command docutils literal"><span class="pre">parse</span></code></a></li>
+<li><a class="reference internal" href="#std:command-genspider"><code class="xref std std-command docutils literal"><span class="pre">genspider</span></code></a></li>
+<li><a class="reference internal" href="#std:command-deploy"><code class="xref std std-command docutils literal"><span class="pre">deploy</span></code></a></li>
+<li><a class="reference internal" href="#std:command-bench"><code class="xref std std-command docutils literal"><span class="pre">bench</span></code></a></li>
+</ul>
+<div class="section" id="startproject">
+<span id="std:command-startproject"></span><h3>startproject<a class="headerlink" href="#startproject" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">startproject</span> <span class="pre">&lt;project_name&gt;</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Creates a new Scrapy project named <code class="docutils literal"><span class="pre">project_name</span></code>, under the <code class="docutils literal"><span class="pre">project_name</span></code>
+directory.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy startproject myproject
+</pre></div>
+</div>
+</div>
+<div class="section" id="genspider">
+<span id="std:command-genspider"></span><h3>genspider<a class="headerlink" href="#genspider" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">genspider</span> <span class="pre">[-t</span> <span class="pre">template]</span> <span class="pre">&lt;name&gt;</span> <span class="pre">&lt;domain&gt;</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>Create a new spider in the current project.</p>
+<p>This is just a convenient shortcut command for creating spiders based on
+pre-defined templates, but certainly not the only way to create spiders. You
+can just create the spider source code files yourself, instead of using this
+command.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy genspider -l
+Available templates:
+  basic
+  crawl
+  csvfeed
+  xmlfeed
+
+$ scrapy genspider -d basic
+import scrapy
+
+class $classname(scrapy.Spider):
+    name = "$name"
+    allowed_domains = ["$domain"]
+    start_urls = (
+        'http://www.$domain/',
+        )
+
+    def parse(self, response):
+        pass
+
+$ scrapy genspider -t basic example example.com
+Created spider 'example' using template 'basic' in module:
+  mybot.spiders.example
+</pre></div>
+</div>
+</div>
+<div class="section" id="crawl">
+<span id="std:command-crawl"></span><h3>crawl<a class="headerlink" href="#crawl" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">crawl</span> <span class="pre">&lt;spider&gt;</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>Start crawling using a spider.</p>
+<p>Usage examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy crawl myspider
+[ ... myspider starts crawling ... ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="check">
+<span id="std:command-check"></span><h3>check<a class="headerlink" href="#check" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">check</span> <span class="pre">[-l]</span> <span class="pre">&lt;spider&gt;</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>Run contract checks.</p>
+<p>Usage examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy check -l
+first_spider
+  * parse
+  * parse_item
+second_spider
+  * parse
+  * parse_item
+
+$ scrapy check
+[FAILED] first_spider:parse_item
+&gt;&gt;&gt; 'RetailPricex' field is missing
+
+[FAILED] first_spider:parse
+&gt;&gt;&gt; Returned 92 requests, expected 0..4
+</pre></div>
+</div>
+</div>
+<div class="section" id="list">
+<span id="std:command-list"></span><h3>list<a class="headerlink" href="#list" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">list</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>List all available spiders in the current project. The output is one spider per
+line.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy list
+spider1
+spider2
+</pre></div>
+</div>
+</div>
+<div class="section" id="edit">
+<span id="std:command-edit"></span><h3>edit<a class="headerlink" href="#edit" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">edit</span> <span class="pre">&lt;spider&gt;</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>Edit the given spider using the editor defined in the <a class="reference internal" href="settings.html#std:setting-EDITOR"><code class="xref std std-setting docutils literal"><span class="pre">EDITOR</span></code></a>
+setting.</p>
+<p>This command is provided only as a convenient shortcut for the most common
+case, the developer is of course free to choose any tool or IDE to write and
+debug his spiders.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy edit spider1
+</pre></div>
+</div>
+</div>
+<div class="section" id="fetch">
+<span id="std:command-fetch"></span><h3>fetch<a class="headerlink" href="#fetch" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">fetch</span> <span class="pre">&lt;url&gt;</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Downloads the given URL using the Scrapy downloader and writes the contents to
+standard output.</p>
+<p>The interesting thing about this command is that it fetches the page how the
+spider would download it. For example, if the spider has an <code class="docutils literal"><span class="pre">USER_AGENT</span></code>
+attribute which overrides the User Agent, it will use that one.</p>
+<p>So this command can be used to “see” how your spider would fetch a certain page.</p>
+<p>If used outside a project, no particular per-spider behaviour would be applied
+and it will just use the default Scrapy downloader settings.</p>
+<p>Usage examples:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy fetch --nolog http://www.example.com/some/page.html
+[ ... html content here ... ]
+
+$ scrapy fetch --nolog --headers http://www.example.com/
+{'Accept-Ranges': ['bytes'],
+ 'Age': ['1263   '],
+ 'Connection': ['close     '],
+ 'Content-Length': ['596'],
+ 'Content-Type': ['text/html; charset=UTF-8'],
+ 'Date': ['Wed, 18 Aug 2010 23:59:46 GMT'],
+ 'Etag': ['"573c1-254-48c9c87349680"'],
+ 'Last-Modified': ['Fri, 30 Jul 2010 15:30:18 GMT'],
+ 'Server': ['Apache/2.2.3 (CentOS)']}
+</pre></div>
+</div>
+</div>
+<div class="section" id="view">
+<span id="std:command-view"></span><h3>view<a class="headerlink" href="#view" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">view</span> <span class="pre">&lt;url&gt;</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Opens the given URL in a browser, as your Scrapy spider would “see” it.
+Sometimes spiders see pages differently from regular users, so this can be used
+to check what the spider “sees” and confirm it’s what you expect.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy view http://www.example.com/some/page.html
+[ ... browser starts ... ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="shell">
+<span id="std:command-shell"></span><h3>shell<a class="headerlink" href="#shell" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">shell</span> <span class="pre">[url]</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Starts the Scrapy shell for the given URL (if given) or empty if no URL is
+given. See <a class="reference internal" href="shell.html#topics-shell"><span>Scrapy shell</span></a> for more info.</p>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy shell http://www.example.com/some/page.html
+[ ... scrapy shell starts ... ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="parse">
+<span id="std:command-parse"></span><h3>parse<a class="headerlink" href="#parse" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">parse</span> <span class="pre">&lt;url&gt;</span> <span class="pre">[options]</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>Fetches the given URL and parses it with the spider that handles it, using the
+method passed with the <code class="docutils literal"><span class="pre">--callback</span></code> option, or <code class="docutils literal"><span class="pre">parse</span></code> if not given.</p>
+<p>Supported options:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">--spider=SPIDER</span></code>: bypass spider autodetection and force use of specific spider</li>
+<li><code class="docutils literal"><span class="pre">--a</span> <span class="pre">NAME=VALUE</span></code>: set spider argument (may be repeated)</li>
+<li><code class="docutils literal"><span class="pre">--callback</span></code> or <code class="docutils literal"><span class="pre">-c</span></code>: spider method to use as callback for parsing the
+response</li>
+<li><code class="docutils literal"><span class="pre">--pipelines</span></code>: process items through pipelines</li>
+<li><code class="docutils literal"><span class="pre">--rules</span></code> or <code class="docutils literal"><span class="pre">-r</span></code>: use <a class="reference internal" href="spiders.html#scrapy.contrib.spiders.CrawlSpider" title="scrapy.contrib.spiders.CrawlSpider"><code class="xref py py-class docutils literal"><span class="pre">CrawlSpider</span></code></a>
+rules to discover the callback (i.e. spider method) to use for parsing the
+response</li>
+<li><code class="docutils literal"><span class="pre">--noitems</span></code>: don’t show scraped items</li>
+<li><code class="docutils literal"><span class="pre">--nolinks</span></code>: don’t show extracted links</li>
+<li><code class="docutils literal"><span class="pre">--nocolour</span></code>: avoid using pygments to colorize the output</li>
+<li><code class="docutils literal"><span class="pre">--depth</span></code> or <code class="docutils literal"><span class="pre">-d</span></code>: depth level for which the requests should be followed
+recursively (default: 1)</li>
+<li><code class="docutils literal"><span class="pre">--verbose</span></code> or <code class="docutils literal"><span class="pre">-v</span></code>: display information for each depth level</li>
+</ul>
+<p>Usage example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy parse http://www.example.com/ -c parse_item
+[ ... scrapy log lines crawling example.com spider ... ]
+
+&gt;&gt;&gt; STATUS DEPTH LEVEL 1 &lt;&lt;&lt;
+# Scraped Items  ------------------------------------------------------------
+[{'name': u'Example item',
+ 'category': u'Furniture',
+ 'length': u'12 cm'}]
+
+# Requests  -----------------------------------------------------------------
+[]
+</pre></div>
+</div>
+</div>
+<div class="section" id="settings">
+<span id="std:command-settings"></span><h3>settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">settings</span> <span class="pre">[options]</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Get the value of a Scrapy setting.</p>
+<p>If used inside a project it’ll show the project setting value, otherwise it’ll
+show the default Scrapy value for that setting.</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy settings --get BOT_NAME
+scrapybot
+$ scrapy settings --get DOWNLOAD_DELAY
+0
+</pre></div>
+</div>
+</div>
+<div class="section" id="runspider">
+<span id="std:command-runspider"></span><h3>runspider<a class="headerlink" href="#runspider" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">runspider</span> <span class="pre">&lt;spider_file.py&gt;</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Run a spider self-contained in a Python file, without having to create a
+project.</p>
+<p>Example usage:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>$ scrapy runspider myspider.py
+[ ... spider starts crawling ... ]
+</pre></div>
+</div>
+</div>
+<div class="section" id="version">
+<span id="std:command-version"></span><h3>version<a class="headerlink" href="#version" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">version</span> <span class="pre">[-v]</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Prints the Scrapy version. If used with <code class="docutils literal"><span class="pre">-v</span></code> it also prints Python, Twisted
+and Platform info, which is useful for bug reports.</p>
+</div>
+<div class="section" id="deploy">
+<span id="std:command-deploy"></span><h3>deploy<a class="headerlink" href="#deploy" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.11.</span></p>
+</div>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">deploy</span> <span class="pre">[</span> <span class="pre">&lt;target:project&gt;</span> <span class="pre">|</span> <span class="pre">-l</span> <span class="pre">&lt;target&gt;</span> <span class="pre">|</span> <span class="pre">-L</span> <span class="pre">]</span></code></li>
+<li>Requires project: <em>yes</em></li>
+</ul>
+<p>Deploy the project into a Scrapyd server. See <a class="reference external" href="http://scrapyd.readthedocs.org/en/latest/deploy.html">Deploying your project</a>.</p>
+</div>
+<div class="section" id="bench">
+<span id="std:command-bench"></span><h3>bench<a class="headerlink" href="#bench" title="Permalink to this headline">¶</a></h3>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.17.</span></p>
+</div>
+<ul class="simple">
+<li>Syntax: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">bench</span></code></li>
+<li>Requires project: <em>no</em></li>
+</ul>
+<p>Run a quick benchmark test. <a class="reference internal" href="benchmarking.html#benchmarking"><span>Benchmarking</span></a>.</p>
+</div>
+</div>
+<div class="section" id="custom-project-commands">
+<h2>Custom project commands<a class="headerlink" href="#custom-project-commands" title="Permalink to this headline">¶</a></h2>
+<p>You can also add your custom project commands by using the
+<a class="reference internal" href="#std:setting-COMMANDS_MODULE"><code class="xref std std-setting docutils literal"><span class="pre">COMMANDS_MODULE</span></code></a> setting. See the Scrapy commands in
+<a class="reference external" href="https://github.com/scrapy/scrapy/blob/master/scrapy/commands">scrapy/commands</a> for examples on how to implement your commands.</p>
+<div class="section" id="commands-module">
+<span id="std:setting-COMMANDS_MODULE"></span><h3>COMMANDS_MODULE<a class="headerlink" href="#commands-module" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">''</span></code> (empty string)</p>
+<p>A module to use for looking up custom Scrapy commands. This is used to add custom
+commands for your Scrapy project.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">COMMANDS_MODULE</span> <span class="o">=</span> <span class="s1">'mybot.commands'</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="items.html" class="btn btn-neutral float-right" title="Items" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../intro/examples.html" class="btn btn-neutral" title="Examples" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-5q8vs2fgj" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2013, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>0845a256</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.24
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/0.8/">0.8</a></dd>
+        
+          <dd><a href="/en/0.7/">0.7</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.24/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.24/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.24/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.24.6',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-ckf9yovwg"></div></body></html>

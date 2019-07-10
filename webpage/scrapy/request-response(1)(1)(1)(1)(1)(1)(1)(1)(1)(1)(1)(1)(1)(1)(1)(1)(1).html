@@ -1,0 +1,1526 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class="no-js" lang="en"><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Requests and Responses — Scrapy  documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://cdnmedia.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+    <link rel="stylesheet" href="https://cdnmedia.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy  documentation" href="../index.html" />
+        <link rel="next" title="Settings" href="settings.html" />
+        <link rel="prev" title="Extensions" href="extensions.html" />
+ 
+<!-- RTD Extra Head -->
+
+
+
+  
+  <!-- 
+  Always link to the latest version, as canonical.
+  http://docs.readthedocs.org/en/latest/canonical.html
+  -->
+  <link rel="canonical" href="http://doc.scrapy.org//en/latest/topics/request-response.html" />
+  
+
+<script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script type="text/javascript">
+  // This is included here because other places don't have access to the pagename variable.
+  var READTHEDOCS_DATA = {
+    project: "scrapy",
+    version: "0.10.3",
+    language: "en",
+    page: "topics/request-response",
+    builder: "sphinx",
+    theme: "sphinx_rtd_theme",
+    docroot: "/docs/",
+    source_suffix: ".rst",
+    api_host: "https://readthedocs.org/",
+    commit: "49ffe528a39e29a84246b31097e2e6aa90cbbb8f"
+  }
+  // Old variables
+  var doc_version = "0.10.3";
+  var doc_slug = "scrapy";
+  var page_name = "topics/request-response";
+  var html_theme = "sphinx_rtd_theme";
+</script>
+<!-- RTD Analytics Code -->
+<!-- Included in the header because you don't have a footer block. -->
+<script type="text/javascript">
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-17997319-1']);
+  _gaq.push(['_trackPageview']);
+
+  // User Analytics Code
+  _gaq.push(['user._setAccount', 'UA-10231918-2']);
+  _gaq.push(['user._trackPageview']);
+  // End User Analytics Code
+
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+</script>
+<!-- end RTD Analytics Code -->
+<!-- end RTD <extrahead> -->
+
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side"><div class="wy-side-scroll"><div class="wy-side-nav-search">
+        
+
+        
+          <a href="../index.html" class="icon icon-home"> Scrapy
+        
+
+        
+        </a>
+
+        
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+        
+      </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+        
+          
+          
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html"><span class="toctree-expand"></span>Scrapy at a glance</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#pick-a-website">Pick a website</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#define-the-data-you-want-to-scrape">Define the data you want to scrape</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#write-a-spider-to-extract-the-data">Write a Spider to extract the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#run-the-spider-to-extract-the-data">Run the spider to extract the data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#review-scraped-data">Review scraped data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#what-else">What else?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/overview.html#what-s-next">What’s next?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html"><span class="toctree-expand"></span>Installation guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#requirements">Requirements</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#step-1-install-python">Step 1. Install Python</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#step-2-install-required-libraries"><span class="toctree-expand"></span>Step 2. Install required libraries</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#ubuntu-debian">Ubuntu/Debian</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#arch-linux">Arch Linux</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#mac-os-x">Mac OS X</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#windows">Windows</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/install.html#step-3-install-scrapy"><span class="toctree-expand"></span>Step 3. Install Scrapy</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#installing-an-official-release">Installing an official release</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#installing-with-easy-install">Installing with easy_install</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/install.html#installing-the-development-version">Installing the development version</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html"><span class="toctree-expand"></span>Scrapy Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#creating-a-project">Creating a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#defining-our-item">Defining our Item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#our-first-spider"><span class="toctree-expand"></span>Our first Spider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../intro/tutorial.html#crawling"><span class="toctree-expand"></span>Crawling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#what-just-happened-under-the-hood">What just happened under the hood?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/tutorial.html#extracting-items"><span class="toctree-expand"></span>Extracting Items</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#introduction-to-selectors">Introduction to Selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#trying-selectors-in-the-shell">Trying Selectors in the Shell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../intro/tutorial.html#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="../intro/tutorial.html#using-our-item">Using our item</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#storing-the-data-using-an-item-pipeline">Storing the data (using an Item Pipeline)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../intro/tutorial.html#finale">Finale</a></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html"><span class="toctree-expand"></span>Command line tool</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#using-the-scrapy-tool"><span class="toctree-expand"></span>Using the <code class="docutils literal"><span class="pre">scrapy</span></code> tool</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#creating-projects">Creating projects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#controlling-projects">Controlling projects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#available-tool-commands"><span class="toctree-expand"></span>Available tool commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#startproject">startproject</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#genspider">genspider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#crawl">crawl</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#runserver">runserver</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#list">list</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#fetch">fetch</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#view">view</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#shell">shell</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#parse">parse</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#settings">settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#runspider">runspider</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#queue">queue</a></li>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#version">version</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="commands.html#custom-project-commands"><span class="toctree-expand"></span>Custom project commands</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="commands.html#commands-module">COMMANDS_MODULE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="items.html"><span class="toctree-expand"></span>Items</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="items.html#declaring-items">Declaring Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#item-fields">Item Fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#working-with-items"><span class="toctree-expand"></span>Working with Items</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="items.html#creating-items">Creating items</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#getting-field-values">Getting field values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#setting-field-values">Setting field values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#accesing-all-populated-values">Accesing all populated values</a></li>
+<li class="toctree-l3"><a class="reference internal" href="items.html#other-common-tasks">Other common tasks</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#default-values">Default values</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#extending-items">Extending Items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#item-objects">Item objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="items.html#field-objects">Field objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html"><span class="toctree-expand"></span>Spiders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spiders.html#built-in-spiders-reference"><span class="toctree-expand"></span>Built-in spiders reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#basespider"><span class="toctree-expand"></span>BaseSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#basespider-example">BaseSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#crawlspider"><span class="toctree-expand"></span>CrawlSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#crawling-rules">Crawling rules</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#crawlspider-example">CrawlSpider example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#xmlfeedspider"><span class="toctree-expand"></span>XMLFeedSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#xmlfeedspider-example">XMLFeedSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="spiders.html#csvfeedspider"><span class="toctree-expand"></span>CSVFeedSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="spiders.html#csvfeedspider-example">CSVFeedSpider example</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html"><span class="toctree-expand"></span>Link Extractors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="link-extractors.html#module-scrapy.contrib.linkextractors"><span class="toctree-expand"></span>Built-in link extractors reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="link-extractors.html#sgmllinkextractor">SgmlLinkExtractor</a></li>
+<li class="toctree-l3"><a class="reference internal" href="link-extractors.html#basesgmllinkextractor">BaseSgmlLinkExtractor</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html"><span class="toctree-expand"></span>XPath Selectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="selectors.html#using-selectors"><span class="toctree-expand"></span>Using selectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#constructing-selectors">Constructing selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#using-selectors-with-xpaths">Using selectors with XPaths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#using-selectors-with-regular-expressions">Using selectors with regular expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#nesting-selectors">Nesting selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#working-with-relative-xpaths">Working with relative XPaths</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="selectors.html#module-scrapy.selector"><span class="toctree-expand"></span>Built-in XPath Selectors reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#xpathselector-objects">XPathSelector objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#xpathselectorlist-objects">XPathSelectorList objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#htmlxpathselector-objects"><span class="toctree-expand"></span>HtmlXPathSelector objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="selectors.html#htmlxpathselector-examples">HtmlXPathSelector examples</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="selectors.html#xmlxpathselector-objects"><span class="toctree-expand"></span>XmlXPathSelector objects</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="selectors.html#xmlxpathselector-examples">XmlXPathSelector examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html"><span class="toctree-expand"></span>Item Loaders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#using-item-loaders-to-populate-items">Using Item Loaders to populate items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#input-and-output-processors">Input and Output processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#declaring-item-loaders">Declaring Item Loaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#declaring-input-and-output-processors">Declaring Input and Output Processors</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#item-loader-context">Item Loader Context</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#itemloader-objects">ItemLoader objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#reusing-and-extending-item-loaders">Reusing and extending Item Loaders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="loaders.html#module-scrapy.contrib.loader.processor">Available built-in processors</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html"><span class="toctree-expand"></span>Scrapy shell</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#launch-the-shell">Launch the shell</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#using-the-shell"><span class="toctree-expand"></span>Using the shell</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="shell.html#available-shortcuts">Available Shortcuts</a></li>
+<li class="toctree-l3"><a class="reference internal" href="shell.html#available-scrapy-objects">Available Scrapy objects</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#example-of-shell-session">Example of shell session</a></li>
+<li class="toctree-l2"><a class="reference internal" href="shell.html#invoking-the-shell-from-spiders-to-inspect-responses">Invoking the shell from spiders to inspect responses</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html"><span class="toctree-expand"></span>Item Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#writing-your-own-item-pipeline">Writing your own item pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#item-pipeline-example">Item pipeline example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#activating-an-item-pipeline-component">Activating an Item Pipeline component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="item-pipeline.html#item-pipeline-example-with-resources-per-spider">Item pipeline example with resources per spider</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html"><span class="toctree-expand"></span>Feed exports</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#serialization-formats"><span class="toctree-expand"></span>Serialization formats</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#json">JSON</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#json-lines">JSON lines</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#csv">CSV</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#xml">XML</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#storages">Storages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#storage-uri-parameters">Storage URI parameters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#storage-backends"><span class="toctree-expand"></span>Storage backends</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#local-filesystem">Local filesystem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#ftp">FTP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#s3">S3</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#standard-output">Standard output</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="feed-exports.html#settings"><span class="toctree-expand"></span>Settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-uri">FEED_URI</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-format">FEED_FORMAT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-store-empty">FEED_STORE_EMPTY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-storages">FEED_STORAGES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-storages-base">FEED_STORAGES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-exporters">FEED_EXPORTERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="feed-exports.html#feed-exporters-base">FEED_EXPORTERS_BASE</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html"><span class="toctree-expand"></span>Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#log-levels">Log levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#how-to-set-the-log-level">How to set the log level</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#how-to-log-messages">How to log messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logging-from-spiders">Logging from Spiders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#module-scrapy.log">scrapy.log module</a></li>
+<li class="toctree-l2"><a class="reference internal" href="logging.html#logging-settings">Logging settings</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html"><span class="toctree-expand"></span>Stats Collection</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#common-stats-collector-uses">Common Stats Collector uses</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#stats-collector-api">Stats Collector API</a></li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#available-stats-collectors"><span class="toctree-expand"></span>Available Stats Collectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="stats.html#memorystatscollector">MemoryStatsCollector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html#dummystatscollector">DummyStatsCollector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stats.html#module-scrapy.contrib.statscol"><span class="toctree-expand"></span>SimpledbStatsCollector</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="stats.html#stats-sdb-domain">STATS_SDB_DOMAIN</a></li>
+<li class="toctree-l4"><a class="reference internal" href="stats.html#stats-sdb-async">STATS_SDB_ASYNC</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="stats.html#stats-signals">Stats signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="email.html"><span class="toctree-expand"></span>Sending e-mail</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="email.html#quick-example">Quick example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html#mailsender-class-reference">MailSender class reference</a></li>
+<li class="toctree-l2"><a class="reference internal" href="email.html#mail-settings"><span class="toctree-expand"></span>Mail settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-from">MAIL_FROM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-host">MAIL_HOST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-port">MAIL_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-user">MAIL_USER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="email.html#mail-pass">MAIL_PASS</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="email.html#mail-signals">Mail signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html"><span class="toctree-expand"></span>Telnet Console</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#how-to-access-the-telnet-console">How to access the telnet console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#available-variables-in-the-telnet-console">Available variables in the telnet console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#telnet-console-usage-examples"><span class="toctree-expand"></span>Telnet console usage examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="telnetconsole.html#view-engine-status">View engine status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="telnetconsole.html#pause-resume-and-stop-the-scrapy-engine">Pause, resume and stop the Scrapy engine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="telnetconsole.html#telnet-console-signals">Telnet Console signals</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html"><span class="toctree-expand"></span>Web Service</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#web-service-resources"><span class="toctree-expand"></span>Web service resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#available-json-rpc-resources"><span class="toctree-expand"></span>Available JSON-RPC resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#module-scrapy.contrib.webservice.crawler">Crawler JSON-RPC resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#module-scrapy.contrib.webservice.stats">Stats Collector JSON-RPC resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#spider-manager-json-rpc-resource">Spider Manager JSON-RPC resource</a></li>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#extension-manager-json-rpc-resource">Extension Manager JSON-RPC resource</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#available-json-resources"><span class="toctree-expand"></span>Available JSON resources</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="webservice.html#module-scrapy.contrib.webservice.enginestatus">Engine status JSON resource</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#web-service-settings"><span class="toctree-expand"></span>Web service settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-enabled">WEBSERVICE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-logfile">WEBSERVICE_LOGFILE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-port">WEBSERVICE_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-resources">WEBSERVICE_RESOURCES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#webservice-resources-base">WEBSERVICE_RESOURCES_BASE</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#writing-a-web-service-resource">Writing a web service resource</a></li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#examples-of-web-service-resources"><span class="toctree-expand"></span>Examples of web service resources</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#statsresource-json-rpc-resource">StatsResource (JSON-RPC resource)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#enginestatusresource-json-resource">EngineStatusResource (JSON resource)</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="webservice.html#example-of-web-service-client"><span class="toctree-expand"></span>Example of web service client</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="webservice.html#scrapy-ws-py-script">scrapy-ws.py script</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html"><span class="toctree-expand"></span>Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#how-does-scrapy-compare-to-beautifulsoul-or-lxml">How does Scrapy compare to BeautifulSoul or lxml?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#does-scrapy-work-with-python-3-0">Does Scrapy work with Python 3.0?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#did-scrapy-steal-x-from-django">Did Scrapy “steal” X from Django?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#does-scrapy-work-with-http-proxies">Does Scrapy work with HTTP proxies?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#scrapy-crashes-with-importerror-no-module-named-win32api">Scrapy crashes with: ImportError: No module named win32api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#how-can-i-simulate-a-user-login-in-my-spider">How can I simulate a user login in my spider?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-crawl-in-breadth-first-order-instead-of-depth-first-order">Can I crawl in breadth-first order instead of depth-first order?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#my-scrapy-crawler-has-memory-leaks-what-can-i-do">My Scrapy crawler has memory leaks. What can I do?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#how-can-i-make-scrapy-consume-less-memory">How can I make Scrapy consume less memory?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-use-basic-http-authentication-in-my-spiders">Can I use Basic HTTP Authentication in my spiders?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#why-does-scrapy-download-pages-in-english-instead-of-my-native-language">Why does Scrapy download pages in English instead of my native language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#where-can-i-find-some-example-code-using-scrapy">Where can I find some example code using Scrapy?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-run-a-spider-without-creating-a-project">Can I run a spider without creating a project?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#i-get-filtered-offsite-request-messages-how-can-i-fix-them">I get “Filtered offsite request” messages. How can I fix them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#what-is-the-recommended-way-to-deploy-a-scrapy-crawler-in-production">What is the recommended way to deploy a Scrapy crawler in production?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-use-json-for-large-exports">Can I use JSON for large exports?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-return-twisted-deferreds-from-signal-handlers">Can I return (Twisted) deferreds from signal handlers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#what-does-the-response-status-code-999-means">What does the response status code 999 means?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#can-i-call-pdb-set-trace-from-my-spiders-to-debug-them">Can I call <code class="docutils literal"><span class="pre">pdb.set_trace()</span></code> from my spiders to debug them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#simplest-way-to-dump-all-my-scraped-items-into-a-json-csv-xml-file">Simplest way to dump all my scraped items into a JSON/CSV/XML file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../faq.html#what-s-this-huge-cryptic-viewstate-parameter-used-in-some-forms">What’s this huge cryptic <code class="docutils literal"><span class="pre">__VIEWSTATE</span></code> parameter used in some forms?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html"><span class="toctree-expand"></span>Using Firefox for scraping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firefox.html#caveats-with-inspecting-the-live-browser-dom">Caveats with inspecting the live browser DOM</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firefox.html#useful-firefox-add-ons-for-scraping"><span class="toctree-expand"></span>Useful Firefox add-ons for scraping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="firefox.html#firebug">Firebug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firefox.html#xpather">XPather</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firefox.html#xpath-checker">XPath Checker</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firefox.html#tamper-data">Tamper Data</a></li>
+<li class="toctree-l3"><a class="reference internal" href="firefox.html#firecookie">Firecookie</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html"><span class="toctree-expand"></span>Using Firebug for scraping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="firebug.html#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firebug.html#getting-links-to-follow">Getting links to follow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="firebug.html#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html"><span class="toctree-expand"></span>Debugging memory leaks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#common-causes-of-memory-leaks">Common causes of memory leaks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#debugging-memory-leaks-with-trackref"><span class="toctree-expand"></span>Debugging memory leaks with <code class="docutils literal"><span class="pre">trackref</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#which-objects-are-tracked">Which objects are tracked?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#a-real-example">A real example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#too-many-spiders">Too many spiders?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="leaks.html#scrapy-utils-trackref-module">scrapy.utils.trackref module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#debugging-memory-leaks-with-guppy">Debugging memory leaks with Guppy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="leaks.html#leaks-without-leaks">Leaks without leaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="images.html"><span class="toctree-expand"></span>Downloading Item Images</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="images.html#using-the-images-pipeline">Using the Images Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#usage-example">Usage example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#enabling-your-images-pipeline">Enabling your Images Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#images-storage"><span class="toctree-expand"></span>Images Storage</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="images.html#file-system-storage">File system storage</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#additional-features"><span class="toctree-expand"></span>Additional features</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="images.html#image-expiration">Image expiration</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images.html#thumbnail-generation">Thumbnail generation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="images.html#filtering-out-small-images">Filtering out small images</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#module-scrapy.contrib.pipeline.images">Implementing your custom Images Pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="images.html#custom-images-pipeline-example">Custom Images pipeline example</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html"><span class="toctree-expand"></span>Scrapy Service (scrapyd)</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#projects-and-versions">Projects and versions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#how-scrapyd-works">How Scrapyd works</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#starting-scrapyd">Starting Scrapyd</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#installing-scrapyd"><span class="toctree-expand"></span>Installing Scrapyd</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#installing-scrapyd-in-ubuntu"><span class="toctree-expand"></span>Installing Scrapyd in Ubuntu</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#etc-scrapyd">/etc/scrapyd</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-scrapyd-log">/var/log/scrapyd/scrapyd.log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-scrapyd-out">/var/log/scrapyd/scrapyd.out</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-scrapyd-err">/var/log/scrapyd/scrapyd.err</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-log-scrapyd-slotn-log">/var/log/scrapyd/slotN.log</a></li>
+<li class="toctree-l4"><a class="reference internal" href="scrapyd.html#var-lib-scrapyd">/var/lib/scrapyd/</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#scrapyd-configuration-file"><span class="toctree-expand"></span>Scrapyd Configuration file</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#http-port">http_port</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#max-proc">max_proc</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#debug">debug</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#eggs-dir">eggs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#dbs-dir">dbs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#logs-dir">logs_dir</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#egg-runner">egg_runner</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#application">application</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#example-configuration-file">Example configuration file</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#eggifying-your-project"><span class="toctree-expand"></span>Eggifying your project</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#egg-caveats">Egg caveats</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#uploading-your-project">Uploading your project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#scheduling-a-spider-run">Scheduling a spider run</a></li>
+<li class="toctree-l2"><a class="reference internal" href="scrapyd.html#json-api-reference"><span class="toctree-expand"></span>JSON API reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#addversion-json">addversion.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#schedule-json">schedule.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#listprojects-json">listprojects.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#listversions-json">listversions.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#listspiders-json">listspiders.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#delversion-json">delversion.json</a></li>
+<li class="toctree-l3"><a class="reference internal" href="scrapyd.html#delproject-json">delproject.json</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html"><span class="toctree-expand"></span>Architecture overview</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#overview">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#components"><span class="toctree-expand"></span>Components</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#scrapy-engine">Scrapy Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#scheduler">Scheduler</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#downloader">Downloader</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#spiders">Spiders</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#item-pipeline">Item Pipeline</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#downloader-middlewares">Downloader middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#spider-middlewares">Spider middlewares</a></li>
+<li class="toctree-l3"><a class="reference internal" href="architecture.html#scheduler-middlewares">Scheduler middlewares</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#data-flow">Data flow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="architecture.html#event-driven-networking">Event-driven networking</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html"><span class="toctree-expand"></span>Downloader Middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="downloader-middleware.html#activating-a-downloader-middleware">Activating a downloader middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloader-middleware.html#writing-your-own-downloader-middleware">Writing your own downloader middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="downloader-middleware.html#built-in-downloader-middleware-reference"><span class="toctree-expand"></span>Built-in downloader middleware reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.cookies">CookiesMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.defaultheaders">DefaultHeadersMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.downloadtimeout">DownloadTimeoutMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpauth">HttpAuthMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpcache"><span class="toctree-expand"></span>HttpCacheMiddleware</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="downloader-middleware.html#file-system-storage">File system storage</a></li>
+<li class="toctree-l4"><a class="reference internal" href="downloader-middleware.html#settings">Settings</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpcompression">HttpCompressionMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.httpproxy">HttpProxyMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.redirect">RedirectMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.retry">RetryMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.robotstxt">RobotsTxtMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.stats">DownloaderStats</a></li>
+<li class="toctree-l3"><a class="reference internal" href="downloader-middleware.html#module-scrapy.contrib.downloadermiddleware.useragent">UserAgentMiddleware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html"><span class="toctree-expand"></span>Spider Middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="spider-middleware.html#activating-a-spider-middleware">Activating a spider middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spider-middleware.html#writing-your-own-spider-middleware">Writing your own spider middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="spider-middleware.html#built-in-spider-middleware-reference"><span class="toctree-expand"></span>Built-in spider middleware reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.depth">DepthMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.httperror">HttpErrorMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.offsite">OffsiteMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.referer">RefererMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.requestlimit">RequestLimitMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="spider-middleware.html#module-scrapy.contrib.spidermiddleware.urllength">UrlLengthMiddleware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html"><span class="toctree-expand"></span>Extensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#extension-settings">Extension settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#loading-activating-extensions">Loading &amp; activating extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#available-enabled-and-disabled-extensions">Available, enabled and disabled extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#accessing-enabled-extensions">Accessing enabled extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#writing-your-own-extension">Writing your own extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#module-scrapy.extension">Extension Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="extensions.html#built-in-extensions-reference"><span class="toctree-expand"></span>Built-in extensions reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="extensions.html#general-purpose-extensions"><span class="toctree-expand"></span>General purpose extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.corestats.corestats">Core Stats extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.webservice">Web service extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.telnet">Telnet console extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.memusage">Memory usage extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.memdebug">Memory debugger extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.closespider">Close spider extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#module-scrapy.contrib.statsmailer">StatsMailer extension</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="extensions.html#debugging-extensions"><span class="toctree-expand"></span>Debugging extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#stack-trace-dump-extension">Stack trace dump extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="extensions.html#debugger-extension">Debugger extension</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Requests and Responses</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#request-objects"><span class="toctree-expand"></span>Request objects</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#passing-arguments-to-callback-functions">Passing arguments to callback functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#request-meta-special-keys">Request.meta special keys</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#request-subclasses"><span class="toctree-expand"></span>Request subclasses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#formrequest-objects">FormRequest objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#request-usage-examples"><span class="toctree-expand"></span>Request usage examples</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-formrequest-to-send-data-via-http-post">Using FormRequest to send data via HTTP POST</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#using-formrequest-from-response-to-simulate-a-user-login">Using FormRequest.from_response() to simulate a user login</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#response-objects">Response objects</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#response-subclasses"><span class="toctree-expand"></span>Response subclasses</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#textresponse-objects">TextResponse objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#htmlresponse-objects">HtmlResponse objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmlresponse-objects">XmlResponse objects</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html"><span class="toctree-expand"></span>Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#designating-the-settings">Designating the settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#populating-the-settings"><span class="toctree-expand"></span>Populating the settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#global-overrides">1. Global overrides</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#environment-variables">2. Environment variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scrapy-settings">3. scrapy_settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-settings-per-command">4. Default settings per-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-global-settings">5. Default global settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#how-to-access-settings">How to access settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#rationale-for-setting-names">Rationale for setting names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="settings.html#built-in-settings-reference"><span class="toctree-expand"></span>Built-in settings reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#aws-access-key-id">AWS_ACCESS_KEY_ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#aws-secret-access-key">AWS_SECRET_ACCESS_KEY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#bot-name">BOT_NAME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#bot-version">BOT_VERSION</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#concurrent-items">CONCURRENT_ITEMS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#concurrent-requests-per-spider">CONCURRENT_REQUESTS_PER_SPIDER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#concurrent-spiders">CONCURRENT_SPIDERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#cookies-debug">COOKIES_DEBUG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-item-class">DEFAULT_ITEM_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-request-headers">DEFAULT_REQUEST_HEADERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#default-response-encoding">DEFAULT_RESPONSE_ENCODING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#depth-limit">DEPTH_LIMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#depth-stats">DEPTH_STATS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-debug">DOWNLOADER_DEBUG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-middlewares">DOWNLOADER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-middlewares-base">DOWNLOADER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#downloader-stats">DOWNLOADER_STATS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-delay">DOWNLOAD_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-handlers">DOWNLOAD_HANDLERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-handlers-base">DOWNLOAD_HANDLERS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#download-timeout">DOWNLOAD_TIMEOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#dupefilter-class">DUPEFILTER_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#encoding-aliases">ENCODING_ALIASES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#encoding-aliases-base">ENCODING_ALIASES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#extensions">EXTENSIONS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#extensions-base">EXTENSIONS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#item-pipelines">ITEM_PIPELINES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-enabled">LOG_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-encoding">LOG_ENCODING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-file">LOG_FILE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-level">LOG_LEVEL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#log-stdout">LOG_STDOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memdebug-enabled">MEMDEBUG_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memdebug-notify">MEMDEBUG_NOTIFY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-enabled">MEMUSAGE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-limit-mb">MEMUSAGE_LIMIT_MB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-notify-mail">MEMUSAGE_NOTIFY_MAIL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-report">MEMUSAGE_REPORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#memusage-warning-mb">MEMUSAGE_WARNING_MB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#newspider-module">NEWSPIDER_MODULE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#randomize-download-delay">RANDOMIZE_DOWNLOAD_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#redirect-max-times">REDIRECT_MAX_TIMES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#redirect-max-metarefresh-delay">REDIRECT_MAX_METAREFRESH_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#redirect-priority-adjust">REDIRECT_PRIORITY_ADJUST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#requests-queue-size">REQUESTS_QUEUE_SIZE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#robotstxt-obey">ROBOTSTXT_OBEY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler">SCHEDULER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler-order">SCHEDULER_ORDER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler-middlewares">SCHEDULER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#scheduler-middlewares-base">SCHEDULER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#spider-middlewares">SPIDER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#spider-middlewares-base">SPIDER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#spider-modules">SPIDER_MODULES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#stats-class">STATS_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#stats-dump">STATS_DUMP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#stats-enabled">STATS_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#statsmailer-rcpts">STATSMAILER_RCPTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#telnetconsole-enabled">TELNETCONSOLE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#telnetconsole-port">TELNETCONSOLE_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#templates-dir">TEMPLATES_DIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#urllength-limit">URLLENGTH_LIMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="settings.html#user-agent">USER_AGENT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html"><span class="toctree-expand"></span>Signals</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="signals.html#deferred-signal-handlers">Deferred signal handlers</a></li>
+<li class="toctree-l2"><a class="reference internal" href="signals.html#module-scrapy.signals"><span class="toctree-expand"></span>Built-in signals reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#engine-started">engine_started</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#engine-stopped">engine_stopped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#item-scraped">item_scraped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#item-passed">item_passed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#item-dropped">item_dropped</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#spider-closed">spider_closed</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#spider-opened">spider_opened</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#spider-idle">spider_idle</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#request-received">request_received</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#response-received">response_received</a></li>
+<li class="toctree-l3"><a class="reference internal" href="signals.html#response-downloaded">response_downloaded</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html"><span class="toctree-expand"></span>Exceptions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exceptions.html#built-in-exceptions-reference"><span class="toctree-expand"></span>Built-in Exceptions reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#dropitem">DropItem</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#ignorerequest">IgnoreRequest</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#notconfigured">NotConfigured</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exceptions.html#notsupported">NotSupported</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html"><span class="toctree-expand"></span>Item Exporters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="exporters.html#using-item-exporters">Using Item Exporters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="exporters.html#serialization-of-item-fields"><span class="toctree-expand"></span>Serialization of item fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#declaring-a-serializer-in-the-field">1. Declaring a serializer in the field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#overriding-the-serialize-field-method">2. Overriding the serialize_field() method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="exporters.html#built-in-item-exporters-reference"><span class="toctree-expand"></span>Built-in Item Exporters reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#baseitemexporter">BaseItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#xmlitemexporter">XmlItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#csvitemexporter">CsvItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#pickleitemexporter">PickleItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#pprintitemexporter">PprintItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#jsonitemexporter">JsonItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="exporters.html#jsonlinesitemexporter">JsonLinesItemExporter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html"><span class="toctree-expand"></span>Contributing to Scrapy</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#reporting-bugs">Reporting bugs</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#writing-patches">Writing patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#submitting-patches">Submitting patches</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#coding-style">Coding style</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#documentation-policies">Documentation policies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../contributing.html#tests"><span class="toctree-expand"></span>Tests</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#running-tests">Running tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../contributing.html#writing-tests">Writing tests</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html"><span class="toctree-expand"></span>Versioning and API Stability</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../api-stability.html#versioning">Versioning</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../api-stability.html#id1">API Stability</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html"><span class="toctree-expand"></span>Experimental features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="../experimental/djangoitems.html"><span class="toctree-expand"></span>DjangoItem</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/djangoitems.html#using-djangoitem">Using DjangoItem</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="../experimental/crawlspider-v2.html"><span class="toctree-expand"></span>CrawlSpider v2</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#introduction">Introduction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#rules-matching">Rules Matching</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-extractors-processors">Request Extractors &amp; Processors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#examples">Examples</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../experimental/crawlspider-v2.html#reference"><span class="toctree-expand"></span>Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#crawlspider">CrawlSpider</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#rules">Rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-extractors">Request Extractors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-processors">Request Processors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="../experimental/crawlspider-v2.html#request-response-matchers">Request/Response Matchers</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          
+        
+      </div><div id="rtd-x4avylyc" class="ethical-rtd ethical-dark-theme"></div></div>
+      
+
+      
+       
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Requests and Responses</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.10.3/docs/topics/request-response.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document">
+            
+  <div class="section" id="module-scrapy.http">
+<span id="requests-and-responses"></span><span id="topics-request-response"></span><h1>Requests and Responses<a class="headerlink" href="#module-scrapy.http" title="Permalink to this headline">¶</a></h1>
+<p>Scrapy uses <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> and <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> objects for crawling web
+sites.</p>
+<p>Typically, <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> objects are generated in the spiders and pass
+across the system until they reach the Downloader, which executes the request
+and returns a <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object which travels back to the spider that
+issued the request.</p>
+<p>Both <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> and <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> classes have subclasses which add
+functionality not required in the base classes. These are described
+below in <a class="reference internal" href="#topics-request-response-ref-request-subclasses"><span>Request subclasses</span></a> and
+<a class="reference internal" href="#topics-request-response-ref-response-subclasses"><span>Response subclasses</span></a>.</p>
+<div class="section" id="request-objects">
+<h2>Request objects<a class="headerlink" href="#request-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.http.Request">
+<em class="property">class </em><code class="descclassname">scrapy.http.</code><code class="descname">Request</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>method='GET'</em>, <em>body</em>, <em>headers</em>, <em>cookies</em>, <em>meta</em>, <em>encoding='utf-8'</em>, <em>priority=0.0</em>, <em>dont_filter=False</em>, <em>callback</em>, <em>errback</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.Request" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object represents an HTTP request, which is usually
+generated in the Spider and executed by the Downloader, and thus generating
+a <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a>.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>url</strong> (<em>string</em>) – the URL of this request</li>
+<li><strong>method</strong> (<em>string</em>) – the HTTP method of this request. Defaults to <code class="docutils literal"><span class="pre">'GET'</span></code>.</li>
+<li><strong>meta</strong> (<em>dict</em>) – the initial values for the <a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> attribute. If
+given, the dict passed in this parameter will be shallow copied.</li>
+<li><strong>body</strong> (<em>str or unicode</em>) – the request body. If a <code class="docutils literal"><span class="pre">unicode</span></code> is passed, then it’s encoded to
+<code class="docutils literal"><span class="pre">str</span></code> using the <cite>encoding</cite> passed (which defaults to <code class="docutils literal"><span class="pre">utf-8</span></code>). If
+<code class="docutils literal"><span class="pre">body</span></code> is not given,, an empty string is stored. Regardless of the
+type of this argument, the final value stored will be a <code class="docutils literal"><span class="pre">str`</span></code> (never
+<code class="docutils literal"><span class="pre">unicode</span></code> or <code class="docutils literal"><span class="pre">None</span></code>).</li>
+<li><strong>headers</strong> (<em>dict</em>) – the headers of this request. The dict values can be strings
+(for single valued headers) or lists (for multi-valued headers).</li>
+<li><strong>cookies</strong> (<em>dict</em>) – <p>the request cookies. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">request_with_cookies</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"http://www.example.com"</span><span class="p">,</span>
+                               <span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="n">currency</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span> <span class="n">country</span><span class="p">:</span> <span class="s">'UY'</span><span class="p">})</span>
+</pre></div>
+</div>
+<p>When some site returns cookies (in a response) those are stored in the
+cookies for that domain and will be sent again in future requests. That’s
+the typical behaviour of any regular web browser. However, if, for some
+reason, you want to avoid merging with existing cookies you can instruct
+Scrapy to do so by setting the <code class="docutils literal"><span class="pre">dont_merge_cookies</span></code> key in the
+<a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a>.</p>
+<p>Example of request without merging cookies:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">request_with_cookies</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"http://www.example.com"</span><span class="p">,</span>
+                               <span class="n">cookies</span><span class="o">=</span><span class="p">{</span><span class="n">currency</span><span class="p">:</span> <span class="s">'USD'</span><span class="p">,</span> <span class="n">country</span><span class="p">:</span> <span class="s">'UY'</span><span class="p">},</span>
+                               <span class="n">meta</span><span class="o">=</span><span class="p">{</span><span class="s">'dont_merge_cookies'</span><span class="p">:</span> <span class="bp">True</span><span class="p">})</span>
+</pre></div>
+</div>
+</li>
+<li><strong>encoding</strong> (<em>int or float</em>) – the encoding of this request (defaults to <code class="docutils literal"><span class="pre">'utf-8'</span></code>).
+This encoding will be used to percent-encode the URL and to convert the
+body to <code class="docutils literal"><span class="pre">str</span></code> (if given as <code class="docutils literal"><span class="pre">unicode</span></code>).</li>
+<li><strong>priority</strong> – the priority of this request (defaults to <code class="docutils literal"><span class="pre">0.0</span></code>).
+The priority is used by the scheduler to define the order used to return
+requests. It can also be used to feed priorities externally, for
+example, using an offline long-term scheduler.</li>
+<li><strong>dont_filter</strong> (<em>boolean</em>) – indicates that this request should not be filtered by
+the scheduler. This is used when you want to perform an identical
+request multiple times, to ignore the duplicates filter. Use it with
+care, or you will get into crawling loops. Default to <code class="docutils literal"><span class="pre">False</span></code>.</li>
+<li><strong>callback</strong> (<em>callable</em>) – the function that will be called with the response of this
+request (once its downloaded) as its first parameter. For more information
+see <a class="reference internal" href="#topics-request-response-ref-request-callback-arguments"><span>Passing arguments to callback functions</span></a> below.
+If a Request doesn’t specify a callback, the spider’s
+<a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider.parse" title="scrapy.spider.BaseSpider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> method will be used.</li>
+<li><strong>errback</strong> (<em>callable</em>) – a function that will be called if any exception was
+raised while processing the request. This includes pages that failed
+with 404 HTTP errors and such. It receives a <a class="reference external" href="http://twistedmatrix.com/documents/8.2.0/api/twisted.python.failure.Failure.html">Twisted Failure</a> instance
+as first parameter.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="scrapy.http.Request.url">
+<code class="descname">url</code><a class="headerlink" href="#scrapy.http.Request.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string containing the URL of this request. Keep in mind that this
+attribute contains the escaped URL, so it can differ from the URL passed in
+the constructor.</p>
+<p>This attribute is read-only. To change the URL of a Request use
+<a class="reference internal" href="#scrapy.http.Request.replace" title="scrapy.http.Request.replace"><code class="xref py py-meth docutils literal"><span class="pre">replace()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Request.method">
+<code class="descname">method</code><a class="headerlink" href="#scrapy.http.Request.method" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string representing the HTTP method in the request. This is guaranteed to
+be uppercase. Example: <code class="docutils literal"><span class="pre">"GET"</span></code>, <code class="docutils literal"><span class="pre">"POST"</span></code>, <code class="docutils literal"><span class="pre">"PUT"</span></code>, etc</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Request.headers">
+<code class="descname">headers</code><a class="headerlink" href="#scrapy.http.Request.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary-like object which contains the request headers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Request.body">
+<code class="descname">body</code><a class="headerlink" href="#scrapy.http.Request.body" title="Permalink to this definition">¶</a></dt>
+<dd><p>A str that contains the request body.</p>
+<p>This attribute is read-only. To change the body of a Request use
+<a class="reference internal" href="#scrapy.http.Request.replace" title="scrapy.http.Request.replace"><code class="xref py py-meth docutils literal"><span class="pre">replace()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Request.meta">
+<code class="descname">meta</code><a class="headerlink" href="#scrapy.http.Request.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict that contains arbitrary metadata for this request. This dict is
+empty for new Requests, and is usually  populated by different Scrapy
+components (extensions, middlewares, etc). So the data contained in this
+dict depends on the extensions you have enabled.</p>
+<p>See <a class="reference internal" href="#topics-request-meta"><span>Request.meta special keys</span></a> for a list of special meta keys
+recognized by Scrapy.</p>
+<p>This dict is <a class="reference external" href="http://docs.python.org/library/copy.html">shallow copied</a> when the request is cloned using the
+<code class="docutils literal"><span class="pre">copy()</span></code> or <code class="docutils literal"><span class="pre">replace()</span></code> methods.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.http.Request.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.Request.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a new Request which is a copy of this Request. See also:
+<a class="reference internal" href="#topics-request-response-ref-request-callback-arguments"><span>Passing arguments to callback functions</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.http.Request.replace">
+<code class="descname">replace</code><span class="sig-paren">(</span><span class="optional">[</span><em>url</em>, <em>callback</em>, <em>method</em>, <em>headers</em>, <em>body</em>, <em>cookies</em>, <em>meta</em>, <em>encoding</em>, <em>dont_filter</em>, <em>callback</em>, <em>errback</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.Request.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return a Request object with the same members, except for those members
+given new values by whichever keyword arguments are specified. The
+attribute <a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> is copied by default (unless a new value
+is given in the <code class="docutils literal"><span class="pre">meta</span></code> argument). See also
+<a class="reference internal" href="#topics-request-response-ref-request-callback-arguments"><span>Passing arguments to callback functions</span></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="passing-arguments-to-callback-functions">
+<span id="topics-request-response-ref-request-callback-arguments"></span><h3>Passing arguments to callback functions<a class="headerlink" href="#passing-arguments-to-callback-functions" title="Permalink to this headline">¶</a></h3>
+<p>The callback of a request is a function that will be called when the response
+of that request is downloaded. The callback function will be called with the
+<a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object downloaded as its first argument.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">parse_page1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"http://www.example.com/some_page.html"</span><span class="p">,</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_page2</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">parse_page2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="c"># this would log http://www.example.com/some_page.html</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">"Visited </span><span class="si">%s</span><span class="s">"</span> <span class="o">%</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>In some cases you may be interested in passing arguments to those callback
+functions so you can receive those arguments later, when the response is
+downloaded. There are two ways for doing this:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>using a lambda function (or any other function/callable)</li>
+<li>using the <a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> attribute.</li>
+</ol>
+</div></blockquote>
+<p>Here’s an example of logging the referer URL of each page using each mechanism.
+Keep in mind, however, that the referer URL could be accessed easier via
+<code class="docutils literal"><span class="pre">response.request.url</span></code>).</p>
+<p>Using lambda function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">parse_page1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="n">myarg</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"http://www.example.com/some_page.html"</span><span class="p">,</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="k">lambda</span> <span class="n">r</span><span class="p">:</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_page2</span><span class="p">(</span><span class="n">r</span><span class="p">,</span> <span class="n">myarg</span><span class="p">))</span>
+
+<span class="k">def</span> <span class="nf">parse_page2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">referer_url</span><span class="p">):</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">"Visited page </span><span class="si">%s</span><span class="s"> from </span><span class="si">%s</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">referer_url</span><span class="p">))</span>
+</pre></div>
+</div>
+<p>Using Request.meta:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">def</span> <span class="nf">parse_page1</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="n">request</span> <span class="o">=</span> <span class="n">Request</span><span class="p">(</span><span class="s">"http://www.example.com/some_page.html"</span><span class="p">,</span>
+                      <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_page2</span><span class="p">)</span>
+    <span class="n">request</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'referer_url'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span>
+
+<span class="k">def</span> <span class="nf">parse_page2</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="n">referer_url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">request</span><span class="o">.</span><span class="n">meta</span><span class="p">[</span><span class="s">'referer_url'</span><span class="p">]</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">"Visited page </span><span class="si">%s</span><span class="s"> from </span><span class="si">%s</span><span class="s">"</span> <span class="o">%</span> <span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">referer_url</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="request-meta-special-keys">
+<span id="topics-request-meta"></span><h2>Request.meta special keys<a class="headerlink" href="#request-meta-special-keys" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> attribute can contain any arbitrary data, but there
+are some special keys recognized by Scrapy and its built-in extensions.</p>
+<p>Those are:</p>
+<ul class="simple">
+<li><a class="reference internal" href="downloader-middleware.html#std:reqmeta-dont_redirect"><code class="xref std std-reqmeta docutils literal"><span class="pre">dont_redirect</span></code></a></li>
+<li><a class="reference internal" href="downloader-middleware.html#std:reqmeta-dont_retry"><code class="xref std std-reqmeta docutils literal"><span class="pre">dont_retry</span></code></a></li>
+<li><a class="reference internal" href="spider-middleware.html#std:reqmeta-handle_httpstatus_list"><code class="xref std std-reqmeta docutils literal"><span class="pre">handle_httpstatus_list</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">dont_merge_cookies</span></code> (see <code class="docutils literal"><span class="pre">cookies</span></code> parameter of <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> constructor)</li>
+</ul>
+</div>
+<div class="section" id="request-subclasses">
+<span id="topics-request-response-ref-request-subclasses"></span><h2>Request subclasses<a class="headerlink" href="#request-subclasses" title="Permalink to this headline">¶</a></h2>
+<p>Here is the list of built-in <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> subclasses. You can also subclass
+it to implement your own custom functionality.</p>
+<div class="section" id="formrequest-objects">
+<h3>FormRequest objects<a class="headerlink" href="#formrequest-objects" title="Permalink to this headline">¶</a></h3>
+<p>The FormRequest class extends the base <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> with functionality for
+dealing with HTML forms. It uses the <a class="reference external" href="http://wwwsearch.sourceforge.net/ClientForm/">ClientForm</a> library (bundled with
+Scrapy) to pre-populate form fields with form data from <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a>
+objects.</p>
+<dl class="class">
+<dt id="scrapy.http.FormRequest">
+<em class="property">class </em><code class="descclassname">scrapy.http.</code><code class="descname">FormRequest</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>formdata</em>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.FormRequest" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.http.FormRequest" title="scrapy.http.FormRequest"><code class="xref py py-class docutils literal"><span class="pre">FormRequest</span></code></a> class adds a new argument to the constructor. The
+remaining arguments are the same as for the <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> class and are
+not documented here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>formdata</strong> (<em>dict or iterable of tuples</em>) – is a dictionary (or iterable of (key, value) tuples)
+containing HTML Form data which will be url-encoded and assigned to the
+body of the request.</td>
+</tr>
+</tbody>
+</table>
+<p>The <a class="reference internal" href="#scrapy.http.FormRequest" title="scrapy.http.FormRequest"><code class="xref py py-class docutils literal"><span class="pre">FormRequest</span></code></a> objects support the following class method in
+addition to the standard <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> methods:</p>
+<dl class="classmethod">
+<dt id="scrapy.http.FormRequest.from_response">
+<em class="property">classmethod </em><code class="descname">from_response</code><span class="sig-paren">(</span><em>response</em><span class="optional">[</span>, <em>formname=None</em>, <em>formnumber=0</em>, <em>formdata=None</em>, <em>clickdata=None</em>, <em>dont_click=False</em>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.FormRequest.from_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new <a class="reference internal" href="#scrapy.http.FormRequest" title="scrapy.http.FormRequest"><code class="xref py py-class docutils literal"><span class="pre">FormRequest</span></code></a> object with its form field values
+pre-populated with those found in the HTML <code class="docutils literal"><span class="pre">&lt;form&gt;</span></code> element contained
+in the given response. For an example see
+<a class="reference internal" href="#topics-request-response-ref-request-userlogin"><span>Using FormRequest.from_response() to simulate a user login</span></a>.</p>
+<p>Keep in mind that this method is implemented using <a class="reference external" href="http://wwwsearch.sourceforge.net/ClientForm/">ClientForm</a> whose
+policy is to automatically simulate a click, by default, on any form
+control that looks clickable, like a <code class="docutils literal"><span class="pre">&lt;input</span> <span class="pre">type="submit"&gt;</span></code>.  Even
+though this is quite convenient, and often the desired behaviour,
+sometimes it can cause problems which could be hard to debug. For
+example, when working with forms that are filled and/or submitted using
+javascript, the default <a class="reference internal" href="#scrapy.http.FormRequest.from_response" title="scrapy.http.FormRequest.from_response"><code class="xref py py-meth docutils literal"><span class="pre">from_response()</span></code></a> (and <a class="reference external" href="http://wwwsearch.sourceforge.net/ClientForm/">ClientForm</a>)
+behaviour may not be the most appropiate. To disable this behaviour you
+can set the <code class="docutils literal"><span class="pre">dont_click</span></code> argument to <code class="docutils literal"><span class="pre">True</span></code>. Also, if you want to
+change the control clicked (instead of disabling it) you can also use
+the <code class="docutils literal"><span class="pre">clickdata</span></code> argument.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>response</strong> (<a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object) – the response containing a HTML form which will be used
+to pre-populate the form fields</li>
+<li><strong>formname</strong> (<em>string</em>) – if given, the form with name attribute set to this value
+will be used. Otherwise, <code class="docutils literal"><span class="pre">formnumber</span></code> will be used for selecting
+the form.</li>
+<li><strong>formnumber</strong> (<em>integer</em>) – the number of form to use, when the response contains
+multiple forms. The first one (and also the default) is <code class="docutils literal"><span class="pre">0</span></code>.</li>
+<li><strong>formdata</strong> (<em>dict</em>) – fields to override in the form data. If a field was
+already present in the response <code class="docutils literal"><span class="pre">&lt;form&gt;</span></code> element, its value is
+overridden by the one passed in this parameter.</li>
+<li><strong>clickdata</strong> (<em>dict</em>) – Arguments to be passed directly to the ClientForm
+<code class="docutils literal"><span class="pre">click_request_data()</span></code> method. See <a class="reference external" href="http://wwwsearch.sourceforge.net/ClientForm/">ClientForm</a> homepage for
+more info.</li>
+<li><strong>dont_click</strong> (<em>boolean</em>) – If True, the form data will be sumbitted without
+clicking in any element.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The other parameters of this class method are passed directly to the
+<a class="reference internal" href="#scrapy.http.FormRequest" title="scrapy.http.FormRequest"><code class="xref py py-class docutils literal"><span class="pre">FormRequest</span></code></a> constructor.</p>
+<div class="versionadded">
+<p><span class="versionmodified">New in version 0.10.3: </span>The <code class="docutils literal"><span class="pre">formname</span></code> parameter.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="request-usage-examples">
+<h3>Request usage examples<a class="headerlink" href="#request-usage-examples" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="using-formrequest-to-send-data-via-http-post">
+<h4>Using FormRequest to send data via HTTP POST<a class="headerlink" href="#using-formrequest-to-send-data-via-http-post" title="Permalink to this headline">¶</a></h4>
+<p>If you want to simulate a HTML Form POST in your spider and send a couple of
+key-value fields, you can return a <a class="reference internal" href="#scrapy.http.FormRequest" title="scrapy.http.FormRequest"><code class="xref py py-class docutils literal"><span class="pre">FormRequest</span></code></a> object (from your
+spider) like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">return</span> <span class="p">[</span><span class="n">FormRequest</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s">"http://www.example.com/post/action"</span><span class="p">,</span>
+                    <span class="n">formdata</span><span class="o">=</span><span class="p">{</span><span class="s">'name'</span><span class="p">:</span> <span class="s">'John Doe'</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="s">'27'</span><span class="p">},</span>
+                    <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">after_post</span><span class="p">)]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-formrequest-from-response-to-simulate-a-user-login">
+<span id="topics-request-response-ref-request-userlogin"></span><h4>Using FormRequest.from_response() to simulate a user login<a class="headerlink" href="#using-formrequest-from-response-to-simulate-a-user-login" title="Permalink to this headline">¶</a></h4>
+<p>It is usual for web sites to provide pre-populated form fields through <code class="docutils literal"><span class="pre">&lt;input</span>
+<span class="pre">type="hidden"&gt;</span></code> elements, such as session related data or authentication
+tokens (for login pages). When scraping, you’ll want these fields to be
+automatically pre-populated and only override a couple of them, such as the
+user name and password. You can use the <a class="reference internal" href="#scrapy.http.FormRequest.from_response" title="scrapy.http.FormRequest.from_response"><code class="xref py py-meth docutils literal"><span class="pre">FormRequest.from_response()</span></code></a>
+method for this job. Here’s an example spider which uses it:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="k">class</span> <span class="nc">LoginSpider</span><span class="p">(</span><span class="n">BaseSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s">'example.com'</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s">'http://www.example.com/users/login.php'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">FormRequest</span><span class="o">.</span><span class="n">from_response</span><span class="p">(</span><span class="n">response</span><span class="p">,</span>
+                    <span class="n">formdata</span><span class="o">=</span><span class="p">{</span><span class="s">'username'</span><span class="p">:</span> <span class="s">'john'</span><span class="p">,</span> <span class="s">'password'</span><span class="p">:</span> <span class="s">'secret'</span><span class="p">},</span>
+                    <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">after_login</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">after_login</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="c"># check login succeed before going on</span>
+        <span class="k">if</span> <span class="s">"authentication failed"</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="s">"Login failed"</span><span class="p">,</span> <span class="n">level</span><span class="o">=</span><span class="n">log</span><span class="o">.</span><span class="n">ERROR</span><span class="p">)</span>
+            <span class="k">return</span>
+
+        <span class="c"># continue scraping with authenticated session...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="response-objects">
+<h2>Response objects<a class="headerlink" href="#response-objects" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.http.Response">
+<em class="property">class </em><code class="descclassname">scrapy.http.</code><code class="descname">Response</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>status=200</em>, <em>headers</em>, <em>body</em>, <em>meta</em>, <em>flags</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.Response" title="Permalink to this definition">¶</a></dt>
+<dd><p>A <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object represents an HTTP response, which is usually
+downloaded (by the Downloader) and fed to the Spiders for processing.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>url</strong> (<em>string</em>) – the URL of this response</li>
+<li><strong>headers</strong> (<em>dict</em>) – the headers of this response. The dict values can be strings
+(for single valued headers) or lists (for multi-valued headers).</li>
+<li><strong>status</strong> (<em>integer</em>) – the HTTP status of the response. Defaults to <code class="docutils literal"><span class="pre">200</span></code>.</li>
+<li><strong>body</strong> (<em>str</em>) – the response body. It must be str, not unicode, unless you’re
+using a encoding-aware <a class="reference internal" href="#topics-request-response-ref-response-subclasses"><span>Response subclass</span></a>, such as
+<a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a>.</li>
+<li><strong>meta</strong> (<em>dict</em>) – the initial values for the <a class="reference internal" href="#scrapy.http.Response.meta" title="scrapy.http.Response.meta"><code class="xref py py-attr docutils literal"><span class="pre">Response.meta</span></code></a> attribute. If
+given, the dict will be shallow copied.</li>
+<li><strong>flags</strong> (<em>list</em>) – is a list containing the initial values for the
+<a class="reference internal" href="#scrapy.http.Response.flags" title="scrapy.http.Response.flags"><code class="xref py py-attr docutils literal"><span class="pre">Response.flags</span></code></a> attribute. If given, the list will be shallow
+copied.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<dl class="attribute">
+<dt id="scrapy.http.Response.url">
+<code class="descname">url</code><a class="headerlink" href="#scrapy.http.Response.url" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string containing the URL of the response.</p>
+<p>This attribute is read-only. To change the URL of a Response use
+<a class="reference internal" href="#scrapy.http.Response.replace" title="scrapy.http.Response.replace"><code class="xref py py-meth docutils literal"><span class="pre">replace()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Response.status">
+<code class="descname">status</code><a class="headerlink" href="#scrapy.http.Response.status" title="Permalink to this definition">¶</a></dt>
+<dd><p>An integer representing the HTTP status of the response. Example: <code class="docutils literal"><span class="pre">200</span></code>,
+<code class="docutils literal"><span class="pre">404</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Response.headers">
+<code class="descname">headers</code><a class="headerlink" href="#scrapy.http.Response.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary-like object which contains the response headers.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Response.body">
+<code class="descname">body</code><a class="headerlink" href="#scrapy.http.Response.body" title="Permalink to this definition">¶</a></dt>
+<dd><p>A str containing the body of this Response. Keep in mind that Reponse.body
+is always a str. If you want the unicode version use
+<a class="reference internal" href="#scrapy.http.TextResponse.body_as_unicode" title="scrapy.http.TextResponse.body_as_unicode"><code class="xref py py-meth docutils literal"><span class="pre">TextResponse.body_as_unicode()</span></code></a> (only available in
+<a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> and subclasses).</p>
+<p>This attribute is read-only. To change the body of a Response use
+<a class="reference internal" href="#scrapy.http.Response.replace" title="scrapy.http.Response.replace"><code class="xref py py-meth docutils literal"><span class="pre">replace()</span></code></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Response.request">
+<code class="descname">request</code><a class="headerlink" href="#scrapy.http.Response.request" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> object that generated this response. This attribute is
+assigned in the Scrapy engine, after the response and the request have passed
+through all <a class="reference internal" href="downloader-middleware.html#topics-downloader-middleware"><span>Downloader Middlewares</span></a>.
+In particular, this means that:</p>
+<ul class="simple">
+<li>HTTP redirections will cause the original request (to the URL before
+redirection) to be assigned to the redirected response (with the final
+URL after redirection).</li>
+<li>Response.request.url doesn’t always equal Response.url</li>
+<li>This attribute is only available in the spider code, and in the
+<a class="reference internal" href="spider-middleware.html#topics-spider-middleware"><span>Spider Middlewares</span></a>, but not in
+Downloader Middlewares (although you have the Request available there by
+other means) and handlers of the <a class="reference internal" href="signals.html#std:signal-response_downloaded"><code class="xref std std-signal docutils literal"><span class="pre">response_downloaded</span></code></a> signal.</li>
+</ul>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Response.meta">
+<code class="descname">meta</code><a class="headerlink" href="#scrapy.http.Response.meta" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict that contains arbitrary metadata for this response, similar to the
+<a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> attribute. See the <a class="reference internal" href="#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> attribute for
+more info.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.http.Response.flags">
+<code class="descname">flags</code><a class="headerlink" href="#scrapy.http.Response.flags" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list that contains flags for this response. Flags are labels used for
+tagging Responses. For example: <cite>‘cached’</cite>, <cite>‘redirected</cite>‘, etc. And
+they’re shown on the string representation of the Response (<cite>__str__</cite>
+method) which is used by the engine for logging.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.http.Response.copy">
+<code class="descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.Response.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a new Response which is a copy of this Response.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.http.Response.replace">
+<code class="descname">replace</code><span class="sig-paren">(</span><span class="optional">[</span><em>url</em>, <em>status</em>, <em>headers</em>, <em>body</em>, <em>meta</em>, <em>flags</em>, <em>cls</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.Response.replace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns a Response object with the same members, except for those members
+given new values by whichever keyword arguments are specified. The
+attribute <a class="reference internal" href="#scrapy.http.Response.meta" title="scrapy.http.Response.meta"><code class="xref py py-attr docutils literal"><span class="pre">Response.meta</span></code></a> is copied by default (unless a new value
+is given in the <code class="docutils literal"><span class="pre">meta</span></code> argument).</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="response-subclasses">
+<span id="topics-request-response-ref-response-subclasses"></span><h2>Response subclasses<a class="headerlink" href="#response-subclasses" title="Permalink to this headline">¶</a></h2>
+<p>Here is the list of available built-in Response subclasses. You can also
+subclass the Response class to implement your own functionality.</p>
+<div class="section" id="textresponse-objects">
+<h3>TextResponse objects<a class="headerlink" href="#textresponse-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.http.TextResponse">
+<em class="property">class </em><code class="descclassname">scrapy.http.</code><code class="descname">TextResponse</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>encoding</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.TextResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> objects adds encoding capabilities to the base
+<a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> class, which is meant to be used only for binary data,
+such as images, sounds or any media file.</p>
+<p><a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> objects support a new constructor argument, in
+addition to the base <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> objects. The remaining functionality
+is the same as for the <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> class and is not documented here.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>encoding</strong> (<em>string</em>) – is a string which contains the encoding to use for this
+response. If you create a <a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> object with a unicode
+body, it will be encoded using this encoding (remember the body attribute
+is always a string). If <code class="docutils literal"><span class="pre">encoding</span></code> is <code class="docutils literal"><span class="pre">None</span></code> (default value), the
+encoding will be looked up in the response headers and body instead.</td>
+</tr>
+</tbody>
+</table>
+<p><a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> objects support the following attributes in addition
+to the standard <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> ones:</p>
+<dl class="attribute">
+<dt id="scrapy.http.TextResponse.encoding">
+<code class="descname">encoding</code><a class="headerlink" href="#scrapy.http.TextResponse.encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string with the encoding of this response. The encoding is resolved by
+trying the following mechanisms, in order:</p>
+<ol class="arabic simple">
+<li>the encoding passed in the constructor <cite>encoding</cite> argument</li>
+<li>the encoding declared in the Content-Type HTTP header. If this
+encoding is not valid (ie. unknown), it is ignored and the next
+resolution mechanism is tried.</li>
+<li>the encoding declared in the response body. The TextResponse class
+doesn’t provide any special functionality for this. However, the
+<a class="reference internal" href="#scrapy.http.HtmlResponse" title="scrapy.http.HtmlResponse"><code class="xref py py-class docutils literal"><span class="pre">HtmlResponse</span></code></a> and <a class="reference internal" href="#scrapy.http.XmlResponse" title="scrapy.http.XmlResponse"><code class="xref py py-class docutils literal"><span class="pre">XmlResponse</span></code></a> classes do.</li>
+<li>the encoding inferred by looking at the response body. This is the more
+fragile method but also the last one tried.</li>
+</ol>
+</dd></dl>
+
+<p><a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> objects support the following methods in addition to
+the standard <a class="reference internal" href="#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> ones:</p>
+<dl class="method">
+<dt id="scrapy.http.TextResponse.body_as_unicode">
+<code class="descname">body_as_unicode</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.TextResponse.body_as_unicode" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns the body of the response as unicode. This is equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">encoding</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>But <strong>not</strong> equivalent to:</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="nb">unicode</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Since, in the latter case, you would be using you system default encoding
+(typically <cite>ascii</cite>) to convert the body to uniode, instead of the response
+encoding.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="htmlresponse-objects">
+<h3>HtmlResponse objects<a class="headerlink" href="#htmlresponse-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.http.HtmlResponse">
+<em class="property">class </em><code class="descclassname">scrapy.http.</code><code class="descname">HtmlResponse</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.HtmlResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.http.HtmlResponse" title="scrapy.http.HtmlResponse"><code class="xref py py-class docutils literal"><span class="pre">HtmlResponse</span></code></a> class is a subclass of <a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a>
+which adds encoding auto-discovering support by looking into the HTML <a class="reference external" href="http://www.w3schools.com/TAGS/att_meta_http_equiv.asp">meta
+http-equiv</a> attribute.  See <a class="reference internal" href="#scrapy.http.TextResponse.encoding" title="scrapy.http.TextResponse.encoding"><code class="xref py py-attr docutils literal"><span class="pre">TextResponse.encoding</span></code></a>.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="xmlresponse-objects">
+<h3>XmlResponse objects<a class="headerlink" href="#xmlresponse-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.http.XmlResponse">
+<em class="property">class </em><code class="descclassname">scrapy.http.</code><code class="descname">XmlResponse</code><span class="sig-paren">(</span><em>url</em><span class="optional">[</span>, <em>...</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.http.XmlResponse" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.http.XmlResponse" title="scrapy.http.XmlResponse"><code class="xref py py-class docutils literal"><span class="pre">XmlResponse</span></code></a> class is a subclass of <a class="reference internal" href="#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal"><span class="pre">TextResponse</span></code></a> which
+adds encoding auto-discovering support by looking into the XML declaration
+line.  See <a class="reference internal" href="#scrapy.http.TextResponse.encoding" title="scrapy.http.TextResponse.encoding"><code class="xref py py-attr docutils literal"><span class="pre">TextResponse.encoding</span></code></a>.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="settings.html" class="btn btn-neutral float-right" title="Settings" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="extensions.html" class="btn btn-neutral" title="Extensions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-0u8dvjnh" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2010, Insophia.
+      Last updated on Jul 06, 2015.
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>.
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.10.3
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/0.8/">0.8</a></dd>
+        
+          <dd><a href="/en/0.7/">0.7</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.10.3/">pdf</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//https://readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//https://readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://cdnmedia.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-c7n05oo3"></div></body></html>

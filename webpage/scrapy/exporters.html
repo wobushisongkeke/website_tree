@@ -1,0 +1,912 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Item Exporters — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Release notes" href="../news.html" />
+    <link rel="prev" title="Signals" href="signals.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/topics/exporters.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/exporters'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                latest
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Item Exporters</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-item-exporters">Using Item Exporters</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#serialization-of-item-fields"><span class="toctree-expand"></span>Serialization of item fields</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#declaring-a-serializer-in-the-field">1. Declaring a serializer in the field</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#overriding-the-serialize-field-method">2. Overriding the serialize_field() method</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-item-exporters-reference"><span class="toctree-expand"></span>Built-in Item Exporters reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#baseitemexporter">BaseItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xmlitemexporter">XmlItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#csvitemexporter">CsvItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pickleitemexporter">PickleItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pprintitemexporter">PprintItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsonitemexporter">JsonItemExporter</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#jsonlinesitemexporter">JsonLinesItemExporter</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-gvy18npz" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Item Exporters</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/origin/1.6/docs/topics/exporters.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-scrapy.exporters">
+<span id="item-exporters"></span><span id="topics-exporters"></span><h1>Item Exporters<a class="headerlink" href="#module-scrapy.exporters" title="Permalink to this headline">¶</a></h1>
+<p>Once you have scraped your items, you often want to persist or export those
+items, to use the data in some other application. That is, after all, the whole
+purpose of the scraping process.</p>
+<p>For this purpose Scrapy provides a collection of Item Exporters for different
+output formats, such as XML, CSV or JSON.</p>
+<div class="section" id="using-item-exporters">
+<h2>Using Item Exporters<a class="headerlink" href="#using-item-exporters" title="Permalink to this headline">¶</a></h2>
+<p>If you are in a hurry, and just want to use an Item Exporter to output scraped
+data see the <a class="reference internal" href="feed-exports.html#topics-feed-exports"><span class="std std-ref">Feed exports</span></a>. Otherwise, if you want to know how
+Item Exporters work or need more custom functionality (not covered by the
+default exports), continue reading below.</p>
+<p>In order to use an Item Exporter, you  must instantiate it with its required
+args. Each Item Exporter requires different arguments, so check each exporter
+documentation to be sure, in <a class="reference internal" href="#topics-exporters-reference"><span class="std std-ref">Built-in Item Exporters reference</span></a>. After you have
+instantiated your exporter, you have to:</p>
+<p>1. call the method <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.start_exporting" title="scrapy.exporters.BaseItemExporter.start_exporting"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_exporting()</span></code></a> in order to
+signal the beginning of the exporting process</p>
+<p>2. call the <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.export_item" title="scrapy.exporters.BaseItemExporter.export_item"><code class="xref py py-meth docutils literal notranslate"><span class="pre">export_item()</span></code></a> method for each item you want
+to export</p>
+<p>3. and finally call the <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.finish_exporting" title="scrapy.exporters.BaseItemExporter.finish_exporting"><code class="xref py py-meth docutils literal notranslate"><span class="pre">finish_exporting()</span></code></a> to signal
+the end of the exporting process</p>
+<p>Here you can see an <a class="reference internal" href="item-pipeline.html"><span class="doc">Item Pipeline</span></a> which uses multiple
+Item Exporters to group scraped items to different files according to the
+value of one of their fields:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.exporters</span> <span class="k">import</span> <span class="n">XmlItemExporter</span>
+
+<span class="k">class</span> <span class="nc">PerYearXmlExportPipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="sd">"""Distribute items across multiple XML files according to their 'year' field"""</span>
+
+    <span class="k">def</span> <span class="nf">open_spider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">year_to_exporter</span> <span class="o">=</span> <span class="p">{}</span>
+
+    <span class="k">def</span> <span class="nf">close_spider</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">exporter</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">year_to_exporter</span><span class="o">.</span><span class="n">values</span><span class="p">():</span>
+            <span class="n">exporter</span><span class="o">.</span><span class="n">finish_exporting</span><span class="p">()</span>
+            <span class="n">exporter</span><span class="o">.</span><span class="n">file</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">_exporter_for_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="n">year</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">'year'</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">year</span> <span class="ow">not</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">year_to_exporter</span><span class="p">:</span>
+            <span class="n">f</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="s1">'</span><span class="si">{}</span><span class="s1">.xml'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">year</span><span class="p">),</span> <span class="s1">'wb'</span><span class="p">)</span>
+            <span class="n">exporter</span> <span class="o">=</span> <span class="n">XmlItemExporter</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+            <span class="n">exporter</span><span class="o">.</span><span class="n">start_exporting</span><span class="p">()</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">year_to_exporter</span><span class="p">[</span><span class="n">year</span><span class="p">]</span> <span class="o">=</span> <span class="n">exporter</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">year_to_exporter</span><span class="p">[</span><span class="n">year</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">item</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="n">exporter</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_exporter_for_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="n">exporter</span><span class="o">.</span><span class="n">export_item</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="serialization-of-item-fields">
+<span id="topics-exporters-field-serialization"></span><h2>Serialization of item fields<a class="headerlink" href="#serialization-of-item-fields" title="Permalink to this headline">¶</a></h2>
+<p>By default, the field values are passed unmodified to the underlying
+serialization library, and the decision of how to serialize them is delegated
+to each particular serialization library.</p>
+<p>However, you can customize how each field value is serialized <em>before it is
+passed to the serialization library</em>.</p>
+<p>There are two ways to customize how a field will be serialized, which are
+described next.</p>
+<div class="section" id="declaring-a-serializer-in-the-field">
+<span id="topics-exporters-serializers"></span><h3>1. Declaring a serializer in the field<a class="headerlink" href="#declaring-a-serializer-in-the-field" title="Permalink to this headline">¶</a></h3>
+<p>If you use <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> you can declare a serializer in the
+<a class="reference internal" href="items.html#topics-items-fields"><span class="std std-ref">field metadata</span></a>. The serializer must be
+a callable which receives a value and returns its serialized form.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">def</span> <span class="nf">serialize_price</span><span class="p">(</span><span class="n">value</span><span class="p">):</span>
+    <span class="k">return</span> <span class="s1">'$ </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">Product</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">price</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">(</span><span class="n">serializer</span><span class="o">=</span><span class="n">serialize_price</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="overriding-the-serialize-field-method">
+<h3>2. Overriding the serialize_field() method<a class="headerlink" href="#overriding-the-serialize-field-method" title="Permalink to this headline">¶</a></h3>
+<p>You can also override the <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.serialize_field" title="scrapy.exporters.BaseItemExporter.serialize_field"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize_field()</span></code></a> method to
+customize how your field value will be exported.</p>
+<p>Make sure you call the base class <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.serialize_field" title="scrapy.exporters.BaseItemExporter.serialize_field"><code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize_field()</span></code></a> method
+after your custom code.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.exporter</span> <span class="k">import</span> <span class="n">XmlItemExporter</span>
+
+<span class="k">class</span> <span class="nc">ProductXmlExporter</span><span class="p">(</span><span class="n">XmlItemExporter</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">serialize_field</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">field</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">field</span> <span class="o">==</span> <span class="s1">'price'</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s1">'$ </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="nb">str</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+        <span class="k">return</span> <span class="nb">super</span><span class="p">(</span><span class="n">Product</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">serialize_field</span><span class="p">(</span><span class="n">field</span><span class="p">,</span> <span class="n">name</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="built-in-item-exporters-reference">
+<span id="topics-exporters-reference"></span><h2>Built-in Item Exporters reference<a class="headerlink" href="#built-in-item-exporters-reference" title="Permalink to this headline">¶</a></h2>
+<p>Here is a list of the Item Exporters bundled with Scrapy. Some of them contain
+output examples, which assume you’re exporting these two items:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'Color TV'</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="s1">'1200'</span><span class="p">)</span>
+<span class="n">Item</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">'DVD player'</span><span class="p">,</span> <span class="n">price</span><span class="o">=</span><span class="s1">'200'</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="baseitemexporter">
+<h3>BaseItemExporter<a class="headerlink" href="#baseitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.BaseItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">BaseItemExporter</code><span class="sig-paren">(</span><em>fields_to_export=None</em>, <em>export_empty_fields=False</em>, <em>encoding='utf-8'</em>, <em>indent=0</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.BaseItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the (abstract) base class for all Item Exporters. It provides
+support for common features used by all (concrete) Item Exporters, such as
+defining what fields to export, whether to export empty fields, or which
+encoding to use.</p>
+<p>These features can be configured through the constructor arguments which
+populate their respective instance attributes: <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.fields_to_export" title="scrapy.exporters.BaseItemExporter.fields_to_export"><code class="xref py py-attr docutils literal notranslate"><span class="pre">fields_to_export</span></code></a>,
+<a class="reference internal" href="#scrapy.exporters.BaseItemExporter.export_empty_fields" title="scrapy.exporters.BaseItemExporter.export_empty_fields"><code class="xref py py-attr docutils literal notranslate"><span class="pre">export_empty_fields</span></code></a>, <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.encoding" title="scrapy.exporters.BaseItemExporter.encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">encoding</span></code></a>, <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.indent" title="scrapy.exporters.BaseItemExporter.indent"><code class="xref py py-attr docutils literal notranslate"><span class="pre">indent</span></code></a>.</p>
+<dl class="method">
+<dt id="scrapy.exporters.BaseItemExporter.export_item">
+<code class="descname">export_item</code><span class="sig-paren">(</span><em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.export_item" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports the given item. This method must be implemented in subclasses.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.exporters.BaseItemExporter.serialize_field">
+<code class="descname">serialize_field</code><span class="sig-paren">(</span><em>field</em>, <em>name</em>, <em>value</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.serialize_field" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the serialized value for the given field. You can override this
+method (in your custom Item Exporters) if you want to control how a
+particular field or value will be serialized/exported.</p>
+<p>By default, this method looks for a serializer <a class="reference internal" href="#topics-exporters-serializers"><span class="std std-ref">declared in the item
+field</span></a> and returns the result of applying
+that serializer to the value. If no serializer is found, it returns the
+value unchanged except for <code class="docutils literal notranslate"><span class="pre">unicode</span></code> values which are encoded to
+<code class="docutils literal notranslate"><span class="pre">str</span></code> using the encoding declared in the <a class="reference internal" href="#scrapy.exporters.BaseItemExporter.encoding" title="scrapy.exporters.BaseItemExporter.encoding"><code class="xref py py-attr docutils literal notranslate"><span class="pre">encoding</span></code></a> attribute.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>field</strong> (<a class="reference internal" href="items.html#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal notranslate"><span class="pre">Field</span></code></a> object or an empty dict) – the field being serialized. If a raw dict is being
+exported (not <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>) <em>field</em> value is an empty dict.</li>
+<li><strong>name</strong> (<em>str</em>) – the name of the field being serialized</li>
+<li><strong>value</strong> – the value being serialized</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.exporters.BaseItemExporter.start_exporting">
+<code class="descname">start_exporting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.start_exporting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal the beginning of the exporting process. Some exporters may use
+this to generate some required header (for example, the
+<a class="reference internal" href="#scrapy.exporters.XmlItemExporter" title="scrapy.exporters.XmlItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlItemExporter</span></code></a>). You must call this method before exporting any
+items.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.exporters.BaseItemExporter.finish_exporting">
+<code class="descname">finish_exporting</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.finish_exporting" title="Permalink to this definition">¶</a></dt>
+<dd><p>Signal the end of the exporting process. Some exporters may use this to
+generate some required footer (for example, the
+<a class="reference internal" href="#scrapy.exporters.XmlItemExporter" title="scrapy.exporters.XmlItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlItemExporter</span></code></a>). You must always call this method after you
+have no more items to export.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.exporters.BaseItemExporter.fields_to_export">
+<code class="descname">fields_to_export</code><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.fields_to_export" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list with the name of the fields that will be exported, or None if you
+want to export all fields. Defaults to None.</p>
+<p>Some exporters (like <a class="reference internal" href="#scrapy.exporters.CsvItemExporter" title="scrapy.exporters.CsvItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvItemExporter</span></code></a>) respect the order of the
+fields defined in this attribute.</p>
+<p>Some exporters may require fields_to_export list in order to export the
+data properly when spiders return dicts (not <code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code> instances).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.exporters.BaseItemExporter.export_empty_fields">
+<code class="descname">export_empty_fields</code><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.export_empty_fields" title="Permalink to this definition">¶</a></dt>
+<dd><p>Whether to include empty/unpopulated item fields in the exported data.
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>. Some exporters (like <a class="reference internal" href="#scrapy.exporters.CsvItemExporter" title="scrapy.exporters.CsvItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">CsvItemExporter</span></code></a>)
+ignore this attribute and always export all empty fields.</p>
+<p>This option is ignored for dict items.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.exporters.BaseItemExporter.encoding">
+<code class="descname">encoding</code><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.encoding" title="Permalink to this definition">¶</a></dt>
+<dd><p>The encoding that will be used to encode unicode values. This only
+affects unicode values (which are always serialized to str using this
+encoding). Other value types are passed unchanged to the specific
+serialization library.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.exporters.BaseItemExporter.indent">
+<code class="descname">indent</code><a class="headerlink" href="#scrapy.exporters.BaseItemExporter.indent" title="Permalink to this definition">¶</a></dt>
+<dd><p>Amount of spaces used to indent the output on each level. Defaults to <code class="docutils literal notranslate"><span class="pre">0</span></code>.</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">indent=None</span></code> selects the most compact representation,
+all items in the same line with no indentation</li>
+<li><code class="docutils literal notranslate"><span class="pre">indent&lt;=0</span></code> each item on its own line, no indentation</li>
+<li><code class="docutils literal notranslate"><span class="pre">indent&gt;0</span></code> each item on its own line, indented with the provided numeric value</li>
+</ul>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="xmlitemexporter">
+<h3>XmlItemExporter<a class="headerlink" href="#xmlitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.XmlItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">XmlItemExporter</code><span class="sig-paren">(</span><em>file</em>, <em>item_element='item'</em>, <em>root_element='items'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.XmlItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Items in XML format to the specified file object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> – the file-like object to use for exporting the data. Its <code class="docutils literal notranslate"><span class="pre">write</span></code> method should
+accept <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (a disk file opened in binary mode, a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> object, etc)</li>
+<li><strong>root_element</strong> (<em>str</em>) – The name of root element in the exported XML.</li>
+<li><strong>item_element</strong> (<em>str</em>) – The name of each item element in the exported XML.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The additional keyword arguments of this constructor are passed to the
+<a class="reference internal" href="#scrapy.exporters.BaseItemExporter" title="scrapy.exporters.BaseItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseItemExporter</span></code></a> constructor.</p>
+<p>A typical output of this exporter would be:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;items&gt;
+  &lt;item&gt;
+    &lt;name&gt;Color TV&lt;/name&gt;
+    &lt;price&gt;1200&lt;/price&gt;
+ &lt;/item&gt;
+  &lt;item&gt;
+    &lt;name&gt;DVD player&lt;/name&gt;
+    &lt;price&gt;200&lt;/price&gt;
+ &lt;/item&gt;
+&lt;/items&gt;
+</pre></div>
+</div>
+<p>Unless overridden in the <code class="xref py py-meth docutils literal notranslate"><span class="pre">serialize_field()</span></code> method, multi-valued fields are
+exported by serializing each value inside a <code class="docutils literal notranslate"><span class="pre">&lt;value&gt;</span></code> element. This is for
+convenience, as multi-valued fields are very common.</p>
+<p>For example, the item:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Item(name=['John', 'Doe'], age='23')
+</pre></div>
+</div>
+<p>Would be serialized as:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;items&gt;
+  &lt;item&gt;
+    &lt;name&gt;
+      &lt;value&gt;John&lt;/value&gt;
+      &lt;value&gt;Doe&lt;/value&gt;
+    &lt;/name&gt;
+    &lt;age&gt;23&lt;/age&gt;
+  &lt;/item&gt;
+&lt;/items&gt;
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="csvitemexporter">
+<h3>CsvItemExporter<a class="headerlink" href="#csvitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.CsvItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">CsvItemExporter</code><span class="sig-paren">(</span><em>file</em>, <em>include_headers_line=True</em>, <em>join_multivalued='</em>, <em>'</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.CsvItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Items in CSV format to the given file-like object. If the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">fields_to_export</span></code> attribute is set, it will be used to define the
+CSV columns and their order. The <code class="xref py py-attr docutils literal notranslate"><span class="pre">export_empty_fields</span></code> attribute has
+no effect on this exporter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> – the file-like object to use for exporting the data. Its <code class="docutils literal notranslate"><span class="pre">write</span></code> method should
+accept <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (a disk file opened in binary mode, a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> object, etc)</li>
+<li><strong>include_headers_line</strong> (<em>str</em>) – If enabled, makes the exporter output a header
+line with the field names taken from
+<a class="reference internal" href="#scrapy.exporters.BaseItemExporter.fields_to_export" title="scrapy.exporters.BaseItemExporter.fields_to_export"><code class="xref py py-attr docutils literal notranslate"><span class="pre">BaseItemExporter.fields_to_export</span></code></a> or the first exported item fields.</li>
+<li><strong>join_multivalued</strong> – The char (or chars) that will be used for joining
+multi-valued fields, if found.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>The additional keyword arguments of this constructor are passed to the
+<a class="reference internal" href="#scrapy.exporters.BaseItemExporter" title="scrapy.exporters.BaseItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseItemExporter</span></code></a> constructor, and the leftover arguments to the
+<a class="reference external" href="https://docs.python.org/2/library/csv.html#csv.writer">csv.writer</a> constructor, so you can use any <cite>csv.writer</cite> constructor
+argument to customize this exporter.</p>
+<p>A typical output of this exporter would be:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>product,price
+Color TV,1200
+DVD player,200
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="pickleitemexporter">
+<h3>PickleItemExporter<a class="headerlink" href="#pickleitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.PickleItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">PickleItemExporter</code><span class="sig-paren">(</span><em>file</em>, <em>protocol=0</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.PickleItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Items in pickle format to the given file-like object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>file</strong> – the file-like object to use for exporting the data. Its <code class="docutils literal notranslate"><span class="pre">write</span></code> method should
+accept <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (a disk file opened in binary mode, a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> object, etc)</li>
+<li><strong>protocol</strong> (<em>int</em>) – The pickle protocol to use.</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>For more information, refer to the <a class="reference external" href="https://docs.python.org/2/library/pickle.html">pickle module documentation</a>.</p>
+<p>The additional keyword arguments of this constructor are passed to the
+<a class="reference internal" href="#scrapy.exporters.BaseItemExporter" title="scrapy.exporters.BaseItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseItemExporter</span></code></a> constructor.</p>
+<p>Pickle isn’t a human readable format, so no output examples are provided.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="pprintitemexporter">
+<h3>PprintItemExporter<a class="headerlink" href="#pprintitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.PprintItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">PprintItemExporter</code><span class="sig-paren">(</span><em>file</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.PprintItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Items in pretty print format to the specified file object.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> – the file-like object to use for exporting the data. Its <code class="docutils literal notranslate"><span class="pre">write</span></code> method should
+accept <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (a disk file opened in binary mode, a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> object, etc)</td>
+</tr>
+</tbody>
+</table>
+<p>The additional keyword arguments of this constructor are passed to the
+<a class="reference internal" href="#scrapy.exporters.BaseItemExporter" title="scrapy.exporters.BaseItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseItemExporter</span></code></a> constructor.</p>
+<p>A typical output of this exporter would be:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{'name': 'Color TV', 'price': '1200'}
+{'name': 'DVD player', 'price': '200'}
+</pre></div>
+</div>
+<p>Longer lines (when present) are pretty-formatted.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="jsonitemexporter">
+<h3>JsonItemExporter<a class="headerlink" href="#jsonitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.JsonItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">JsonItemExporter</code><span class="sig-paren">(</span><em>file</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.JsonItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Items in JSON format to the specified file-like object, writing all
+objects as a list of objects. The additional constructor arguments are
+passed to the <a class="reference internal" href="#scrapy.exporters.BaseItemExporter" title="scrapy.exporters.BaseItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseItemExporter</span></code></a> constructor, and the leftover
+arguments to the <a class="reference external" href="https://docs.python.org/2/library/json.html#json.JSONEncoder">JSONEncoder</a> constructor, so you can use any
+<a class="reference external" href="https://docs.python.org/2/library/json.html#json.JSONEncoder">JSONEncoder</a> constructor argument to customize this exporter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> – the file-like object to use for exporting the data. Its <code class="docutils literal notranslate"><span class="pre">write</span></code> method should
+accept <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (a disk file opened in binary mode, a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> object, etc)</td>
+</tr>
+</tbody>
+</table>
+<p>A typical output of this exporter would be:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>[{"name": "Color TV", "price": "1200"},
+{"name": "DVD player", "price": "200"}]
+</pre></div>
+</div>
+<div class="admonition warning" id="json-with-large-data">
+<p class="first admonition-title">Warning</p>
+<p class="last">JSON is very simple and flexible serialization format, but it
+doesn’t scale well for large amounts of data since incremental (aka.
+stream-mode) parsing is not well supported (if at all) among JSON parsers
+(on any language), and most of them just parse the entire object in
+memory. If you want the power and simplicity of JSON with a more
+stream-friendly format, consider using <a class="reference internal" href="#scrapy.exporters.JsonLinesItemExporter" title="scrapy.exporters.JsonLinesItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonLinesItemExporter</span></code></a>
+instead, or splitting the output in multiple chunks.</p>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="jsonlinesitemexporter">
+<h3>JsonLinesItemExporter<a class="headerlink" href="#jsonlinesitemexporter" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.exporters.JsonLinesItemExporter">
+<em class="property">class </em><code class="descclassname">scrapy.exporters.</code><code class="descname">JsonLinesItemExporter</code><span class="sig-paren">(</span><em>file</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.exporters.JsonLinesItemExporter" title="Permalink to this definition">¶</a></dt>
+<dd><p>Exports Items in JSON format to the specified file-like object, writing one
+JSON-encoded item per line. The additional constructor arguments are passed
+to the <a class="reference internal" href="#scrapy.exporters.BaseItemExporter" title="scrapy.exporters.BaseItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">BaseItemExporter</span></code></a> constructor, and the leftover arguments to
+the <a class="reference external" href="https://docs.python.org/2/library/json.html#json.JSONEncoder">JSONEncoder</a> constructor, so you can use any <a class="reference external" href="https://docs.python.org/2/library/json.html#json.JSONEncoder">JSONEncoder</a>
+constructor argument to customize this exporter.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>file</strong> – the file-like object to use for exporting the data. Its <code class="docutils literal notranslate"><span class="pre">write</span></code> method should
+accept <code class="docutils literal notranslate"><span class="pre">bytes</span></code> (a disk file opened in binary mode, a <code class="docutils literal notranslate"><span class="pre">io.BytesIO</span></code> object, etc)</td>
+</tr>
+</tbody>
+</table>
+<p>A typical output of this exporter would be:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>{"name": "Color TV", "price": "1200"}
+{"name": "DVD player", "price": "200"}
+</pre></div>
+</div>
+<p>Unlike the one produced by <a class="reference internal" href="#scrapy.exporters.JsonItemExporter" title="scrapy.exporters.JsonItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonItemExporter</span></code></a>, the format produced by
+this exporter is well suited for serializing large amounts of data.</p>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../news.html" class="btn btn-neutral float-right" title="Release notes" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="signals.html" class="btn btn-neutral" title="Signals" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-59tmevs4k" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>a9254127</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: latest
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/exporters.html">latest</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/exporters.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/exporters.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/exporters.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/exporters.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/exporters.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/exporters.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/exporters.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/exporters.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/exporters.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/exporters.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/exporters.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/latest/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/latest/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/latest/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/origin/1.6/docs/topics/exporters.rst">View</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.6.0',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-zmwgzy6x"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/JXjQ9QCbZUoG/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/JXjQ9QCbZUoG/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/JXjQ9QCbZUoG/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

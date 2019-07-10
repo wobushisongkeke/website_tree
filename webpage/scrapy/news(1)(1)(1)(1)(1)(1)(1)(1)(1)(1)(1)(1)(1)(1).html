@@ -1,0 +1,988 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Release notes — Scrapy 0.16.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.16.5 documentation" href="index.html" />
+        <link rel="next" title="Contributing to Scrapy" href="contributing.html" />
+        <link rel="prev" title="Item Exporters" href="topics/exporters.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/news.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'news'
+</script>
+
+<script type="text/javascript" src="_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.16
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/scrapyd.html">Scrapy Service (scrapyd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/djangoitem.html">DjangoItem</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/api.html">Core API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/exporters.html">Item Exporters</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Release notes</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#released-2013-05-30">0.16.5 (released 2013-05-30)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#released-2013-01-23">0.16.4 (released 2013-01-23)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#released-2012-12-07">0.16.3 (released 2012-12-07)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#released-2012-11-09">0.16.2 (released 2012-11-09)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#released-2012-10-26">0.16.1 (released 2012-10-26)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#released-2012-10-18">0.16.0 (released 2012-10-18)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id1">0.14.4</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id2">0.14.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id3">0.14.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id4">0.14.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#id5"><span class="toctree-expand"></span>0.14</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-features-and-settings">New features and settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#code-rearranged-and-removed">Code rearranged and removed</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id6"><span class="toctree-expand"></span>0.12</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-features-and-improvements">New features and improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scrapyd-changes">Scrapyd changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changes-to-settings">Changes to settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#deprecated-obsoleted-functionality">Deprecated/obsoleted functionality</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id7"><span class="toctree-expand"></span>0.10</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id8">New features and improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-tool-changes">Command-line tool changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#api-changes">API changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Changes to settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id10"><span class="toctree-expand"></span>0.9</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id11">New features and improvements</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">API changes</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#changes-to-default-settings">Changes to default settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id13"><span class="toctree-expand"></span>0.8</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#new-features">New features</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#backwards-incompatible-changes">Backwards-incompatible changes</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#id14">0.7</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-vyzoec8sk" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> »</li>
+      
+    <li>Release notes</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.16/docs/news.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="release-notes">
+<span id="news"></span><h1>Release notes<a class="headerlink" href="#release-notes" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="released-2013-05-30">
+<h2>0.16.5 (released 2013-05-30)<a class="headerlink" href="#released-2013-05-30" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>obey request method when scrapy deploy is redirected to a new endpoint (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/8c4fcee">commit 8c4fcee</a>)</li>
+<li>fix inaccurate downloader middleware documentation. refs #280 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/40667cb">commit 40667cb</a>)</li>
+<li>doc: remove links to diveintopython.org, which is no longer available. closes #246 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/bd58bfa">commit bd58bfa</a>)</li>
+<li>Find form nodes in invalid html5 documents (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/e3d6945">commit e3d6945</a>)</li>
+<li>Fix typo labeling attrs type bool instead of list (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/a274276">commit a274276</a>)</li>
+</ul>
+</div>
+<div class="section" id="released-2013-01-23">
+<h2>0.16.4 (released 2013-01-23)<a class="headerlink" href="#released-2013-01-23" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>fixes spelling errors in documentation (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/6d2b3aa">commit 6d2b3aa</a>)</li>
+<li>add doc about disabling an extension. refs #132 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/c90de33">commit c90de33</a>)</li>
+<li>Fixed error message formatting. log.err() doesn’t support cool formatting and when error occured, the message was:    “ERROR: Error processing %(item)s” (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/c16150c">commit c16150c</a>)</li>
+<li>lint and improve images pipeline error logging (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/56b45fc">commit 56b45fc</a>)</li>
+<li>fixed doc typos (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/243be84">commit 243be84</a>)</li>
+<li>add documentation topics: Broad Crawls &amp; Common Practies (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/1fbb715">commit 1fbb715</a>)</li>
+<li>fix bug in scrapy parse command when spider is not specified explicitly. closes #209 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/c72e682">commit c72e682</a>)</li>
+<li>Update docs/topics/commands.rst (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/28eac7a">commit 28eac7a</a>)</li>
+</ul>
+</div>
+<div class="section" id="released-2012-12-07">
+<h2>0.16.3 (released 2012-12-07)<a class="headerlink" href="#released-2012-12-07" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>Remove concurrency limitation when using download delays and still ensure inter-request delays are enforced (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/487b9b5">commit 487b9b5</a>)</li>
+<li>add error details when image pipeline fails (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/8232569">commit 8232569</a>)</li>
+<li>improve mac os compatibility (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/8dcf8aa">commit 8dcf8aa</a>)</li>
+<li>setup.py: use README.rst to populate long_description (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/7b5310d">commit 7b5310d</a>)</li>
+<li>doc: removed obsolete references to ClientForm (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/80f9bb6">commit 80f9bb6</a>)</li>
+<li>correct docs for default storage backend (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/2aa491b">commit 2aa491b</a>)</li>
+<li>doc: removed broken proxyhub link from FAQ (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/bdf61c4">commit bdf61c4</a>)</li>
+<li>Merge branch ‘0.16’ of github.com:scrapy/scrapy into 0.16 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/d5087b0">commit d5087b0</a>)</li>
+<li>Fixed docs typo in SpiderOpenCloseLogging example (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/7184094">commit 7184094</a>)</li>
+</ul>
+</div>
+<div class="section" id="released-2012-11-09">
+<h2>0.16.2 (released 2012-11-09)<a class="headerlink" href="#released-2012-11-09" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>scrapy contracts: python2.6 compat (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/a4a9199">commit a4a9199</a>)</li>
+<li>scrapy contracts verbose option (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/ec41673">commit ec41673</a>)</li>
+<li>proper unittest-like output for scrapy contracts (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/86635e4">commit 86635e4</a>)</li>
+<li>added open_in_browser to debugging doc (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/c9b690d">commit c9b690d</a>)</li>
+<li>removed reference to global scrapy stats from settings doc (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/dd55067">commit dd55067</a>)</li>
+<li>Fix SpiderState bug in Windows platforms (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/58998f4">commit 58998f4</a>)</li>
+</ul>
+</div>
+<div class="section" id="released-2012-10-26">
+<h2>0.16.1 (released 2012-10-26)<a class="headerlink" href="#released-2012-10-26" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>fixed LogStats extension, which got broken after a wrong merge before the 0.16 release (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/8c780fd">commit 8c780fd</a>)</li>
+<li>better backwards compatibility for scrapy.conf.settings (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/3403089">commit 3403089</a>)</li>
+<li>extended documentation on how to access crawler stats from extensions (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/c4da0b5">commit c4da0b5</a>)</li>
+<li>removed .hgtags (no longer needed now that scrapy uses git) (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/d52c188">commit d52c188</a>)</li>
+<li>fix dashes under rst headers (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/fa4f7f9">commit fa4f7f9</a>)</li>
+<li>set release date for 0.16.0 in news (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/e292246">commit e292246</a>)</li>
+</ul>
+</div>
+<div class="section" id="released-2012-10-18">
+<h2>0.16.0 (released 2012-10-18)<a class="headerlink" href="#released-2012-10-18" title="Permalink to this headline">¶</a></h2>
+<p>Scrapy changes:</p>
+<ul class="simple">
+<li>added <a class="reference internal" href="topics/contracts.html#topics-contracts"><span>Spiders Contracts</span></a>, a mechanism for testing spiders in a formal/reproducible way</li>
+<li>added options <code class="docutils literal"><span class="pre">-o</span></code> and <code class="docutils literal"><span class="pre">-t</span></code> to the <a class="reference internal" href="topics/commands.html#std:command-runspider"><code class="xref std std-command docutils literal"><span class="pre">runspider</span></code></a> command</li>
+<li>documented <a class="reference internal" href="topics/autothrottle.html"><em>AutoThrottle extension</em></a> and added to extensions installed by default. You still need to enable it with <a class="reference internal" href="topics/autothrottle.html#std:setting-AUTOTHROTTLE_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">AUTOTHROTTLE_ENABLED</span></code></a></li>
+<li>major Stats Collection refactoring: removed separation of global/per-spider stats, removed stats-related signals (<code class="docutils literal"><span class="pre">stats_spider_opened</span></code>, etc). Stats are much simpler now, backwards compatibility is kept on the Stats Collector API and signals.</li>
+<li>added <a class="reference internal" href="topics/spider-middleware.html#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_start_requests" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_start_requests"><code class="xref py py-meth docutils literal"><span class="pre">process_start_requests()</span></code></a> method to spider middlewares</li>
+<li>dropped Signals singleton. Signals should now be accesed through the Crawler.signals attribute. See the signals documentation for more info.</li>
+<li>dropped Signals singleton. Signals should now be accesed through the Crawler.signals attribute. See the signals documentation for more info.</li>
+<li>dropped Stats Collector singleton. Stats can now be accessed through the Crawler.stats attribute. See the stats collection documentation for more info.</li>
+<li>documented <a class="reference internal" href="topics/api.html#topics-api"><span>Core API</span></a></li>
+<li><cite>lxml</cite> is now the default selectors backend instead of <cite>libxml2</cite></li>
+<li>ported FormRequest.from_response() to use <a class="reference external" href="http://lxml.de/">lxml</a> instead of <a class="reference external" href="http://wwwsearch.sourceforge.net/old/ClientForm/">ClientForm</a></li>
+<li>removed modules: <code class="docutils literal"><span class="pre">scrapy.xlib.BeautifulSoup</span></code> and <code class="docutils literal"><span class="pre">scrapy.xlib.ClientForm</span></code></li>
+<li>SitemapSpider: added support for sitemap urls ending in .xml and .xml.gz, even if they advertise a wrong content type (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/10ed28b">commit 10ed28b</a>)</li>
+<li>StackTraceDump extension: also dump trackref live references (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/fe2ce93">commit fe2ce93</a>)</li>
+<li>nested items now fully supported in JSON and JSONLines exporters</li>
+<li>added <a class="reference internal" href="topics/downloader-middleware.html#std:reqmeta-cookiejar"><code class="xref std std-reqmeta docutils literal"><span class="pre">cookiejar</span></code></a> Request meta key to support multiple cookie sessions per spider</li>
+<li>decoupled encoding detection code to <a class="reference external" href="https://github.com/scrapy/w3lib/blob/master/w3lib/encoding.py">w3lib.encoding</a>, and ported Scrapy code to use that mdule</li>
+<li>dropped support for Python 2.5. See <a class="reference external" href="http://blog.scrapy.org/scrapy-dropping-support-for-python-25">http://blog.scrapy.org/scrapy-dropping-support-for-python-25</a></li>
+<li>dropped support for Twisted 2.5</li>
+<li>added <a class="reference internal" href="topics/spider-middleware.html#std:setting-REFERER_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">REFERER_ENABLED</span></code></a> setting, to control referer middleware</li>
+<li>changed default user agent to: <code class="docutils literal"><span class="pre">Scrapy/VERSION</span> <span class="pre">(+http://scrapy.org)</span></code></li>
+<li>removed (undocumented) <code class="docutils literal"><span class="pre">HTMLImageLinkExtractor</span></code> class from <code class="docutils literal"><span class="pre">scrapy.contrib.linkextractors.image</span></code></li>
+<li>removed per-spider settings (to be replaced by instantiating multiple crawler objects)</li>
+<li><code class="docutils literal"><span class="pre">USER_AGENT</span></code> spider attribute will no longer work, use <code class="docutils literal"><span class="pre">user_agent</span></code> attribute instead</li>
+<li><code class="docutils literal"><span class="pre">DOWNLOAD_TIMEOUT</span></code> spider attribute will no longer work, use <code class="docutils literal"><span class="pre">download_timeout</span></code> attribute instead</li>
+<li>removed <code class="docutils literal"><span class="pre">ENCODING_ALIASES</span></code> setting, as encoding auto-detection has been moved to the <a class="reference external" href="http://https://github.com/scrapy/w3lib">w3lib</a> library</li>
+<li>promoted <a class="reference internal" href="topics/djangoitem.html#topics-djangoitem"><span>DjangoItem</span></a> to main contrib</li>
+<li>LogFormatter method now return dicts(instead of strings) to support lazy formatting (<a class="reference external" href="https://github.com/scrapy/scrapy/issues/164">issue 164</a>, <a class="reference external" href="https://github.com/scrapy/scrapy/commit/dcef7b0">commit dcef7b0</a>)</li>
+<li>downloader handlers (<a class="reference internal" href="topics/settings.html#std:setting-DOWNLOAD_HANDLERS"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOAD_HANDLERS</span></code></a> setting) now receive settings as the first argument of the constructor</li>
+<li>replaced memory usage acounting with (more portable) <a class="reference external" href="http://docs.python.org/library/resource.html">resource</a> module, removed <code class="docutils literal"><span class="pre">scrapy.utils.memory</span></code> module</li>
+<li>removed signal: <code class="docutils literal"><span class="pre">scrapy.mail.mail_sent</span></code></li>
+<li>removed <code class="docutils literal"><span class="pre">TRACK_REFS</span></code> setting, now <a class="reference internal" href="topics/leaks.html#topics-leaks-trackrefs"><span>trackrefs</span></a> is always enabled</li>
+<li>DBM is now the default storage backend for HTTP cache middleware</li>
+<li>number of log messages (per level) are now tracked through Scrapy stats (stat name: <code class="docutils literal"><span class="pre">log_count/LEVEL</span></code>)</li>
+<li>number received responses are now tracked through Scrapy stats (stat name: <code class="docutils literal"><span class="pre">response_received_count</span></code>)</li>
+<li>removed <code class="docutils literal"><span class="pre">scrapy.log.started</span></code> attribute</li>
+</ul>
+<p>Scrapyd changes:</p>
+<ul class="simple">
+<li>New Scrapyd API methods: <a class="reference internal" href="topics/scrapyd.html#listjobs-json"><span>listjobs.json</span></a> and <a class="reference internal" href="topics/scrapyd.html#cancel-json"><span>cancel.json</span></a></li>
+<li>New Scrapyd settings: <a class="reference internal" href="topics/scrapyd.html#items-dir"><span>items_dir</span></a> and <a class="reference internal" href="topics/scrapyd.html#jobs-to-keep"><span>jobs_to_keep</span></a></li>
+<li>Items are now stored on disk using feed exports, and accessible through the Scrapyd web interface</li>
+<li>Support making Scrapyd listen into a specific IP address (see <code class="docutils literal"><span class="pre">bind_address</span></code> option)</li>
+</ul>
+</div>
+<div class="section" id="id1">
+<h2>0.14.4<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>added precise to supported ubuntu distros (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/b7e46df">commit b7e46df</a>)</li>
+<li>fixed bug in json-rpc webservice reported in <a class="reference external" href="https://groups.google.com/d/topic/scrapy-users/qgVBmFybNAQ/discussion">https://groups.google.com/d/topic/scrapy-users/qgVBmFybNAQ/discussion</a>. also removed no longer supported ‘run’ command from extras/scrapy-ws.py (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/340fbdb">commit 340fbdb</a>)</li>
+<li>meta tag attributes for content-type http equiv can be in any order. #123 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/0cb68af">commit 0cb68af</a>)</li>
+<li>replace “import Image” by more standard “from PIL import Image”. closes #88 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/4d17048">commit 4d17048</a>)</li>
+<li>return trial status as bin/runtests.sh exit value. #118 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/b7b2e7f">commit b7b2e7f</a>)</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>0.14.3<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>forgot to include pydispatch license. #118 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/fd85f9c">commit fd85f9c</a>)</li>
+<li>include egg files used by testsuite in source distribution. #118 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/c897793">commit c897793</a>)</li>
+<li>update docstring in project template to avoid confusion with genspider command, which may be considered as an advanced feature. refs #107 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/2548dcc">commit 2548dcc</a>)</li>
+<li>added note to docs/topics/firebug.rst about google directory being shut down (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/668e352">commit 668e352</a>)</li>
+<li>Merge branch ‘0.14’ of github.com:scrapy/scrapy into 0.14 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/835d082">commit 835d082</a>)</li>
+<li>dont discard slot when empty, just save in another dict in order to recycle if needed again. (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/8e9f607">commit 8e9f607</a>)</li>
+<li>do not fail handling unicode xpaths in libxml2 backed selectors (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/b830e95">commit b830e95</a>)</li>
+<li>fixed minor mistake in Request objects documentation (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/bf3c9ee">commit bf3c9ee</a>)</li>
+<li>fixed minor defect in link extractors documentation (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/ba14f38">commit ba14f38</a>)</li>
+<li>removed some obsolete remaining code related to sqlite support in scrapy (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/0665175">commit 0665175</a>)</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>0.14.2<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>move buffer pointing to start of file before computing checksum. refs #92 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/6a5bef2">commit 6a5bef2</a>)</li>
+<li>Compute image checksum before persisting images. closes #92 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/9817df1">commit 9817df1</a>)</li>
+<li>remove leaking references in cached failures (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/673a120">commit 673a120</a>)</li>
+<li>fixed bug in MemoryUsage extension: get_engine_status() takes exactly 1 argument (0 given) (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/11133e9">commit 11133e9</a>)</li>
+<li>Merge branch ‘0.14’ of github.com:scrapy/scrapy into 0.14 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/1627320">commit 1627320</a>)</li>
+<li>fixed struct.error on http compression middleware. closes #87 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/1423140">commit 1423140</a>)</li>
+<li>ajax crawling wasn’t expanding for unicode urls (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/0de3fb4">commit 0de3fb4</a>)</li>
+<li>Catch start_requests iterator errors. refs #83 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/454a21d">commit 454a21d</a>)</li>
+<li>Speed-up libxml2 XPathSelector (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/2fbd662">commit 2fbd662</a>)</li>
+<li>updated versioning doc according to recent changes (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/0a070f5">commit 0a070f5</a>)</li>
+<li>scrapyd: fixed documentation link (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/2b4e4c3">commit 2b4e4c3</a>)</li>
+<li>extras/makedeb.py: no longer obtaining version from git (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/caffe0e">commit caffe0e</a>)</li>
+</ul>
+</div>
+<div class="section" id="id4">
+<h2>0.14.1<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li>extras/makedeb.py: no longer obtaining version from git (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/caffe0e">commit caffe0e</a>)</li>
+<li>bumped version to 0.14.1 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/6cb9e1c">commit 6cb9e1c</a>)</li>
+<li>fixed reference to tutorial directory (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/4b86bd6">commit 4b86bd6</a>)</li>
+<li>doc: removed duplicated callback argument from Request.replace() (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/1aeccdd">commit 1aeccdd</a>)</li>
+<li>fixed formatting of scrapyd doc (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/8bf19e6">commit 8bf19e6</a>)</li>
+<li>Dump stacks for all running threads and fix engine status dumped by StackTraceDump extension (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/14a8e6e">commit 14a8e6e</a>)</li>
+<li>added comment about why we disable ssl on boto images upload (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/5223575">commit 5223575</a>)</li>
+<li>SSL handshaking hangs when doing too many parallel connections to S3 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/63d583d">commit 63d583d</a>)</li>
+<li>change tutorial to follow changes on dmoz site (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/bcb3198">commit bcb3198</a>)</li>
+<li>Avoid _disconnectedDeferred AttributeError exception in Twisted&gt;=11.1.0 (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/98f3f87">commit 98f3f87</a>)</li>
+<li>allow spider to set autothrottle max concurrency (<a class="reference external" href="https://github.com/scrapy/scrapy/commit/175a4b5">commit 175a4b5</a>)</li>
+</ul>
+</div>
+<div class="section" id="id5">
+<h2>0.14<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="new-features-and-settings">
+<h3>New features and settings<a class="headerlink" href="#new-features-and-settings" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Support for <a class="reference external" href="http://code.google.com/web/ajaxcrawling/docs/getting-started.html">AJAX crawleable urls</a></p>
+</li>
+<li><p class="first">New persistent scheduler that stores requests on disk, allowing to suspend and resume crawls (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2737">r2737</a>)</p>
+</li>
+<li><p class="first">added <code class="docutils literal"><span class="pre">-o</span></code> option to <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">crawl</span></code>, a shortcut for dumping scraped items into a file (or standard output using <code class="docutils literal"><span class="pre">-</span></code>)</p>
+</li>
+<li><p class="first">Added support for passing custom settings to Scrapyd <code class="docutils literal"><span class="pre">schedule.json</span></code> api (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2779">r2779</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2783">r2783</a>)</p>
+</li>
+<li><p class="first">New <code class="docutils literal"><span class="pre">ChunkedTransferMiddleware</span></code> (enabled by default) to support <a class="reference external" href="http://en.wikipedia.org/wiki/Chunked_transfer_encoding">chunked transfer encoding</a> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2769">r2769</a>)</p>
+</li>
+<li><p class="first">Add boto 2.0 support for S3 downloader handler (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2763">r2763</a>)</p>
+</li>
+<li><p class="first">Added <a class="reference external" href="http://docs.python.org/library/marshal.html">marshal</a> to formats supported by feed exports (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2744">r2744</a>)</p>
+</li>
+<li><p class="first">In request errbacks, offending requests are now received in <cite>failure.request</cite> attribute (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2738">r2738</a>)</p>
+</li>
+<li><dl class="first docutils">
+<dt>Big downloader refactoring to support per domain/ip concurrency limits (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2732">r2732</a>)</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">CONCURRENT_REQUESTS_PER_SPIDER</span></code> setting has been deprecated and replaced by:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference internal" href="topics/settings.html#std:setting-CONCURRENT_REQUESTS"><code class="xref std std-setting docutils literal"><span class="pre">CONCURRENT_REQUESTS</span></code></a>, <a class="reference internal" href="topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN"><code class="xref std std-setting docutils literal"><span class="pre">CONCURRENT_REQUESTS_PER_DOMAIN</span></code></a>, <a class="reference internal" href="topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_IP"><code class="xref std std-setting docutils literal"><span class="pre">CONCURRENT_REQUESTS_PER_IP</span></code></a></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">check the documentation for more details</p>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Added builtin caching DNS resolver (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2728">r2728</a>)</p>
+</li>
+<li><p class="first">Moved Amazon AWS-related components/extensions (SQS spider queue, SimpleDB stats collector) to a separate project: [scaws](<a class="reference external" href="https://github.com/scrapinghub/scaws">https://github.com/scrapinghub/scaws</a>) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2706">r2706</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2714">r2714</a>)</p>
+</li>
+<li><p class="first">Moved spider queues to scrapyd: <cite>scrapy.spiderqueue</cite> -&gt; <cite>scrapyd.spiderqueue</cite> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2708">r2708</a>)</p>
+</li>
+<li><p class="first">Moved sqlite utils to scrapyd: <cite>scrapy.utils.sqlite</cite> -&gt; <cite>scrapyd.sqlite</cite> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2781">r2781</a>)</p>
+</li>
+<li><p class="first">Real support for returning iterators on <cite>start_requests()</cite> method. The iterator is now consumed during the crawl when the spider is getting idle (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2704">r2704</a>)</p>
+</li>
+<li><p class="first">Added <a class="reference internal" href="topics/downloader-middleware.html#std:setting-REDIRECT_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">REDIRECT_ENABLED</span></code></a> setting to quickly enable/disable the redirect middleware (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2697">r2697</a>)</p>
+</li>
+<li><p class="first">Added <a class="reference internal" href="topics/downloader-middleware.html#std:setting-RETRY_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">RETRY_ENABLED</span></code></a> setting to quickly enable/disable the retry middleware (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2694">r2694</a>)</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">CloseSpider</span></code> exception to manually close spiders (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2691">r2691</a>)</p>
+</li>
+<li><p class="first">Improved encoding detection by adding support for HTML5 meta charset declaration (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2690">r2690</a>)</p>
+</li>
+<li><p class="first">Refactored close spider behavior to wait for all downloads to finish and be processed by spiders, before closing the spider (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2688">r2688</a>)</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">SitemapSpider</span></code> (see documentation in Spiders page) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2658">r2658</a>)</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">LogStats</span></code> extension for periodically logging basic stats (like crawled pages and scraped items) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2657">r2657</a>)</p>
+</li>
+<li><p class="first">Make handling of gzipped responses more robust (#319, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2643">r2643</a>). Now Scrapy will try and decompress as much as possible from a gzipped response, instead of failing with an <cite>IOError</cite>.</p>
+</li>
+<li><p class="first">Simplified !MemoryDebugger extension to use stats for dumping memory debugging info (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2639">r2639</a>)</p>
+</li>
+<li><p class="first">Added new command to edit spiders: <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">edit</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2636">r2636</a>) and <cite>-e</cite> flag to <cite>genspider</cite> command that uses it (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2653">r2653</a>)</p>
+</li>
+<li><p class="first">Changed default representation of items to pretty-printed dicts. (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2631">r2631</a>). This improves default logging by making log more readable in the default case, for both Scraped and Dropped lines.</p>
+</li>
+<li><p class="first">Added <a class="reference internal" href="topics/signals.html#std:signal-spider_error"><code class="xref std std-signal docutils literal"><span class="pre">spider_error</span></code></a> signal (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2628">r2628</a>)</p>
+</li>
+<li><p class="first">Added <a class="reference internal" href="topics/downloader-middleware.html#std:setting-COOKIES_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">COOKIES_ENABLED</span></code></a> setting (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2625">r2625</a>)</p>
+</li>
+<li><p class="first">Stats are now dumped to Scrapy log (default value of <a class="reference internal" href="topics/settings.html#std:setting-STATS_DUMP"><code class="xref std std-setting docutils literal"><span class="pre">STATS_DUMP</span></code></a> setting has been changed to <cite>True</cite>). This is to make Scrapy users more aware of Scrapy stats and the data that is collected there.</p>
+</li>
+<li><p class="first">Added support for dynamically adjusting download delay and maximum concurrent requests (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2599">r2599</a>)</p>
+</li>
+<li><p class="first">Added new DBM HTTP cache storage backend (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2576">r2576</a>)</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">listjobs.json</span></code> API to Scrapyd (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2571">r2571</a>)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">CsvItemExporter</span></code>: added <code class="docutils literal"><span class="pre">join_multivalued</span></code> parameter (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2578">r2578</a>)</p>
+</li>
+<li><p class="first">Added namespace support to <code class="docutils literal"><span class="pre">xmliter_lxml</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2552">r2552</a>)</p>
+</li>
+<li><p class="first">Improved cookies middleware by making <cite>COOKIES_DEBUG</cite> nicer and documenting it (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2579">r2579</a>)</p>
+</li>
+<li><p class="first">Several improvements to Scrapyd and Link extractors</p>
+</li>
+</ul>
+</div>
+<div class="section" id="code-rearranged-and-removed">
+<h3>Code rearranged and removed<a class="headerlink" href="#code-rearranged-and-removed" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><dl class="first docutils">
+<dt>Merged item passed and item scraped concepts, as they have often proved confusing in the past. This means: (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2630">r2630</a>)</dt>
+<dd><ul class="first last simple">
+<li>original item_scraped signal was removed</li>
+<li>original item_passed signal was renamed to item_scraped</li>
+<li>old log lines <code class="docutils literal"><span class="pre">Scraped</span> <span class="pre">Item...</span></code> were removed</li>
+<li>old log lines <code class="docutils literal"><span class="pre">Passed</span> <span class="pre">Item...</span></code> were renamed to <code class="docutils literal"><span class="pre">Scraped</span> <span class="pre">Item...</span></code> lines and downgraded to <code class="docutils literal"><span class="pre">DEBUG</span></code> level</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Reduced Scrapy codebase by striping part of Scrapy code into two new libraries:</dt>
+<dd><ul class="first last simple">
+<li><a class="reference external" href="http://https://github.com/scrapy/w3lib">w3lib</a> (several functions from <code class="docutils literal"><span class="pre">scrapy.utils.{http,markup,multipart,response,url}</span></code>, done in <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2584">r2584</a>)</li>
+<li><a class="reference external" href="https://github.com/scrapy/scrapely">scrapely</a> (was <code class="docutils literal"><span class="pre">scrapy.contrib.ibl</span></code>, done in <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2586">r2586</a>)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Removed unused function: <cite>scrapy.utils.request.request_info()</cite> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2577">r2577</a>)</p>
+</li>
+<li><p class="first">Removed googledir project from <cite>examples/googledir</cite>. There’s now a new example project called <cite>dirbot</cite> available on github: <a class="reference external" href="https://github.com/scrapy/dirbot">https://github.com/scrapy/dirbot</a></p>
+</li>
+<li><p class="first">Removed support for default field values in Scrapy items (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2616">r2616</a>)</p>
+</li>
+<li><p class="first">Removed experimental crawlspider v2 (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2632">r2632</a>)</p>
+</li>
+<li><p class="first">Removed scheduler middleware to simplify architecture. Duplicates filter is now done in the scheduler itself, using the same dupe fltering class as before (<cite>DUPEFILTER_CLASS</cite> setting) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2640">r2640</a>)</p>
+</li>
+<li><p class="first">Removed support for passing urls to <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">crawl</span></code> command (use <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">parse</span></code> instead) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2704">r2704</a>)</p>
+</li>
+<li><p class="first">Removed deprecated Execution Queue (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2704">r2704</a>)</p>
+</li>
+<li><p class="first">Removed (undocumented) spider context extension (from scrapy.contrib.spidercontext) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2780">r2780</a>)</p>
+</li>
+<li><p class="first">removed <code class="docutils literal"><span class="pre">CONCURRENT_SPIDERS</span></code> setting (use scrapyd maxproc instead) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2789">r2789</a>)</p>
+</li>
+<li><p class="first">Renamed attributes of core components: downloader.sites -&gt; downloader.slots, scraper.sites -&gt; scraper.slots (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2717">r2717</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2718">r2718</a>)</p>
+</li>
+<li><p class="first">Renamed setting <code class="docutils literal"><span class="pre">CLOSESPIDER_ITEMPASSED</span></code> to <a class="reference internal" href="topics/extensions.html#std:setting-CLOSESPIDER_ITEMCOUNT"><code class="xref std std-setting docutils literal"><span class="pre">CLOSESPIDER_ITEMCOUNT</span></code></a> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2655">r2655</a>). Backwards compatibility kept.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id6">
+<h2>0.12<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h2>
+<p>The numbers like #NNN reference tickets in the old issue tracker (Trac) which is no longer available.</p>
+<div class="section" id="new-features-and-improvements">
+<h3>New features and improvements<a class="headerlink" href="#new-features-and-improvements" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Passed item is now sent in the <code class="docutils literal"><span class="pre">item</span></code> argument of the <code class="xref std std-signal docutils literal"><span class="pre">item_passed</span></code> (#273)</li>
+<li>Added verbose option to <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">version</span></code> command, useful for bug reports (#298)</li>
+<li>HTTP cache now stored by default in the project data dir (#279)</li>
+<li>Added project data storage directory (#276, #277)</li>
+<li>Documented file structure of Scrapy projects (see command-line tool doc)</li>
+<li>New lxml backend for XPath selectors (#147)</li>
+<li>Per-spider settings (#245)</li>
+<li>Support exit codes to signal errors in Scrapy commands (#248)</li>
+<li>Added <code class="docutils literal"><span class="pre">-c</span></code> argument to <code class="docutils literal"><span class="pre">scrapy</span> <span class="pre">shell</span></code> command</li>
+<li>Made <code class="docutils literal"><span class="pre">libxml2</span></code> optional (#260)</li>
+<li>New <code class="docutils literal"><span class="pre">deploy</span></code> command (#261)</li>
+<li>Added <a class="reference internal" href="topics/extensions.html#std:setting-CLOSESPIDER_PAGECOUNT"><code class="xref std std-setting docutils literal"><span class="pre">CLOSESPIDER_PAGECOUNT</span></code></a> setting (#253)</li>
+<li>Added <a class="reference internal" href="topics/extensions.html#std:setting-CLOSESPIDER_ERRORCOUNT"><code class="xref std std-setting docutils literal"><span class="pre">CLOSESPIDER_ERRORCOUNT</span></code></a> setting (#254)</li>
+</ul>
+</div>
+<div class="section" id="scrapyd-changes">
+<h3>Scrapyd changes<a class="headerlink" href="#scrapyd-changes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Scrapyd now uses one process per spider</li>
+<li>It stores one log file per spider run, and rotate them keeping the lastest 5 logs per spider (by default)</li>
+<li>A minimal web ui was added, available at <a class="reference external" href="http://localhost:6800">http://localhost:6800</a> by default</li>
+<li>There is now a <cite>scrapy server</cite> command to start a Scrapyd server of the current project</li>
+</ul>
+</div>
+<div class="section" id="changes-to-settings">
+<h3>Changes to settings<a class="headerlink" href="#changes-to-settings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>added <cite>HTTPCACHE_ENABLED</cite> setting (False by default) to enable HTTP cache middleware</li>
+<li>changed <cite>HTTPCACHE_EXPIRATION_SECS</cite> semantics: now zero means “never expire”.</li>
+</ul>
+</div>
+<div class="section" id="deprecated-obsoleted-functionality">
+<h3>Deprecated/obsoleted functionality<a class="headerlink" href="#deprecated-obsoleted-functionality" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Deprecated <code class="docutils literal"><span class="pre">runserver</span></code> command in favor of <code class="docutils literal"><span class="pre">server</span></code> command which starts a Scrapyd server. See also: Scrapyd changes</li>
+<li>Deprecated <code class="docutils literal"><span class="pre">queue</span></code> command in favor of using Scrapyd <code class="docutils literal"><span class="pre">schedule.json</span></code> API. See also: Scrapyd changes</li>
+<li>Removed the !LxmlItemLoader (experimental contrib which never graduated to main contrib)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id7">
+<h2>0.10<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h2>
+<p>The numbers like #NNN reference tickets in the old issue tracker (Trac) which is no longer available.</p>
+<div class="section" id="id8">
+<h3>New features and improvements<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>New Scrapy service called <code class="docutils literal"><span class="pre">scrapyd</span></code> for deploying Scrapy crawlers in production (#218) (documentation available)</li>
+<li>Simplified Images pipeline usage which doesn’t require subclassing your own images pipeline now (#217)</li>
+<li>Scrapy shell now shows the Scrapy log by default (#206)</li>
+<li>Refactored execution queue in a common base code and pluggable backends called “spider queues” (#220)</li>
+<li>New persistent spider queue (based on SQLite) (#198), available by default, which allows to start Scrapy in server mode and then schedule spiders to run.</li>
+<li>Added documentation for Scrapy command-line tool and all its available sub-commands. (documentation available)</li>
+<li>Feed exporters with pluggable backends (#197) (documentation available)</li>
+<li>Deferred signals (#193)</li>
+<li>Added two new methods to item pipeline open_spider(), close_spider() with deferred support (#195)</li>
+<li>Support for overriding default request headers per spider (#181)</li>
+<li>Replaced default Spider Manager with one with similar functionality but not depending on Twisted Plugins (#186)</li>
+<li>Splitted Debian package into two packages - the library and the service (#187)</li>
+<li>Scrapy log refactoring (#188)</li>
+<li>New extension for keeping persistent spider contexts among different runs (#203)</li>
+<li>Added <cite>dont_redirect</cite> request.meta key for avoiding redirects (#233)</li>
+<li>Added <cite>dont_retry</cite> request.meta key for avoiding retries (#234)</li>
+</ul>
+</div>
+<div class="section" id="command-line-tool-changes">
+<h3>Command-line tool changes<a class="headerlink" href="#command-line-tool-changes" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>New <cite>scrapy</cite> command which replaces the old <cite>scrapy-ctl.py</cite> (#199)
+- there is only one global <cite>scrapy</cite> command now, instead of one <cite>scrapy-ctl.py</cite> per project
+- Added <cite>scrapy.bat</cite> script for running more conveniently from Windows</li>
+<li>Added bash completion to command-line tool (#210)</li>
+<li>Renamed command <cite>start</cite> to <cite>runserver</cite> (#209)</li>
+</ul>
+</div>
+<div class="section" id="api-changes">
+<h3>API changes<a class="headerlink" href="#api-changes" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first"><code class="docutils literal"><span class="pre">url</span></code> and <code class="docutils literal"><span class="pre">body</span></code> attributes of Request objects are now read-only (#230)</p>
+</li>
+<li><p class="first"><code class="docutils literal"><span class="pre">Request.copy()</span></code> and <code class="docutils literal"><span class="pre">Request.replace()</span></code> now also copies their <code class="docutils literal"><span class="pre">callback</span></code> and <code class="docutils literal"><span class="pre">errback</span></code> attributes (#231)</p>
+</li>
+<li><p class="first">Removed <code class="docutils literal"><span class="pre">UrlFilterMiddleware</span></code> from <code class="docutils literal"><span class="pre">scrapy.contrib</span></code> (already disabled by default)</p>
+</li>
+<li><p class="first">Offsite middelware doesn’t filter out any request coming from a spider that doesn’t have a allowed_domains attribute (#225)</p>
+</li>
+<li><p class="first">Removed Spider Manager <code class="docutils literal"><span class="pre">load()</span></code> method. Now spiders are loaded in the constructor itself.</p>
+</li>
+<li><dl class="first docutils">
+<dt>Changes to Scrapy Manager (now called “Crawler”):</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">scrapy.core.manager.ScrapyManager</span></code> class renamed to <code class="docutils literal"><span class="pre">scrapy.crawler.Crawler</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.core.manager.scrapymanager</span></code> singleton moved to <code class="docutils literal"><span class="pre">scrapy.project.crawler</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Moved module: <code class="docutils literal"><span class="pre">scrapy.contrib.spidermanager</span></code> to <code class="docutils literal"><span class="pre">scrapy.spidermanager</span></code></p>
+</li>
+<li><p class="first">Spider Manager singleton moved from <code class="docutils literal"><span class="pre">scrapy.spider.spiders</span></code> to the <code class="docutils literal"><span class="pre">spiders`</span> <span class="pre">attribute</span> <span class="pre">of</span> <span class="pre">``scrapy.project.crawler</span></code> singleton.</p>
+</li>
+<li><dl class="first docutils">
+<dt>moved Stats Collector classes: (#204)</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">scrapy.stats.collector.StatsCollector</span></code> to <code class="docutils literal"><span class="pre">scrapy.statscol.StatsCollector</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.stats.collector.SimpledbStatsCollector</span></code> to <code class="docutils literal"><span class="pre">scrapy.contrib.statscol.SimpledbStatsCollector</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">default per-command settings are now specified in the <code class="docutils literal"><span class="pre">default_settings</span></code> attribute of command object class (#201)</p>
+</li>
+<li><dl class="first docutils">
+<dt>changed arguments of Item pipeline <code class="docutils literal"><span class="pre">process_item()</span></code> method from <code class="docutils literal"><span class="pre">(spider,</span> <span class="pre">item)</span></code> to <code class="docutils literal"><span class="pre">(item,</span> <span class="pre">spider)</span></code></dt>
+<dd><ul class="first last simple">
+<li>backwards compatibility kept (with deprecation warning)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>moved <code class="docutils literal"><span class="pre">scrapy.core.signals</span></code> module to <code class="docutils literal"><span class="pre">scrapy.signals</span></code></dt>
+<dd><ul class="first last simple">
+<li>backwards compatibility kept (with deprecation warning)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>moved <code class="docutils literal"><span class="pre">scrapy.core.exceptions</span></code> module to <code class="docutils literal"><span class="pre">scrapy.exceptions</span></code></dt>
+<dd><ul class="first last simple">
+<li>backwards compatibility kept (with deprecation warning)</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">added <code class="docutils literal"><span class="pre">handles_request()</span></code> class method to <code class="docutils literal"><span class="pre">BaseSpider</span></code></p>
+</li>
+<li><p class="first">dropped <code class="docutils literal"><span class="pre">scrapy.log.exc()</span></code> function (use <code class="docutils literal"><span class="pre">scrapy.log.err()</span></code> instead)</p>
+</li>
+<li><p class="first">dropped <code class="docutils literal"><span class="pre">component</span></code> argument of <code class="docutils literal"><span class="pre">scrapy.log.msg()</span></code> function</p>
+</li>
+<li><p class="first">dropped <code class="docutils literal"><span class="pre">scrapy.log.log_level</span></code> attribute</p>
+</li>
+<li><p class="first">Added <code class="docutils literal"><span class="pre">from_settings()</span></code> class methods to Spider Manager, and Item Pipeline Manager</p>
+</li>
+</ul>
+</div>
+<div class="section" id="id9">
+<h3>Changes to settings<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added <code class="docutils literal"><span class="pre">HTTPCACHE_IGNORE_SCHEMES</span></code> setting to ignore certain schemes on !HttpCacheMiddleware (#225)</li>
+<li>Added <code class="docutils literal"><span class="pre">SPIDER_QUEUE_CLASS</span></code> setting which defines the spider queue to use (#220)</li>
+<li>Added <code class="docutils literal"><span class="pre">KEEP_ALIVE</span></code> setting (#220)</li>
+<li>Removed <code class="docutils literal"><span class="pre">SERVICE_QUEUE</span></code> setting (#220)</li>
+<li>Removed <code class="docutils literal"><span class="pre">COMMANDS_SETTINGS_MODULE</span></code> setting (#201)</li>
+<li>Renamed <code class="docutils literal"><span class="pre">REQUEST_HANDLERS</span></code> to <code class="docutils literal"><span class="pre">DOWNLOAD_HANDLERS</span></code> and make download handlers classes (instead of functions)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id10">
+<h2>0.9<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h2>
+<p>The numbers like #NNN reference tickets in the old issue tracker (Trac) which is no longer available.</p>
+<div class="section" id="id11">
+<h3>New features and improvements<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added SMTP-AUTH support to scrapy.mail</li>
+<li>New settings added: <code class="docutils literal"><span class="pre">MAIL_USER</span></code>, <code class="docutils literal"><span class="pre">MAIL_PASS</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2065">r2065</a> | #149)</li>
+<li>Added new scrapy-ctl view command - To view URL in the browser, as seen by Scrapy (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2039">r2039</a>)</li>
+<li>Added web service for controlling Scrapy process (this also deprecates the web console. (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2053">r2053</a> | #167)</li>
+<li>Support for running Scrapy as a service, for production systems (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1988">r1988</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2054">r2054</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2055">r2055</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2056">r2056</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2057">r2057</a> | #168)</li>
+<li>Added wrapper induction library (documentation only available in source code for now). (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2011">r2011</a>)</li>
+<li>Simplified and improved response encoding support (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1961">r1961</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1969">r1969</a>)</li>
+<li>Added <code class="docutils literal"><span class="pre">LOG_ENCODING</span></code> setting (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1956">r1956</a>, documentation available)</li>
+<li>Added <code class="docutils literal"><span class="pre">RANDOMIZE_DOWNLOAD_DELAY</span></code> setting (enabled by default) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1923">r1923</a>, doc available)</li>
+<li><code class="docutils literal"><span class="pre">MailSender</span></code> is no longer IO-blocking (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1955">r1955</a> | #146)</li>
+<li>Linkextractors and new Crawlspider now handle relative base tag urls (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1960">r1960</a> | #148)</li>
+<li>Several improvements to Item Loaders and processors (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2022">r2022</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2023">r2023</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2024">r2024</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2025">r2025</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2026">r2026</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2027">r2027</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2028">r2028</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2029">r2029</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2030">r2030</a>)</li>
+<li>Added support for adding variables to telnet console (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2047">r2047</a> | #165)</li>
+<li>Support for requests without callbacks (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2050">r2050</a> | #166)</li>
+</ul>
+</div>
+<div class="section" id="id12">
+<h3>API changes<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Change <code class="docutils literal"><span class="pre">Spider.domain_name</span></code> to <code class="docutils literal"><span class="pre">Spider.name</span></code> (SEP-012, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1975">r1975</a>)</li>
+<li><code class="docutils literal"><span class="pre">Response.encoding</span></code> is now the detected encoding (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1961">r1961</a>)</li>
+<li><code class="docutils literal"><span class="pre">HttpErrorMiddleware</span></code> now returns None or raises an exception (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2006">r2006</a> | #157)</li>
+<li><code class="docutils literal"><span class="pre">scrapy.command</span></code> modules relocation (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2035">r2035</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2036">r2036</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2037">r2037</a>)</li>
+<li>Added <code class="docutils literal"><span class="pre">ExecutionQueue</span></code> for feeding spiders to scrape (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2034">r2034</a>)</li>
+<li>Removed <code class="docutils literal"><span class="pre">ExecutionEngine</span></code> singleton (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2039">r2039</a>)</li>
+<li>Ported <code class="docutils literal"><span class="pre">S3ImagesStore</span></code> (images pipeline) to use boto and threads (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2033">r2033</a>)</li>
+<li>Moved module: <code class="docutils literal"><span class="pre">scrapy.management.telnet</span></code> to <code class="docutils literal"><span class="pre">scrapy.telnet</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/2047">r2047</a>)</li>
+</ul>
+</div>
+<div class="section" id="changes-to-default-settings">
+<h3>Changes to default settings<a class="headerlink" href="#changes-to-default-settings" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Changed default <code class="docutils literal"><span class="pre">SCHEDULER_ORDER</span></code> to <code class="docutils literal"><span class="pre">DFO</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1939">r1939</a>)</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id13">
+<h2>0.8<a class="headerlink" href="#id13" title="Permalink to this headline">¶</a></h2>
+<p>The numbers like #NNN reference tickets in the old issue tracker (Trac) which is no longer available.</p>
+<div class="section" id="new-features">
+<h3>New features<a class="headerlink" href="#new-features" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>Added DEFAULT_RESPONSE_ENCODING setting (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1809">r1809</a>)</li>
+<li>Added <code class="docutils literal"><span class="pre">dont_click</span></code> argument to <code class="docutils literal"><span class="pre">FormRequest.from_response()</span></code> method (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1813">r1813</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1816">r1816</a>)</li>
+<li>Added <code class="docutils literal"><span class="pre">clickdata</span></code> argument to <code class="docutils literal"><span class="pre">FormRequest.from_response()</span></code> method (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1802">r1802</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1803">r1803</a>)</li>
+<li>Added support for HTTP proxies (<code class="docutils literal"><span class="pre">HttpProxyMiddleware</span></code>) (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1781">r1781</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1785">r1785</a>)</li>
+<li>Offiste spider middleware now logs messages when filtering out requests (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1841">r1841</a>)</li>
+</ul>
+</div>
+<div class="section" id="backwards-incompatible-changes">
+<h3>Backwards-incompatible changes<a class="headerlink" href="#backwards-incompatible-changes" title="Permalink to this headline">¶</a></h3>
+<ul>
+<li><p class="first">Changed <code class="docutils literal"><span class="pre">scrapy.utils.response.get_meta_refresh()</span></code> signature (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1804">r1804</a>)</p>
+</li>
+<li><p class="first">Removed deprecated <code class="docutils literal"><span class="pre">scrapy.item.ScrapedItem</span></code> class - use <code class="docutils literal"><span class="pre">scrapy.item.Item</span> <span class="pre">instead</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1838">r1838</a>)</p>
+</li>
+<li><p class="first">Removed deprecated <code class="docutils literal"><span class="pre">scrapy.xpath</span></code> module - use <code class="docutils literal"><span class="pre">scrapy.selector</span></code> instead. (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1836">r1836</a>)</p>
+</li>
+<li><p class="first">Removed deprecated <code class="docutils literal"><span class="pre">core.signals.domain_open</span></code> signal - use <code class="docutils literal"><span class="pre">core.signals.domain_opened</span></code> instead (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1822">r1822</a>)</p>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">log.msg()</span></code> now receives a <code class="docutils literal"><span class="pre">spider</span></code> argument (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1822">r1822</a>)</dt>
+<dd><ul class="first last simple">
+<li>Old domain argument has been deprecated and will be removed in 0.9. For spiders, you should always use the <code class="docutils literal"><span class="pre">spider</span></code> argument and pass spider references. If you really want to pass a string, use the <code class="docutils literal"><span class="pre">component</span></code> argument instead.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Changed core signals <code class="docutils literal"><span class="pre">domain_opened</span></code>, <code class="docutils literal"><span class="pre">domain_closed</span></code>, <code class="docutils literal"><span class="pre">domain_idle</span></code></p>
+</li>
+<li><dl class="first docutils">
+<dt>Changed Item pipeline to use spiders instead of domains</dt>
+<dd><ul class="first last simple">
+<li>The <code class="docutils literal"><span class="pre">domain</span></code> argument of  <code class="docutils literal"><span class="pre">process_item()</span></code> item pipeline method was changed to  <code class="docutils literal"><span class="pre">spider</span></code>, the new signature is: <code class="docutils literal"><span class="pre">process_item(spider,</span> <span class="pre">item)</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1827">r1827</a> | #105)</li>
+<li>To quickly port your code (to work with Scrapy 0.8) just use <code class="docutils literal"><span class="pre">spider.domain_name</span></code> where you previously used <code class="docutils literal"><span class="pre">domain</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt>Changed Stats API to use spiders instead of domains (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1849">r1849</a> | #113)</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">StatsCollector</span></code> was changed to receive spider references (instead of domains) in its methods (<code class="docutils literal"><span class="pre">set_value</span></code>, <code class="docutils literal"><span class="pre">inc_value</span></code>, etc).</li>
+<li>added <code class="docutils literal"><span class="pre">StatsCollector.iter_spider_stats()</span></code> method</li>
+<li>removed <code class="docutils literal"><span class="pre">StatsCollector.list_domains()</span></code> method</li>
+<li>Also, Stats signals were renamed and now pass around spider references (instead of domains). Here’s a summary of the changes:</li>
+<li>To quickly port your code (to work with Scrapy 0.8) just use <code class="docutils literal"><span class="pre">spider.domain_name</span></code> where you previously used <code class="docutils literal"><span class="pre">domain</span></code>. <code class="docutils literal"><span class="pre">spider_stats</span></code> contains exactly the same data as <code class="docutils literal"><span class="pre">domain_stats</span></code>.</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal"><span class="pre">CloseDomain</span></code> extension moved to <code class="docutils literal"><span class="pre">scrapy.contrib.closespider.CloseSpider</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1833">r1833</a>)</dt>
+<dd><ul class="first last">
+<li><dl class="first docutils">
+<dt>Its settings were also renamed:</dt>
+<dd><ul class="first last simple">
+<li><code class="docutils literal"><span class="pre">CLOSEDOMAIN_TIMEOUT</span></code> to <code class="docutils literal"><span class="pre">CLOSESPIDER_TIMEOUT</span></code></li>
+<li><code class="docutils literal"><span class="pre">CLOSEDOMAIN_ITEMCOUNT</span></code> to <code class="docutils literal"><span class="pre">CLOSESPIDER_ITEMCOUNT</span></code></li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+<li><p class="first">Removed deprecated <code class="docutils literal"><span class="pre">SCRAPYSETTINGS_MODULE</span></code> environment variable - use <code class="docutils literal"><span class="pre">SCRAPY_SETTINGS_MODULE</span></code> instead (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1840">r1840</a>)</p>
+</li>
+<li><p class="first">Renamed setting: <code class="docutils literal"><span class="pre">REQUESTS_PER_DOMAIN</span></code> to <code class="docutils literal"><span class="pre">CONCURRENT_REQUESTS_PER_SPIDER</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1830">r1830</a>, <a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1844">r1844</a>)</p>
+</li>
+<li><p class="first">Renamed setting: <code class="docutils literal"><span class="pre">CONCURRENT_DOMAINS</span></code> to <code class="docutils literal"><span class="pre">CONCURRENT_SPIDERS</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1830">r1830</a>)</p>
+</li>
+<li><p class="first">Refactored HTTP Cache middleware</p>
+</li>
+<li><p class="first">HTTP Cache middleware has been heavilty refactored, retaining the same functionality except for the domain sectorization which was removed. (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1843">r1843</a> )</p>
+</li>
+<li><p class="first">Renamed exception: <code class="docutils literal"><span class="pre">DontCloseDomain</span></code> to <code class="docutils literal"><span class="pre">DontCloseSpider</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1859">r1859</a> | #120)</p>
+</li>
+<li><p class="first">Renamed extension: <code class="docutils literal"><span class="pre">DelayedCloseDomain</span></code> to <code class="docutils literal"><span class="pre">SpiderCloseDelay</span></code> (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1861">r1861</a> | #121)</p>
+</li>
+<li><p class="first">Removed obsolete <code class="docutils literal"><span class="pre">scrapy.utils.markup.remove_escape_chars</span></code> function - use <code class="docutils literal"><span class="pre">scrapy.utils.markup.replace_escape_chars</span></code> instead (<a class="reference external" href="http://hg.scrapy.org/scrapy/changeset/1865">r1865</a>)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="section" id="id14">
+<h2>0.7<a class="headerlink" href="#id14" title="Permalink to this headline">¶</a></h2>
+<p>First release of Scrapy.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="contributing.html" class="btn btn-neutral float-right" title="Contributing to Scrapy" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="topics/exporters.html" class="btn btn-neutral" title="Item Exporters" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-qgxvw3pz" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2012, Scrapinghub.
+      
+        <span class="commit">
+          Revision <code>c152682b</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.16
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.16/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.16/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.16/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.16.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-kozlxpif"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/548/qmj48TLnYmle/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/548/qmj48TLnYmle/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/548/qmj48TLnYmle/" rel="nofollow" target="_blank">Hiring Python devs? Read the Docs can help!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

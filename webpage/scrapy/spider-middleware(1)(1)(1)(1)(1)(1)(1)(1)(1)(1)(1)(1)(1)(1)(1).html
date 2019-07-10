@@ -1,0 +1,591 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Spider Middleware — Scrapy 0.14.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.14.4 documentation" href="../index.html" />
+        <link rel="next" title="Extensions" href="extensions.html" />
+        <link rel="prev" title="Downloader Middleware" href="downloader-middleware.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/spider-middleware.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/spider-middleware'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.14
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapy Service (scrapyd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Spider Middleware</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#activating-a-spider-middleware">Activating a spider middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-your-own-spider-middleware">Writing your own spider middleware</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-spider-middleware-reference"><span class="toctree-expand"></span>Built-in spider middleware reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.contrib.spidermiddleware.depth">DepthMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.contrib.spidermiddleware.httperror">HttpErrorMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.contrib.spidermiddleware.offsite">OffsiteMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.contrib.spidermiddleware.referer">RefererMiddleware</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.contrib.spidermiddleware.urllength">UrlLengthMiddleware</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-sh1q55hp" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/qzwxeptYVRZu/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/qzwxeptYVRZu/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Spider Middleware</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.14/docs/topics/spider-middleware.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spider-middleware">
+<span id="topics-spider-middleware"></span><h1>Spider Middleware<a class="headerlink" href="#spider-middleware" title="Permalink to this headline">¶</a></h1>
+<p>The spider middleware is a framework of hooks into Scrapy’s spider processing
+mechanism where you can plug custom functionality to process the requests that
+are sent to <a class="reference internal" href="spiders.html#topics-spiders"><span>Spiders</span></a> for processing and to process the responses
+and items that are generated from spiders.</p>
+<div class="section" id="activating-a-spider-middleware">
+<span id="topics-spider-middleware-setting"></span><h2>Activating a spider middleware<a class="headerlink" href="#activating-a-spider-middleware" title="Permalink to this headline">¶</a></h2>
+<p>To activate a spider middleware component, add it to the
+<a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES</span></code></a> setting, which is a dict whose keys are the
+middleware class path and their values are the middleware orders.</p>
+<p>Here’s an example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SPIDER_MIDDLEWARES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'myproject.middlewares.CustomSpiderMiddleware'</span><span class="p">:</span> <span class="mi">543</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES</span></code></a> setting is merged with the
+<a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES_BASE</span></code></a> setting defined in Scrapy (and not meant to
+be overridden) and then sorted by order to get the final sorted list of enabled
+middlewares: the first middleware is the one closer to the engine and the last
+is the one closer to the spider.</p>
+<p>To decide which order to assign to your middleware see the
+<a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES_BASE</span></code></a> setting and pick a value according to where
+you want to insert the middleware. The order does matter because each
+middleware performs a different action and your middleware could depend on some
+previous (or subsequent) middleware being applied.</p>
+<p>If you want to disable a builtin middleware (the ones defined in
+<a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES_BASE</span></code></a>, and enabled by default) you must define it
+in your project <a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES</span></code></a> setting and assign <cite>None</cite> as its
+value.  For example, if you want to disable the off-site middleware:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SPIDER_MIDDLEWARES</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'myproject.middlewares.CustomSpiderMiddleware'</span><span class="p">:</span> <span class="mi">543</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware'</span><span class="p">:</span> <span class="bp">None</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>Finally, keep in mind that some middlewares may need to be enabled through a
+particular setting. See each middleware documentation for more info.</p>
+</div>
+<div class="section" id="writing-your-own-spider-middleware">
+<h2>Writing your own spider middleware<a class="headerlink" href="#writing-your-own-spider-middleware" title="Permalink to this headline">¶</a></h2>
+<p>Writing your own spider middleware is easy. Each middleware component is a
+single Python class that defines one or more of the following methods:</p>
+<span class="target" id="module-scrapy.contrib.spidermiddleware"></span><dl class="class">
+<dt id="scrapy.contrib.spidermiddleware.SpiderMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.spidermiddleware.</code><code class="descname">SpiderMiddleware</code><a class="headerlink" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="method">
+<dt id="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input">
+<code class="descname">process_spider_input</code><span class="sig-paren">(</span><em>response</em>, <em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for each response that goes through the spider
+middleware and into the spider, for processing.</p>
+<p><a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_input()</span></code></a> should return <code class="docutils literal"><span class="pre">None</span></code> or raise and
+exception.</p>
+<p>If it returns <code class="docutils literal"><span class="pre">None</span></code>, Scrapy will continue processing this response,
+executing all other middlewares until, finally, the response is handled
+to the spider for processing.</p>
+<p>If it raises an exception, Scrapy won’t bother calling any other spider
+middleware <a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_input()</span></code></a> and will call the request
+errback.  The output of the errback is chained back in the other
+direction for <a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_output()</span></code></a> to process it, or
+<a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_exception()</span></code></a> if it raised an exception.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>reponse</strong> – the response being processed</li>
+<li><strong>spider</strong> (<a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider" title="scrapy.spider.BaseSpider"><code class="xref py py-class docutils literal"><span class="pre">BaseSpider</span></code></a> object) – the spider for which this response is intended</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output">
+<code class="descname">process_spider_output</code><span class="sig-paren">(</span><em>response</em>, <em>result</em>, <em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called with the results returned from the Spider, after
+it has processed the response.</p>
+<p><a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_output()</span></code></a> must return an iterable of
+<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> or <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>response</strong> (class:<cite>~scrapy.http.Response</cite> object) – the response which generated this output from the
+spider</li>
+<li><strong>result</strong> (an iterable of <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> or
+<a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects) – the result returned by the spider</li>
+<li><strong>spider</strong> (<code class="xref py py-class docutils literal"><span class="pre">BaseSpider</span></code> object) – the spider whose result is being processed</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception">
+<code class="descname">process_spider_exception</code><span class="sig-paren">(</span><em>response</em>, <em>exception</em>, <em>spider</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called when when a spider or <a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_input"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_input()</span></code></a>
+method (from other spider middleware) raises an exception.</p>
+<p><a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_exception()</span></code></a> should return either <code class="docutils literal"><span class="pre">None</span></code> or an
+iterable of <a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> or
+<a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects.</p>
+<p>If it returns <code class="docutils literal"><span class="pre">None</span></code>, Scrapy will continue processing this exception,
+executing any other <a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_exception()</span></code></a> in the following
+middleware components, until no middleware components are left and the
+exception reaches the engine (where it’s logged and discarded).</p>
+<p>If it returns an iterable the <a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_output"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_output()</span></code></a> pipeline
+kicks in, and no other <a class="reference internal" href="#scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception" title="scrapy.contrib.spidermiddleware.SpiderMiddleware.process_spider_exception"><code class="xref py py-meth docutils literal"><span class="pre">process_spider_exception()</span></code></a> will be called.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>response</strong> (<a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object) – the response being processed when the exception was
+raised</li>
+<li><strong>exception</strong> (<a class="reference external" href="http://docs.python.org/library/exceptions.html#exceptions.Exception">Exception</a> object) – the exception raised</li>
+<li><strong>spider</strong> (<a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider" title="scrapy.spider.BaseSpider"><code class="xref py py-class docutils literal"><span class="pre">scrapy.spider.BaseSpider</span></code></a> object) – the spider which raised the exception</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="built-in-spider-middleware-reference">
+<span id="topics-spider-middleware-ref"></span><h2>Built-in spider middleware reference<a class="headerlink" href="#built-in-spider-middleware-reference" title="Permalink to this headline">¶</a></h2>
+<p>This page describes all spider middleware components that come with Scrapy. For
+information on how to use them and how to write your own spider middleware, see
+the <a class="reference internal" href="#topics-spider-middleware"><span>spider middleware usage guide</span></a>.</p>
+<p>For a list of the components enabled by default (and their orders) see the
+<a class="reference internal" href="settings.html#std:setting-SPIDER_MIDDLEWARES_BASE"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES_BASE</span></code></a> setting.</p>
+<div class="section" id="module-scrapy.contrib.spidermiddleware.depth">
+<span id="depthmiddleware"></span><h3>DepthMiddleware<a class="headerlink" href="#module-scrapy.contrib.spidermiddleware.depth" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.contrib.spidermiddleware.depth.DepthMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.spidermiddleware.depth.</code><code class="descname">DepthMiddleware</code><a class="headerlink" href="#scrapy.contrib.spidermiddleware.depth.DepthMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>DepthMiddleware is a scrape middleware used for tracking the depth of each
+Request inside the site being scraped. It can be used to limit the maximum
+depth to scrape or things like that.</p>
+<p>The <a class="reference internal" href="#scrapy.contrib.spidermiddleware.depth.DepthMiddleware" title="scrapy.contrib.spidermiddleware.depth.DepthMiddleware"><code class="xref py py-class docutils literal"><span class="pre">DepthMiddleware</span></code></a> can be configured through the following
+settings (see the settings documentation for more info):</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="settings.html#std:setting-DEPTH_LIMIT"><code class="xref std std-setting docutils literal"><span class="pre">DEPTH_LIMIT</span></code></a> - The maximum depth that will be allowed to
+crawl for any site. If zero, no limit will be imposed.</li>
+<li><a class="reference internal" href="settings.html#std:setting-DEPTH_STATS"><code class="xref std std-setting docutils literal"><span class="pre">DEPTH_STATS</span></code></a> - Whether to collect depth stats.</li>
+<li><a class="reference internal" href="settings.html#std:setting-DEPTH_PRIORITY"><code class="xref std std-setting docutils literal"><span class="pre">DEPTH_PRIORITY</span></code></a> - Whether to prioritize the requests based on
+their depth.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.contrib.spidermiddleware.httperror">
+<span id="httperrormiddleware"></span><h3>HttpErrorMiddleware<a class="headerlink" href="#module-scrapy.contrib.spidermiddleware.httperror" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.contrib.spidermiddleware.httperror.HttpErrorMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.spidermiddleware.httperror.</code><code class="descname">HttpErrorMiddleware</code><a class="headerlink" href="#scrapy.contrib.spidermiddleware.httperror.HttpErrorMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filter out unsuccessful (erroneous) HTTP responses so that spiders don’t
+have to deal with them, which (most of the time) imposes an overhead,
+consumes more resources, and makes the spider logic more complex.</p>
+</dd></dl>
+
+<p>According to the <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP standard</a>, successful responses are those whose
+status codes are in the 200-300 range.</p>
+<p>If you still want to process response codes outside that range, you can
+specify which response codes the spider is able to handle using the
+<code class="docutils literal"><span class="pre">handle_httpstatus_list</span></code> spider attribute.</p>
+<p>For example, if you want your spider to handle 404 responses you can do
+this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="n">handle_httpstatus_list</span> <span class="o">=</span> <span class="p">[</span><span class="mi">404</span><span class="p">]</span>
+</pre></div>
+</div>
+<p id="std:reqmeta-handle_httpstatus_list">The <code class="docutils literal"><span class="pre">handle_httpstatus_list</span></code> key of <a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">Request.meta</span></code></a> can also be used to specify which response codes to
+allow on a per-request basis.</p>
+<p>Keep in mind, however, that it’s usually a bad idea to handle non-200
+responses, unless you really know what you’re doing.</p>
+<p>For more information see: <a class="reference external" href="http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html">HTTP Status Code Definitions</a>.</p>
+</div>
+<div class="section" id="module-scrapy.contrib.spidermiddleware.offsite">
+<span id="offsitemiddleware"></span><h3>OffsiteMiddleware<a class="headerlink" href="#module-scrapy.contrib.spidermiddleware.offsite" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.spidermiddleware.offsite.</code><code class="descname">OffsiteMiddleware</code><a class="headerlink" href="#scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters out Requests for URLs outside the domains covered by the spider.</p>
+<p>This middleware filters out every request whose host names aren’t in the
+spider’s <a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider.allowed_domains" title="scrapy.spider.BaseSpider.allowed_domains"><code class="xref py py-attr docutils literal"><span class="pre">allowed_domains</span></code></a> attribute.</p>
+<p>When your spider returns a request for a domain not belonging to those
+covered by the spider, this middleware will log a debug message similar to
+this one:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>DEBUG: Filtered offsite request to 'www.othersite.com': &lt;GET http://www.othersite.com/some/page.html&gt;
+</pre></div>
+</div>
+<p>To avoid filling the log with too much noise, it will only print one of
+these messages for each new domain filtered. So, for example, if another
+request for <code class="docutils literal"><span class="pre">www.othersite.com</span></code> is filtered, no log message will be
+printed. But if a request for <code class="docutils literal"><span class="pre">someothersite.com</span></code> is filtered, a message
+will be printed (but only for the first request filtred).</p>
+<p>If the spider doesn’t define an
+<a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider.allowed_domains" title="scrapy.spider.BaseSpider.allowed_domains"><code class="xref py py-attr docutils literal"><span class="pre">allowed_domains</span></code></a> attribute, or the
+attribute is empty, the offsite middleware will allow all requests.</p>
+<p>If the request has the <code class="xref py py-attr docutils literal"><span class="pre">dont_filter</span></code> attribute
+set, the offsite middleware will allow the request even if its domain is not
+listed in allowed domains.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.contrib.spidermiddleware.referer">
+<span id="referermiddleware"></span><h3>RefererMiddleware<a class="headerlink" href="#module-scrapy.contrib.spidermiddleware.referer" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.contrib.spidermiddleware.referer.RefererMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.spidermiddleware.referer.</code><code class="descname">RefererMiddleware</code><a class="headerlink" href="#scrapy.contrib.spidermiddleware.referer.RefererMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Populates Request referer field, based on the Response which originated it.</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-scrapy.contrib.spidermiddleware.urllength">
+<span id="urllengthmiddleware"></span><h3>UrlLengthMiddleware<a class="headerlink" href="#module-scrapy.contrib.spidermiddleware.urllength" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.contrib.spidermiddleware.urllength.UrlLengthMiddleware">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.spidermiddleware.urllength.</code><code class="descname">UrlLengthMiddleware</code><a class="headerlink" href="#scrapy.contrib.spidermiddleware.urllength.UrlLengthMiddleware" title="Permalink to this definition">¶</a></dt>
+<dd><p>Filters out requests with URLs longer than URLLENGTH_LIMIT</p>
+<p>The <a class="reference internal" href="#scrapy.contrib.spidermiddleware.urllength.UrlLengthMiddleware" title="scrapy.contrib.spidermiddleware.urllength.UrlLengthMiddleware"><code class="xref py py-class docutils literal"><span class="pre">UrlLengthMiddleware</span></code></a> can be configured through the following
+settings (see the settings documentation for more info):</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference internal" href="settings.html#std:setting-URLLENGTH_LIMIT"><code class="xref std std-setting docutils literal"><span class="pre">URLLENGTH_LIMIT</span></code></a> - The maximum URL length to allow for crawled URLs.</li>
+</ul>
+</div></blockquote>
+</dd></dl>
+
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="extensions.html" class="btn btn-neutral float-right" title="Extensions" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="downloader-middleware.html" class="btn btn-neutral" title="Downloader Middleware" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-1a30p6ml" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2011, Insophia.
+      
+        <span class="commit">
+          Revision <code>f8eb4709</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.14
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.14/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.14/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.14/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.14.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-3rd03t9m"></div></body></html>

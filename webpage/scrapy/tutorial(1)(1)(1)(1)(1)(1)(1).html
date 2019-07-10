@@ -1,0 +1,973 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Scrapy Tutorial — Scrapy 1.0.7 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Scrapy 1.0.7 documentation" href="../index.html" />
+        <link rel="next" title="Examples" href="examples.html" />
+        <link rel="prev" title="Installation guide" href="install.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/intro/tutorial.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'intro/tutorial' 		
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="install.html">Installation guide</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Scrapy Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#creating-a-project">Creating a project</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#defining-our-item">Defining our Item</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#our-first-spider"><span class="toctree-expand"></span>Our first Spider</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crawling"><span class="toctree-expand"></span>Crawling</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#what-just-happened-under-the-hood">What just happened under the hood?</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#extracting-items"><span class="toctree-expand"></span>Extracting Items</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#introduction-to-selectors">Introduction to Selectors</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#trying-selectors-in-the-shell">Trying Selectors in the Shell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#using-our-item">Using our item</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#following-links">Following links</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#storing-the-scraped-data">Storing the scraped data</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#next-steps">Next steps</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../topics/architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../topics/exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-x6nmms36" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/BoDD5Nmi42cp/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/BoDD5Nmi42cp/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Scrapy Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.0/docs/intro/tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/intro/tutorial.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrapy-tutorial">
+<span id="intro-tutorial"></span><h1>Scrapy Tutorial<a class="headerlink" href="#scrapy-tutorial" title="Permalink to this headline">¶</a></h1>
+<p>In this tutorial, we’ll assume that Scrapy is already installed on your system.
+If that’s not the case, see <a class="reference internal" href="install.html#intro-install"><span class="std std-ref">Installation guide</span></a>.</p>
+<p>We are going to use <a class="reference external" href="http://www.dmoz.org/">Open directory project (dmoz)</a> as
+our example domain to scrape.</p>
+<p>This tutorial will walk you through these tasks:</p>
+<ol class="arabic simple">
+<li>Creating a new Scrapy project</li>
+<li>Defining the Items you will extract</li>
+<li>Writing a <a class="reference internal" href="../topics/spiders.html#topics-spiders"><span class="std std-ref">spider</span></a> to crawl a site and extract
+<a class="reference internal" href="../topics/items.html#topics-items"><span class="std std-ref">Items</span></a></li>
+<li>Writing an <a class="reference internal" href="../topics/item-pipeline.html#topics-item-pipeline"><span class="std std-ref">Item Pipeline</span></a> to store the
+extracted Items</li>
+</ol>
+<p>Scrapy is written in <a class="reference external" href="https://www.python.org/">Python</a>. If you’re new to the language you might want to
+start by getting an idea of what the language is like, to get the most out of
+Scrapy.  If you’re already familiar with other languages, and want to learn
+Python quickly, we recommend <a class="reference external" href="http://learnpythonthehardway.org/book/">Learn Python The Hard Way</a>.  If you’re new to programming
+and want to start with Python, take a look at <a class="reference external" href="https://wiki.python.org/moin/BeginnersGuide/NonProgrammers">this list of Python resources
+for non-programmers</a>.</p>
+<div class="section" id="creating-a-project">
+<h2>Creating a project<a class="headerlink" href="#creating-a-project" title="Permalink to this headline">¶</a></h2>
+<p>Before you start scraping, you will have to set up a new Scrapy project. Enter a
+directory where you’d like to store your code and run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">startproject</span> <span class="n">tutorial</span>
+</pre></div>
+</div>
+<p>This will create a <code class="docutils literal"><span class="pre">tutorial</span></code> directory with the following contents:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">tutorial</span><span class="o">/</span>
+    <span class="n">scrapy</span><span class="o">.</span><span class="n">cfg</span>            <span class="c1"># deploy configuration file</span>
+
+    <span class="n">tutorial</span><span class="o">/</span>             <span class="c1"># project's Python module, you'll import your code from here</span>
+        <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+
+        <span class="n">items</span><span class="o">.</span><span class="n">py</span>          <span class="c1"># project items file</span>
+
+        <span class="n">pipelines</span><span class="o">.</span><span class="n">py</span>      <span class="c1"># project pipelines file</span>
+
+        <span class="n">settings</span><span class="o">.</span><span class="n">py</span>       <span class="c1"># project settings file</span>
+
+        <span class="n">spiders</span><span class="o">/</span>          <span class="c1"># a directory where you'll later put your spiders</span>
+            <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>
+            <span class="o">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="defining-our-item">
+<h2>Defining our Item<a class="headerlink" href="#defining-our-item" title="Permalink to this headline">¶</a></h2>
+<p><cite>Items</cite> are containers that will be loaded with the scraped data; they work
+like simple Python dicts. While you can use plain Python dicts with Scrapy,
+<cite>Items</cite> provide additional protection against populating undeclared fields,
+preventing typos. They can also be used with <a class="reference internal" href="../topics/loaders.html#topics-loaders"><span class="std std-ref">Item Loaders</span></a>, a mechanism with helpers to conveniently populate <cite>Items</cite>.</p>
+<p>They are declared by creating a <a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">scrapy.Item</span></code></a> class and defining
+its attributes as <a class="reference internal" href="../topics/items.html#scrapy.item.Field" title="scrapy.item.Field"><code class="xref py py-class docutils literal"><span class="pre">scrapy.Field</span></code></a> objects, much like in an ORM
+(don’t worry if you’re not familiar with ORMs, you will see that this is an
+easy task).</p>
+<p>We begin by modeling the item that we will use to hold the site’s data obtained
+from dmoz.org. As we want to capture the name, url and description of the
+sites, we define fields for each of these three attributes. To do that, we edit
+<code class="docutils literal"><span class="pre">items.py</span></code>, found in the <code class="docutils literal"><span class="pre">tutorial</span></code> directory. Our Item class looks like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">DmozItem</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This may seem complicated at first, but defining an item class allows you to use other handy
+components and helpers within Scrapy.</p>
+</div>
+<div class="section" id="our-first-spider">
+<h2>Our first Spider<a class="headerlink" href="#our-first-spider" title="Permalink to this headline">¶</a></h2>
+<p>Spiders are classes that you define and Scrapy uses to scrape information from a
+domain (or group of domains).</p>
+<p>They define an initial list of URLs to download, how to follow links, and how
+to parse the contents of pages to extract <a class="reference internal" href="../topics/items.html#topics-items"><span class="std std-ref">items</span></a>.</p>
+<p>To create a Spider, you must subclass <a class="reference internal" href="../topics/spiders.html#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal"><span class="pre">scrapy.Spider</span></code></a> and define some attributes:</p>
+<ul>
+<li><p class="first"><a class="reference internal" href="../topics/spiders.html#scrapy.spiders.Spider.name" title="scrapy.spiders.Spider.name"><code class="xref py py-attr docutils literal"><span class="pre">name</span></code></a>: identifies the Spider. It must be
+unique, that is, you can’t set the same name for different Spiders.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../topics/spiders.html#scrapy.spiders.Spider.start_urls" title="scrapy.spiders.Spider.start_urls"><code class="xref py py-attr docutils literal"><span class="pre">start_urls</span></code></a>: a list of URLs where the
+Spider will begin to crawl from.  The first pages downloaded will be those
+listed here. The subsequent URLs will be generated successively from data
+contained in the start URLs.</p>
+</li>
+<li><p class="first"><a class="reference internal" href="../topics/spiders.html#scrapy.spiders.Spider.parse" title="scrapy.spiders.Spider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a>: a method of the spider, which will
+be called with the downloaded <a class="reference internal" href="../topics/request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">Response</span></code></a> object of each
+start URL. The response is passed to the method as the first and only
+argument.</p>
+<p>This method is responsible for parsing the response data and extracting
+scraped data (as scraped items) and more URLs to follow.</p>
+<p>The <a class="reference internal" href="../topics/spiders.html#scrapy.spiders.Spider.parse" title="scrapy.spiders.Spider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> method is in charge of processing
+the response and returning scraped data (as <a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a>
+objects) and more URLs to follow (as <a class="reference internal" href="../topics/request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">Request</span></code></a> objects).</p>
+</li>
+</ul>
+<p>This is the code for our first Spider; save it in a file named
+<code class="docutils literal"><span class="pre">dmoz_spider.py</span></code> under the <code class="docutils literal"><span class="pre">tutorial/spiders</span></code> directory:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span><span class="p">,</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">"/"</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">]</span> <span class="o">+</span> <span class="s1">'.html'</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">body</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="crawling">
+<h3>Crawling<a class="headerlink" href="#crawling" title="Permalink to this headline">¶</a></h3>
+<p>To put our spider to work, go to the project’s top level directory and run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">dmoz</span>
+</pre></div>
+</div>
+<p>This command runs the spider with name <code class="docutils literal"><span class="pre">dmoz</span></code> that we’ve just added, that
+will send some requests for the <code class="docutils literal"><span class="pre">dmoz.org</span></code> domain. You will get an output
+similar to this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Scrapy</span> <span class="n">started</span> <span class="p">(</span><span class="n">bot</span><span class="p">:</span> <span class="n">tutorial</span><span class="p">)</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Optional</span> <span class="n">features</span> <span class="n">available</span><span class="p">:</span> <span class="o">...</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Overridden</span> <span class="n">settings</span><span class="p">:</span> <span class="p">{}</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Enabled</span> <span class="n">extensions</span><span class="p">:</span> <span class="o">...</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Enabled</span> <span class="n">downloader</span> <span class="n">middlewares</span><span class="p">:</span> <span class="o">...</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Enabled</span> <span class="n">spider</span> <span class="n">middlewares</span><span class="p">:</span> <span class="o">...</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Enabled</span> <span class="n">item</span> <span class="n">pipelines</span><span class="p">:</span> <span class="o">...</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">07</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Spider</span> <span class="n">opened</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">08</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Crawled</span> <span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Resources</span><span class="o">/&gt;</span> <span class="p">(</span><span class="n">referer</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Crawled</span> <span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Books</span><span class="o">/&gt;</span> <span class="p">(</span><span class="n">referer</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">18</span><span class="p">:</span><span class="mi">13</span><span class="p">:</span><span class="mi">09</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Closing</span> <span class="n">spider</span> <span class="p">(</span><span class="n">finished</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">At the end you can see a log line for each URL defined in <code class="docutils literal"><span class="pre">start_urls</span></code>.
+Because these URLs are the starting ones, they have no referrers, which is
+shown at the end of the log line, where it says <code class="docutils literal"><span class="pre">(referer:</span> <span class="pre">None)</span></code>.</p>
+</div>
+<p>Now, check the files in the current directory. You should notice two new files
+have been created: <em>Books.html</em> and <em>Resources.html</em>, with the content for the respective
+URLs, as our <code class="docutils literal"><span class="pre">parse</span></code> method instructs.</p>
+<div class="section" id="what-just-happened-under-the-hood">
+<h4>What just happened under the hood?<a class="headerlink" href="#what-just-happened-under-the-hood" title="Permalink to this headline">¶</a></h4>
+<p>Scrapy creates <a class="reference internal" href="../topics/request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal"><span class="pre">scrapy.Request</span></code></a> objects
+for each URL in the <code class="docutils literal"><span class="pre">start_urls</span></code> attribute of the Spider, and assigns
+them the <code class="docutils literal"><span class="pre">parse</span></code> method of the spider as their callback function.</p>
+<p>These Requests are scheduled, then executed, and <a class="reference internal" href="../topics/request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal"><span class="pre">scrapy.http.Response</span></code></a>
+objects are returned and then fed back to the spider, through the
+<a class="reference internal" href="../topics/spiders.html#scrapy.spiders.Spider.parse" title="scrapy.spiders.Spider.parse"><code class="xref py py-meth docutils literal"><span class="pre">parse()</span></code></a> method.</p>
+</div>
+</div>
+<div class="section" id="extracting-items">
+<h3>Extracting Items<a class="headerlink" href="#extracting-items" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="introduction-to-selectors">
+<h4>Introduction to Selectors<a class="headerlink" href="#introduction-to-selectors" title="Permalink to this headline">¶</a></h4>
+<p>There are several ways to extract data from web pages. Scrapy uses a mechanism
+based on <a class="reference external" href="http://www.w3.org/TR/xpath">XPath</a> or <a class="reference external" href="http://www.w3.org/TR/selectors">CSS</a> expressions called <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span class="std std-ref">Scrapy Selectors</span></a>.  For more information about selectors and other extraction
+mechanisms see the <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span class="std std-ref">Selectors documentation</span></a>.</p>
+<p>Here are some examples of XPath expressions and their meanings:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">/html/head/title</span></code>: selects the <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> element, inside the <code class="docutils literal"><span class="pre">&lt;head&gt;</span></code>
+element of an HTML document</li>
+<li><code class="docutils literal"><span class="pre">/html/head/title/text()</span></code>: selects the text inside the aforementioned
+<code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> element.</li>
+<li><code class="docutils literal"><span class="pre">//td</span></code>: selects all the <code class="docutils literal"><span class="pre">&lt;td&gt;</span></code> elements</li>
+<li><code class="docutils literal"><span class="pre">//div[@class="mine"]</span></code>: selects all <code class="docutils literal"><span class="pre">div</span></code> elements which contain an
+attribute <code class="docutils literal"><span class="pre">class="mine"</span></code></li>
+</ul>
+<p>These are just a couple of simple examples of what you can do with XPath, but
+XPath expressions are indeed much more powerful. To learn more about XPath, we
+recommend <a class="reference external" href="http://zvon.org/comp/r/tut-XPath_1.html">this tutorial to learn XPath through examples</a>, and <a class="reference external" href="http://plasmasturm.org/log/xpath101/">this tutorial to learn “how
+to think in XPath”</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><strong>CSS vs XPath:</strong> you can go a long way extracting data from web pages
+using only CSS selectors. However, XPath offers more power because besides
+navigating the structure, it can also look at the content: you’re
+able to select things like: <em>the link that contains the text ‘Next Page’</em>.
+Because of this, we encourage you to learn about XPath even if you
+already know how to construct CSS selectors.</p>
+</div>
+<p>For working with CSS and XPath expressions, Scrapy provides
+<a class="reference internal" href="../topics/selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal"><span class="pre">Selector</span></code></a> class and convenient shortcuts to avoid
+instantiating selectors yourself every time you need to select something from a
+response.</p>
+<p>You can see selectors as objects that represent nodes in the document
+structure. So, the first instantiated selectors are associated with the root
+node, or the entire document.</p>
+<p>Selectors have four basic methods (click on the method to see the complete API
+documentation):</p>
+<ul class="simple">
+<li><a class="reference internal" href="../topics/selectors.html#scrapy.selector.Selector.xpath" title="scrapy.selector.Selector.xpath"><code class="xref py py-meth docutils literal"><span class="pre">xpath()</span></code></a>: returns a list of selectors, each of
+which represents the nodes selected by the xpath expression given as
+argument.</li>
+<li><a class="reference internal" href="../topics/selectors.html#scrapy.selector.Selector.css" title="scrapy.selector.Selector.css"><code class="xref py py-meth docutils literal"><span class="pre">css()</span></code></a>: returns a list of selectors, each of
+which represents the nodes selected by the CSS expression given as argument.</li>
+<li><a class="reference internal" href="../topics/selectors.html#scrapy.selector.Selector.extract" title="scrapy.selector.Selector.extract"><code class="xref py py-meth docutils literal"><span class="pre">extract()</span></code></a>: returns a unicode string with the
+selected data.</li>
+<li><a class="reference internal" href="../topics/selectors.html#scrapy.selector.Selector.re" title="scrapy.selector.Selector.re"><code class="xref py py-meth docutils literal"><span class="pre">re()</span></code></a>: returns a list of unicode strings
+extracted by applying the regular expression given as argument.</li>
+</ul>
+</div>
+<div class="section" id="trying-selectors-in-the-shell">
+<h4>Trying Selectors in the Shell<a class="headerlink" href="#trying-selectors-in-the-shell" title="Permalink to this headline">¶</a></h4>
+<p>To illustrate the use of Selectors we’re going to use the built-in <a class="reference internal" href="../topics/shell.html#topics-shell"><span class="std std-ref">Scrapy
+shell</span></a>, which also requires <a class="reference external" href="http://ipython.org/">IPython</a> (an extended Python console)
+installed on your system.</p>
+<p>To start a shell, you must go to the project’s top level directory and run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">shell</span> <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Remember to always enclose urls in quotes when running Scrapy shell from
+command-line, otherwise urls containing arguments (ie. <code class="docutils literal"><span class="pre">&amp;</span></code> character)
+will not work.</p>
+</div>
+<p>This is what the shell looks like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span> <span class="o">...</span> <span class="n">Scrapy</span> <span class="n">log</span> <span class="n">here</span> <span class="o">...</span> <span class="p">]</span>
+
+<span class="mi">2014</span><span class="o">-</span><span class="mi">01</span><span class="o">-</span><span class="mi">23</span> <span class="mi">17</span><span class="p">:</span><span class="mi">11</span><span class="p">:</span><span class="mi">42</span><span class="o">-</span><span class="mi">0400</span> <span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Crawled</span> <span class="p">(</span><span class="mi">200</span><span class="p">)</span> <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Books</span><span class="o">/&gt;</span> <span class="p">(</span><span class="n">referer</span><span class="p">:</span> <span class="kc">None</span><span class="p">)</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="n">Available</span> <span class="n">Scrapy</span> <span class="n">objects</span><span class="p">:</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">crawler</span>    <span class="o">&lt;</span><span class="n">scrapy</span><span class="o">.</span><span class="n">crawler</span><span class="o">.</span><span class="n">Crawler</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x3636b50</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">item</span>       <span class="p">{}</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">request</span>    <span class="o">&lt;</span><span class="n">GET</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Books</span><span class="o">/&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">response</span>   <span class="o">&lt;</span><span class="mi">200</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Books</span><span class="o">/&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">settings</span>   <span class="o">&lt;</span><span class="n">scrapy</span><span class="o">.</span><span class="n">settings</span><span class="o">.</span><span class="n">Settings</span> <span class="nb">object</span> <span class="n">at</span> <span class="mh">0x3fadc50</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">spider</span>     <span class="o">&lt;</span><span class="n">Spider</span> <span class="s1">'default'</span> <span class="n">at</span> <span class="mh">0x3cebf50</span><span class="o">&gt;</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span> <span class="n">Useful</span> <span class="n">shortcuts</span><span class="p">:</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">shelp</span><span class="p">()</span>           <span class="n">Shell</span> <span class="n">help</span> <span class="p">(</span><span class="nb">print</span> <span class="n">this</span> <span class="n">help</span><span class="p">)</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">fetch</span><span class="p">(</span><span class="n">req_or_url</span><span class="p">)</span> <span class="n">Fetch</span> <span class="n">request</span> <span class="p">(</span><span class="ow">or</span> <span class="n">URL</span><span class="p">)</span> <span class="ow">and</span> <span class="n">update</span> <span class="n">local</span> <span class="n">objects</span>
+<span class="p">[</span><span class="n">s</span><span class="p">]</span>   <span class="n">view</span><span class="p">(</span><span class="n">response</span><span class="p">)</span>    <span class="n">View</span> <span class="n">response</span> <span class="ow">in</span> <span class="n">a</span> <span class="n">browser</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span>
+</pre></div>
+</div>
+<p>After the shell loads, you will have the response fetched in a local
+<code class="docutils literal"><span class="pre">response</span></code> variable, so if you type <code class="docutils literal"><span class="pre">response.body</span></code> you will see the body
+of the response, or you can type <code class="docutils literal"><span class="pre">response.headers</span></code> to see its headers.</p>
+<p>More importantly <code class="docutils literal"><span class="pre">response</span></code> has a <code class="docutils literal"><span class="pre">selector</span></code> attribute which is an instance of
+<a class="reference internal" href="../topics/selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal"><span class="pre">Selector</span></code></a> class, instantiated with this particular <code class="docutils literal"><span class="pre">response</span></code>.
+You can run queries on <code class="docutils literal"><span class="pre">response</span></code> by calling <code class="docutils literal"><span class="pre">response.selector.xpath()</span></code> or
+<code class="docutils literal"><span class="pre">response.selector.css()</span></code>. There are also some convenience shortcuts like <code class="docutils literal"><span class="pre">response.xpath()</span></code>
+or <code class="docutils literal"><span class="pre">response.css()</span></code> which map directly to <code class="docutils literal"><span class="pre">response.selector.xpath()</span></code> and
+<code class="docutils literal"><span class="pre">response.selector.css()</span></code>.</p>
+<p>So let’s try it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">In</span> <span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title'</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">'//title'</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">'&lt;title&gt;Open Directory - Computers: Progr'</span><span class="o">&gt;</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">2</span><span class="p">]:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'&lt;title&gt;Open Directory - Computers: Programming: Languages: Python: Books&lt;/title&gt;'</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">3</span><span class="p">]:</span> <span class="p">[</span><span class="o">&lt;</span><span class="n">Selector</span> <span class="n">xpath</span><span class="o">=</span><span class="s1">'//title/text()'</span> <span class="n">data</span><span class="o">=</span><span class="sa">u</span><span class="s1">'Open Directory - Computers: Programming:'</span><span class="o">&gt;</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">4</span><span class="p">]:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'Open Directory - Computers: Programming: Languages: Python: Books'</span><span class="p">]</span>
+
+<span class="n">In</span> <span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">re</span><span class="p">(</span><span class="s1">'(\w+):'</span><span class="p">)</span>
+<span class="n">Out</span><span class="p">[</span><span class="mi">5</span><span class="p">]:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'Computers'</span><span class="p">,</span> <span class="sa">u</span><span class="s1">'Programming'</span><span class="p">,</span> <span class="sa">u</span><span class="s1">'Languages'</span><span class="p">,</span> <span class="sa">u</span><span class="s1">'Python'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extracting-the-data">
+<h4>Extracting the data<a class="headerlink" href="#extracting-the-data" title="Permalink to this headline">¶</a></h4>
+<p>Now, let’s try to extract some real information from those pages.</p>
+<p>You could type <code class="docutils literal"><span class="pre">response.body</span></code> in the console, and inspect the source code to
+figure out the XPaths you need to use. However, inspecting the raw HTML code
+there could become a very tedious task. To make it easier, you can
+use Firefox Developer Tools or some Firefox extensions like Firebug. For more
+information see <a class="reference internal" href="../topics/firebug.html#topics-firebug"><span class="std std-ref">Using Firebug for scraping</span></a> and <a class="reference internal" href="../topics/firefox.html#topics-firefox"><span class="std std-ref">Using Firefox for scraping</span></a>.</p>
+<p>After inspecting the page source, you’ll find that the web site’s information
+is inside a <code class="docutils literal"><span class="pre">&lt;ul&gt;</span></code> element, in fact the <em>second</em> <code class="docutils literal"><span class="pre">&lt;ul&gt;</span></code> element.</p>
+<p>So we can select each <code class="docutils literal"><span class="pre">&lt;li&gt;</span></code> element belonging to the site’s list with this
+code:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>And from them, the site’s descriptions:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The site’s titles:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li/a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>And the site’s links:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li/a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>As we’ve said before, each <code class="docutils literal"><span class="pre">.xpath()</span></code> call returns a list of selectors, so we can
+concatenate further <code class="docutils literal"><span class="pre">.xpath()</span></code> calls to dig deeper into a node. We are going to use
+that property here, so:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">):</span>
+    <span class="n">title</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+    <span class="n">link</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+    <span class="n">desc</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+    <span class="nb">print</span> <span class="n">title</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">desc</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For a more detailed description of using nested selectors, see
+<a class="reference internal" href="../topics/selectors.html#topics-selectors-nesting-selectors"><span class="std std-ref">Nesting selectors</span></a> and
+<a class="reference internal" href="../topics/selectors.html#topics-selectors-relative-xpaths"><span class="std std-ref">Working with relative XPaths</span></a> in the <a class="reference internal" href="../topics/selectors.html#topics-selectors"><span class="std std-ref">Selectors</span></a>
+documentation</p>
+</div>
+<p>Let’s add this code to our spider:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span><span class="p">,</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">):</span>
+            <span class="n">title</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">link</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">desc</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="nb">print</span> <span class="n">title</span><span class="p">,</span> <span class="n">link</span><span class="p">,</span> <span class="n">desc</span>
+</pre></div>
+</div>
+<p>Now try crawling dmoz.org again and you’ll see sites being printed
+in your output. Run:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">dmoz</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-our-item">
+<h3>Using our item<a class="headerlink" href="#using-our-item" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="../topics/items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> objects are custom Python dicts; you can access the
+values of their fields (attributes of the class we defined earlier) using the
+standard dict syntax like:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">item</span> <span class="o">=</span> <span class="n">DmozItem</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="s1">'Example title'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span>
+<span class="go">'Example title'</span>
+</pre></div>
+</div>
+<p>So, in order to return the data we’ve scraped so far, the final code for our
+Spider would be like this:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="kn">from</span> <span class="nn">tutorial.items</span> <span class="k">import</span> <span class="n">DmozItem</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Books/"</span><span class="p">,</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/Resources/"</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">DmozItem</span><span class="p">()</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">'link'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">'desc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">item</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can find a fully-functional variant of this spider in the <a class="reference external" href="https://github.com/scrapy/dirbot">dirbot</a>
+project available at <a class="reference external" href="https://github.com/scrapy/dirbot">https://github.com/scrapy/dirbot</a></p>
+</div>
+<p>Now crawling dmoz.org yields <code class="docutils literal"><span class="pre">DmozItem</span></code> objects:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Scraped</span> <span class="kn">from</span> <span class="o">&lt;</span><span class="mi">200</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Books</span><span class="o">/&gt;</span>
+     <span class="p">{</span><span class="s1">'desc'</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">' - By David Mertz; Addison Wesley. Book in progress, full text, ASCII format. Asks for feedback. [author website, Gnosis Software, Inc.</span><span class="se">\n</span><span class="s1">],</span>
+      <span class="s1">'link'</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'http://gnosis.cx/TPiP/'</span><span class="p">],</span>
+      <span class="s1">'title'</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'Text Processing in Python'</span><span class="p">]}</span>
+<span class="p">[</span><span class="n">scrapy</span><span class="p">]</span> <span class="n">DEBUG</span><span class="p">:</span> <span class="n">Scraped</span> <span class="kn">from</span> <span class="o">&lt;</span><span class="mi">200</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">www</span><span class="o">.</span><span class="n">dmoz</span><span class="o">.</span><span class="n">org</span><span class="o">/</span><span class="n">Computers</span><span class="o">/</span><span class="n">Programming</span><span class="o">/</span><span class="n">Languages</span><span class="o">/</span><span class="n">Python</span><span class="o">/</span><span class="n">Books</span><span class="o">/&gt;</span>
+     <span class="p">{</span><span class="s1">'desc'</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">' - By Sean McGrath; Prentice Hall PTR, 2000, ISBN 0130211192, has CD-ROM. Methods to build XML applications fast, Python tutorial, DOM and SAX, new Pyxie open source XML processing library. [Prentice Hall PTR]</span><span class="se">\n</span><span class="s1">'</span><span class="p">],</span>
+      <span class="s1">'link'</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'http://www.informit.com/store/product.aspx?isbn=0130211192'</span><span class="p">],</span>
+      <span class="s1">'title'</span><span class="p">:</span> <span class="p">[</span><span class="sa">u</span><span class="s1">'XML Processing with Python'</span><span class="p">]}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="following-links">
+<h2>Following links<a class="headerlink" href="#following-links" title="Permalink to this headline">¶</a></h2>
+<p>Let’s say, instead of just scraping the stuff in <em>Books</em> and <em>Resources</em> pages,
+you want everything that is under the <a class="reference external" href="http://www.dmoz.org/Computers/Programming/Languages/Python/">Python directory</a>.</p>
+<p>Now that you know how to extract data from a page, why not extract the links
+for the pages you are interested, follow them and then extract the data you
+want for all of them?</p>
+<p>Here is a modification to our spider that does just that:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="kn">from</span> <span class="nn">tutorial.items</span> <span class="k">import</span> <span class="n">DmozItem</span>
+
+<span class="k">class</span> <span class="nc">DmozSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"dmoz"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"dmoz.org"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s2">"http://www.dmoz.org/Computers/Programming/Languages/Python/"</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">href</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">"ul.directory.dir-col &gt; li &gt; a::attr('href')"</span><span class="p">):</span>
+            <span class="n">url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">href</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse_dir_contents</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_dir_contents</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">sel</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//ul/li'</span><span class="p">):</span>
+            <span class="n">item</span> <span class="o">=</span> <span class="n">DmozItem</span><span class="p">()</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">'title'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">'link'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="n">item</span><span class="p">[</span><span class="s1">'desc'</span><span class="p">]</span> <span class="o">=</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+            <span class="k">yield</span> <span class="n">item</span>
+</pre></div>
+</div>
+<p>Now the <cite>parse()</cite> method only extract the interesting links from the page,
+builds a full absolute URL using the <cite>response.urljoin</cite> method (since the links can
+be relative) and yields new requests to be sent later, registering as callback
+the method <cite>parse_dir_contents()</cite> that will ultimately scrape the data we want.</p>
+<p>What you see here is the Scrapy’s mechanism of following links: when you yield
+a Request in a callback method, Scrapy will schedule that request to be sent
+and register a callback method to be executed when that request finishes.</p>
+<p>Using this, you can build complex crawlers that follow links according to rules
+you define, and extract different kinds of data depending on the page it’s
+visiting.</p>
+<p>A common pattern is a callback method that extracts some items, looks for a link
+to follow to the next page and then yields a <cite>Request</cite> with the same callback
+for it:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_articles_follow_next_page</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">article</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//article"</span><span class="p">):</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">ArticleItem</span><span class="p">()</span>
+
+        <span class="o">...</span> <span class="n">extract</span> <span class="n">article</span> <span class="n">data</span> <span class="n">here</span>
+
+        <span class="k">yield</span> <span class="n">item</span>
+
+    <span class="n">next_page</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s2">"ul.navigation &gt; li.next-page &gt; a::attr('href')"</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">next_page</span><span class="p">:</span>
+        <span class="n">url</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">urljoin</span><span class="p">(</span><span class="n">next_page</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+        <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_articles_follow_next_page</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>This creates a sort of loop, following all the links to the next page until it
+doesn’t find one – handy for crawling blogs, forums and other sites with
+pagination.</p>
+<p>Another common pattern is to build an item with data from more than one page,
+using a <a class="reference internal" href="../topics/request-response.html#topics-request-response-ref-request-callback-arguments"><span class="std std-ref">trick to pass additional data to the callbacks</span></a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">As an example spider that leverages this mechanism, check out the
+<a class="reference internal" href="../topics/spiders.html#scrapy.spiders.CrawlSpider" title="scrapy.spiders.CrawlSpider"><code class="xref py py-class docutils literal"><span class="pre">CrawlSpider</span></code></a> class for a generic spider
+that implements a small rules engine that you can use to write your
+crawlers on top of it.</p>
+</div>
+</div>
+<div class="section" id="storing-the-scraped-data">
+<h2>Storing the scraped data<a class="headerlink" href="#storing-the-scraped-data" title="Permalink to this headline">¶</a></h2>
+<p>The simplest way to store the scraped data is by using <a class="reference internal" href="../topics/feed-exports.html#topics-feed-exports"><span class="std std-ref">Feed exports</span></a>, with the following command:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">dmoz</span> <span class="o">-</span><span class="n">o</span> <span class="n">items</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>That will generate an <code class="docutils literal"><span class="pre">items.json</span></code> file containing all scraped items,
+serialized in <a class="reference external" href="http://en.wikipedia.org/wiki/JSON">JSON</a>.</p>
+<p>In small projects (like the one in this tutorial), that should be enough.
+However, if you want to perform more complex things with the scraped items, you
+can write an <a class="reference internal" href="../topics/item-pipeline.html#topics-item-pipeline"><span class="std std-ref">Item Pipeline</span></a>. As with Items, a
+placeholder file for Item Pipelines has been set up for you when the project is
+created, in <code class="docutils literal"><span class="pre">tutorial/pipelines.py</span></code>. Though you don’t need to implement any item
+pipelines if you just want to store the scraped items.</p>
+</div>
+<div class="section" id="next-steps">
+<h2>Next steps<a class="headerlink" href="#next-steps" title="Permalink to this headline">¶</a></h2>
+<p>This tutorial covered only the basics of Scrapy, but there’s a lot of other
+features not mentioned here. Check the <a class="reference internal" href="overview.html#topics-whatelse"><span class="std std-ref">What else?</span></a> section in
+<a class="reference internal" href="overview.html#intro-overview"><span class="std std-ref">Scrapy at a glance</span></a> chapter for a quick overview of the most important ones.</p>
+<p>Then, we recommend you continue by playing with an example project (see
+<a class="reference internal" href="examples.html#intro-examples"><span class="std std-ref">Examples</span></a>), and then continue with the section
+<a class="reference internal" href="../index.html#section-basics"><span class="std std-ref">Basic concepts</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="examples.html" class="btn btn-neutral float-right" title="Examples" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="install.html" class="btn btn-neutral" title="Installation guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-1sbsg41s" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2015, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>600e7bbd</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.0
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/intro/tutorial.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/intro/tutorial.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/intro/tutorial.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/intro/tutorial.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/intro/tutorial.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/intro/tutorial.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/intro/tutorial.html">1.1</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.0/intro/tutorial.html">1.0</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/intro/tutorial.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/intro/tutorial.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/intro/tutorial.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/intro/tutorial.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.0/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.0/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.0/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.0/docs/intro/tutorial.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.0/docs/intro/tutorial.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.0.7',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-rjjo5naeg"></div></body></html>

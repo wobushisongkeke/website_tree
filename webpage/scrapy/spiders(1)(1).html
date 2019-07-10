@@ -1,0 +1,1272 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Spiders — Scrapy 1.5.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Selectors" href="selectors.html" />
+    <link rel="prev" title="Command line tool" href="commands.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/spiders.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/spiders'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Spiders</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#scrapy-spider">scrapy.Spider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#spider-arguments">Spider arguments</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#generic-spiders"><span class="toctree-expand"></span>Generic Spiders</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#crawlspider"><span class="toctree-expand"></span>CrawlSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#crawling-rules">Crawling rules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#crawlspider-example">CrawlSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#xmlfeedspider"><span class="toctree-expand"></span>XMLFeedSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#xmlfeedspider-example">XMLFeedSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#csvfeedspider"><span class="toctree-expand"></span>CSVFeedSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#csvfeedspider-example">CSVFeedSpider example</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#sitemapspider"><span class="toctree-expand"></span>SitemapSpider</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sitemapspider-examples">SitemapSpider examples</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-23up987e" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/LKkMdTijWOd1/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/LKkMdTijWOd1/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Spiders</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/spiders.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/topics/spiders.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="spiders">
+<span id="topics-spiders"></span><h1>Spiders<a class="headerlink" href="#spiders" title="Permalink to this headline">¶</a></h1>
+<p>Spiders are classes which define how a certain site (or a group of sites) will be
+scraped, including how to perform the crawl (i.e. follow links) and how to
+extract structured data from their pages (i.e. scraping items). In other words,
+Spiders are the place where you define the custom behaviour for crawling and
+parsing pages for a particular site (or, in some cases, a group of sites).</p>
+<p>For spiders, the scraping cycle goes through something like this:</p>
+<ol class="arabic">
+<li><p class="first">You start by generating the initial Requests to crawl the first URLs, and
+specify a callback function to be called with the response downloaded from
+those requests.</p>
+<p>The first requests to perform are obtained by calling the
+<a class="reference internal" href="#scrapy.spiders.Spider.start_requests" title="scrapy.spiders.Spider.start_requests"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_requests()</span></code></a> method which (by default)
+generates <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> for the URLs specified in the
+<a class="reference internal" href="#scrapy.spiders.Spider.start_urls" title="scrapy.spiders.Spider.start_urls"><code class="xref py py-attr docutils literal notranslate"><span class="pre">start_urls</span></code></a> and the
+<a class="reference internal" href="#scrapy.spiders.Spider.parse" title="scrapy.spiders.Spider.parse"><code class="xref py py-attr docutils literal notranslate"><span class="pre">parse</span></code></a> method as callback function for the
+Requests.</p>
+</li>
+<li><p class="first">In the callback function, you parse the response (web page) and return either
+dicts with extracted data, <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> objects,
+<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> objects, or an iterable of these objects.
+Those Requests will also contain a callback (maybe
+the same) and will then be downloaded by Scrapy and then their
+response handled by the specified callback.</p>
+</li>
+<li><p class="first">In callback functions, you parse the page contents, typically using
+<a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">Selectors</span></a> (but you can also use BeautifulSoup, lxml or whatever
+mechanism you prefer) and generate items with the parsed data.</p>
+</li>
+<li><p class="first">Finally, the items returned from the spider will be typically persisted to a
+database (in some <a class="reference internal" href="item-pipeline.html#topics-item-pipeline"><span class="std std-ref">Item Pipeline</span></a>) or written to
+a file using <a class="reference internal" href="feed-exports.html#topics-feed-exports"><span class="std std-ref">Feed exports</span></a>.</p>
+</li>
+</ol>
+<p>Even though this cycle applies (more or less) to any kind of spider, there are
+different kinds of default spiders bundled into Scrapy for different purposes.
+We will talk about those types here.</p>
+<span class="target" id="module-scrapy.spiders"></span><div class="section" id="scrapy-spider">
+<span id="topics-spiders-ref"></span><h2>scrapy.Spider<a class="headerlink" href="#scrapy-spider" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="scrapy.spiders.Spider">
+<em class="property">class </em><code class="descclassname">scrapy.spiders.</code><code class="descname">Spider</code><a class="headerlink" href="#scrapy.spiders.Spider" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the simplest spider, and the one from which every other spider
+must inherit (including spiders that come bundled with Scrapy, as well as spiders
+that you write yourself). It doesn’t provide any special functionality. It just
+provides a default <a class="reference internal" href="#scrapy.spiders.Spider.start_requests" title="scrapy.spiders.Spider.start_requests"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_requests()</span></code></a> implementation which sends requests from
+the <a class="reference internal" href="#scrapy.spiders.Spider.start_urls" title="scrapy.spiders.Spider.start_urls"><code class="xref py py-attr docutils literal notranslate"><span class="pre">start_urls</span></code></a> spider attribute and calls the spider’s method <code class="docutils literal notranslate"><span class="pre">parse</span></code>
+for each of the resulting responses.</p>
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.name">
+<code class="descname">name</code><a class="headerlink" href="#scrapy.spiders.Spider.name" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string which defines the name for this spider. The spider name is how
+the spider is located (and instantiated) by Scrapy, so it must be
+unique. However, nothing prevents you from instantiating more than one
+instance of the same spider. This is the most important spider attribute
+and it’s required.</p>
+<p>If the spider scrapes a single domain, a common practice is to name the
+spider after the domain, with or without the <a class="reference external" href="https://en.wikipedia.org/wiki/Top-level_domain">TLD</a>. So, for example, a
+spider that crawls <code class="docutils literal notranslate"><span class="pre">mywebsite.com</span></code> would often be called
+<code class="docutils literal notranslate"><span class="pre">mywebsite</span></code>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">In Python 2 this must be ASCII only.</p>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.allowed_domains">
+<code class="descname">allowed_domains</code><a class="headerlink" href="#scrapy.spiders.Spider.allowed_domains" title="Permalink to this definition">¶</a></dt>
+<dd><p>An optional list of strings containing domains that this spider is
+allowed to crawl. Requests for URLs not belonging to the domain names
+specified in this list (or their subdomains) won’t be followed if
+<a class="reference internal" href="spider-middleware.html#scrapy.spidermiddlewares.offsite.OffsiteMiddleware" title="scrapy.spidermiddlewares.offsite.OffsiteMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">OffsiteMiddleware</span></code></a> is enabled.</p>
+<p>Let’s say your target url is <code class="docutils literal notranslate"><span class="pre">https://www.example.com/1.html</span></code>,
+then add <code class="docutils literal notranslate"><span class="pre">'example.com'</span></code> to the list.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.start_urls">
+<code class="descname">start_urls</code><a class="headerlink" href="#scrapy.spiders.Spider.start_urls" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of URLs where the spider will begin to crawl from, when no
+particular URLs are specified. So, the first pages downloaded will be those
+listed here. The subsequent <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> will be generated successively from data
+contained in the start URLs.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.custom_settings">
+<code class="descname">custom_settings</code><a class="headerlink" href="#scrapy.spiders.Spider.custom_settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dictionary of settings that will be overridden from the project wide
+configuration when running this spider. It must be defined as a class
+attribute since the settings are updated before instantiation.</p>
+<p>For a list of available built-in settings see:
+<a class="reference internal" href="settings.html#topics-settings-ref"><span class="std std-ref">Built-in settings reference</span></a>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.crawler">
+<code class="descname">crawler</code><a class="headerlink" href="#scrapy.spiders.Spider.crawler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This attribute is set by the <a class="reference internal" href="item-pipeline.html#from_crawler" title="from_crawler"><code class="xref py py-meth docutils literal notranslate"><span class="pre">from_crawler()</span></code></a> class method after
+initializating the class, and links to the
+<a class="reference internal" href="api.html#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Crawler</span></code></a> object to which this spider instance is
+bound.</p>
+<p>Crawlers encapsulate a lot of components in the project for their single
+entry access (such as extensions, middlewares, signals managers, etc).
+See <a class="reference internal" href="api.html#topics-api-crawler"><span class="std std-ref">Crawler API</span></a> to know more about them.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.settings">
+<code class="descname">settings</code><a class="headerlink" href="#scrapy.spiders.Spider.settings" title="Permalink to this definition">¶</a></dt>
+<dd><p>Configuration for running this spider. This is a
+<a class="reference internal" href="api.html#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Settings</span></code></a> instance, see the
+<a class="reference internal" href="settings.html#topics-settings"><span class="std std-ref">Settings</span></a> topic for a detailed introduction on this subject.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.Spider.logger">
+<code class="descname">logger</code><a class="headerlink" href="#scrapy.spiders.Spider.logger" title="Permalink to this definition">¶</a></dt>
+<dd><p>Python logger created with the Spider’s <a class="reference internal" href="#scrapy.spiders.Spider.name" title="scrapy.spiders.Spider.name"><code class="xref py py-attr docutils literal notranslate"><span class="pre">name</span></code></a>. You can use it to
+send log messages through it as described on
+<a class="reference internal" href="logging.html#topics-logging-from-spiders"><span class="std std-ref">Logging from Spiders</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.Spider.from_crawler">
+<code class="descname">from_crawler</code><span class="sig-paren">(</span><em>crawler</em>, <em>*args</em>, <em>**kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.Spider.from_crawler" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the class method used by Scrapy to create your spiders.</p>
+<p>You probably won’t need to override this directly because the default
+implementation acts as a proxy to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> method, calling
+it with the given arguments <cite>args</cite> and named arguments <cite>kwargs</cite>.</p>
+<p>Nonetheless, this method sets the <a class="reference internal" href="#scrapy.spiders.Spider.crawler" title="scrapy.spiders.Spider.crawler"><code class="xref py py-attr docutils literal notranslate"><span class="pre">crawler</span></code></a> and <a class="reference internal" href="#scrapy.spiders.Spider.settings" title="scrapy.spiders.Spider.settings"><code class="xref py py-attr docutils literal notranslate"><span class="pre">settings</span></code></a>
+attributes in the new instance so they can be accessed later inside the
+spider’s code.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>crawler</strong> (<a class="reference internal" href="api.html#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal notranslate"><span class="pre">Crawler</span></code></a> instance) – crawler to which the spider will be bound</li>
+<li><strong>args</strong> (<em>list</em>) – arguments passed to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> method</li>
+<li><strong>kwargs</strong> (<em>dict</em>) – keyword arguments passed to the <code class="xref py py-meth docutils literal notranslate"><span class="pre">__init__()</span></code> method</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.Spider.start_requests">
+<code class="descname">start_requests</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.Spider.start_requests" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method must return an iterable with the first Requests to crawl for
+this spider. It is called by Scrapy when the spider is opened for
+scraping. Scrapy calls it only once, so it is safe to implement
+<a class="reference internal" href="#scrapy.spiders.Spider.start_requests" title="scrapy.spiders.Spider.start_requests"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_requests()</span></code></a> as a generator.</p>
+<p>The default implementation generates <code class="docutils literal notranslate"><span class="pre">Request(url,</span> <span class="pre">dont_filter=True)</span></code>
+for each url in <a class="reference internal" href="#scrapy.spiders.Spider.start_urls" title="scrapy.spiders.Spider.start_urls"><code class="xref py py-attr docutils literal notranslate"><span class="pre">start_urls</span></code></a>.</p>
+<p>If you want to change the Requests used to start scraping a domain, this is
+the method to override. For example, if you need to start by logging in using
+a POST request, you could do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'myspider'</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">FormRequest</span><span class="p">(</span><span class="s2">"http://www.example.com/login"</span><span class="p">,</span>
+                                   <span class="n">formdata</span><span class="o">=</span><span class="p">{</span><span class="s1">'user'</span><span class="p">:</span> <span class="s1">'john'</span><span class="p">,</span> <span class="s1">'pass'</span><span class="p">:</span> <span class="s1">'secret'</span><span class="p">},</span>
+                                   <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">logged_in</span><span class="p">)]</span>
+
+    <span class="k">def</span> <span class="nf">logged_in</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="c1"># here you would extract links to follow and return Requests for</span>
+        <span class="c1"># each of them, with another callback</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.Spider.parse">
+<code class="descname">parse</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.Spider.parse" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the default callback used by Scrapy to process downloaded
+responses, when their requests don’t specify a callback.</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">parse</span></code> method is in charge of processing the response and returning
+scraped data and/or more URLs to follow. Other Requests callbacks have
+the same requirements as the <a class="reference internal" href="#scrapy.spiders.Spider" title="scrapy.spiders.Spider"><code class="xref py py-class docutils literal notranslate"><span class="pre">Spider</span></code></a> class.</p>
+<p>This method, as well as any other Request callback, must return an
+iterable of <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> and/or
+dicts or <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> objects.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>response</strong> (<a class="reference internal" href="request-response.html#scrapy.http.Response" title="scrapy.http.Response"><code class="xref py py-class docutils literal notranslate"><span class="pre">Response</span></code></a>) – the response to parse</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.Spider.log">
+<code class="descname">log</code><span class="sig-paren">(</span><em>message</em><span class="optional">[</span>, <em>level</em>, <em>component</em><span class="optional">]</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.Spider.log" title="Permalink to this definition">¶</a></dt>
+<dd><p>Wrapper that sends a log message through the Spider’s <a class="reference internal" href="#scrapy.spiders.Spider.logger" title="scrapy.spiders.Spider.logger"><code class="xref py py-attr docutils literal notranslate"><span class="pre">logger</span></code></a>,
+kept for backwards compatibility. For more information see
+<a class="reference internal" href="logging.html#topics-logging-from-spiders"><span class="std std-ref">Logging from Spiders</span></a>.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.Spider.closed">
+<code class="descname">closed</code><span class="sig-paren">(</span><em>reason</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.Spider.closed" title="Permalink to this definition">¶</a></dt>
+<dd><p>Called when the spider closes. This method provides a shortcut to
+signals.connect() for the <a class="reference internal" href="signals.html#std:signal-spider_closed"><code class="xref std std-signal docutils literal notranslate"><span class="pre">spider_closed</span></code></a> signal.</p>
+</dd></dl>
+
+</dd></dl>
+
+<p>Let’s see an example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'example.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'example.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">'http://www.example.com/1.html'</span><span class="p">,</span>
+        <span class="s1">'http://www.example.com/2.html'</span><span class="p">,</span>
+        <span class="s1">'http://www.example.com/3.html'</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'A response from </span><span class="si">%s</span><span class="s1"> just arrived!'</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Return multiple Requests and items from a single callback:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'example.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'example.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="s1">'http://www.example.com/1.html'</span><span class="p">,</span>
+        <span class="s1">'http://www.example.com/2.html'</span><span class="p">,</span>
+        <span class="s1">'http://www.example.com/3.html'</span><span class="p">,</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">h3</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//h3'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="p">{</span><span class="s2">"title"</span><span class="p">:</span> <span class="n">h3</span><span class="p">}</span>
+
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Instead of <a class="reference internal" href="#scrapy.spiders.Spider.start_urls" title="scrapy.spiders.Spider.start_urls"><code class="xref py py-attr docutils literal notranslate"><span class="pre">start_urls</span></code></a> you can use <a class="reference internal" href="#scrapy.spiders.Spider.start_requests" title="scrapy.spiders.Spider.start_requests"><code class="xref py py-meth docutils literal notranslate"><span class="pre">start_requests()</span></code></a> directly;
+to give data more structure you can use <a class="reference internal" href="items.html#topics-items"><span class="std std-ref">Items</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">from</span> <span class="nn">myproject.items</span> <span class="k">import</span> <span class="n">MyItem</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'example.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'example.com'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">'http://www.example.com/1.html'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">'http://www.example.com/2.html'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">'http://www.example.com/3.html'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">h3</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//h3'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">MyItem</span><span class="p">(</span><span class="n">title</span><span class="o">=</span><span class="n">h3</span><span class="p">)</span>
+
+        <span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">():</span>
+            <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">callback</span><span class="o">=</span><span class="bp">self</span><span class="o">.</span><span class="n">parse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="spider-arguments">
+<span id="spiderargs"></span><h2>Spider arguments<a class="headerlink" href="#spider-arguments" title="Permalink to this headline">¶</a></h2>
+<p>Spiders can receive arguments that modify their behaviour. Some common uses for
+spider arguments are to define the start URLs or to restrict the crawl to
+certain sections of the site, but they can be used to configure any
+functionality of the spider.</p>
+<p>Spider arguments are passed through the <a class="reference internal" href="commands.html#std:command-crawl"><code class="xref std std-command docutils literal notranslate"><span class="pre">crawl</span></code></a> command using the
+<code class="docutils literal notranslate"><span class="pre">-a</span></code> option. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">myspider</span> <span class="o">-</span><span class="n">a</span> <span class="n">category</span><span class="o">=</span><span class="n">electronics</span>
+</pre></div>
+</div>
+<p>Spiders can access arguments in their <cite>__init__</cite> methods:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'myspider'</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">category</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="nb">super</span><span class="p">(</span><span class="n">MySpider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/categories/</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">category</span><span class="p">]</span>
+        <span class="c1"># ...</span>
+</pre></div>
+</div>
+<p>The default <cite>__init__</cite> method will take any spider arguments
+and copy them to the spider as attributes.
+The above example can also be written as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'myspider'</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="s1">'http://www.example.com/categories/</span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">category</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Keep in mind that spider arguments are only strings.
+The spider will not do any parsing on its own.
+If you were to set the <cite>start_urls</cite> attribute from the command line,
+you would have to parse it on your own into a list
+using something like
+<a class="reference external" href="https://docs.python.org/library/ast.html#ast.literal_eval">ast.literal_eval</a>
+or <a class="reference external" href="https://docs.python.org/library/json.html#json.loads">json.loads</a>
+and then set it as an attribute.
+Otherwise, you would cause iteration over a <cite>start_urls</cite> string
+(a very common python pitfall)
+resulting in each character being seen as a separate url.</p>
+<p>A valid use case is to set the http auth credentials
+used by <a class="reference internal" href="downloader-middleware.html#scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware" title="scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpAuthMiddleware</span></code></a>
+or the user agent
+used by <a class="reference internal" href="downloader-middleware.html#scrapy.downloadermiddlewares.useragent.UserAgentMiddleware" title="scrapy.downloadermiddlewares.useragent.UserAgentMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">UserAgentMiddleware</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">myspider</span> <span class="o">-</span><span class="n">a</span> <span class="n">http_user</span><span class="o">=</span><span class="n">myuser</span> <span class="o">-</span><span class="n">a</span> <span class="n">http_pass</span><span class="o">=</span><span class="n">mypassword</span> <span class="o">-</span><span class="n">a</span> <span class="n">user_agent</span><span class="o">=</span><span class="n">mybot</span>
+</pre></div>
+</div>
+<p>Spider arguments can also be passed through the Scrapyd <code class="docutils literal notranslate"><span class="pre">schedule.json</span></code> API.
+See <a class="reference external" href="https://scrapyd.readthedocs.io/en/latest/">Scrapyd documentation</a>.</p>
+</div>
+<div class="section" id="generic-spiders">
+<span id="builtin-spiders"></span><h2>Generic Spiders<a class="headerlink" href="#generic-spiders" title="Permalink to this headline">¶</a></h2>
+<p>Scrapy comes with some useful generic spiders that you can use to subclass
+your spiders from. Their aim is to provide convenient functionality for a few
+common scraping cases, like following all links on a site based on certain
+rules, crawling from <a class="reference external" href="https://www.sitemaps.org/index.html">Sitemaps</a>, or parsing an XML/CSV feed.</p>
+<p>For the examples used in the following spiders, we’ll assume you have a project
+with a <code class="docutils literal notranslate"><span class="pre">TestItem</span></code> declared in a <code class="docutils literal notranslate"><span class="pre">myproject.items</span></code> module:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">TestItem</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">):</span>
+    <span class="nb">id</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+    <span class="n">description</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Field</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="section" id="crawlspider">
+<h3>CrawlSpider<a class="headerlink" href="#crawlspider" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.spiders.CrawlSpider">
+<em class="property">class </em><code class="descclassname">scrapy.spiders.</code><code class="descname">CrawlSpider</code><a class="headerlink" href="#scrapy.spiders.CrawlSpider" title="Permalink to this definition">¶</a></dt>
+<dd><p>This is the most commonly used spider for crawling regular websites, as it
+provides a convenient mechanism for following links by defining a set of rules.
+It may not be the best suited for your particular web sites or project, but
+it’s generic enough for several cases, so you can start from it and override it
+as needed for more custom functionality, or just implement your own spider.</p>
+<p>Apart from the attributes inherited from Spider (that you must
+specify), this class supports a new attribute:</p>
+<dl class="attribute">
+<dt id="scrapy.spiders.CrawlSpider.rules">
+<code class="descname">rules</code><a class="headerlink" href="#scrapy.spiders.CrawlSpider.rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>Which is a list of one (or more) <a class="reference internal" href="#scrapy.spiders.Rule" title="scrapy.spiders.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a> objects.  Each <a class="reference internal" href="#scrapy.spiders.Rule" title="scrapy.spiders.Rule"><code class="xref py py-class docutils literal notranslate"><span class="pre">Rule</span></code></a>
+defines a certain behaviour for crawling the site. Rules objects are
+described below. If multiple rules match the same link, the first one
+will be used, according to the order they’re defined in this attribute.</p>
+</dd></dl>
+
+<p>This spider also exposes an overrideable method:</p>
+<dl class="method">
+<dt id="scrapy.spiders.CrawlSpider.parse_start_url">
+<code class="descname">parse_start_url</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.CrawlSpider.parse_start_url" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for the start_urls responses. It allows to parse
+the initial responses and must return either an
+<a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> object, a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a>
+object, or an iterable containing any of them.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="crawling-rules">
+<h4>Crawling rules<a class="headerlink" href="#crawling-rules" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.spiders.Rule">
+<em class="property">class </em><code class="descclassname">scrapy.spiders.</code><code class="descname">Rule</code><span class="sig-paren">(</span><em>link_extractor</em>, <em>callback=None</em>, <em>cb_kwargs=None</em>, <em>follow=None</em>, <em>process_links=None</em>, <em>process_request=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.Rule" title="Permalink to this definition">¶</a></dt>
+<dd><p><code class="docutils literal notranslate"><span class="pre">link_extractor</span></code> is a <a class="reference internal" href="link-extractors.html#topics-link-extractors"><span class="std std-ref">Link Extractor</span></a> object which
+defines how links will be extracted from each crawled page.</p>
+<p><code class="docutils literal notranslate"><span class="pre">callback</span></code> is a callable or a string (in which case a method from the spider
+object with that name will be used) to be called for each link extracted with
+the specified link_extractor. This callback receives a response as its first
+argument and must return a list containing <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> and/or
+<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> objects (or any subclass of them).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">When writing crawl spider rules, avoid using <code class="docutils literal notranslate"><span class="pre">parse</span></code> as
+callback, since the <a class="reference internal" href="#scrapy.spiders.CrawlSpider" title="scrapy.spiders.CrawlSpider"><code class="xref py py-class docutils literal notranslate"><span class="pre">CrawlSpider</span></code></a> uses the <code class="docutils literal notranslate"><span class="pre">parse</span></code> method
+itself to implement its logic. So if you override the <code class="docutils literal notranslate"><span class="pre">parse</span></code> method,
+the crawl spider will no longer work.</p>
+</div>
+<p><code class="docutils literal notranslate"><span class="pre">cb_kwargs</span></code> is a dict containing the keyword arguments to be passed to the
+callback function.</p>
+<p><code class="docutils literal notranslate"><span class="pre">follow</span></code> is a boolean which specifies if links should be followed from each
+response extracted with this rule. If <code class="docutils literal notranslate"><span class="pre">callback</span></code> is None <code class="docutils literal notranslate"><span class="pre">follow</span></code> defaults
+to <code class="docutils literal notranslate"><span class="pre">True</span></code>, otherwise it defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">process_links</span></code> is a callable, or a string (in which case a method from the
+spider object with that name will be used) which will be called for each list
+of links extracted from each response using the specified <code class="docutils literal notranslate"><span class="pre">link_extractor</span></code>.
+This is mainly used for filtering purposes.</p>
+<p><code class="docutils literal notranslate"><span class="pre">process_request</span></code> is a callable, or a string (in which case a method from
+the spider object with that name will be used) which will be called with
+every request extracted by this rule, and must return a request or None (to
+filter out the request).</p>
+</dd></dl>
+
+</div>
+<div class="section" id="crawlspider-example">
+<h4>CrawlSpider example<a class="headerlink" href="#crawlspider-example" title="Permalink to this headline">¶</a></h4>
+<p>Let’s now take a look at an example CrawlSpider with rules:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+<span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">CrawlSpider</span><span class="p">,</span> <span class="n">Rule</span>
+<span class="kn">from</span> <span class="nn">scrapy.linkextractors</span> <span class="k">import</span> <span class="n">LinkExtractor</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'example.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'example.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com'</span><span class="p">]</span>
+
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="c1"># Extract links matching 'category.php' (but not matching 'subsection.php')</span>
+        <span class="c1"># and follow links from them (since no callback means follow=True by default).</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">LinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="p">(</span><span class="s1">'category\.php'</span><span class="p">,</span> <span class="p">),</span> <span class="n">deny</span><span class="o">=</span><span class="p">(</span><span class="s1">'subsection\.php'</span><span class="p">,</span> <span class="p">))),</span>
+
+        <span class="c1"># Extract links matching 'item.php' and parse them with the spider's method parse_item</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">LinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="p">(</span><span class="s1">'item\.php'</span><span class="p">,</span> <span class="p">)),</span> <span class="n">callback</span><span class="o">=</span><span class="s1">'parse_item'</span><span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Hi, this is an item page! </span><span class="si">%s</span><span class="s1">'</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">scrapy</span><span class="o">.</span><span class="n">Item</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//td[@id="item_id"]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">re</span><span class="p">(</span><span class="sa">r</span><span class="s1">'ID: (\d+)'</span><span class="p">)</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//td[@id="item_name"]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//td[@id="item_description"]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+<p>This spider would start crawling example.com’s home page, collecting category
+links, and item links, parsing the latter with the <code class="docutils literal notranslate"><span class="pre">parse_item</span></code> method. For
+each item response, some data will be extracted from the HTML using XPath, and
+an <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> will be filled with it.</p>
+</div>
+</div>
+<div class="section" id="xmlfeedspider">
+<h3>XMLFeedSpider<a class="headerlink" href="#xmlfeedspider" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.spiders.XMLFeedSpider">
+<em class="property">class </em><code class="descclassname">scrapy.spiders.</code><code class="descname">XMLFeedSpider</code><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider" title="Permalink to this definition">¶</a></dt>
+<dd><p>XMLFeedSpider is designed for parsing XML feeds by iterating through them by a
+certain node name.  The iterator can be chosen from: <code class="docutils literal notranslate"><span class="pre">iternodes</span></code>, <code class="docutils literal notranslate"><span class="pre">xml</span></code>,
+and <code class="docutils literal notranslate"><span class="pre">html</span></code>.  It’s recommended to use the <code class="docutils literal notranslate"><span class="pre">iternodes</span></code> iterator for
+performance reasons, since the <code class="docutils literal notranslate"><span class="pre">xml</span></code> and <code class="docutils literal notranslate"><span class="pre">html</span></code> iterators generate the
+whole DOM at once in order to parse it.  However, using <code class="docutils literal notranslate"><span class="pre">html</span></code> as the
+iterator may be useful when parsing XML with bad markup.</p>
+<p>To set the iterator and the tag name, you must define the following class
+attributes:</p>
+<dl class="attribute">
+<dt id="scrapy.spiders.XMLFeedSpider.iterator">
+<code class="descname">iterator</code><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider.iterator" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string which defines the iterator to use. It can be either:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">'iternodes'</span></code> - a fast iterator based on regular expressions</li>
+<li><code class="docutils literal notranslate"><span class="pre">'html'</span></code> - an iterator which uses <a class="reference internal" href="selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a>.
+Keep in mind this uses DOM parsing and must load all DOM in memory
+which could be a problem for big feeds</li>
+<li><code class="docutils literal notranslate"><span class="pre">'xml'</span></code> - an iterator which uses <a class="reference internal" href="selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a>.
+Keep in mind this uses DOM parsing and must load all DOM in memory
+which could be a problem for big feeds</li>
+</ul>
+</div></blockquote>
+<p>It defaults to: <code class="docutils literal notranslate"><span class="pre">'iternodes'</span></code>.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.XMLFeedSpider.itertag">
+<code class="descname">itertag</code><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider.itertag" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string with the name of the node (or element) to iterate in. Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">itertag</span> <span class="o">=</span> <span class="s1">'product'</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.XMLFeedSpider.namespaces">
+<code class="descname">namespaces</code><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider.namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of <code class="docutils literal notranslate"><span class="pre">(prefix,</span> <span class="pre">uri)</span></code> tuples which define the namespaces
+available in that document that will be processed with this spider. The
+<code class="docutils literal notranslate"><span class="pre">prefix</span></code> and <code class="docutils literal notranslate"><span class="pre">uri</span></code> will be used to automatically register
+namespaces using the
+<a class="reference internal" href="selectors.html#scrapy.selector.Selector.register_namespace" title="scrapy.selector.Selector.register_namespace"><code class="xref py py-meth docutils literal notranslate"><span class="pre">register_namespace()</span></code></a> method.</p>
+<p>You can then specify nodes with namespaces in the <a class="reference internal" href="#scrapy.spiders.XMLFeedSpider.itertag" title="scrapy.spiders.XMLFeedSpider.itertag"><code class="xref py py-attr docutils literal notranslate"><span class="pre">itertag</span></code></a>
+attribute.</p>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">YourSpider</span><span class="p">(</span><span class="n">XMLFeedSpider</span><span class="p">):</span>
+
+    <span class="n">namespaces</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">'n'</span><span class="p">,</span> <span class="s1">'http://www.sitemaps.org/schemas/sitemap/0.9'</span><span class="p">)]</span>
+    <span class="n">itertag</span> <span class="o">=</span> <span class="s1">'n:url'</span>
+    <span class="c1"># ...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<p>Apart from these new attributes, this spider has the following overrideable
+methods too:</p>
+<dl class="method">
+<dt id="scrapy.spiders.XMLFeedSpider.adapt_response">
+<code class="descname">adapt_response</code><span class="sig-paren">(</span><em>response</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider.adapt_response" title="Permalink to this definition">¶</a></dt>
+<dd><p>A method that receives the response as soon as it arrives from the spider
+middleware, before the spider starts parsing it. It can be used to modify
+the response body before parsing it. This method receives a response and
+also returns a response (it could be the same or another one).</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.XMLFeedSpider.parse_node">
+<code class="descname">parse_node</code><span class="sig-paren">(</span><em>response</em>, <em>selector</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider.parse_node" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for the nodes matching the provided tag name
+(<code class="docutils literal notranslate"><span class="pre">itertag</span></code>).  Receives the response and an
+<a class="reference internal" href="selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> for each node.  Overriding this
+method is mandatory. Otherwise, you spider won’t work.  This method
+must return either a <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a> object, a
+<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> object, or an iterable containing any of
+them.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.XMLFeedSpider.process_results">
+<code class="descname">process_results</code><span class="sig-paren">(</span><em>response</em>, <em>results</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.XMLFeedSpider.process_results" title="Permalink to this definition">¶</a></dt>
+<dd><p>This method is called for each result (item or request) returned by the
+spider, and it’s intended to perform any last time processing required
+before returning the results to the framework core, for example setting the
+item IDs. It receives a list of results and the response which originated
+those results. It must return a list of results (Items or Requests).</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="xmlfeedspider-example">
+<h4>XMLFeedSpider example<a class="headerlink" href="#xmlfeedspider-example" title="Permalink to this headline">¶</a></h4>
+<p>These spiders are pretty easy to use, let’s have a look at one example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">XMLFeedSpider</span>
+<span class="kn">from</span> <span class="nn">myproject.items</span> <span class="k">import</span> <span class="n">TestItem</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">XMLFeedSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'example.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'example.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/feed.xml'</span><span class="p">]</span>
+    <span class="n">iterator</span> <span class="o">=</span> <span class="s1">'iternodes'</span>  <span class="c1"># This is actually unnecessary, since it's the default value</span>
+    <span class="n">itertag</span> <span class="o">=</span> <span class="s1">'item'</span>
+
+    <span class="k">def</span> <span class="nf">parse_node</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">node</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Hi, this is a &lt;</span><span class="si">%s</span><span class="s1">&gt; node!: </span><span class="si">%s</span><span class="s1">'</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">itertag</span><span class="p">,</span> <span class="s1">''</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">node</span><span class="o">.</span><span class="n">extract</span><span class="p">()))</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">TestItem</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'@id'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'name'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="n">node</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'description'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+<p>Basically what we did up there was to create a spider that downloads a feed from
+the given <code class="docutils literal notranslate"><span class="pre">start_urls</span></code>, and then iterates through each of its <code class="docutils literal notranslate"><span class="pre">item</span></code> tags,
+prints them out, and stores some random data in an <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal notranslate"><span class="pre">Item</span></code></a>.</p>
+</div>
+</div>
+<div class="section" id="csvfeedspider">
+<h3>CSVFeedSpider<a class="headerlink" href="#csvfeedspider" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.spiders.CSVFeedSpider">
+<em class="property">class </em><code class="descclassname">scrapy.spiders.</code><code class="descname">CSVFeedSpider</code><a class="headerlink" href="#scrapy.spiders.CSVFeedSpider" title="Permalink to this definition">¶</a></dt>
+<dd><p>This spider is very similar to the XMLFeedSpider, except that it iterates
+over rows, instead of nodes. The method that gets called in each iteration
+is <a class="reference internal" href="#scrapy.spiders.CSVFeedSpider.parse_row" title="scrapy.spiders.CSVFeedSpider.parse_row"><code class="xref py py-meth docutils literal notranslate"><span class="pre">parse_row()</span></code></a>.</p>
+<dl class="attribute">
+<dt id="scrapy.spiders.CSVFeedSpider.delimiter">
+<code class="descname">delimiter</code><a class="headerlink" href="#scrapy.spiders.CSVFeedSpider.delimiter" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string with the separator character for each field in the CSV file
+Defaults to <code class="docutils literal notranslate"><span class="pre">','</span></code> (comma).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.CSVFeedSpider.quotechar">
+<code class="descname">quotechar</code><a class="headerlink" href="#scrapy.spiders.CSVFeedSpider.quotechar" title="Permalink to this definition">¶</a></dt>
+<dd><p>A string with the enclosure character for each field in the CSV file
+Defaults to <code class="docutils literal notranslate"><span class="pre">'"'</span></code> (quotation mark).</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.CSVFeedSpider.headers">
+<code class="descname">headers</code><a class="headerlink" href="#scrapy.spiders.CSVFeedSpider.headers" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of the column names in the CSV file.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.spiders.CSVFeedSpider.parse_row">
+<code class="descname">parse_row</code><span class="sig-paren">(</span><em>response</em>, <em>row</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.spiders.CSVFeedSpider.parse_row" title="Permalink to this definition">¶</a></dt>
+<dd><p>Receives a response and a dict (representing each row) with a key for each
+provided (or detected) header of the CSV file.  This spider also gives the
+opportunity to override <code class="docutils literal notranslate"><span class="pre">adapt_response</span></code> and <code class="docutils literal notranslate"><span class="pre">process_results</span></code> methods
+for pre- and post-processing purposes.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="csvfeedspider-example">
+<h4>CSVFeedSpider example<a class="headerlink" href="#csvfeedspider-example" title="Permalink to this headline">¶</a></h4>
+<p>Let’s see an example similar to the previous one, but using a
+<a class="reference internal" href="#scrapy.spiders.CSVFeedSpider" title="scrapy.spiders.CSVFeedSpider"><code class="xref py py-class docutils literal notranslate"><span class="pre">CSVFeedSpider</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">CSVFeedSpider</span>
+<span class="kn">from</span> <span class="nn">myproject.items</span> <span class="k">import</span> <span class="n">TestItem</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">CSVFeedSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'example.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'example.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/feed.csv'</span><span class="p">]</span>
+    <span class="n">delimiter</span> <span class="o">=</span> <span class="s1">';'</span>
+    <span class="n">quotechar</span> <span class="o">=</span> <span class="s2">"'"</span>
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'id'</span><span class="p">,</span> <span class="s1">'name'</span><span class="p">,</span> <span class="s1">'description'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse_row</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">row</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Hi, this is a row!: </span><span class="si">%r</span><span class="s1">'</span><span class="p">,</span> <span class="n">row</span><span class="p">)</span>
+
+        <span class="n">item</span> <span class="o">=</span> <span class="n">TestItem</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="n">row</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="sitemapspider">
+<h3>SitemapSpider<a class="headerlink" href="#sitemapspider" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.spiders.SitemapSpider">
+<em class="property">class </em><code class="descclassname">scrapy.spiders.</code><code class="descname">SitemapSpider</code><a class="headerlink" href="#scrapy.spiders.SitemapSpider" title="Permalink to this definition">¶</a></dt>
+<dd><p>SitemapSpider allows you to crawl a site by discovering the URLs using
+<a class="reference external" href="https://www.sitemaps.org/index.html">Sitemaps</a>.</p>
+<p>It supports nested sitemaps and discovering sitemap urls from
+<a class="reference external" href="http://www.robotstxt.org/">robots.txt</a>.</p>
+<dl class="attribute">
+<dt id="scrapy.spiders.SitemapSpider.sitemap_urls">
+<code class="descname">sitemap_urls</code><a class="headerlink" href="#scrapy.spiders.SitemapSpider.sitemap_urls" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of urls pointing to the sitemaps whose urls you want to crawl.</p>
+<p>You can also point to a <a class="reference external" href="http://www.robotstxt.org/">robots.txt</a> and it will be parsed to extract
+sitemap urls from it.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.SitemapSpider.sitemap_rules">
+<code class="descname">sitemap_rules</code><a class="headerlink" href="#scrapy.spiders.SitemapSpider.sitemap_rules" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of tuples <code class="docutils literal notranslate"><span class="pre">(regex,</span> <span class="pre">callback)</span></code> where:</p>
+<ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">regex</span></code> is a regular expression to match urls extracted from sitemaps.
+<code class="docutils literal notranslate"><span class="pre">regex</span></code> can be either a str or a compiled regex object.</li>
+<li>callback is the callback to use for processing the urls that match
+the regular expression. <code class="docutils literal notranslate"><span class="pre">callback</span></code> can be a string (indicating the
+name of a spider method) or a callable.</li>
+</ul>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">sitemap_rules</span> <span class="o">=</span> <span class="p">[(</span><span class="s1">'/product/'</span><span class="p">,</span> <span class="s1">'parse_product'</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>Rules are applied in order, and only the first one that matches will be
+used.</p>
+<p>If you omit this attribute, all urls found in sitemaps will be
+processed with the <code class="docutils literal notranslate"><span class="pre">parse</span></code> callback.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.SitemapSpider.sitemap_follow">
+<code class="descname">sitemap_follow</code><a class="headerlink" href="#scrapy.spiders.SitemapSpider.sitemap_follow" title="Permalink to this definition">¶</a></dt>
+<dd><p>A list of regexes of sitemap that should be followed. This is is only
+for sites that use <a class="reference external" href="https://www.sitemaps.org/protocol.html#index">Sitemap index files</a> that point to other sitemap
+files.</p>
+<p>By default, all sitemaps are followed.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.spiders.SitemapSpider.sitemap_alternate_links">
+<code class="descname">sitemap_alternate_links</code><a class="headerlink" href="#scrapy.spiders.SitemapSpider.sitemap_alternate_links" title="Permalink to this definition">¶</a></dt>
+<dd><p>Specifies if alternate links for one <code class="docutils literal notranslate"><span class="pre">url</span></code> should be followed. These
+are links for the same website in another language passed within
+the same <code class="docutils literal notranslate"><span class="pre">url</span></code> block.</p>
+<p>For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">url</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">loc</span><span class="o">&gt;</span><span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span><span class="o">/&lt;/</span><span class="n">loc</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="n">xhtml</span><span class="p">:</span><span class="n">link</span> <span class="n">rel</span><span class="o">=</span><span class="s2">"alternate"</span> <span class="n">hreflang</span><span class="o">=</span><span class="s2">"de"</span> <span class="n">href</span><span class="o">=</span><span class="s2">"http://example.com/de"</span><span class="o">/&gt;</span>
+<span class="o">&lt;/</span><span class="n">url</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">sitemap_alternate_links</span></code> set, this would retrieve both URLs. With
+<code class="docutils literal notranslate"><span class="pre">sitemap_alternate_links</span></code> disabled, only <code class="docutils literal notranslate"><span class="pre">http://example.com/</span></code> would be
+retrieved.</p>
+<p>Default is <code class="docutils literal notranslate"><span class="pre">sitemap_alternate_links</span></code> disabled.</p>
+</dd></dl>
+
+</dd></dl>
+
+<div class="section" id="sitemapspider-examples">
+<h4>SitemapSpider examples<a class="headerlink" href="#sitemapspider-examples" title="Permalink to this headline">¶</a></h4>
+<p>Simplest example: process all urls discovered through sitemaps using the
+<code class="docutils literal notranslate"><span class="pre">parse</span></code> callback:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">SitemapSpider</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">SitemapSpider</span><span class="p">):</span>
+    <span class="n">sitemap_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/sitemap.xml'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">pass</span> <span class="c1"># ... scrape item here ...</span>
+</pre></div>
+</div>
+<p>Process some urls with certain callback and other urls with a different
+callback:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">SitemapSpider</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">SitemapSpider</span><span class="p">):</span>
+    <span class="n">sitemap_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/sitemap.xml'</span><span class="p">]</span>
+    <span class="n">sitemap_rules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">'/product/'</span><span class="p">,</span> <span class="s1">'parse_product'</span><span class="p">),</span>
+        <span class="p">(</span><span class="s1">'/category/'</span><span class="p">,</span> <span class="s1">'parse_category'</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse_product</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">pass</span> <span class="c1"># ... scrape product ...</span>
+
+    <span class="k">def</span> <span class="nf">parse_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">pass</span> <span class="c1"># ... scrape category ...</span>
+</pre></div>
+</div>
+<p>Follow sitemaps defined in the <a class="reference external" href="http://www.robotstxt.org/">robots.txt</a> file and only follow sitemaps
+whose url contains <code class="docutils literal notranslate"><span class="pre">/sitemap_shop</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">SitemapSpider</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">SitemapSpider</span><span class="p">):</span>
+    <span class="n">sitemap_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/robots.txt'</span><span class="p">]</span>
+    <span class="n">sitemap_rules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">'/shop/'</span><span class="p">,</span> <span class="s1">'parse_shop'</span><span class="p">),</span>
+    <span class="p">]</span>
+    <span class="n">sitemap_follow</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'/sitemap_shops'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse_shop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">pass</span> <span class="c1"># ... scrape shop here ...</span>
+</pre></div>
+</div>
+<p>Combine SitemapSpider with other sources of urls:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">SitemapSpider</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">SitemapSpider</span><span class="p">):</span>
+    <span class="n">sitemap_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/robots.txt'</span><span class="p">]</span>
+    <span class="n">sitemap_rules</span> <span class="o">=</span> <span class="p">[</span>
+        <span class="p">(</span><span class="s1">'/shop/'</span><span class="p">,</span> <span class="s1">'parse_shop'</span><span class="p">),</span>
+    <span class="p">]</span>
+
+    <span class="n">other_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://www.example.com/about'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">start_requests</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">requests</span> <span class="o">=</span> <span class="nb">list</span><span class="p">(</span><span class="nb">super</span><span class="p">(</span><span class="n">MySpider</span><span class="p">,</span> <span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="n">start_requests</span><span class="p">())</span>
+        <span class="n">requests</span> <span class="o">+=</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">parse_other</span><span class="p">)</span> <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">other_urls</span><span class="p">]</span>
+        <span class="k">return</span> <span class="n">requests</span>
+
+    <span class="k">def</span> <span class="nf">parse_shop</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">pass</span> <span class="c1"># ... scrape shop here ...</span>
+
+    <span class="k">def</span> <span class="nf">parse_other</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="k">pass</span> <span class="c1"># ... scrape other here ...</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="selectors.html" class="btn btn-neutral float-right" title="Selectors" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="commands.html" class="btn btn-neutral" title="Command line tool" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-dzedl33si" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>2ff27774</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/spiders.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/spiders.html">1.6</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/spiders.html">1.5</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/spiders.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/spiders.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/spiders.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/spiders.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/spiders.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/spiders.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/spiders.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/spiders.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/spiders.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.5/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.5/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.5/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/spiders.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.5/docs/topics/spiders.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.5.2',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-yskpuk4w"></div></body></html>

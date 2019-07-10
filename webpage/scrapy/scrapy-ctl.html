@@ -1,0 +1,429 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>scrapy-ctl.py — Scrapy 0.9 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.9 documentation" href="../index.html" />
+        <link rel="next" title="Requests and Responses" href="request-response.html" />
+        <link rel="prev" title="Extensions" href="extensions.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/scrapy-ctl.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/scrapy-ctl'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>scrapy-ctl.py</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#global-and-project-specific-scrapy-ctl-py">Global and project-specific <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-the-scrapy-ctl-py-script"><span class="toctree-expand"></span>Using the <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#see-all-available-commands">See all available commands</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get-help-for-a-particular-command">Get help for a particular command</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#using-scrapy-ctl-py-outside-your-project">Using <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> outside your project</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-oph9atml" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>scrapy-ctl.py</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.9/docs/topics/scrapy-ctl.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="scrapy-ctl-py">
+<span id="topics-scrapy-ctl"></span><h1>scrapy-ctl.py<a class="headerlink" href="#scrapy-ctl-py" title="Permalink to this headline">¶</a></h1>
+<p>Scrapy is controlled through the <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> control script. The script
+provides several commands, for different purposes. Each command supports its
+own particular syntax. In other words, each command supports a different set of
+arguments and options.</p>
+<p>This page doesn’t describe each command and its syntax, but provides an
+introduction to how the <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script is used. After you learn how
+to use it, you can get help for each particular command using the same
+<code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script.</p>
+<div class="section" id="global-and-project-specific-scrapy-ctl-py">
+<h2>Global and project-specific <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code><a class="headerlink" href="#global-and-project-specific-scrapy-ctl-py" title="Permalink to this headline">¶</a></h2>
+<p>There is one global <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script shipped with Scrapy and another
+<code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script automatically created inside your Scrapy project. The
+project-specific <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> is just a thin wrapper around the global
+<code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> which populates the settings of your project, so you don’t
+have to specify them every time through the <code class="docutils literal"><span class="pre">--settings</span></code> argument.</p>
+</div>
+<div class="section" id="using-the-scrapy-ctl-py-script">
+<h2>Using the <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script<a class="headerlink" href="#using-the-scrapy-ctl-py-script" title="Permalink to this headline">¶</a></h2>
+<p>The first thing you would do with the <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script is create your
+Scrapy project:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy-ctl.py startproject myproject
+</pre></div>
+</div>
+<p>That will create a Scrapy project under the <code class="docutils literal"><span class="pre">myproject</span></code> directory and will
+put a new <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> inside that directory.</p>
+<p>So, you go inside the new project directory:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>cd myproject
+</pre></div>
+</div>
+<p>And you’re ready to use your project’s <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code>. For example, to
+create a new spider:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>python scrapy-ctl.py genspider mydomain mydomain.com
+</pre></div>
+</div>
+<p>This is the same as using the global <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> script and passing the
+project settings module in the <code class="docutils literal"><span class="pre">--settings</span></code> argument:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy-ctl.py --settings=myproject.settings genspider mydomain mydomain.com
+</pre></div>
+</div>
+<p>You’ll typically use the project-specific <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code>, for convenience.</p>
+<div class="section" id="see-all-available-commands">
+<h3>See all available commands<a class="headerlink" href="#see-all-available-commands" title="Permalink to this headline">¶</a></h3>
+<p>To see all available commands type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scrapy</span><span class="o">-</span><span class="n">ctl</span><span class="o">.</span><span class="n">py</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>That will print a summary of all available Scrapy commands.</p>
+<p>The first line will print the currently active project (if any).</p>
+<p>Example (active project):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Scrapy X.X.X - project: myproject
+
+Usage
+=====
+
+...
+</pre></div>
+</div>
+<p>Example (no active project):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>Scrapy X.X.X - no active project
+
+Usage
+=====
+
+...
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-help-for-a-particular-command">
+<h3>Get help for a particular command<a class="headerlink" href="#get-help-for-a-particular-command" title="Permalink to this headline">¶</a></h3>
+<p>To get help about a particular command, including its description, usage and
+available options type:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">scrapy</span><span class="o">-</span><span class="n">ctl</span><span class="o">.</span><span class="n">py</span> <span class="o">&lt;</span><span class="n">command</span><span class="o">&gt;</span> <span class="o">-</span><span class="n">h</span>
+</pre></div>
+</div>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>scrapy-ctl.py crawl -h
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-scrapy-ctl-py-outside-your-project">
+<h2>Using <code class="docutils literal"><span class="pre">scrapy-ctl.py</span></code> outside your project<a class="headerlink" href="#using-scrapy-ctl-py-outside-your-project" title="Permalink to this headline">¶</a></h2>
+<p>Not all commands must be run from “inside” a Scrapy project. You can, for
+example, use the <code class="docutils literal"><span class="pre">fetch</span></code> command to download a page (using Scrapy built-in
+downloader) from outside a project. Other commands that can be used outside a
+project are <code class="docutils literal"><span class="pre">startproject</span></code> (obviously) and <code class="docutils literal"><span class="pre">shell</span></code>, to launch a
+<a class="reference internal" href="shell.html#topics-shell"><span>Scrapy Shell</span></a>.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="request-response.html" class="btn btn-neutral float-right" title="Requests and Responses" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="extensions.html" class="btn btn-neutral" title="Extensions" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-jbnk7yml" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2010, Insophia.
+      
+        <span class="commit">
+          Revision <code>6525d3fe</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.9
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.9/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.9/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.9/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-zqg6jszf"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/G1lqDWiSZ0pX/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/G1lqDWiSZ0pX/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/G1lqDWiSZ0pX/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

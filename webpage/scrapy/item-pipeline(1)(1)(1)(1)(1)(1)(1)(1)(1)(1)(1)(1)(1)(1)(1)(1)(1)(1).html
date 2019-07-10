@@ -1,0 +1,534 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Item Pipeline — Scrapy 0.9 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.9 documentation" href="../index.html" />
+        <link rel="next" title="Logging" href="logging.html" />
+        <link rel="prev" title="Scrapy shell" href="shell.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/item-pipeline.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/item-pipeline'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Item Pipeline</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#writing-your-own-item-pipeline">Writing your own item pipeline</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#item-pipeline-example">Item pipeline example</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#activating-a-item-pipeline-component">Activating a Item Pipeline component</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#item-pipeline-example-with-resources-per-spider">Item pipeline example with resources per spider</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-item-pipelines-reference"><span class="toctree-expand"></span>Built-in Item Pipelines reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-scrapy.contrib.pipeline.fileexport"><span class="toctree-expand"></span>File Export Pipeline</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#file-export-pipeline-examples">File Export Pipeline examples</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#file-export-pipeline-settings">File Export Pipeline settings</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="scrapy-ctl.html">scrapy-ctl.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-8d7pnnwj" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Item Pipeline</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.9/docs/topics/item-pipeline.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-scrapy.contrib.pipeline">
+<span id="item-pipeline"></span><span id="topics-item-pipeline"></span><h1>Item Pipeline<a class="headerlink" href="#module-scrapy.contrib.pipeline" title="Permalink to this headline">¶</a></h1>
+<p>After an item has been scraped by a spider it is sent to the Item Pipeline
+which process it through several components that are executed sequentially.</p>
+<p>Item pipeline are usually implemented on each project. Typical usage for item
+pipelines are:</p>
+<ul class="simple">
+<li>HTML cleansing</li>
+<li>validation</li>
+<li>persistence (storing the scraped item)</li>
+</ul>
+<div class="section" id="writing-your-own-item-pipeline">
+<h2>Writing your own item pipeline<a class="headerlink" href="#writing-your-own-item-pipeline" title="Permalink to this headline">¶</a></h2>
+<p>Writing your own item pipeline is easy. Each item pipeline component is a
+single Python class that must define the following method:</p>
+<dl class="method">
+<dt id="scrapy.contrib.pipeline.process_item">
+<code class="descclassname">scrapy.contrib.pipeline.</code><code class="descname">process_item</code><span class="sig-paren">(</span><em>spider</em>, <em>item</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.contrib.pipeline.process_item" title="Permalink to this definition">¶</a></dt>
+<dd><table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>spider</strong> (<a class="reference internal" href="spiders.html#scrapy.spider.BaseSpider" title="scrapy.spider.BaseSpider"><code class="xref py py-class docutils literal"><span class="pre">BaseSpider</span></code></a> object) – the spider which scraped the item</li>
+<li><strong>item</strong> (<a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> object) – the item scraped</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<p>This method is called for every item pipeline component and must either return
+a <a class="reference internal" href="items.html#scrapy.item.Item" title="scrapy.item.Item"><code class="xref py py-class docutils literal"><span class="pre">Item</span></code></a> (or any descendant class) object or raise a
+<a class="reference internal" href="exceptions.html#scrapy.core.exceptions.DropItem" title="scrapy.core.exceptions.DropItem"><code class="xref py py-exc docutils literal"><span class="pre">DropItem</span></code></a> exception. Dropped items are no longer
+processed by further pipeline components.</p>
+</div>
+<div class="section" id="item-pipeline-example">
+<h2>Item pipeline example<a class="headerlink" href="#item-pipeline-example" title="Permalink to this headline">¶</a></h2>
+<p>Let’s take a look at following hypothetic pipeline that adjusts the <code class="docutils literal"><span class="pre">price</span></code>
+attribute for those items that do not include VAT (<code class="docutils literal"><span class="pre">price_excludes_vat</span></code>
+attribute), and drops those items which don’t contain a price:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.core.exceptions</span> <span class="kn">import</span> <span class="n">DropItem</span>
+
+<span class="k">class</span> <span class="nc">PricePipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="n">vat_factor</span> <span class="o">=</span> <span class="mf">1.15</span>
+
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">'price'</span><span class="p">]:</span>
+            <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">'price_excludes_vat'</span><span class="p">]:</span>
+                <span class="n">item</span><span class="p">[</span><span class="s1">'price'</span><span class="p">]</span> <span class="o">=</span> <span class="n">item</span><span class="p">[</span><span class="s1">'price'</span><span class="p">]</span> <span class="o">*</span> <span class="bp">self</span><span class="o">.</span><span class="n">vat_factor</span>
+            <span class="k">return</span> <span class="n">item</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">DropItem</span><span class="p">(</span><span class="s2">"Missing price in </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="activating-a-item-pipeline-component">
+<h2>Activating a Item Pipeline component<a class="headerlink" href="#activating-a-item-pipeline-component" title="Permalink to this headline">¶</a></h2>
+<p>To activate an Item Pipeline component you must add its class to the
+<a class="reference internal" href="settings.html#std:setting-ITEM_PIPELINES"><code class="xref std std-setting docutils literal"><span class="pre">ITEM_PIPELINES</span></code></a> list, like in the following example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ITEM_PIPELINES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'myproject.pipeline.PricePipeline'</span><span class="p">,</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="item-pipeline-example-with-resources-per-spider">
+<h2>Item pipeline example with resources per spider<a class="headerlink" href="#item-pipeline-example-with-resources-per-spider" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you need to keep resources about the items processed grouped per
+spider, and delete those resource when a spider finish.</p>
+<p>An example is a filter that looks for duplicate items, and drops those items
+that were already processed. Let say that our items has an unique id, but our
+spider returns multiples items with the same id:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.xlib.pydispatch</span> <span class="kn">import</span> <span class="n">dispatcher</span>
+<span class="kn">from</span> <span class="nn">scrapy.core</span> <span class="kn">import</span> <span class="n">signals</span>
+<span class="kn">from</span> <span class="nn">scrapy.core.exceptions</span> <span class="kn">import</span> <span class="n">DropItem</span>
+
+<span class="k">class</span> <span class="nc">DuplicatesPipeline</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duplicates</span> <span class="o">=</span> <span class="p">{}</span>
+        <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider_opened</span><span class="p">,</span> <span class="n">signals</span><span class="o">.</span><span class="n">spider_opened</span><span class="p">)</span>
+        <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider_closed</span><span class="p">,</span> <span class="n">signals</span><span class="o">.</span><span class="n">spider_closed</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">spider_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">duplicates</span><span class="p">[</span><span class="n">spider</span><span class="p">]</span> <span class="o">=</span> <span class="nb">set</span><span class="p">()</span>
+
+    <span class="k">def</span> <span class="nf">spider_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="k">del</span> <span class="bp">self</span><span class="o">.</span><span class="n">duplicates</span><span class="p">[</span><span class="n">spider</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">process_item</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">,</span> <span class="n">item</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">item</span><span class="p">[</span><span class="s1">'id'</span><span class="p">]</span> <span class="ow">in</span> <span class="bp">self</span><span class="o">.</span><span class="n">duplicates</span><span class="p">[</span><span class="n">spider</span><span class="p">]:</span>
+            <span class="k">raise</span> <span class="n">DropItem</span><span class="p">(</span><span class="s2">"Duplicate item found: </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">item</span><span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="bp">self</span><span class="o">.</span><span class="n">duplicates</span><span class="p">[</span><span class="n">spider</span><span class="p">]</span><span class="o">.</span><span class="n">add</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">'id'</span><span class="p">])</span>
+            <span class="k">return</span> <span class="n">item</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="built-in-item-pipelines-reference">
+<h2>Built-in Item Pipelines reference<a class="headerlink" href="#built-in-item-pipelines-reference" title="Permalink to this headline">¶</a></h2>
+<p>Here is a list of item pipelines bundled with Scrapy.</p>
+<div class="section" id="module-scrapy.contrib.pipeline.fileexport">
+<span id="id1"></span><span id="file-export-pipeline"></span><h3>File Export Pipeline<a class="headerlink" href="#module-scrapy.contrib.pipeline.fileexport" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.contrib.pipeline.fileexport.FileExportPipeline">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.pipeline.fileexport.</code><code class="descname">FileExportPipeline</code><a class="headerlink" href="#scrapy.contrib.pipeline.fileexport.FileExportPipeline" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This pipeline exports all scraped items into a file, using different formats.</p>
+<p>It is simple but convenient wrapper to use <a class="reference internal" href="exporters.html"><em>Item Exporters</em></a> as
+<a class="reference internal" href="#topics-item-pipeline"><span>Item Pipelines</span></a>. If you need more custom/advanced
+functionality you can write your own pipeline or subclass the <a class="reference internal" href="exporters.html"><em>Item
+Exporters</em></a> .</p>
+<p>It supports the following settings:</p>
+<ul class="simple">
+<li><a class="reference internal" href="#std:setting-EXPORT_FORMAT"><code class="xref std std-setting docutils literal"><span class="pre">EXPORT_FORMAT</span></code></a> (mandatory)</li>
+<li><a class="reference internal" href="#std:setting-EXPORT_FILE"><code class="xref std std-setting docutils literal"><span class="pre">EXPORT_FILE</span></code></a> (mandatory)</li>
+<li><a class="reference internal" href="#std:setting-EXPORT_FIELDS"><code class="xref std std-setting docutils literal"><span class="pre">EXPORT_FIELDS</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-EXPORT_EMPTY"><code class="xref std std-setting docutils literal"><span class="pre">EXPORT_EMPTY</span></code></a></li>
+<li><a class="reference internal" href="#std:setting-EXPORT_ENCODING"><code class="xref std std-setting docutils literal"><span class="pre">EXPORT_ENCODING</span></code></a></li>
+</ul>
+<p>If any mandatory setting is not set, this pipeline will be automatically
+disabled.</p>
+<div class="section" id="file-export-pipeline-examples">
+<h4>File Export Pipeline examples<a class="headerlink" href="#file-export-pipeline-examples" title="Permalink to this headline">¶</a></h4>
+<p>Here are some usage examples of the File Export Pipeline.</p>
+<p>To export all scraped items into a XML file:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EXPORT_FORMAT</span> <span class="o">=</span> <span class="s1">'xml'</span>
+<span class="n">EXPORT_FILE</span> <span class="o">=</span> <span class="s1">'scraped_items.xml'</span>
+</pre></div>
+</div>
+<p>To export all scraped items into a CSV file (with all fields in headers line):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EXPORT_FORMAT</span> <span class="o">=</span> <span class="s1">'csv'</span>
+<span class="n">EXPORT_FILE</span> <span class="o">=</span> <span class="s1">'scraped_items.csv'</span>
+</pre></div>
+</div>
+<p>To export all scraped items into a CSV file (with specific fields in headers line):</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EXPORT_FORMAT</span> <span class="o">=</span> <span class="s1">'csv_headers'</span>
+<span class="n">EXPORT_FILE</span> <span class="o">=</span> <span class="s1">'scraped_items_with_headers.csv'</span>
+<span class="n">EXPORT_FIELDS</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'name'</span><span class="p">,</span> <span class="s1">'price'</span><span class="p">,</span> <span class="s1">'description'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="file-export-pipeline-settings">
+<h4>File Export Pipeline settings<a class="headerlink" href="#file-export-pipeline-settings" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="export-format">
+<span id="std:setting-EXPORT_FORMAT"></span><h5>EXPORT_FORMAT<a class="headerlink" href="#export-format" title="Permalink to this headline">¶</a></h5>
+<p>The format to use for exporting. Here is a list of all available formats. Click
+on the respective Item Exporter to get more info.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">xml</span></code>: uses a <a class="reference internal" href="exporters.html#scrapy.contrib.exporter.XmlItemExporter" title="scrapy.contrib.exporter.XmlItemExporter"><code class="xref py py-class docutils literal"><span class="pre">XmlItemExporter</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">csv</span></code>: uses a <a class="reference internal" href="exporters.html#scrapy.contrib.exporter.CsvItemExporter" title="scrapy.contrib.exporter.CsvItemExporter"><code class="xref py py-class docutils literal"><span class="pre">CsvItemExporter</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">csv_headers</span></code>: uses a <a class="reference internal" href="exporters.html#scrapy.contrib.exporter.CsvItemExporter" title="scrapy.contrib.exporter.CsvItemExporter"><code class="xref py py-class docutils literal"><span class="pre">CsvItemExporter</span></code></a> with a the column headers on
+the first line. This format requires you to specify the fields to export
+using the <a class="reference internal" href="#std:setting-EXPORT_FIELDS"><code class="xref std std-setting docutils literal"><span class="pre">EXPORT_FIELDS</span></code></a> setting.</li>
+<li><code class="docutils literal"><span class="pre">json</span></code>: uses a <a class="reference internal" href="exporters.html#scrapy.contrib.exporter.jsonlines.JsonLinesItemExporter" title="scrapy.contrib.exporter.jsonlines.JsonLinesItemExporter"><code class="xref py py-class docutils literal"><span class="pre">JsonLinesItemExporter</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">pickle</span></code>: uses a <a class="reference internal" href="exporters.html#scrapy.contrib.exporter.PickleItemExporter" title="scrapy.contrib.exporter.PickleItemExporter"><code class="xref py py-class docutils literal"><span class="pre">PickleItemExporter</span></code></a></li>
+<li><code class="docutils literal"><span class="pre">pprint</span></code>: uses a <a class="reference internal" href="exporters.html#scrapy.contrib.exporter.PprintItemExporter" title="scrapy.contrib.exporter.PprintItemExporter"><code class="xref py py-class docutils literal"><span class="pre">PprintItemExporter</span></code></a></li>
+</ul>
+<p>This setting is mandatory in order to use the File Export Pipeline.</p>
+</div>
+<div class="section" id="export-file">
+<span id="std:setting-EXPORT_FILE"></span><h5>EXPORT_FILE<a class="headerlink" href="#export-file" title="Permalink to this headline">¶</a></h5>
+<p>The name of the file where the items will be exported. This setting is
+mandatory in order to use the File Export Pipeline.</p>
+</div>
+<div class="section" id="export-fields">
+<span id="std:setting-EXPORT_FIELDS"></span><h5>EXPORT_FIELDS<a class="headerlink" href="#export-fields" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
+<p>The name of the item fields that will be exported. This will be use for the
+<a class="reference internal" href="exporters.html#scrapy.contrib.exporter.BaseItemExporter.fields_to_export" title="scrapy.contrib.exporter.BaseItemExporter.fields_to_export"><code class="xref py py-attr docutils literal"><span class="pre">fields_to_export</span></code></a> Item Exporter attribute. If
+<code class="docutils literal"><span class="pre">None</span></code>, all fields will be exported.</p>
+</div>
+<div class="section" id="export-empty">
+<span id="std:setting-EXPORT_EMPTY"></span><h5>EXPORT_EMPTY<a class="headerlink" href="#export-empty" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Whether to export empty (non populated) fields. This will be used for the
+<a class="reference internal" href="exporters.html#scrapy.contrib.exporter.BaseItemExporter.export_empty_fields" title="scrapy.contrib.exporter.BaseItemExporter.export_empty_fields"><code class="xref py py-attr docutils literal"><span class="pre">export_empty_fields</span></code></a> Item Exporter attribute.</p>
+</div>
+<div class="section" id="export-encoding">
+<span id="std:setting-EXPORT_ENCODING"></span><h5>EXPORT_ENCODING<a class="headerlink" href="#export-encoding" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">'utf-8'</span></code></p>
+<p>The encoding to use for exporting. Ths will be used for the
+<a class="reference internal" href="exporters.html#scrapy.contrib.exporter.BaseItemExporter.encoding" title="scrapy.contrib.exporter.BaseItemExporter.encoding"><code class="xref py py-attr docutils literal"><span class="pre">encoding</span></code></a> Item Exporter attribute.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="logging.html" class="btn btn-neutral float-right" title="Logging" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="shell.html" class="btn btn-neutral" title="Scrapy shell" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-p4xuvzzf" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2010, Insophia.
+      
+        <span class="commit">
+          Revision <code>6525d3fe</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.9
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.9/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.9/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.9/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-1sldzvaj"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/EIUIzSEfKM5K/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/EIUIzSEfKM5K/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/EIUIzSEfKM5K/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

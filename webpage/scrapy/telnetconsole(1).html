@@ -1,0 +1,682 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Telnet Console — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Web Service" href="webservice.html" />
+    <link rel="prev" title="Sending e-mail" href="email.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/topics/telnetconsole.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/telnetconsole'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.6
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Telnet Console</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-access-the-telnet-console">How to access the telnet console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-variables-in-the-telnet-console">Available variables in the telnet console</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#telnet-console-usage-examples"><span class="toctree-expand"></span>Telnet console usage examples</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#view-engine-status">View engine status</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pause-resume-and-stop-the-scrapy-engine">Pause, resume and stop the Scrapy engine</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#telnet-console-signals">Telnet Console signals</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#telnet-settings"><span class="toctree-expand"></span>Telnet settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#telnetconsole-port">TELNETCONSOLE_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#telnetconsole-host">TELNETCONSOLE_HOST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#telnetconsole-username">TELNETCONSOLE_USERNAME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#telnetconsole-password">TELNETCONSOLE_PASSWORD</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-w8j19h6i" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Telnet Console</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.6/docs/topics/telnetconsole.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="module-scrapy.extensions.telnet">
+<span id="telnet-console"></span><span id="topics-telnetconsole"></span><h1>Telnet Console<a class="headerlink" href="#module-scrapy.extensions.telnet" title="Permalink to this headline">¶</a></h1>
+<p>Scrapy comes with a built-in telnet console for inspecting and controlling a
+Scrapy running process. The telnet console is just a regular python shell
+running inside the Scrapy process, so you can do literally anything from it.</p>
+<p>The telnet console is a <a class="reference internal" href="extensions.html#topics-extensions-ref"><span class="std std-ref">built-in Scrapy extension</span></a> which comes enabled by default, but you can also
+disable it if you want. For more information about the extension itself see
+<a class="reference internal" href="extensions.html#topics-extensions-ref-telnetconsole"><span class="std std-ref">Telnet console extension</span></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>It is not secure to use telnet console via public networks, as telnet
+doesn’t provide any transport-layer security. Having username/password
+authentication doesn’t change that.</p>
+<p class="last">Intended usage is connecting to a running Scrapy spider locally
+(spider process and telnet client are on the same machine)
+or over a secure connection (VPN, SSH tunnel).
+Please avoid using telnet console over insecure connections,
+or disable it completely using <a class="reference internal" href="settings.html#std:setting-TELNETCONSOLE_ENABLED"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TELNETCONSOLE_ENABLED</span></code></a> option.</p>
+</div>
+<div class="section" id="how-to-access-the-telnet-console">
+<h2>How to access the telnet console<a class="headerlink" href="#how-to-access-the-telnet-console" title="Permalink to this headline">¶</a></h2>
+<p>The telnet console listens in the TCP port defined in the
+<a class="reference internal" href="#std:setting-TELNETCONSOLE_PORT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TELNETCONSOLE_PORT</span></code></a> setting, which defaults to <code class="docutils literal notranslate"><span class="pre">6023</span></code>. To access
+the console you need to type:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>telnet localhost 6023
+Trying localhost...
+Connected to localhost.
+Escape character is '^]'.
+Username:
+Password:
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>By default Username is <code class="docutils literal notranslate"><span class="pre">scrapy</span></code> and Password is autogenerated. The
+autogenerated Password can be seen on scrapy logs like the example bellow:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>2018-10-16 14:35:21 [scrapy.extensions.telnet] INFO: Telnet Password: 16f92501e8a59326
+</pre></div>
+</div>
+<p>Default Username and Password can be overriden by the settings
+<a class="reference internal" href="#std:setting-TELNETCONSOLE_USERNAME"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TELNETCONSOLE_USERNAME</span></code></a> and <a class="reference internal" href="#std:setting-TELNETCONSOLE_PASSWORD"><code class="xref std std-setting docutils literal notranslate"><span class="pre">TELNETCONSOLE_PASSWORD</span></code></a>.</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Username and password provide only a limited protection, as telnet
+is not using secure transport - by default traffic is not encrypted
+even if username and password are set.</p>
+</div>
+<p>You need the telnet program which comes installed by default in Windows, and
+most Linux distros.</p>
+</div>
+<div class="section" id="available-variables-in-the-telnet-console">
+<h2>Available variables in the telnet console<a class="headerlink" href="#available-variables-in-the-telnet-console" title="Permalink to this headline">¶</a></h2>
+<p>The telnet console is like a regular Python shell running inside the Scrapy
+process, so you can do anything from it including importing new modules, etc.</p>
+<p>However, the telnet console comes with some default variables defined for
+convenience:</p>
+<div class="wy-table-responsive"><table border="1" class="docutils">
+<colgroup>
+<col width="19%" />
+<col width="81%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Shortcut</th>
+<th class="head">Description</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">crawler</span></code></td>
+<td>the Scrapy Crawler (<a class="reference internal" href="api.html#scrapy.crawler.Crawler" title="scrapy.crawler.Crawler"><code class="xref py py-class docutils literal notranslate"><span class="pre">scrapy.crawler.Crawler</span></code></a> object)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">engine</span></code></td>
+<td>Crawler.engine attribute</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">spider</span></code></td>
+<td>the active spider</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">slot</span></code></td>
+<td>the engine slot</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">extensions</span></code></td>
+<td>the Extension Manager (Crawler.extensions attribute)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">stats</span></code></td>
+<td>the Stats Collector (Crawler.stats attribute)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">settings</span></code></td>
+<td>the Scrapy settings object (Crawler.settings attribute)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">est</span></code></td>
+<td>print a report of the engine status</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">prefs</span></code></td>
+<td>for memory debugging (see <a class="reference internal" href="leaks.html#topics-leaks"><span class="std std-ref">Debugging memory leaks</span></a>)</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal notranslate"><span class="pre">p</span></code></td>
+<td>a shortcut to the <a class="reference external" href="https://docs.python.org/library/pprint.html#pprint.pprint">pprint.pprint</a> function</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal notranslate"><span class="pre">hpy</span></code></td>
+<td>for memory debugging (see <a class="reference internal" href="leaks.html#topics-leaks"><span class="std std-ref">Debugging memory leaks</span></a>)</td>
+</tr>
+</tbody>
+</table></div>
+</div>
+<div class="section" id="telnet-console-usage-examples">
+<h2>Telnet console usage examples<a class="headerlink" href="#telnet-console-usage-examples" title="Permalink to this headline">¶</a></h2>
+<p>Here are some example tasks you can do with the telnet console:</p>
+<div class="section" id="view-engine-status">
+<h3>View engine status<a class="headerlink" href="#view-engine-status" title="Permalink to this headline">¶</a></h3>
+<p>You can use the <code class="docutils literal notranslate"><span class="pre">est()</span></code> method of the Scrapy engine to quickly show its state
+using the telnet console:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>telnet localhost 6023
+&gt;&gt;&gt; est()
+Execution engine status
+
+time()-engine.start_time                        : 8.62972998619
+engine.has_capacity()                           : False
+len(engine.downloader.active)                   : 16
+engine.scraper.is_idle()                        : False
+engine.spider.name                              : followall
+engine.spider_is_idle(engine.spider)            : False
+engine.slot.closing                             : False
+len(engine.slot.inprogress)                     : 16
+len(engine.slot.scheduler.dqs or [])            : 0
+len(engine.slot.scheduler.mqs)                  : 92
+len(engine.scraper.slot.queue)                  : 0
+len(engine.scraper.slot.active)                 : 0
+engine.scraper.slot.active_size                 : 0
+engine.scraper.slot.itemproc_size               : 0
+engine.scraper.slot.needs_backout()             : False
+</pre></div>
+</div>
+</div>
+<div class="section" id="pause-resume-and-stop-the-scrapy-engine">
+<h3>Pause, resume and stop the Scrapy engine<a class="headerlink" href="#pause-resume-and-stop-the-scrapy-engine" title="Permalink to this headline">¶</a></h3>
+<p>To pause:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>telnet localhost 6023
+&gt;&gt;&gt; engine.pause()
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>To resume:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>telnet localhost 6023
+&gt;&gt;&gt; engine.unpause()
+&gt;&gt;&gt;
+</pre></div>
+</div>
+<p>To stop:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>telnet localhost 6023
+&gt;&gt;&gt; engine.stop()
+Connection closed by foreign host.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="telnet-console-signals">
+<h2>Telnet Console signals<a class="headerlink" href="#telnet-console-signals" title="Permalink to this headline">¶</a></h2>
+<span class="target" id="std:signal-update_telnet_vars"></span><dl class="function">
+<dt id="scrapy.extensions.telnet.update_telnet_vars">
+<code class="descclassname">scrapy.extensions.telnet.</code><code class="descname">update_telnet_vars</code><span class="sig-paren">(</span><em>telnet_vars</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.extensions.telnet.update_telnet_vars" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sent just before the telnet console is opened. You can hook up to this
+signal to add, remove or update the variables that will be available in the
+telnet local namespace. In order to do that, you need to update the
+<code class="docutils literal notranslate"><span class="pre">telnet_vars</span></code> dict in your handler.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>telnet_vars</strong> (<em>dict</em>) – the dict of telnet variables</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</div>
+<div class="section" id="telnet-settings">
+<h2>Telnet settings<a class="headerlink" href="#telnet-settings" title="Permalink to this headline">¶</a></h2>
+<p>These are the settings that control the telnet console’s behaviour:</p>
+<div class="section" id="telnetconsole-port">
+<span id="std:setting-TELNETCONSOLE_PORT"></span><h3>TELNETCONSOLE_PORT<a class="headerlink" href="#telnetconsole-port" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">[6023,</span> <span class="pre">6073]</span></code></p>
+<p>The port range to use for the telnet console. If set to <code class="docutils literal notranslate"><span class="pre">None</span></code> or <code class="docutils literal notranslate"><span class="pre">0</span></code>, a
+dynamically assigned port is used.</p>
+</div>
+<div class="section" id="telnetconsole-host">
+<span id="std:setting-TELNETCONSOLE_HOST"></span><h3>TELNETCONSOLE_HOST<a class="headerlink" href="#telnetconsole-host" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'127.0.0.1'</span></code></p>
+<p>The interface the telnet console should listen on</p>
+</div>
+<div class="section" id="telnetconsole-username">
+<span id="std:setting-TELNETCONSOLE_USERNAME"></span><h3>TELNETCONSOLE_USERNAME<a class="headerlink" href="#telnetconsole-username" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">'scrapy'</span></code></p>
+<p>The username used for the telnet console</p>
+</div>
+<div class="section" id="telnetconsole-password">
+<span id="std:setting-TELNETCONSOLE_PASSWORD"></span><h3>TELNETCONSOLE_PASSWORD<a class="headerlink" href="#telnetconsole-password" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+<p>The password used for the telnet console, default behaviour is to have it
+autogenerated</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="webservice.html" class="btn btn-neutral float-right" title="Web Service" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="email.html" class="btn btn-neutral" title="Sending e-mail" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-mk3zisz6l" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>a9254127</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.6
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/telnetconsole.html">latest</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/telnetconsole.html">1.6</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/telnetconsole.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/telnetconsole.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/telnetconsole.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/telnetconsole.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/telnetconsole.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/telnetconsole.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/telnetconsole.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/telnetconsole.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/telnetconsole.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/telnetconsole.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.6/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.6/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.6/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.6/docs/topics/telnetconsole.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.6/docs/topics/telnetconsole.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.6.0',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-plq4w0dl"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/548/YDP96IavQPJN/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/548/YDP96IavQPJN/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/548/YDP96IavQPJN/" rel="nofollow" target="_blank">Hiring Python devs? Read the Docs can help!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

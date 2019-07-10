@@ -1,0 +1,678 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Logging — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Stats Collection" href="stats.html" />
+    <link rel="prev" title="Exceptions" href="exceptions.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/logging.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/logging'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                stable
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Logging</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#log-levels">Log levels</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-log-messages">How to log messages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-from-spiders">Logging from Spiders</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#logging-configuration"><span class="toctree-expand"></span>Logging configuration</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#logging-settings">Logging settings</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#command-line-options">Command-line options</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-customization">Advanced customization</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.utils.log">scrapy.utils.log module</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-rf8crmir" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/vtj3DMxYRunB/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/vtj3DMxYRunB/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Logging</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/b8594353d03be5574f51766c35566b713584302b/docs/topics/logging.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="logging">
+<span id="topics-logging"></span><h1>Logging<a class="headerlink" href="#logging" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="xref py py-mod docutils literal notranslate"><span class="pre">scrapy.log</span></code> has been deprecated alongside its functions in favor of
+explicit calls to the Python standard logging. Keep reading to learn more
+about the new logging system.</p>
+</div>
+<p>Scrapy uses <a class="reference external" href="https://docs.python.org/3/library/logging.html">Python’s builtin logging system</a> for event logging. We’ll
+provide some simple examples to get you started, but for more advanced
+use-cases it’s strongly suggested to read thoroughly its documentation.</p>
+<p>Logging works out of the box, and can be configured to some extent with the
+Scrapy settings listed in <a class="reference internal" href="#topics-logging-settings"><span class="std std-ref">Logging settings</span></a>.</p>
+<p>Scrapy calls <a class="reference internal" href="#scrapy.utils.log.configure_logging" title="scrapy.utils.log.configure_logging"><code class="xref py py-func docutils literal notranslate"><span class="pre">scrapy.utils.log.configure_logging()</span></code></a> to set some reasonable
+defaults and handle those settings in <a class="reference internal" href="#topics-logging-settings"><span class="std std-ref">Logging settings</span></a> when
+running commands, so it’s recommended to manually call it if you’re running
+Scrapy from scripts as described in <a class="reference internal" href="practices.html#run-from-script"><span class="std std-ref">Run Scrapy from a script</span></a>.</p>
+<div class="section" id="log-levels">
+<span id="topics-logging-levels"></span><h2>Log levels<a class="headerlink" href="#log-levels" title="Permalink to this headline">¶</a></h2>
+<p>Python’s builtin logging defines 5 different levels to indicate the severity of a
+given log message. Here are the standard ones, listed in decreasing order:</p>
+<ol class="arabic simple">
+<li><code class="docutils literal notranslate"><span class="pre">logging.CRITICAL</span></code> - for critical errors (highest severity)</li>
+<li><code class="docutils literal notranslate"><span class="pre">logging.ERROR</span></code> - for regular errors</li>
+<li><code class="docutils literal notranslate"><span class="pre">logging.WARNING</span></code> - for warning messages</li>
+<li><code class="docutils literal notranslate"><span class="pre">logging.INFO</span></code> - for informational messages</li>
+<li><code class="docutils literal notranslate"><span class="pre">logging.DEBUG</span></code> - for debugging messages (lowest severity)</li>
+</ol>
+</div>
+<div class="section" id="how-to-log-messages">
+<h2>How to log messages<a class="headerlink" href="#how-to-log-messages" title="Permalink to this headline">¶</a></h2>
+<p>Here’s a quick example of how to log a message using the <code class="docutils literal notranslate"><span class="pre">logging.WARNING</span></code>
+level:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"This is a warning"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>There are shortcuts for issuing log messages on any of the standard 5 levels,
+and there’s also a general <code class="docutils literal notranslate"><span class="pre">logging.log</span></code> method which takes a given level as
+argument.  If needed, the last example could be rewritten as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">,</span> <span class="s2">"This is a warning"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>On top of that, you can create different “loggers” to encapsulate messages. (For
+example, a common practice is to create different loggers for every module).
+These loggers can be configured independently, and they allow hierarchical
+constructions.</p>
+<p>The previous examples use the root logger behind the scenes, which is a top level
+logger where all messages are propagated to (unless otherwise specified). Using
+<code class="docutils literal notranslate"><span class="pre">logging</span></code> helpers is merely a shortcut for getting the root logger
+explicitly, so this is also an equivalent of the last snippets:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">()</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"This is a warning"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>You can use a different logger just by getting its name with the
+<code class="docutils literal notranslate"><span class="pre">logging.getLogger</span></code> function:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">'mycustomlogger'</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"This is a warning"</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Finally, you can ensure having a custom logger for any module you’re working on
+by using the <code class="docutils literal notranslate"><span class="pre">__name__</span></code> variable, which is populated with current module’s
+path:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="vm">__name__</span><span class="p">)</span>
+<span class="n">logger</span><span class="o">.</span><span class="n">warning</span><span class="p">(</span><span class="s2">"This is a warning"</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Module logging, <a class="reference external" href="https://docs.python.org/2/howto/logging.html">HowTo</a></dt>
+<dd>Basic Logging Tutorial</dd>
+<dt>Module logging, <a class="reference external" href="https://docs.python.org/2/library/logging.html#logger-objects">Loggers</a></dt>
+<dd>Further documentation on loggers</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="logging-from-spiders">
+<span id="topics-logging-from-spiders"></span><h2>Logging from Spiders<a class="headerlink" href="#logging-from-spiders" title="Permalink to this headline">¶</a></h2>
+<p>Scrapy provides a <a class="reference internal" href="spiders.html#scrapy.spiders.Spider.logger" title="scrapy.spiders.Spider.logger"><code class="xref py py-data docutils literal notranslate"><span class="pre">logger</span></code></a> within each Spider
+instance, which can be accessed and used like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'myspider'</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'https://scrapinghub.com'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Parse function called on </span><span class="si">%s</span><span class="s1">'</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>That logger is created using the Spider’s name, but you can use any custom
+Python logger you want. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">scrapy</span>
+
+<span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">'mycustomlogger'</span><span class="p">)</span>
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'myspider'</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'https://scrapinghub.com'</span><span class="p">]</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">info</span><span class="p">(</span><span class="s1">'Parse function called on </span><span class="si">%s</span><span class="s1">'</span><span class="p">,</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="logging-configuration">
+<span id="topics-logging-configuration"></span><h2>Logging configuration<a class="headerlink" href="#logging-configuration" title="Permalink to this headline">¶</a></h2>
+<p>Loggers on their own don’t manage how messages sent through them are displayed.
+For this task, different “handlers” can be attached to any logger instance and
+they will redirect those messages to appropriate destinations, such as the
+standard output, files, emails, etc.</p>
+<p>By default, Scrapy sets and configures a handler for the root logger, based on
+the settings below.</p>
+<div class="section" id="logging-settings">
+<span id="topics-logging-settings"></span><h3>Logging settings<a class="headerlink" href="#logging-settings" title="Permalink to this headline">¶</a></h3>
+<p>These settings can be used to configure the logging:</p>
+<ul class="simple">
+<li><a class="reference internal" href="settings.html#std:setting-LOG_FILE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_FILE</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_ENABLED"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_ENABLED</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_ENCODING"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_ENCODING</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_LEVEL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_LEVEL</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_FORMAT</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_DATEFORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_DATEFORMAT</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_STDOUT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_STDOUT</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-LOG_SHORT_NAMES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_SHORT_NAMES</span></code></a></li>
+</ul>
+<p>The first couple of settings define a destination for log messages. If
+<a class="reference internal" href="settings.html#std:setting-LOG_FILE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_FILE</span></code></a> is set, messages sent through the root logger will be
+redirected to a file named <a class="reference internal" href="settings.html#std:setting-LOG_FILE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_FILE</span></code></a> with encoding
+<a class="reference internal" href="settings.html#std:setting-LOG_ENCODING"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_ENCODING</span></code></a>. If unset and <a class="reference internal" href="settings.html#std:setting-LOG_ENABLED"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_ENABLED</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code>, log
+messages will be displayed on the standard error. Lastly, if
+<a class="reference internal" href="settings.html#std:setting-LOG_ENABLED"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_ENABLED</span></code></a> is <code class="docutils literal notranslate"><span class="pre">False</span></code>, there won’t be any visible log output.</p>
+<p><a class="reference internal" href="settings.html#std:setting-LOG_LEVEL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_LEVEL</span></code></a> determines the minimum level of severity to display, those
+messages with lower severity will be filtered out. It ranges through the
+possible levels listed in <a class="reference internal" href="#topics-logging-levels"><span class="std std-ref">Log levels</span></a>.</p>
+<p><a class="reference internal" href="settings.html#std:setting-LOG_FORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_FORMAT</span></code></a> and <a class="reference internal" href="settings.html#std:setting-LOG_DATEFORMAT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_DATEFORMAT</span></code></a> specify formatting strings
+used as layouts for all messages. Those strings can contain any placeholders
+listed in <a class="reference external" href="https://docs.python.org/2/library/logging.html#logrecord-attributes">logging’s logrecord attributes docs</a> and
+<a class="reference external" href="https://docs.python.org/2/library/datetime.html#strftime-and-strptime-behavior">datetime’s strftime and strptime directives</a>
+respectively.</p>
+<p>If <a class="reference internal" href="settings.html#std:setting-LOG_SHORT_NAMES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_SHORT_NAMES</span></code></a> is set, then the logs will not display the scrapy
+component that prints the log. It is unset by default, hence logs contain the
+scrapy component responsible for that log output.</p>
+</div>
+<div class="section" id="command-line-options">
+<h3>Command-line options<a class="headerlink" href="#command-line-options" title="Permalink to this headline">¶</a></h3>
+<p>There are command-line arguments, available for all commands, that you can use
+to override some of the Scrapy settings regarding logging.</p>
+<ul class="simple">
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">--logfile</span> <span class="pre">FILE</span></code></dt>
+<dd>Overrides <a class="reference internal" href="settings.html#std:setting-LOG_FILE"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_FILE</span></code></a></dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">--loglevel/-L</span> <span class="pre">LEVEL</span></code></dt>
+<dd>Overrides <a class="reference internal" href="settings.html#std:setting-LOG_LEVEL"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_LEVEL</span></code></a></dd>
+</dl>
+</li>
+<li><dl class="first docutils">
+<dt><code class="docutils literal notranslate"><span class="pre">--nolog</span></code></dt>
+<dd>Sets <a class="reference internal" href="settings.html#std:setting-LOG_ENABLED"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_ENABLED</span></code></a> to <code class="docutils literal notranslate"><span class="pre">False</span></code></dd>
+</dl>
+</li>
+</ul>
+<div class="admonition seealso">
+<p class="first admonition-title">See also</p>
+<dl class="last docutils">
+<dt>Module <a class="reference external" href="https://docs.python.org/2/library/logging.handlers.html">logging.handlers</a></dt>
+<dd>Further documentation on available handlers</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="advanced-customization">
+<h3>Advanced customization<a class="headerlink" href="#advanced-customization" title="Permalink to this headline">¶</a></h3>
+<p>Because Scrapy uses stdlib logging module, you can customize logging using
+all features of stdlib logging.</p>
+<p>For example, let’s say you’re scraping a website which returns many
+HTTP 404 and 500 responses, and you want to hide all messages like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">2016</span><span class="o">-</span><span class="mi">12</span><span class="o">-</span><span class="mi">16</span> <span class="mi">22</span><span class="p">:</span><span class="mi">00</span><span class="p">:</span><span class="mi">06</span> <span class="p">[</span><span class="n">scrapy</span><span class="o">.</span><span class="n">spidermiddlewares</span><span class="o">.</span><span class="n">httperror</span><span class="p">]</span> <span class="n">INFO</span><span class="p">:</span> <span class="n">Ignoring</span>
+<span class="n">response</span> <span class="o">&lt;</span><span class="mi">500</span> <span class="n">http</span><span class="p">:</span><span class="o">//</span><span class="n">quotes</span><span class="o">.</span><span class="n">toscrape</span><span class="o">.</span><span class="n">com</span><span class="o">/</span><span class="n">page</span><span class="o">/</span><span class="mi">1</span><span class="o">-</span><span class="mi">34</span><span class="o">/&gt;</span><span class="p">:</span> <span class="n">HTTP</span> <span class="n">status</span> <span class="n">code</span>
+<span class="ow">is</span> <span class="ow">not</span> <span class="n">handled</span> <span class="ow">or</span> <span class="ow">not</span> <span class="n">allowed</span>
+</pre></div>
+</div>
+<p>The first thing to note is a logger name - it is in brackets:
+<code class="docutils literal notranslate"><span class="pre">[scrapy.spidermiddlewares.httperror]</span></code>. If you get just <code class="docutils literal notranslate"><span class="pre">[scrapy]</span></code> then
+<a class="reference internal" href="settings.html#std:setting-LOG_SHORT_NAMES"><code class="xref std std-setting docutils literal notranslate"><span class="pre">LOG_SHORT_NAMES</span></code></a> is likely set to True; set it to False and re-run
+the crawl.</p>
+<p>Next, we can see that the message has INFO level. To hide it
+we should set logging level for <code class="docutils literal notranslate"><span class="pre">scrapy.spidermiddlewares.httperror</span></code>
+higher than INFO; next level after INFO is WARNING. It could be done
+e.g. in the spider’s <code class="docutils literal notranslate"><span class="pre">__init__</span></code> method:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">import</span> <span class="nn">scrapy</span>
+
+
+<span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="c1"># ...</span>
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">):</span>
+        <span class="n">logger</span> <span class="o">=</span> <span class="n">logging</span><span class="o">.</span><span class="n">getLogger</span><span class="p">(</span><span class="s1">'scrapy.spidermiddlewares.httperror'</span><span class="p">)</span>
+        <span class="n">logger</span><span class="o">.</span><span class="n">setLevel</span><span class="p">(</span><span class="n">logging</span><span class="o">.</span><span class="n">WARNING</span><span class="p">)</span>
+        <span class="nb">super</span><span class="p">()</span><span class="o">.</span><span class="fm">__init__</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If you run this spider again then INFO messages from
+<code class="docutils literal notranslate"><span class="pre">scrapy.spidermiddlewares.httperror</span></code> logger will be gone.</p>
+</div>
+</div>
+<div class="section" id="module-scrapy.utils.log">
+<span id="scrapy-utils-log-module"></span><h2>scrapy.utils.log module<a class="headerlink" href="#module-scrapy.utils.log" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="scrapy.utils.log.configure_logging">
+<code class="descclassname">scrapy.utils.log.</code><code class="descname">configure_logging</code><span class="sig-paren">(</span><em>settings=None</em>, <em>install_root_handler=True</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.utils.log.configure_logging" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize logging defaults for Scrapy.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><ul class="first last simple">
+<li><strong>settings</strong> (dict, <a class="reference internal" href="api.html#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal notranslate"><span class="pre">Settings</span></code></a> object or <code class="docutils literal notranslate"><span class="pre">None</span></code>) – settings used to create and configure a handler for the
+root logger (default: None).</li>
+<li><strong>install_root_handler</strong> (<em>bool</em>) – whether to install root logging handler
+(default: True)</li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+<p>This function does:</p>
+<ul class="simple">
+<li>Route warnings and twisted logging through Python standard logging</li>
+<li>Assign DEBUG and ERROR level to Scrapy and Twisted loggers respectively</li>
+<li>Route stdout to log if LOG_STDOUT setting is True</li>
+</ul>
+<p>When <code class="docutils literal notranslate"><span class="pre">install_root_handler</span></code> is True (default), this function also
+creates a handler for the root logger according to given settings
+(see <a class="reference internal" href="#topics-logging-settings"><span class="std std-ref">Logging settings</span></a>). You can override default options
+using <code class="docutils literal notranslate"><span class="pre">settings</span></code> argument. When <code class="docutils literal notranslate"><span class="pre">settings</span></code> is empty or None, defaults
+are used.</p>
+<p><code class="docutils literal notranslate"><span class="pre">configure_logging</span></code> is automatically called when using Scrapy commands,
+but needs to be called explicitly when running custom scripts. In that
+case, its usage is not required but it’s recommended.</p>
+<p>If you plan on configuring the handlers yourself is still recommended you
+call this function, passing <cite>install_root_handler=False</cite>. Bear in mind
+there won’t be any log output set by default in that case.</p>
+<p>To get you started on manually configuring logging’s output, you can use
+<a class="reference external" href="https://docs.python.org/2/library/logging.html#logging.basicConfig">logging.basicConfig()</a> to set a basic root handler. This is an example
+on how to redirect <code class="docutils literal notranslate"><span class="pre">INFO</span></code> or higher messages to a file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">logging</span>
+<span class="kn">from</span> <span class="nn">scrapy.utils.log</span> <span class="k">import</span> <span class="n">configure_logging</span>
+
+<span class="n">configure_logging</span><span class="p">(</span><span class="n">install_root_handler</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+<span class="n">logging</span><span class="o">.</span><span class="n">basicConfig</span><span class="p">(</span>
+    <span class="n">filename</span><span class="o">=</span><span class="s1">'log.txt'</span><span class="p">,</span>
+    <span class="nb">format</span><span class="o">=</span><span class="s1">'</span><span class="si">%(levelname)s</span><span class="s1">: </span><span class="si">%(message)s</span><span class="s1">'</span><span class="p">,</span>
+    <span class="n">level</span><span class="o">=</span><span class="n">logging</span><span class="o">.</span><span class="n">INFO</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Refer to <a class="reference internal" href="practices.html#run-from-script"><span class="std std-ref">Run Scrapy from a script</span></a> for more details about using Scrapy this
+way.</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="stats.html" class="btn btn-neutral float-right" title="Stats Collection" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="exceptions.html" class="btn btn-neutral" title="Exceptions" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-mwkvmthci" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>b8594353</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: stable
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/1.5/">1.5</a></dd>
+        
+          <dd><a href="/en/1.4/">1.4</a></dd>
+        
+          <dd><a href="/en/1.3/">1.3</a></dd>
+        
+          <dd><a href="/en/1.2/">1.2</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/xpath-tutorial/">xpath-tutorial</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/stable/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/stable/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/stable/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.6.0',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-4cu1rrjn"></div></body></html>

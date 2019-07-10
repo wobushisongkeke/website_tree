@@ -1,0 +1,978 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Settings — Scrapy 0.18.4 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.18.4 documentation" href="../index.html" />
+        <link rel="next" title="Signals" href="signals.html" />
+        <link rel="prev" title="Requests and Responses" href="request-response.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/settings.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/settings'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.18
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapyd</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="djangoitem.html">DjangoItem</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Settings</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#designating-the-settings">Designating the settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#populating-the-settings"><span class="toctree-expand"></span>Populating the settings</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#global-overrides">1. Global overrides</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#project-settings-module">2. Project settings module</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-settings-per-command">3. Default settings per-command</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-global-settings">4. Default global settings</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-access-settings">How to access settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#rationale-for-setting-names">Rationale for setting names</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-settings-reference"><span class="toctree-expand"></span>Built-in settings reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#aws-access-key-id">AWS_ACCESS_KEY_ID</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aws-secret-access-key">AWS_SECRET_ACCESS_KEY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bot-name">BOT_NAME</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concurrent-items">CONCURRENT_ITEMS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concurrent-requests">CONCURRENT_REQUESTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concurrent-requests-per-domain">CONCURRENT_REQUESTS_PER_DOMAIN</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#concurrent-requests-per-ip">CONCURRENT_REQUESTS_PER_IP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-item-class">DEFAULT_ITEM_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#default-request-headers">DEFAULT_REQUEST_HEADERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depth-limit">DEPTH_LIMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depth-priority">DEPTH_PRIORITY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depth-stats">DEPTH_STATS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#depth-stats-verbose">DEPTH_STATS_VERBOSE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dnscache-enabled">DNSCACHE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downloader-debug">DOWNLOADER_DEBUG</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downloader-middlewares">DOWNLOADER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downloader-middlewares-base">DOWNLOADER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#downloader-stats">DOWNLOADER_STATS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-delay">DOWNLOAD_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-handlers">DOWNLOAD_HANDLERS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-handlers-base">DOWNLOAD_HANDLERS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#download-timeout">DOWNLOAD_TIMEOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dupefilter-class">DUPEFILTER_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#editor">EDITOR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extensions">EXTENSIONS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#extensions-base">EXTENSIONS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#item-pipelines">ITEM_PIPELINES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-enabled">LOG_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-encoding">LOG_ENCODING</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-file">LOG_FILE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-level">LOG_LEVEL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#log-stdout">LOG_STDOUT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memdebug-enabled">MEMDEBUG_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memdebug-notify">MEMDEBUG_NOTIFY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memusage-enabled">MEMUSAGE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memusage-limit-mb">MEMUSAGE_LIMIT_MB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memusage-notify-mail">MEMUSAGE_NOTIFY_MAIL</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memusage-report">MEMUSAGE_REPORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#memusage-warning-mb">MEMUSAGE_WARNING_MB</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#newspider-module">NEWSPIDER_MODULE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#randomize-download-delay">RANDOMIZE_DOWNLOAD_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redirect-max-times">REDIRECT_MAX_TIMES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redirect-max-metarefresh-delay">REDIRECT_MAX_METAREFRESH_DELAY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#redirect-priority-adjust">REDIRECT_PRIORITY_ADJUST</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#robotstxt-obey">ROBOTSTXT_OBEY</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scheduler">SCHEDULER</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spider-contracts">SPIDER_CONTRACTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spider-contracts-base">SPIDER_CONTRACTS_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spider-middlewares">SPIDER_MIDDLEWARES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spider-middlewares-base">SPIDER_MIDDLEWARES_BASE</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#spider-modules">SPIDER_MODULES</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stats-class">STATS_CLASS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#stats-dump">STATS_DUMP</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#statsmailer-rcpts">STATSMAILER_RCPTS</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#telnetconsole-enabled">TELNETCONSOLE_ENABLED</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#telnetconsole-port">TELNETCONSOLE_PORT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#templates-dir">TEMPLATES_DIR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#urllength-limit">URLLENGTH_LIMIT</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#user-agent">USER_AGENT</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-z9z1gyfgi" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/OC7ZiLkkTA7w/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/OC7ZiLkkTA7w/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Settings</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.18/docs/topics/settings.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="settings">
+<span id="topics-settings"></span><h1>Settings<a class="headerlink" href="#settings" title="Permalink to this headline">¶</a></h1>
+<p>The Scrapy settings allows you to customize the behaviour of all Scrapy
+components, including the core, extensions, pipelines and spiders themselves.</p>
+<p>The infrastructure of the settings provides a global namespace of key-value mappings
+that the code can use to pull configuration values from. The settings can be
+populated through different mechanisms, which are described below.</p>
+<p>The settings are also the mechanism for selecting the currently active Scrapy
+project (in case you have many).</p>
+<p>For a list of available built-in settings see: <a class="reference internal" href="#topics-settings-ref"><span>Built-in settings reference</span></a>.</p>
+<div class="section" id="designating-the-settings">
+<h2>Designating the settings<a class="headerlink" href="#designating-the-settings" title="Permalink to this headline">¶</a></h2>
+<p>When you use Scrapy, you have to tell it which settings you’re using. You can
+do this by using an environment variable, <code class="docutils literal"><span class="pre">SCRAPY_SETTINGS_MODULE</span></code>.</p>
+<p>The value of <code class="docutils literal"><span class="pre">SCRAPY_SETTINGS_MODULE</span></code> should be in Python path syntax, e.g.
+<code class="docutils literal"><span class="pre">myproject.settings</span></code>. Note that the settings module should be on the
+Python <a class="reference external" href="http://docs.python.org/2/tutorial/modules.html#the-module-search-path">import search path</a>.</p>
+</div>
+<div class="section" id="populating-the-settings">
+<h2>Populating the settings<a class="headerlink" href="#populating-the-settings" title="Permalink to this headline">¶</a></h2>
+<p>Settings can be populated using different mechanisms, each of which having a
+different precedence. Here is the list of them in decreasing order of
+precedence:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li>Global overrides (most precedence)</li>
+<li>Project settings module</li>
+<li>Default settings per-command</li>
+<li>Default global settings (less precedence)</li>
+</ol>
+</div></blockquote>
+<p>These mechanisms are described in more detail below.</p>
+<div class="section" id="global-overrides">
+<h3>1. Global overrides<a class="headerlink" href="#global-overrides" title="Permalink to this headline">¶</a></h3>
+<p>Global overrides are the ones that take most precedence, and are usually
+populated by command-line options. You can also override one (or more) settings
+from command line using the <code class="docutils literal"><span class="pre">-s</span></code> (or <code class="docutils literal"><span class="pre">--set</span></code>) command line option.</p>
+<p>For more information see the <a class="reference internal" href="api.html#scrapy.settings.Settings.overrides" title="scrapy.settings.Settings.overrides"><code class="xref py py-attr docutils literal"><span class="pre">overrides</span></code></a>
+Settings attribute.</p>
+<p>Example:</p>
+<div class="highlight-sh"><div class="highlight"><pre><span></span>scrapy crawl domain.com -s <span class="nv">LOG_FILE</span><span class="o">=</span>scrapy.log
+</pre></div>
+</div>
+</div>
+<div class="section" id="project-settings-module">
+<h3>2. Project settings module<a class="headerlink" href="#project-settings-module" title="Permalink to this headline">¶</a></h3>
+<p>The project settings module is the standard configuration file for your Scrapy
+project.  It’s where most of your custom settings will be populated. For
+example:: <code class="docutils literal"><span class="pre">myproject.settings</span></code>.</p>
+</div>
+<div class="section" id="default-settings-per-command">
+<h3>3. Default settings per-command<a class="headerlink" href="#default-settings-per-command" title="Permalink to this headline">¶</a></h3>
+<p>Each <a class="reference internal" href="commands.html"><em>Scrapy tool</em></a> command can have its own default
+settings, which override the global default settings. Those custom command
+settings are specified in the <code class="docutils literal"><span class="pre">default_settings</span></code> attribute of the command
+class.</p>
+</div>
+<div class="section" id="default-global-settings">
+<h3>4. Default global settings<a class="headerlink" href="#default-global-settings" title="Permalink to this headline">¶</a></h3>
+<p>The global defaults are located in the <code class="docutils literal"><span class="pre">scrapy.settings.default_settings</span></code>
+module and documented in the <a class="reference internal" href="#topics-settings-ref"><span>Built-in settings reference</span></a> section.</p>
+</div>
+</div>
+<div class="section" id="how-to-access-settings">
+<h2>How to access settings<a class="headerlink" href="#how-to-access-settings" title="Permalink to this headline">¶</a></h2>
+<p>Settings can be accessed through the <a class="reference internal" href="api.html#scrapy.crawler.Crawler.settings" title="scrapy.crawler.Crawler.settings"><code class="xref py py-attr docutils literal"><span class="pre">scrapy.crawler.Crawler.settings</span></code></a>
+attribute of the Crawler that is passed to <code class="docutils literal"><span class="pre">from_crawler</span></code> method in
+extensions and middlewares:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MyExtension</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_crawler</span><span class="p">(</span><span class="n">cls</span><span class="p">,</span> <span class="n">crawler</span><span class="p">):</span>
+        <span class="n">settings</span> <span class="o">=</span> <span class="n">crawler</span><span class="o">.</span><span class="n">settings</span>
+        <span class="k">if</span> <span class="n">settings</span><span class="p">[</span><span class="s1">'LOG_ENABLED'</span><span class="p">]:</span>
+            <span class="k">print</span> <span class="s2">"log is enabled!"</span>
+</pre></div>
+</div>
+<p>In other words, settings can be accessed like a dict, but it’s usually preferred
+to extract the setting in the format you need it to avoid type errors. In order
+to do that you’ll have to use one of the methods provided the
+<a class="reference internal" href="api.html#scrapy.settings.Settings" title="scrapy.settings.Settings"><code class="xref py py-class docutils literal"><span class="pre">Settings</span></code></a> API.</p>
+</div>
+<div class="section" id="rationale-for-setting-names">
+<h2>Rationale for setting names<a class="headerlink" href="#rationale-for-setting-names" title="Permalink to this headline">¶</a></h2>
+<p>Setting names are usually prefixed with the component that they configure. For
+example, proper setting names for a fictional robots.txt extension would be
+<code class="docutils literal"><span class="pre">ROBOTSTXT_ENABLED</span></code>, <code class="docutils literal"><span class="pre">ROBOTSTXT_OBEY</span></code>, <code class="docutils literal"><span class="pre">ROBOTSTXT_CACHEDIR</span></code>, etc.</p>
+</div>
+<div class="section" id="built-in-settings-reference">
+<span id="topics-settings-ref"></span><h2>Built-in settings reference<a class="headerlink" href="#built-in-settings-reference" title="Permalink to this headline">¶</a></h2>
+<p>Here’s a list of all available Scrapy settings, in alphabetical order, along
+with their default values and the scope where they apply.</p>
+<p>The scope, where available, shows where the setting is being used, if it’s tied
+to any particular component. In that case the module of that component will be
+shown, typically an extension, middleware or pipeline. It also means that the
+component must be enabled in order for the setting to have any effect.</p>
+<div class="section" id="aws-access-key-id">
+<span id="std:setting-AWS_ACCESS_KEY_ID"></span><h3>AWS_ACCESS_KEY_ID<a class="headerlink" href="#aws-access-key-id" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
+<p>The AWS access key used by code that requires access to <a class="reference external" href="http://aws.amazon.com/">Amazon Web services</a>,
+such as the <a class="reference internal" href="feed-exports.html#topics-feed-storage-s3"><span>S3 feed storage backend</span></a>.</p>
+</div>
+<div class="section" id="aws-secret-access-key">
+<span id="std:setting-AWS_SECRET_ACCESS_KEY"></span><h3>AWS_SECRET_ACCESS_KEY<a class="headerlink" href="#aws-secret-access-key" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
+<p>The AWS secret key used by code that requires access to <a class="reference external" href="http://aws.amazon.com/">Amazon Web services</a>,
+such as the <a class="reference internal" href="feed-exports.html#topics-feed-storage-s3"><span>S3 feed storage backend</span></a>.</p>
+</div>
+<div class="section" id="bot-name">
+<span id="std:setting-BOT_NAME"></span><h3>BOT_NAME<a class="headerlink" href="#bot-name" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapybot'</span></code></p>
+<p>The name of the bot implemented by this Scrapy project (also known as the
+project name). This will be used to construct the User-Agent by default, and
+also for logging.</p>
+<p>It’s automatically populated with your project name when you create your
+project with the <a class="reference internal" href="commands.html#std:command-startproject"><code class="xref std std-command docutils literal"><span class="pre">startproject</span></code></a> command.</p>
+</div>
+<div class="section" id="concurrent-items">
+<span id="std:setting-CONCURRENT_ITEMS"></span><h3>CONCURRENT_ITEMS<a class="headerlink" href="#concurrent-items" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">100</span></code></p>
+<p>Maximum number of concurrent items (per response) to process in parallel in the
+Item Processor (also known as the <a class="reference internal" href="item-pipeline.html#topics-item-pipeline"><span>Item Pipeline</span></a>).</p>
+</div>
+<div class="section" id="concurrent-requests">
+<span id="std:setting-CONCURRENT_REQUESTS"></span><h3>CONCURRENT_REQUESTS<a class="headerlink" href="#concurrent-requests" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">16</span></code></p>
+<p>The maximum number of concurrent (ie. simultaneous) requests that will be
+performed by the Scrapy downloader.</p>
+</div>
+<div class="section" id="concurrent-requests-per-domain">
+<span id="std:setting-CONCURRENT_REQUESTS_PER_DOMAIN"></span><h3>CONCURRENT_REQUESTS_PER_DOMAIN<a class="headerlink" href="#concurrent-requests-per-domain" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">8</span></code></p>
+<p>The maximum number of concurrent (ie. simultaneous) requests that will be
+performed to any single domain.</p>
+</div>
+<div class="section" id="concurrent-requests-per-ip">
+<span id="std:setting-CONCURRENT_REQUESTS_PER_IP"></span><h3>CONCURRENT_REQUESTS_PER_IP<a class="headerlink" href="#concurrent-requests-per-ip" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>The maximum number of concurrent (ie. simultaneous) requests that will be
+performed to any single IP. If non-zero, the
+<a class="reference internal" href="#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN"><code class="xref std std-setting docutils literal"><span class="pre">CONCURRENT_REQUESTS_PER_DOMAIN</span></code></a> setting is ignored, and this one is
+used instead. In other words, concurrency limits will be applied per IP, not
+per domain.</p>
+</div>
+<div class="section" id="default-item-class">
+<span id="std:setting-DEFAULT_ITEM_CLASS"></span><h3>DEFAULT_ITEM_CLASS<a class="headerlink" href="#default-item-class" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapy.item.Item'</span></code></p>
+<p>The default class that will be used for instantiating items in the <a class="reference internal" href="shell.html#topics-shell"><span>the
+Scrapy shell</span></a>.</p>
+</div>
+<div class="section" id="default-request-headers">
+<span id="std:setting-DEFAULT_REQUEST_HEADERS"></span><h3>DEFAULT_REQUEST_HEADERS<a class="headerlink" href="#default-request-headers" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'Accept'</span><span class="p">:</span> <span class="s1">'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8'</span><span class="p">,</span>
+    <span class="s1">'Accept-Language'</span><span class="p">:</span> <span class="s1">'en'</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The default headers used for Scrapy HTTP Requests. They’re populated in the
+<a class="reference internal" href="downloader-middleware.html#scrapy.contrib.downloadermiddleware.defaultheaders.DefaultHeadersMiddleware" title="scrapy.contrib.downloadermiddleware.defaultheaders.DefaultHeadersMiddleware"><code class="xref py py-class docutils literal"><span class="pre">DefaultHeadersMiddleware</span></code></a>.</p>
+</div>
+<div class="section" id="depth-limit">
+<span id="std:setting-DEPTH_LIMIT"></span><h3>DEPTH_LIMIT<a class="headerlink" href="#depth-limit" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>The maximum depth that will be allowed to crawl for any site. If zero, no limit
+will be imposed.</p>
+</div>
+<div class="section" id="depth-priority">
+<span id="std:setting-DEPTH_PRIORITY"></span><h3>DEPTH_PRIORITY<a class="headerlink" href="#depth-priority" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>An integer that is used to adjust the request priority based on its depth.</p>
+<p>If zero, no priority adjustment is made from depth.</p>
+</div>
+<div class="section" id="depth-stats">
+<span id="std:setting-DEPTH_STATS"></span><h3>DEPTH_STATS<a class="headerlink" href="#depth-stats" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether to collect maximum depth stats.</p>
+</div>
+<div class="section" id="depth-stats-verbose">
+<span id="std:setting-DEPTH_STATS_VERBOSE"></span><h3>DEPTH_STATS_VERBOSE<a class="headerlink" href="#depth-stats-verbose" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Whether to collect verbose depth stats. If this is enabled, the number of
+requests for each depth is collected in the stats.</p>
+</div>
+<div class="section" id="dnscache-enabled">
+<span id="std:setting-DNSCACHE_ENABLED"></span><h3>DNSCACHE_ENABLED<a class="headerlink" href="#dnscache-enabled" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether to enable DNS in-memory cache.</p>
+</div>
+<div class="section" id="downloader-debug">
+<span id="std:setting-DOWNLOADER_DEBUG"></span><h3>DOWNLOADER_DEBUG<a class="headerlink" href="#downloader-debug" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Whether to enable the Downloader debugging mode.</p>
+</div>
+<div class="section" id="downloader-middlewares">
+<span id="std:setting-DOWNLOADER_MIDDLEWARES"></span><h3>DOWNLOADER_MIDDLEWARES<a class="headerlink" href="#downloader-middlewares" title="Permalink to this headline">¶</a></h3>
+<p>Default:: <code class="docutils literal"><span class="pre">{}</span></code></p>
+<p>A dict containing the downloader middlewares enabled in your project, and their
+orders. For more info see <a class="reference internal" href="downloader-middleware.html#topics-downloader-middleware-setting"><span>Activating a downloader middleware</span></a>.</p>
+</div>
+<div class="section" id="downloader-middlewares-base">
+<span id="std:setting-DOWNLOADER_MIDDLEWARES_BASE"></span><h3>DOWNLOADER_MIDDLEWARES_BASE<a class="headerlink" href="#downloader-middlewares-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.robotstxt.RobotsTxtMiddleware'</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.httpauth.HttpAuthMiddleware'</span><span class="p">:</span> <span class="mi">300</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.downloadtimeout.DownloadTimeoutMiddleware'</span><span class="p">:</span> <span class="mi">350</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.useragent.UserAgentMiddleware'</span><span class="p">:</span> <span class="mi">400</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.retry.RetryMiddleware'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.defaultheaders.DefaultHeadersMiddleware'</span><span class="p">:</span> <span class="mi">550</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.redirect.MetaRefreshMiddleware'</span><span class="p">:</span> <span class="mi">580</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.httpcompression.HttpCompressionMiddleware'</span><span class="p">:</span> <span class="mi">590</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.redirect.RedirectMiddleware'</span><span class="p">:</span> <span class="mi">600</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.cookies.CookiesMiddleware'</span><span class="p">:</span> <span class="mi">700</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.httpproxy.HttpProxyMiddleware'</span><span class="p">:</span> <span class="mi">750</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.chunked.ChunkedTransferMiddleware'</span><span class="p">:</span> <span class="mi">830</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.stats.DownloaderStats'</span><span class="p">:</span> <span class="mi">850</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.downloadermiddleware.httpcache.HttpCacheMiddleware'</span><span class="p">:</span> <span class="mi">900</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A dict containing the downloader middlewares enabled by default in Scrapy. You
+should never modify this setting in your project, modify
+<a class="reference internal" href="#std:setting-DOWNLOADER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOADER_MIDDLEWARES</span></code></a> instead.  For more info see
+<a class="reference internal" href="downloader-middleware.html#topics-downloader-middleware-setting"><span>Activating a downloader middleware</span></a>.</p>
+</div>
+<div class="section" id="downloader-stats">
+<span id="std:setting-DOWNLOADER_STATS"></span><h3>DOWNLOADER_STATS<a class="headerlink" href="#downloader-stats" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether to enable downloader stats collection.</p>
+</div>
+<div class="section" id="download-delay">
+<span id="std:setting-DOWNLOAD_DELAY"></span><h3>DOWNLOAD_DELAY<a class="headerlink" href="#download-delay" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>The amount of time (in secs) that the downloader should wait before downloading
+consecutive pages from the same spider. This can be used to throttle the
+crawling speed to avoid hitting servers too hard. Decimal numbers are
+supported.  Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">DOWNLOAD_DELAY</span> <span class="o">=</span> <span class="mf">0.25</span>    <span class="c1"># 250 ms of delay</span>
+</pre></div>
+</div>
+<p>This setting is also affected by the <a class="reference internal" href="#std:setting-RANDOMIZE_DOWNLOAD_DELAY"><code class="xref std std-setting docutils literal"><span class="pre">RANDOMIZE_DOWNLOAD_DELAY</span></code></a>
+setting (which is enabled by default). By default, Scrapy doesn’t wait a fixed
+amount of time between requests, but uses a random interval between 0.5 and 1.5
+* <a class="reference internal" href="#std:setting-DOWNLOAD_DELAY"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOAD_DELAY</span></code></a>.</p>
+<p>You can also change this setting per spider.</p>
+</div>
+<div class="section" id="download-handlers">
+<span id="std:setting-DOWNLOAD_HANDLERS"></span><h3>DOWNLOAD_HANDLERS<a class="headerlink" href="#download-handlers" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">{}</span></code></p>
+<p>A dict containing the request downloader handlers enabled in your project.
+See <cite>DOWNLOAD_HANDLERS_BASE</cite> for example format.</p>
+</div>
+<div class="section" id="download-handlers-base">
+<span id="std:setting-DOWNLOAD_HANDLERS_BASE"></span><h3>DOWNLOAD_HANDLERS_BASE<a class="headerlink" href="#download-handlers-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'file'</span><span class="p">:</span> <span class="s1">'scrapy.core.downloader.handlers.file.FileDownloadHandler'</span><span class="p">,</span>
+    <span class="s1">'http'</span><span class="p">:</span> <span class="s1">'scrapy.core.downloader.handlers.http.HttpDownloadHandler'</span><span class="p">,</span>
+    <span class="s1">'https'</span><span class="p">:</span> <span class="s1">'scrapy.core.downloader.handlers.http.HttpDownloadHandler'</span><span class="p">,</span>
+    <span class="s1">'s3'</span><span class="p">:</span> <span class="s1">'scrapy.core.downloader.handlers.s3.S3DownloadHandler'</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A dict containing the request download handlers enabled by default in Scrapy.
+You should never modify this setting in your project, modify
+<a class="reference internal" href="#std:setting-DOWNLOAD_HANDLERS"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOAD_HANDLERS</span></code></a> instead.</p>
+</div>
+<div class="section" id="download-timeout">
+<span id="std:setting-DOWNLOAD_TIMEOUT"></span><h3>DOWNLOAD_TIMEOUT<a class="headerlink" href="#download-timeout" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">180</span></code></p>
+<p>The amount of time (in secs) that the downloader will wait before timing out.</p>
+</div>
+<div class="section" id="dupefilter-class">
+<span id="std:setting-DUPEFILTER_CLASS"></span><h3>DUPEFILTER_CLASS<a class="headerlink" href="#dupefilter-class" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapy.dupefilter.RFPDupeFilter'</span></code></p>
+<p>The class used to detect and filter duplicate requests.</p>
+<p>The default (<code class="docutils literal"><span class="pre">RFPDupeFilter</span></code>) filters based on request fingerprint using
+the <code class="docutils literal"><span class="pre">scrapy.utils.request.request_fingerprint</span></code> function.</p>
+</div>
+<div class="section" id="editor">
+<span id="std:setting-jDITOR"></span><h3>EDITOR<a class="headerlink" href="#editor" title="Permalink to this headline">¶</a></h3>
+<p>Default: <cite>depends on the environment</cite></p>
+<p>The editor to use for editing spiders with the <a class="reference internal" href="commands.html#std:command-edit"><code class="xref std std-command docutils literal"><span class="pre">edit</span></code></a> command. It
+defaults to the <code class="docutils literal"><span class="pre">EDITOR</span></code> environment variable, if set. Otherwise, it defaults
+to <code class="docutils literal"><span class="pre">vi</span></code> (on Unix systems) or the IDLE editor (on Windows).</p>
+</div>
+<div class="section" id="extensions">
+<span id="std:setting-EXTENSIONS"></span><h3>EXTENSIONS<a class="headerlink" href="#extensions" title="Permalink to this headline">¶</a></h3>
+<p>Default:: <code class="docutils literal"><span class="pre">{}</span></code></p>
+<p>A dict containing the extensions enabled in your project, and their orders.</p>
+</div>
+<div class="section" id="extensions-base">
+<span id="std:setting-EXTENSIONS_BASE"></span><h3>EXTENSIONS_BASE<a class="headerlink" href="#extensions-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'scrapy.contrib.corestats.CoreStats'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.webservice.WebService'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.telnet.TelnetConsole'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.memusage.MemoryUsage'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.memdebug.MemoryDebugger'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.closespider.CloseSpider'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.feedexport.FeedExporter'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.logstats.LogStats'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.spiderstate.SpiderState'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.throttle.AutoThrottle'</span><span class="p">:</span> <span class="mi">0</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>The list of available extensions. Keep in mind that some of them need to
+be enabled through a setting. By default, this setting contains all stable
+built-in extensions.</p>
+<p>For more information See the <a class="reference internal" href="extensions.html#topics-extensions"><span>extensions user guide</span></a>
+and the <a class="reference internal" href="extensions.html#topics-extensions-ref"><span>list of available extensions</span></a>.</p>
+</div>
+<div class="section" id="item-pipelines">
+<span id="std:setting-ITEM_PIPELINES"></span><h3>ITEM_PIPELINES<a class="headerlink" href="#item-pipelines" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">[]</span></code></p>
+<p>The item pipelines to use (a list of classes).</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">ITEM_PIPELINES</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="s1">'mybot.pipeline.validate.ValidateMyItem'</span><span class="p">,</span>
+    <span class="s1">'mybot.pipeline.validate.StoreMyItem'</span>
+<span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="log-enabled">
+<span id="std:setting-LOG_ENABLED"></span><h3>LOG_ENABLED<a class="headerlink" href="#log-enabled" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Whether to enable logging.</p>
+</div>
+<div class="section" id="log-encoding">
+<span id="std:setting-LOG_ENCODING"></span><h3>LOG_ENCODING<a class="headerlink" href="#log-encoding" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'utf-8'</span></code></p>
+<p>The encoding to use for logging.</p>
+</div>
+<div class="section" id="log-file">
+<span id="std:setting-LOG_FILE"></span><h3>LOG_FILE<a class="headerlink" href="#log-file" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">None</span></code></p>
+<p>File name to use for logging output. If None, standard error will be used.</p>
+</div>
+<div class="section" id="log-level">
+<span id="std:setting-LOG_LEVEL"></span><h3>LOG_LEVEL<a class="headerlink" href="#log-level" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'DEBUG'</span></code></p>
+<p>Minimum level to log. Available levels are: CRITICAL, ERROR, WARNING,
+INFO, DEBUG. For more info see <a class="reference internal" href="logging.html#topics-logging"><span>Logging</span></a>.</p>
+</div>
+<div class="section" id="log-stdout">
+<span id="std:setting-LOG_STDOUT"></span><h3>LOG_STDOUT<a class="headerlink" href="#log-stdout" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>If <code class="docutils literal"><span class="pre">True</span></code>, all standard output (and error) of your process will be redirected
+to the log. For example if you <code class="docutils literal"><span class="pre">print</span> <span class="pre">'hello'</span></code> it will appear in the Scrapy
+log.</p>
+</div>
+<div class="section" id="memdebug-enabled">
+<span id="std:setting-MEMDEBUG_ENABLED"></span><h3>MEMDEBUG_ENABLED<a class="headerlink" href="#memdebug-enabled" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Whether to enable memory debugging.</p>
+</div>
+<div class="section" id="memdebug-notify">
+<span id="std:setting-MEMDEBUG_NOTIFY"></span><h3>MEMDEBUG_NOTIFY<a class="headerlink" href="#memdebug-notify" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">[]</span></code></p>
+<p>When memory debugging is enabled a memory report will be sent to the specified
+addresses if this setting is not empty, otherwise the report will be written to
+the log.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MEMDEBUG_NOTIFY</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'user@example.com'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="memusage-enabled">
+<span id="std:setting-MEMUSAGE_ENABLED"></span><h3>MEMUSAGE_ENABLED<a class="headerlink" href="#memusage-enabled" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">scrapy.contrib.memusage</span></code></p>
+<p>Whether to enable the memory usage extension that will shutdown the Scrapy
+process when it exceeds a memory limit, and also notify by email when that
+happened.</p>
+<p>See <a class="reference internal" href="extensions.html#topics-extensions-ref-memusage"><span>Memory usage extension</span></a>.</p>
+</div>
+<div class="section" id="memusage-limit-mb">
+<span id="std:setting-MEMUSAGE_LIMIT_MB"></span><h3>MEMUSAGE_LIMIT_MB<a class="headerlink" href="#memusage-limit-mb" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">scrapy.contrib.memusage</span></code></p>
+<p>The maximum amount of memory to allow (in megabytes) before shutting down
+Scrapy  (if MEMUSAGE_ENABLED is True). If zero, no check will be performed.</p>
+<p>See <a class="reference internal" href="extensions.html#topics-extensions-ref-memusage"><span>Memory usage extension</span></a>.</p>
+</div>
+<div class="section" id="memusage-notify-mail">
+<span id="std:setting-MEMUSAGE_NOTIFY_MAIL"></span><h3>MEMUSAGE_NOTIFY_MAIL<a class="headerlink" href="#memusage-notify-mail" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">scrapy.contrib.memusage</span></code></p>
+<p>A list of emails to notify if the memory limit has been reached.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">MEMUSAGE_NOTIFY_MAIL</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'user@example.com'</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="extensions.html#topics-extensions-ref-memusage"><span>Memory usage extension</span></a>.</p>
+</div>
+<div class="section" id="memusage-report">
+<span id="std:setting-MEMUSAGE_REPORT"></span><h3>MEMUSAGE_REPORT<a class="headerlink" href="#memusage-report" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">scrapy.contrib.memusage</span></code></p>
+<p>Whether to send a memory usage report after each spider has been closed.</p>
+<p>See <a class="reference internal" href="extensions.html#topics-extensions-ref-memusage"><span>Memory usage extension</span></a>.</p>
+</div>
+<div class="section" id="memusage-warning-mb">
+<span id="std:setting-MEMUSAGE_WARNING_MB"></span><h3>MEMUSAGE_WARNING_MB<a class="headerlink" href="#memusage-warning-mb" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">scrapy.contrib.memusage</span></code></p>
+<p>The maximum amount of memory to allow (in megabytes) before sending a warning
+email notifying about it. If zero, no warning will be produced.</p>
+</div>
+<div class="section" id="newspider-module">
+<span id="std:setting-NEWSPIDER_MODULE"></span><h3>NEWSPIDER_MODULE<a class="headerlink" href="#newspider-module" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">''</span></code></p>
+<p>Module where to create new spiders using the <a class="reference internal" href="commands.html#std:command-genspider"><code class="xref std std-command docutils literal"><span class="pre">genspider</span></code></a> command.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">NEWSPIDER_MODULE</span> <span class="o">=</span> <span class="s1">'mybot.spiders_dev'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="randomize-download-delay">
+<span id="std:setting-RANDOMIZE_DOWNLOAD_DELAY"></span><h3>RANDOMIZE_DOWNLOAD_DELAY<a class="headerlink" href="#randomize-download-delay" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>If enabled, Scrapy will wait a random amount of time (between 0.5 and 1.5
+* <a class="reference internal" href="#std:setting-DOWNLOAD_DELAY"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOAD_DELAY</span></code></a>) while fetching requests from the same
+spider.</p>
+<p>This randomization decreases the chance of the crawler being detected (and
+subsequently blocked) by sites which analyze requests looking for statistically
+significant similarities in the time between their requests.</p>
+<p>The randomization policy is the same used by <a class="reference external" href="http://www.gnu.org/software/wget/manual/wget.html">wget</a> <code class="docutils literal"><span class="pre">--random-wait</span></code> option.</p>
+<p>If <a class="reference internal" href="#std:setting-DOWNLOAD_DELAY"><code class="xref std std-setting docutils literal"><span class="pre">DOWNLOAD_DELAY</span></code></a> is zero (default) this option has no effect.</p>
+</div>
+<div class="section" id="redirect-max-times">
+<span id="std:setting-REDIRECT_MAX_TIMES"></span><h3>REDIRECT_MAX_TIMES<a class="headerlink" href="#redirect-max-times" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">20</span></code></p>
+<p>Defines the maximum times a request can be redirected. After this maximum the
+request’s response is returned as is. We used Firefox default value for the
+same task.</p>
+</div>
+<div class="section" id="redirect-max-metarefresh-delay">
+<span id="std:setting-REDIRECT_MAX_METAREFRESH_DELAY"></span><h3>REDIRECT_MAX_METAREFRESH_DELAY<a class="headerlink" href="#redirect-max-metarefresh-delay" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">100</span></code></p>
+<p>Some sites use meta-refresh for redirecting to a session expired page, so we
+restrict automatic redirection to a maximum delay (in seconds)</p>
+</div>
+<div class="section" id="redirect-priority-adjust">
+<span id="std:setting-REDIRECT_PRIORITY_ADJUST"></span><h3>REDIRECT_PRIORITY_ADJUST<a class="headerlink" href="#redirect-priority-adjust" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">+2</span></code></p>
+<p>Adjust redirect request priority relative to original request.
+A negative priority adjust means more priority.</p>
+</div>
+<div class="section" id="robotstxt-obey">
+<span id="std:setting-ROBOTSTXT_OBEY"></span><h3>ROBOTSTXT_OBEY<a class="headerlink" href="#robotstxt-obey" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">False</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">scrapy.contrib.downloadermiddleware.robotstxt</span></code></p>
+<p>If enabled, Scrapy will respect robots.txt policies. For more information see
+<a class="reference internal" href="downloader-middleware.html#topics-dlmw-robots"><span>RobotsTxtMiddleware</span></a></p>
+</div>
+<div class="section" id="scheduler">
+<span id="std:setting-SCHEDULER"></span><h3>SCHEDULER<a class="headerlink" href="#scheduler" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapy.core.scheduler.Scheduler'</span></code></p>
+<p>The scheduler to use for crawling.</p>
+</div>
+<div class="section" id="spider-contracts">
+<span id="std:setting-SPIDER_MIDDLEWARES"></span><h3>SPIDER_CONTRACTS<a class="headerlink" href="#spider-contracts" title="Permalink to this headline">¶</a></h3>
+<p>Default:: <code class="docutils literal"><span class="pre">{}</span></code></p>
+<p>A dict containing the scrapy contracts enabled in your project, used for
+testing spiders. For more info see <a class="reference internal" href="contracts.html#topics-contracts"><span>Spiders Contracts</span></a>.</p>
+</div>
+<div class="section" id="spider-contracts-base">
+<h3>SPIDER_CONTRACTS_BASE<a class="headerlink" href="#spider-contracts-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'scrapy.contracts.default.UrlContract'</span> <span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+    <span class="s1">'scrapy.contracts.default.ReturnsContract'</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span>
+    <span class="s1">'scrapy.contracts.default.ScrapesContract'</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A dict containing the scrapy contracts enabled by default in Scrapy. You should
+never modify this setting in your project, modify <code class="xref std std-setting docutils literal"><span class="pre">SPIDER_CONTRACTS</span></code>
+instead. For more info see <a class="reference internal" href="contracts.html#topics-contracts"><span>Spiders Contracts</span></a>.</p>
+</div>
+<div class="section" id="spider-middlewares">
+<h3>SPIDER_MIDDLEWARES<a class="headerlink" href="#spider-middlewares" title="Permalink to this headline">¶</a></h3>
+<p>Default:: <code class="docutils literal"><span class="pre">{}</span></code></p>
+<p>A dict containing the spider middlewares enabled in your project, and their
+orders. For more info see <a class="reference internal" href="spider-middleware.html#topics-spider-middleware-setting"><span>Activating a spider middleware</span></a>.</p>
+</div>
+<div class="section" id="spider-middlewares-base">
+<span id="std:setting-SPIDER_MIDDLEWARES_BASE"></span><h3>SPIDER_MIDDLEWARES_BASE<a class="headerlink" href="#spider-middlewares-base" title="Permalink to this headline">¶</a></h3>
+<p>Default:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="p">{</span>
+    <span class="s1">'scrapy.contrib.spidermiddleware.httperror.HttpErrorMiddleware'</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.spidermiddleware.offsite.OffsiteMiddleware'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.spidermiddleware.referer.RefererMiddleware'</span><span class="p">:</span> <span class="mi">700</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.spidermiddleware.urllength.UrlLengthMiddleware'</span><span class="p">:</span> <span class="mi">800</span><span class="p">,</span>
+    <span class="s1">'scrapy.contrib.spidermiddleware.depth.DepthMiddleware'</span><span class="p">:</span> <span class="mi">900</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>A dict containing the spider middlewares enabled by default in Scrapy. You
+should never modify this setting in your project, modify
+<a class="reference internal" href="#std:setting-SPIDER_MIDDLEWARES"><code class="xref std std-setting docutils literal"><span class="pre">SPIDER_MIDDLEWARES</span></code></a> instead. For more info see
+<a class="reference internal" href="spider-middleware.html#topics-spider-middleware-setting"><span>Activating a spider middleware</span></a>.</p>
+</div>
+<div class="section" id="spider-modules">
+<span id="std:setting-SPIDER_MODULES"></span><h3>SPIDER_MODULES<a class="headerlink" href="#spider-modules" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">[]</span></code></p>
+<p>A list of modules where Scrapy will look for spiders.</p>
+<p>Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">SPIDER_MODULES</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'mybot.spiders_prod'</span><span class="p">,</span> <span class="s1">'mybot.spiders_dev'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="stats-class">
+<span id="std:setting-STATS_CLASS"></span><h3>STATS_CLASS<a class="headerlink" href="#stats-class" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">'scrapy.statscol.MemoryStatsCollector'</span></code></p>
+<p>The class to use for collecting stats, who must implement the
+<a class="reference internal" href="api.html#topics-api-stats"><span>Stats Collector API</span></a>.</p>
+</div>
+<div class="section" id="stats-dump">
+<span id="std:setting-STATS_DUMP"></span><h3>STATS_DUMP<a class="headerlink" href="#stats-dump" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>Dump the <a class="reference internal" href="stats.html#topics-stats"><span>Scrapy stats</span></a> (to the Scrapy log) once the spider
+finishes.</p>
+<p>For more info see: <a class="reference internal" href="stats.html#topics-stats"><span>Stats Collection</span></a>.</p>
+</div>
+<div class="section" id="statsmailer-rcpts">
+<span id="std:setting-STATSMAILER_RCPTS"></span><h3>STATSMAILER_RCPTS<a class="headerlink" href="#statsmailer-rcpts" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">[]</span></code> (empty list)</p>
+<p>Send Scrapy stats after spiders finish scraping. See
+<code class="xref py py-class docutils literal"><span class="pre">StatsMailer</span></code> for more info.</p>
+</div>
+<div class="section" id="telnetconsole-enabled">
+<span id="std:setting-TELNETCONSOLE_ENABLED"></span><h3>TELNETCONSOLE_ENABLED<a class="headerlink" href="#telnetconsole-enabled" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">True</span></code></p>
+<p>A boolean which specifies if the <a class="reference internal" href="telnetconsole.html#topics-telnetconsole"><span>telnet console</span></a>
+will be enabled (provided its extension is also enabled).</p>
+</div>
+<div class="section" id="telnetconsole-port">
+<span id="std:setting-TELNETCONSOLE_PORT"></span><h3>TELNETCONSOLE_PORT<a class="headerlink" href="#telnetconsole-port" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">[6023,</span> <span class="pre">6073]</span></code></p>
+<p>The port range to use for the telnet console. If set to <code class="docutils literal"><span class="pre">None</span></code> or <code class="docutils literal"><span class="pre">0</span></code>, a
+dynamically assigned port is used. For more info see
+<a class="reference internal" href="telnetconsole.html#topics-telnetconsole"><span>Telnet Console</span></a>.</p>
+</div>
+<div class="section" id="templates-dir">
+<span id="std:setting-TEMPLATES_DIR"></span><h3>TEMPLATES_DIR<a class="headerlink" href="#templates-dir" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">templates</span></code> dir inside scrapy module</p>
+<p>The directory where to look for templates when creating new projects with
+<a class="reference internal" href="commands.html#std:command-startproject"><code class="xref std std-command docutils literal"><span class="pre">startproject</span></code></a> command.</p>
+</div>
+<div class="section" id="urllength-limit">
+<span id="std:setting-URLLENGTH_LIMIT"></span><h3>URLLENGTH_LIMIT<a class="headerlink" href="#urllength-limit" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">2083</span></code></p>
+<p>Scope: <code class="docutils literal"><span class="pre">contrib.spidermiddleware.urllength</span></code></p>
+<p>The maximum URL length to allow for crawled URLs. For more information about
+the default value for this setting see: <a class="reference external" href="http://www.boutell.com/newfaq/misc/urllength.html">http://www.boutell.com/newfaq/misc/urllength.html</a></p>
+</div>
+<div class="section" id="user-agent">
+<span id="std:setting-USER_AGENT"></span><h3>USER_AGENT<a class="headerlink" href="#user-agent" title="Permalink to this headline">¶</a></h3>
+<p>Default: <code class="docutils literal"><span class="pre">"Scrapy/VERSION</span> <span class="pre">(+http://scrapy.org)"</span></code></p>
+<p>The default User-Agent to use when crawling, unless overridden.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="signals.html" class="btn btn-neutral float-right" title="Signals" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="request-response.html" class="btn btn-neutral" title="Requests and Responses" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-rczg0qtf" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2013, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>dc43890b</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.18
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.18/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.18/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.18/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.18.4',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-zon9ssvk"></div></body></html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Frequently Asked Questions — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Debugging Spiders" href="topics/debug.html" />
+    <link rel="prev" title="Web Service" href="topics/webservice.html" /> 
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/faq.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "faq"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Frequently Asked Questions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#how-does-scrapy-compare-to-beautifulsoup-or-lxml">How does Scrapy compare to BeautifulSoup or lxml?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-use-scrapy-with-beautifulsoup">Can I use Scrapy with BeautifulSoup?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-python-versions-does-scrapy-support">What Python versions does Scrapy support?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#did-scrapy-steal-x-from-django">Did Scrapy “steal” X from Django?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#does-scrapy-work-with-http-proxies">Does Scrapy work with HTTP proxies?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-can-i-scrape-an-item-with-attributes-in-different-pages">How can I scrape an item with attributes in different pages?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#scrapy-crashes-with-importerror-no-module-named-win32api">Scrapy crashes with: ImportError: No module named win32api</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-can-i-simulate-a-user-login-in-my-spider">How can I simulate a user login in my spider?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#does-scrapy-crawl-in-breadth-first-or-depth-first-order">Does Scrapy crawl in breadth-first or depth-first order?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#my-scrapy-crawler-has-memory-leaks-what-can-i-do">My Scrapy crawler has memory leaks. What can I do?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-can-i-make-scrapy-consume-less-memory">How can I make Scrapy consume less memory?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-use-basic-http-authentication-in-my-spiders">Can I use Basic HTTP Authentication in my spiders?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#why-does-scrapy-download-pages-in-english-instead-of-my-native-language">Why does Scrapy download pages in English instead of my native language?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#where-can-i-find-some-example-scrapy-projects">Where can I find some example Scrapy projects?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-run-a-spider-without-creating-a-project">Can I run a spider without creating a project?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i-get-filtered-offsite-request-messages-how-can-i-fix-them">I get “Filtered offsite request” messages. How can I fix them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-is-the-recommended-way-to-deploy-a-scrapy-crawler-in-production">What is the recommended way to deploy a Scrapy crawler in production?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-use-json-for-large-exports">Can I use JSON for large exports?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-return-twisted-deferreds-from-signal-handlers">Can I return (Twisted) deferreds from signal handlers?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-does-the-response-status-code-999-means">What does the response status code 999 means?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#can-i-call-pdb-set-trace-from-my-spiders-to-debug-them">Can I call <code class="docutils literal notranslate"><span class="pre">pdb.set_trace()</span></code> from my spiders to debug them?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#simplest-way-to-dump-all-my-scraped-items-into-a-json-csv-xml-file">Simplest way to dump all my scraped items into a JSON/CSV/XML file?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-this-huge-cryptic-viewstate-parameter-used-in-some-forms">What’s this huge cryptic <code class="docutils literal notranslate"><span class="pre">__VIEWSTATE</span></code> parameter used in some forms?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#what-s-the-best-way-to-parse-big-xml-csv-data-feeds">What’s the best way to parse big XML/CSV data feeds?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#does-scrapy-manage-cookies-automatically">Does Scrapy manage cookies automatically?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-can-i-see-the-cookies-being-sent-and-received-from-scrapy">How can I see the cookies being sent and received from Scrapy?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-can-i-instruct-a-spider-to-stop-itself">How can I instruct a spider to stop itself?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-can-i-prevent-my-scrapy-bot-from-getting-banned">How can I prevent my Scrapy bot from getting banned?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#should-i-use-spider-arguments-or-settings-to-configure-my-spider">Should I use spider arguments or settings to configure my spider?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#i-m-scraping-a-xml-document-and-my-xpath-selector-doesn-t-return-any-items">I’m scraping a XML document and my XPath selector doesn’t return any items</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#how-to-split-an-item-into-multiple-items-in-an-item-pipeline">How to split an item into multiple items in an item pipeline?</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="topics/debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/dynamic-content.html">Selecting dynamically-loaded content</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="topics/architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="topics/exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-rqp8e6sll" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> »</li>
+        
+      <li>Frequently Asked Questions</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/master/docs/faq.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="frequently-asked-questions">
+<span id="faq"></span><h1>Frequently Asked Questions<a class="headerlink" href="#frequently-asked-questions" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="how-does-scrapy-compare-to-beautifulsoup-or-lxml">
+<span id="faq-scrapy-bs-cmp"></span><h2>How does Scrapy compare to BeautifulSoup or lxml?<a class="headerlink" href="#how-does-scrapy-compare-to-beautifulsoup-or-lxml" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> and <a class="reference external" href="http://lxml.de/">lxml</a> are libraries for parsing HTML and XML. Scrapy is
+an application framework for writing web spiders that crawl web sites and
+extract data from them.</p>
+<p>Scrapy provides a built-in mechanism for extracting data (called
+<a class="reference internal" href="topics/selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a>) but you can easily use <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a>
+(or <a class="reference external" href="http://lxml.de/">lxml</a>) instead, if you feel more comfortable working with them. After
+all, they’re just parsing libraries which can be imported and used from any
+Python code.</p>
+<p>In other words, comparing <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> (or <a class="reference external" href="http://lxml.de/">lxml</a>) to Scrapy is like
+comparing <a class="reference external" href="http://jinja.pocoo.org/">jinja2</a> to <a class="reference external" href="https://www.djangoproject.com/">Django</a>.</p>
+</div>
+<div class="section" id="can-i-use-scrapy-with-beautifulsoup">
+<h2>Can I use Scrapy with BeautifulSoup?<a class="headerlink" href="#can-i-use-scrapy-with-beautifulsoup" title="Permalink to this headline">¶</a></h2>
+<p>Yes, you can.
+As mentioned <a class="reference internal" href="#faq-scrapy-bs-cmp"><span class="std std-ref">above</span></a>, <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> can be used
+for parsing HTML responses in Scrapy callbacks.
+You just have to feed the response’s body into a <code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> object
+and extract whatever data you need from it.</p>
+<p>Here’s an example spider using BeautifulSoup API, with <code class="docutils literal notranslate"><span class="pre">lxml</span></code> as the HTML parser:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">bs4</span> <span class="k">import</span> <span class="n">BeautifulSoup</span>
+<span class="kn">import</span> <span class="nn">scrapy</span>
+
+
+<span class="k">class</span> <span class="nc">ExampleSpider</span><span class="p">(</span><span class="n">scrapy</span><span class="o">.</span><span class="n">Spider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s2">"example"</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s2">"example.com"</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="s1">'http://www.example.com/'</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="c1"># use lxml to get decent HTML parsing speed</span>
+        <span class="n">soup</span> <span class="o">=</span> <span class="n">BeautifulSoup</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">,</span> <span class="s1">'lxml'</span><span class="p">)</span>
+        <span class="k">yield</span> <span class="p">{</span>
+            <span class="s2">"url"</span><span class="p">:</span> <span class="n">response</span><span class="o">.</span><span class="n">url</span><span class="p">,</span>
+            <span class="s2">"title"</span><span class="p">:</span> <span class="n">soup</span><span class="o">.</span><span class="n">h1</span><span class="o">.</span><span class="n">string</span>
+        <span class="p">}</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><code class="docutils literal notranslate"><span class="pre">BeautifulSoup</span></code> supports several HTML/XML parsers.
+See <a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/bs4/doc/#specifying-the-parser-to-use">BeautifulSoup’s official documentation</a> on which ones are available.</p>
+</div>
+</div>
+<div class="section" id="what-python-versions-does-scrapy-support">
+<span id="faq-python-versions"></span><h2>What Python versions does Scrapy support?<a class="headerlink" href="#what-python-versions-does-scrapy-support" title="Permalink to this headline">¶</a></h2>
+<p>Scrapy is supported under Python 2.7 and Python 3.4+
+under CPython (default Python implementation) and PyPy (starting with PyPy 5.9).
+Python 2.6 support was dropped starting at Scrapy 0.20.
+Python 3 support was added in Scrapy 1.1.
+PyPy support was added in Scrapy 1.4, PyPy3 support was added in Scrapy 1.5.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For Python 3 support on Windows, it is recommended to use
+Anaconda/Miniconda as <a class="reference internal" href="intro/install.html#intro-install-windows"><span class="std std-ref">outlined in the installation guide</span></a>.</p>
+</div>
+</div>
+<div class="section" id="did-scrapy-steal-x-from-django">
+<h2>Did Scrapy “steal” X from Django?<a class="headerlink" href="#did-scrapy-steal-x-from-django" title="Permalink to this headline">¶</a></h2>
+<p>Probably, but we don’t like that word. We think <a class="reference external" href="https://www.djangoproject.com/">Django</a> is a great open source
+project and an example to follow, so we’ve used it as an inspiration for
+Scrapy.</p>
+<p>We believe that, if something is already done well, there’s no need to reinvent
+it. This concept, besides being one of the foundations for open source and free
+software, not only applies to software but also to documentation, procedures,
+policies, etc. So, instead of going through each problem ourselves, we choose
+to copy ideas from those projects that have already solved them properly, and
+focus on the real problems we need to solve.</p>
+<p>We’d be proud if Scrapy serves as an inspiration for other projects. Feel free
+to steal from us!</p>
+</div>
+<div class="section" id="does-scrapy-work-with-http-proxies">
+<h2>Does Scrapy work with HTTP proxies?<a class="headerlink" href="#does-scrapy-work-with-http-proxies" title="Permalink to this headline">¶</a></h2>
+<p>Yes. Support for HTTP proxies is provided (since Scrapy 0.8) through the HTTP
+Proxy downloader middleware. See
+<a class="reference internal" href="topics/downloader-middleware.html#scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware" title="scrapy.downloadermiddlewares.httpproxy.HttpProxyMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpProxyMiddleware</span></code></a>.</p>
+</div>
+<div class="section" id="how-can-i-scrape-an-item-with-attributes-in-different-pages">
+<h2>How can I scrape an item with attributes in different pages?<a class="headerlink" href="#how-can-i-scrape-an-item-with-attributes-in-different-pages" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="topics/request-response.html#topics-request-response-ref-request-callback-arguments"><span class="std std-ref">Passing additional data to callback functions</span></a>.</p>
+</div>
+<div class="section" id="scrapy-crashes-with-importerror-no-module-named-win32api">
+<h2>Scrapy crashes with: ImportError: No module named win32api<a class="headerlink" href="#scrapy-crashes-with-importerror-no-module-named-win32api" title="Permalink to this headline">¶</a></h2>
+<p>You need to install <a class="reference external" href="https://sourceforge.net/projects/pywin32/">pywin32</a> because of <a class="reference external" href="https://twistedmatrix.com/trac/ticket/3707">this Twisted bug</a>.</p>
+</div>
+<div class="section" id="how-can-i-simulate-a-user-login-in-my-spider">
+<h2>How can I simulate a user login in my spider?<a class="headerlink" href="#how-can-i-simulate-a-user-login-in-my-spider" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="topics/request-response.html#topics-request-response-ref-request-userlogin"><span class="std std-ref">Using FormRequest.from_response() to simulate a user login</span></a>.</p>
+</div>
+<div class="section" id="does-scrapy-crawl-in-breadth-first-or-depth-first-order">
+<span id="faq-bfo-dfo"></span><h2>Does Scrapy crawl in breadth-first or depth-first order?<a class="headerlink" href="#does-scrapy-crawl-in-breadth-first-or-depth-first-order" title="Permalink to this headline">¶</a></h2>
+<p>By default, Scrapy uses a <a class="reference external" href="https://en.wikipedia.org/wiki/Stack_(abstract_data_type)">LIFO</a> queue for storing pending requests, which
+basically means that it crawls in <a class="reference external" href="https://en.wikipedia.org/wiki/Depth-first_search">DFO order</a>. This order is more convenient
+in most cases.</p>
+<p>If you do want to crawl in true <a class="reference external" href="https://en.wikipedia.org/wiki/Breadth-first_search">BFO order</a>, you can do it by
+setting the following settings:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">DEPTH_PRIORITY</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="n">SCHEDULER_DISK_QUEUE</span> <span class="o">=</span> <span class="s1">'scrapy.squeues.PickleFifoDiskQueue'</span>
+<span class="n">SCHEDULER_MEMORY_QUEUE</span> <span class="o">=</span> <span class="s1">'scrapy.squeues.FifoMemoryQueue'</span>
+</pre></div>
+</div>
+<p>While pending requests are below the configured values of
+<a class="reference internal" href="topics/settings.html#std:setting-CONCURRENT_REQUESTS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CONCURRENT_REQUESTS</span></code></a>, <a class="reference internal" href="topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CONCURRENT_REQUESTS_PER_DOMAIN</span></code></a> or
+<a class="reference internal" href="topics/settings.html#std:setting-CONCURRENT_REQUESTS_PER_DOMAIN"><code class="xref std std-setting docutils literal notranslate"><span class="pre">CONCURRENT_REQUESTS_PER_DOMAIN</span></code></a>, those requests are sent
+concurrently. As a result, the first few requests of a crawl rarely follow the
+desired order. Lowering those settings to <code class="docutils literal notranslate"><span class="pre">1</span></code> enforces the desired order, but
+it significantly slows down the crawl as a whole.</p>
+</div>
+<div class="section" id="my-scrapy-crawler-has-memory-leaks-what-can-i-do">
+<h2>My Scrapy crawler has memory leaks. What can I do?<a class="headerlink" href="#my-scrapy-crawler-has-memory-leaks-what-can-i-do" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="topics/leaks.html#topics-leaks"><span class="std std-ref">Debugging memory leaks</span></a>.</p>
+<p>Also, Python has a builtin memory leak issue which is described in
+<a class="reference internal" href="topics/leaks.html#topics-leaks-without-leaks"><span class="std std-ref">Leaks without leaks</span></a>.</p>
+</div>
+<div class="section" id="how-can-i-make-scrapy-consume-less-memory">
+<h2>How can I make Scrapy consume less memory?<a class="headerlink" href="#how-can-i-make-scrapy-consume-less-memory" title="Permalink to this headline">¶</a></h2>
+<p>See previous question.</p>
+</div>
+<div class="section" id="can-i-use-basic-http-authentication-in-my-spiders">
+<h2>Can I use Basic HTTP Authentication in my spiders?<a class="headerlink" href="#can-i-use-basic-http-authentication-in-my-spiders" title="Permalink to this headline">¶</a></h2>
+<p>Yes, see <a class="reference internal" href="topics/downloader-middleware.html#scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware" title="scrapy.downloadermiddlewares.httpauth.HttpAuthMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">HttpAuthMiddleware</span></code></a>.</p>
+</div>
+<div class="section" id="why-does-scrapy-download-pages-in-english-instead-of-my-native-language">
+<h2>Why does Scrapy download pages in English instead of my native language?<a class="headerlink" href="#why-does-scrapy-download-pages-in-english-instead-of-my-native-language" title="Permalink to this headline">¶</a></h2>
+<p>Try changing the default <a class="reference external" href="https://www.w3.org/Protocols/rfc2616/rfc2616-sec14.html#sec14.4">Accept-Language</a> request header by overriding the
+<a class="reference internal" href="topics/settings.html#std:setting-DEFAULT_REQUEST_HEADERS"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DEFAULT_REQUEST_HEADERS</span></code></a> setting.</p>
+</div>
+<div class="section" id="where-can-i-find-some-example-scrapy-projects">
+<h2>Where can I find some example Scrapy projects?<a class="headerlink" href="#where-can-i-find-some-example-scrapy-projects" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="intro/examples.html#intro-examples"><span class="std std-ref">Examples</span></a>.</p>
+</div>
+<div class="section" id="can-i-run-a-spider-without-creating-a-project">
+<h2>Can I run a spider without creating a project?<a class="headerlink" href="#can-i-run-a-spider-without-creating-a-project" title="Permalink to this headline">¶</a></h2>
+<p>Yes. You can use the <a class="reference internal" href="topics/commands.html#std:command-runspider"><code class="xref std std-command docutils literal notranslate"><span class="pre">runspider</span></code></a> command. For example, if you have a
+spider written in a <code class="docutils literal notranslate"><span class="pre">my_spider.py</span></code> file you can run it with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">runspider</span> <span class="n">my_spider</span><span class="o">.</span><span class="n">py</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="topics/commands.html#std:command-runspider"><code class="xref std std-command docutils literal notranslate"><span class="pre">runspider</span></code></a> command for more info.</p>
+</div>
+<div class="section" id="i-get-filtered-offsite-request-messages-how-can-i-fix-them">
+<h2>I get “Filtered offsite request” messages. How can I fix them?<a class="headerlink" href="#i-get-filtered-offsite-request-messages-how-can-i-fix-them" title="Permalink to this headline">¶</a></h2>
+<p>Those messages (logged with <code class="docutils literal notranslate"><span class="pre">DEBUG</span></code> level) don’t necessarily mean there is a
+problem, so you may not need to fix them.</p>
+<p>Those messages are thrown by the Offsite Spider Middleware, which is a spider
+middleware (enabled by default) whose purpose is to filter out requests to
+domains outside the ones covered by the spider.</p>
+<p>For more info see:
+<a class="reference internal" href="topics/spider-middleware.html#scrapy.spidermiddlewares.offsite.OffsiteMiddleware" title="scrapy.spidermiddlewares.offsite.OffsiteMiddleware"><code class="xref py py-class docutils literal notranslate"><span class="pre">OffsiteMiddleware</span></code></a>.</p>
+</div>
+<div class="section" id="what-is-the-recommended-way-to-deploy-a-scrapy-crawler-in-production">
+<h2>What is the recommended way to deploy a Scrapy crawler in production?<a class="headerlink" href="#what-is-the-recommended-way-to-deploy-a-scrapy-crawler-in-production" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="topics/deploy.html#topics-deploy"><span class="std std-ref">Deploying Spiders</span></a>.</p>
+</div>
+<div class="section" id="can-i-use-json-for-large-exports">
+<h2>Can I use JSON for large exports?<a class="headerlink" href="#can-i-use-json-for-large-exports" title="Permalink to this headline">¶</a></h2>
+<p>It’ll depend on how large your output is. See <a class="reference internal" href="topics/exporters.html#json-with-large-data"><span class="std std-ref">this warning</span></a> in <a class="reference internal" href="topics/exporters.html#scrapy.exporters.JsonItemExporter" title="scrapy.exporters.JsonItemExporter"><code class="xref py py-class docutils literal notranslate"><span class="pre">JsonItemExporter</span></code></a>
+documentation.</p>
+</div>
+<div class="section" id="can-i-return-twisted-deferreds-from-signal-handlers">
+<h2>Can I return (Twisted) deferreds from signal handlers?<a class="headerlink" href="#can-i-return-twisted-deferreds-from-signal-handlers" title="Permalink to this headline">¶</a></h2>
+<p>Some signals support returning deferreds from their handlers, others don’t. See
+the <a class="reference internal" href="topics/signals.html#topics-signals-ref"><span class="std std-ref">Built-in signals reference</span></a> to know which ones.</p>
+</div>
+<div class="section" id="what-does-the-response-status-code-999-means">
+<h2>What does the response status code 999 means?<a class="headerlink" href="#what-does-the-response-status-code-999-means" title="Permalink to this headline">¶</a></h2>
+<p>999 is a custom response status code used by Yahoo sites to throttle requests.
+Try slowing down the crawling speed by using a download delay of <code class="docutils literal notranslate"><span class="pre">2</span></code> (or
+higher) in your spider:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="k">class</span> <span class="nc">MySpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'myspider'</span>
+
+    <span class="n">download_delay</span> <span class="o">=</span> <span class="mi">2</span>
+
+    <span class="c1"># [ ... rest of the spider code ... ]</span>
+</pre></div>
+</div>
+<p>Or by setting a global download delay in your project with the
+<a class="reference internal" href="topics/settings.html#std:setting-DOWNLOAD_DELAY"><code class="xref std std-setting docutils literal notranslate"><span class="pre">DOWNLOAD_DELAY</span></code></a> setting.</p>
+</div>
+<div class="section" id="can-i-call-pdb-set-trace-from-my-spiders-to-debug-them">
+<h2>Can I call <code class="docutils literal notranslate"><span class="pre">pdb.set_trace()</span></code> from my spiders to debug them?<a class="headerlink" href="#can-i-call-pdb-set-trace-from-my-spiders-to-debug-them" title="Permalink to this headline">¶</a></h2>
+<p>Yes, but you can also use the Scrapy shell which allows you to quickly analyze
+(and even modify) the response being processed by your spider, which is, quite
+often, more useful than plain old <code class="docutils literal notranslate"><span class="pre">pdb.set_trace()</span></code>.</p>
+<p>For more info see <a class="reference internal" href="topics/shell.html#topics-shell-inspect-response"><span class="std std-ref">Invoking the shell from spiders to inspect responses</span></a>.</p>
+</div>
+<div class="section" id="simplest-way-to-dump-all-my-scraped-items-into-a-json-csv-xml-file">
+<h2>Simplest way to dump all my scraped items into a JSON/CSV/XML file?<a class="headerlink" href="#simplest-way-to-dump-all-my-scraped-items-into-a-json-csv-xml-file" title="Permalink to this headline">¶</a></h2>
+<p>To dump into a JSON file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">myspider</span> <span class="o">-</span><span class="n">o</span> <span class="n">items</span><span class="o">.</span><span class="n">json</span>
+</pre></div>
+</div>
+<p>To dump into a CSV file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">myspider</span> <span class="o">-</span><span class="n">o</span> <span class="n">items</span><span class="o">.</span><span class="n">csv</span>
+</pre></div>
+</div>
+<p>To dump into a XML file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">crawl</span> <span class="n">myspider</span> <span class="o">-</span><span class="n">o</span> <span class="n">items</span><span class="o">.</span><span class="n">xml</span>
+</pre></div>
+</div>
+<p>For more information see <a class="reference internal" href="topics/feed-exports.html#topics-feed-exports"><span class="std std-ref">Feed exports</span></a></p>
+</div>
+<div class="section" id="what-s-this-huge-cryptic-viewstate-parameter-used-in-some-forms">
+<h2>What’s this huge cryptic <code class="docutils literal notranslate"><span class="pre">__VIEWSTATE</span></code> parameter used in some forms?<a class="headerlink" href="#what-s-this-huge-cryptic-viewstate-parameter-used-in-some-forms" title="Permalink to this headline">¶</a></h2>
+<p>The <code class="docutils literal notranslate"><span class="pre">__VIEWSTATE</span></code> parameter is used in sites built with ASP.NET/VB.NET. For
+more info on how it works see <a class="reference external" href="http://search.cpan.org/~ecarroll/HTML-TreeBuilderX-ASP_NET-0.09/lib/HTML/TreeBuilderX/ASP_NET.pm">this page</a>. Also, here’s an <a class="reference external" href="https://github.com/AmbientLighter/rpn-fas/blob/master/fas/spiders/rnp.py">example spider</a>
+which scrapes one of these sites.</p>
+</div>
+<div class="section" id="what-s-the-best-way-to-parse-big-xml-csv-data-feeds">
+<h2>What’s the best way to parse big XML/CSV data feeds?<a class="headerlink" href="#what-s-the-best-way-to-parse-big-xml-csv-data-feeds" title="Permalink to this headline">¶</a></h2>
+<p>Parsing big feeds with XPath selectors can be problematic since they need to
+build the DOM of the entire feed in memory, and this can be quite slow and
+consume a lot of memory.</p>
+<p>In order to avoid parsing all the entire feed at once in memory, you can use
+the functions <code class="docutils literal notranslate"><span class="pre">xmliter</span></code> and <code class="docutils literal notranslate"><span class="pre">csviter</span></code> from <code class="docutils literal notranslate"><span class="pre">scrapy.utils.iterators</span></code>
+module. In fact, this is what the feed spiders (see <a class="reference internal" href="topics/spiders.html#topics-spiders"><span class="std std-ref">Spiders</span></a>) use
+under the cover.</p>
+</div>
+<div class="section" id="does-scrapy-manage-cookies-automatically">
+<h2>Does Scrapy manage cookies automatically?<a class="headerlink" href="#does-scrapy-manage-cookies-automatically" title="Permalink to this headline">¶</a></h2>
+<p>Yes, Scrapy receives and keeps track of cookies sent by servers, and sends them
+back on subsequent requests, like any regular web browser does.</p>
+<p>For more info see <a class="reference internal" href="topics/request-response.html#topics-request-response"><span class="std std-ref">Requests and Responses</span></a> and <a class="reference internal" href="topics/downloader-middleware.html#cookies-mw"><span class="std std-ref">CookiesMiddleware</span></a>.</p>
+</div>
+<div class="section" id="how-can-i-see-the-cookies-being-sent-and-received-from-scrapy">
+<h2>How can I see the cookies being sent and received from Scrapy?<a class="headerlink" href="#how-can-i-see-the-cookies-being-sent-and-received-from-scrapy" title="Permalink to this headline">¶</a></h2>
+<p>Enable the <a class="reference internal" href="topics/downloader-middleware.html#std:setting-COOKIES_DEBUG"><code class="xref std std-setting docutils literal notranslate"><span class="pre">COOKIES_DEBUG</span></code></a> setting.</p>
+</div>
+<div class="section" id="how-can-i-instruct-a-spider-to-stop-itself">
+<h2>How can I instruct a spider to stop itself?<a class="headerlink" href="#how-can-i-instruct-a-spider-to-stop-itself" title="Permalink to this headline">¶</a></h2>
+<p>Raise the <a class="reference internal" href="topics/exceptions.html#scrapy.exceptions.CloseSpider" title="scrapy.exceptions.CloseSpider"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CloseSpider</span></code></a> exception from a callback. For
+more info see: <a class="reference internal" href="topics/exceptions.html#scrapy.exceptions.CloseSpider" title="scrapy.exceptions.CloseSpider"><code class="xref py py-exc docutils literal notranslate"><span class="pre">CloseSpider</span></code></a>.</p>
+</div>
+<div class="section" id="how-can-i-prevent-my-scrapy-bot-from-getting-banned">
+<h2>How can I prevent my Scrapy bot from getting banned?<a class="headerlink" href="#how-can-i-prevent-my-scrapy-bot-from-getting-banned" title="Permalink to this headline">¶</a></h2>
+<p>See <a class="reference internal" href="topics/practices.html#bans"><span class="std std-ref">Avoiding getting banned</span></a>.</p>
+</div>
+<div class="section" id="should-i-use-spider-arguments-or-settings-to-configure-my-spider">
+<h2>Should I use spider arguments or settings to configure my spider?<a class="headerlink" href="#should-i-use-spider-arguments-or-settings-to-configure-my-spider" title="Permalink to this headline">¶</a></h2>
+<p>Both <a class="reference internal" href="topics/spiders.html#spiderargs"><span class="std std-ref">spider arguments</span></a> and <a class="reference internal" href="topics/settings.html#topics-settings"><span class="std std-ref">settings</span></a>
+can be used to configure your spider. There is no strict rule that mandates to
+use one or the other, but settings are more suited for parameters that, once
+set, don’t change much, while spider arguments are meant to change more often,
+even on each spider run and sometimes are required for the spider to run at all
+(for example, to set the start url of a spider).</p>
+<p>To illustrate with an example, assuming you have a spider that needs to log
+into a site to scrape data, and you only want to scrape data from a certain
+section of the site (which varies each time). In that case, the credentials to
+log in would be settings, while the url of the section to scrape would be a
+spider argument.</p>
+</div>
+<div class="section" id="i-m-scraping-a-xml-document-and-my-xpath-selector-doesn-t-return-any-items">
+<h2>I’m scraping a XML document and my XPath selector doesn’t return any items<a class="headerlink" href="#i-m-scraping-a-xml-document-and-my-xpath-selector-doesn-t-return-any-items" title="Permalink to this headline">¶</a></h2>
+<p>You may need to remove namespaces. See <a class="reference internal" href="topics/selectors.html#removing-namespaces"><span class="std std-ref">Removing namespaces</span></a>.</p>
+</div>
+<div class="section" id="how-to-split-an-item-into-multiple-items-in-an-item-pipeline">
+<h2>How to split an item into multiple items in an item pipeline?<a class="headerlink" href="#how-to-split-an-item-into-multiple-items-in-an-item-pipeline" title="Permalink to this headline">¶</a></h2>
+<p><a class="reference internal" href="topics/item-pipeline.html#topics-item-pipeline"><span class="std std-ref">Item pipelines</span></a> cannot yield multiple items per
+input item. <a class="reference internal" href="topics/spider-middleware.html#custom-spider-middleware"><span class="std std-ref">Create a spider middleware</span></a>
+instead, and use its
+<a class="reference internal" href="topics/spider-middleware.html#scrapy.spidermiddlewares.SpiderMiddleware.process_spider_output" title="scrapy.spidermiddlewares.SpiderMiddleware.process_spider_output"><code class="xref py py-meth docutils literal notranslate"><span class="pre">process_spider_output()</span></code></a>
+method for this puspose. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">copy</span> <span class="k">import</span> <span class="n">deepcopy</span>
+
+<span class="kn">from</span> <span class="nn">scrapy.item</span> <span class="k">import</span> <span class="n">BaseItem</span>
+
+
+<span class="k">class</span> <span class="nc">MultiplyItemsMiddleware</span><span class="p">:</span>
+
+    <span class="k">def</span> <span class="nf">process_spider_output</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">,</span> <span class="n">result</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="k">for</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">result</span><span class="p">:</span>
+            <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">item</span><span class="p">,</span> <span class="p">(</span><span class="n">BaseItem</span><span class="p">,</span> <span class="nb">dict</span><span class="p">)):</span>
+                <span class="k">for</span> <span class="n">_</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">item</span><span class="p">[</span><span class="s1">'multiply_by'</span><span class="p">]):</span>
+                    <span class="k">yield</span> <span class="n">deepcopy</span><span class="p">(</span><span class="n">item</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="topics/debug.html" class="btn btn-neutral float-right" title="Debugging Spiders" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="topics/webservice.html" class="btn btn-neutral float-left" title="Web Service" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-fd3o41yl" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>68d898d4</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: master
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/faq.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/faq.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/faq.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/faq.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/faq.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/faq.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/faq.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/faq.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/faq.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/faq.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/faq.html">0.20</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/master/faq.html">master</a></dd>
+         </strong> 
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/master/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/master/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/master/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/master/docs/faq.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/master/docs/faq.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-bl4vkbqu"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/548/qLoIyCQzQY7Z/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/548/qLoIyCQzQY7Z/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/548/qLoIyCQzQY7Z/" rel="nofollow" target="_blank">Hiring Python devs? Read the Docs can help!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

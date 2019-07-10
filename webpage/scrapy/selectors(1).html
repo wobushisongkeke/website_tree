@@ -1,0 +1,1285 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Selectors — Scrapy 1.5.2 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Items" href="items.html" />
+    <link rel="prev" title="Spiders" href="spiders.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/selectors.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/selectors'
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                1.5
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Selectors</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#using-selectors"><span class="toctree-expand"></span>Using selectors</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#constructing-selectors">Constructing selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Using selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#nesting-selectors">Nesting selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-selectors-with-regular-expressions">Using selectors with regular expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#working-with-relative-xpaths">Working with relative XPaths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#variables-in-xpath-expressions">Variables in XPath expressions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#using-exslt-extensions"><span class="toctree-expand"></span>Using EXSLT extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#regular-expressions">Regular expressions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#set-operations">Set operations</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#some-xpath-tips"><span class="toctree-expand"></span>Some XPath tips</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#using-text-nodes-in-a-condition">Using text nodes in a condition</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#beware-of-the-difference-between-node-1-and-node-1">Beware of the difference between //node[1] and (//node)[1]</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#when-querying-by-class-consider-using-css">When querying by class, consider using CSS</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.selector"><span class="toctree-expand"></span>Built-in Selectors reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#selector-objects">Selector objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selectorlist-objects">SelectorList objects</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selector-examples-on-html-response">Selector examples on HTML response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#selector-examples-on-xml-response">Selector examples on XML response</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#removing-namespaces">Removing namespaces</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-lro3nspc" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/VZqMxJkMCADH/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/VZqMxJkMCADH/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Selectors</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/selectors.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article"><div class="admonition warning"> <p class="first admonition-title">Note</p> <p class="last"> You are not reading the most recent version of this documentation. <a href="/en/1.6/topics/selectors.html">1.6</a> is the latest version available.</p></div>
+           <div itemprop="articleBody">
+            
+  <div class="section" id="selectors">
+<span id="topics-selectors"></span><h1>Selectors<a class="headerlink" href="#selectors" title="Permalink to this headline">¶</a></h1>
+<p>When you’re scraping web pages, the most common task you need to perform is
+to extract data from the HTML source. There are several libraries available to
+achieve this:</p>
+<blockquote>
+<div><ul class="simple">
+<li><a class="reference external" href="https://www.crummy.com/software/BeautifulSoup/">BeautifulSoup</a> is a very popular web scraping library among Python
+programmers which constructs a Python object based on the structure of the
+HTML code and also deals with bad markup reasonably well, but it has one
+drawback: it’s slow.</li>
+<li><a class="reference external" href="http://lxml.de/">lxml</a> is an XML parsing library (which also parses HTML) with a pythonic
+API based on <a class="reference external" href="https://docs.python.org/2/library/xml.etree.elementtree.html">ElementTree</a>. (lxml is not part of the Python standard
+library.)</li>
+</ul>
+</div></blockquote>
+<p>Scrapy comes with its own mechanism for extracting data. They’re called
+selectors because they “select” certain parts of the HTML document specified
+either by <a class="reference external" href="https://www.w3.org/TR/xpath">XPath</a> or <a class="reference external" href="https://www.w3.org/TR/selectors">CSS</a> expressions.</p>
+<p><a class="reference external" href="https://www.w3.org/TR/xpath">XPath</a> is a language for selecting nodes in XML documents, which can also be
+used with HTML. <a class="reference external" href="https://www.w3.org/TR/selectors">CSS</a> is a language for applying styles to HTML documents. It
+defines selectors to associate those styles with specific HTML elements.</p>
+<p>Scrapy selectors are built over the <a class="reference external" href="http://lxml.de/">lxml</a> library, which means they’re very
+similar in speed and parsing accuracy.</p>
+<p>This page explains how selectors work and describes their API which is very
+small and simple, unlike the <a class="reference external" href="http://lxml.de/">lxml</a> API which is much bigger because the
+<a class="reference external" href="http://lxml.de/">lxml</a> library can be used for many other tasks, besides selecting markup
+documents.</p>
+<p>For a complete reference of the selectors API see
+<a class="reference internal" href="#topics-selectors-ref"><span class="std std-ref">Selector reference</span></a></p>
+<div class="section" id="using-selectors">
+<h2>Using selectors<a class="headerlink" href="#using-selectors" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="constructing-selectors">
+<h3>Constructing selectors<a class="headerlink" href="#constructing-selectors" title="Permalink to this headline">¶</a></h3>
+<p>Scrapy selectors are instances of <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> class
+constructed by passing <strong>text</strong> or <a class="reference internal" href="request-response.html#scrapy.http.TextResponse" title="scrapy.http.TextResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">TextResponse</span></code></a>
+object. It automatically chooses the best parsing rules (XML vs HTML) based on
+input type:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.selector</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.http</span> <span class="kn">import</span> <span class="n">HtmlResponse</span>
+</pre></div>
+</div>
+<p>Constructing from text:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">body</span> <span class="o">=</span> <span class="s1">'&lt;html&gt;&lt;body&gt;&lt;span&gt;good&lt;/span&gt;&lt;/body&gt;&lt;/html&gt;'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">body</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//span/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'good']</span>
+</pre></div>
+</div>
+<p>Constructing from response:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span> <span class="o">=</span> <span class="n">HtmlResponse</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="s1">'http://example.com'</span><span class="p">,</span> <span class="n">body</span><span class="o">=</span><span class="n">body</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">Selector</span><span class="p">(</span><span class="n">response</span><span class="o">=</span><span class="n">response</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//span/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'good']</span>
+</pre></div>
+</div>
+<p>For convenience, response objects expose a selector on <cite>.selector</cite> attribute,
+it’s totally OK to use this shortcut when possible:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//span/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'good']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Using selectors<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<p>To explain how to use the selectors we’ll use the <cite>Scrapy shell</cite> (which
+provides interactive testing) and an example page located in the Scrapy
+documentation server:</p>
+<blockquote>
+<div><a class="reference external" href="https://doc.scrapy.org/en/latest/_static/selectors-sample1.html">https://doc.scrapy.org/en/latest/_static/selectors-sample1.html</a></div></blockquote>
+<p id="topics-selectors-htmlcode">Here’s its HTML code:</p>
+<div class="highlight-html notranslate"><div class="highlight"><pre><span></span><span class="p">&lt;</span><span class="nt">html</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">base</span> <span class="na">href</span><span class="o">=</span><span class="s">'http://example.com/'</span> <span class="p">/&gt;</span>
+  <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span>Example website<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+ <span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+ <span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+  <span class="p">&lt;</span><span class="nt">div</span> <span class="na">id</span><span class="o">=</span><span class="s">'images'</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image1.html'</span><span class="p">&gt;</span>Name: My image 1 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image1_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image2.html'</span><span class="p">&gt;</span>Name: My image 2 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image2_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image3.html'</span><span class="p">&gt;</span>Name: My image 3 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image3_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image4.html'</span><span class="p">&gt;</span>Name: My image 4 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image4_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+   <span class="p">&lt;</span><span class="nt">a</span> <span class="na">href</span><span class="o">=</span><span class="s">'image5.html'</span><span class="p">&gt;</span>Name: My image 5 <span class="p">&lt;</span><span class="nt">br</span> <span class="p">/&gt;&lt;</span><span class="nt">img</span> <span class="na">src</span><span class="o">=</span><span class="s">'image5_thumb.jpg'</span> <span class="p">/&gt;&lt;/</span><span class="nt">a</span><span class="p">&gt;</span>
+  <span class="p">&lt;/</span><span class="nt">div</span><span class="p">&gt;</span>
+ <span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+</div>
+<p>First, let’s open the shell:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>scrapy shell https://doc.scrapy.org/en/latest/_static/selectors-sample1.html
+</pre></div>
+</div>
+<p>Then, after the shell loads, you’ll have the response available as <code class="docutils literal notranslate"><span class="pre">response</span></code>
+shell variable, and its attached selector in <code class="docutils literal notranslate"><span class="pre">response.selector</span></code> attribute.</p>
+<p>Since we’re dealing with HTML, the selector will automatically use an HTML parser.</p>
+<p>So, by looking at the <a class="reference internal" href="#topics-selectors-htmlcode"><span class="std std-ref">HTML code</span></a> of that
+page, let’s construct an XPath for selecting the text inside the title tag:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">selector</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span>
+<span class="go">[&lt;Selector (text) xpath=//title/text()&gt;]</span>
+</pre></div>
+</div>
+<p>Querying responses using XPath and CSS is so common that responses include two
+convenience shortcuts: <code class="docutils literal notranslate"><span class="pre">response.xpath()</span></code> and <code class="docutils literal notranslate"><span class="pre">response.css()</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span>
+<span class="go">[&lt;Selector (text) xpath=//title/text()&gt;]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'title::text'</span><span class="p">)</span>
+<span class="go">[&lt;Selector (text) xpath=//title/text()&gt;]</span>
+</pre></div>
+</div>
+<p>As you can see, <code class="docutils literal notranslate"><span class="pre">.xpath()</span></code> and <code class="docutils literal notranslate"><span class="pre">.css()</span></code> methods return a
+<a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a> instance, which is a list of new
+selectors. This API can be used for quickly selecting nested data:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'img'</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'@src'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1_thumb.jpg',</span>
+<span class="go"> u'image2_thumb.jpg',</span>
+<span class="go"> u'image3_thumb.jpg',</span>
+<span class="go"> u'image4_thumb.jpg',</span>
+<span class="go"> u'image5_thumb.jpg']</span>
+</pre></div>
+</div>
+<p>To actually extract the textual data, you must call the selector <code class="docutils literal notranslate"><span class="pre">.extract()</span></code>
+method, as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//title/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'Example website']</span>
+</pre></div>
+</div>
+<p>If you want to extract only first matched element, you can call the selector <code class="docutils literal notranslate"><span class="pre">.extract_first()</span></code></p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[@id="images"]/a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
+<span class="go">u'Name: My image 1 '</span>
+</pre></div>
+</div>
+<p>It returns <code class="docutils literal notranslate"><span class="pre">None</span></code> if no element was found:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[@id="not-exists"]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span> <span class="ow">is</span> <span class="bp">None</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+<p>A default return value can be provided as an argument, to be used instead of <code class="docutils literal notranslate"><span class="pre">None</span></code>:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[@id="not-exists"]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">(</span><span class="n">default</span><span class="o">=</span><span class="s1">'not-found'</span><span class="p">)</span>
+<span class="go">'not-found'</span>
+</pre></div>
+</div>
+<p>Notice that CSS selectors can select text or attribute nodes using CSS3
+pseudo-elements:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'title::text'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'Example website']</span>
+</pre></div>
+</div>
+<p>Now we’re going to get the base URL and some image links:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//base/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'http://example.com/']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'base::attr(href)'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'http://example.com/']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1.html',</span>
+<span class="go"> u'image2.html',</span>
+<span class="go"> u'image3.html',</span>
+<span class="go"> u'image4.html',</span>
+<span class="go"> u'image5.html']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'a[href*=image]::attr(href)'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1.html',</span>
+<span class="go"> u'image2.html',</span>
+<span class="go"> u'image3.html',</span>
+<span class="go"> u'image4.html',</span>
+<span class="go"> u'image5.html']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/img/@src'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1_thumb.jpg',</span>
+<span class="go"> u'image2_thumb.jpg',</span>
+<span class="go"> u'image3_thumb.jpg',</span>
+<span class="go"> u'image4_thumb.jpg',</span>
+<span class="go"> u'image5_thumb.jpg']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'a[href*=image] img::attr(src)'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'image1_thumb.jpg',</span>
+<span class="go"> u'image2_thumb.jpg',</span>
+<span class="go"> u'image3_thumb.jpg',</span>
+<span class="go"> u'image4_thumb.jpg',</span>
+<span class="go"> u'image5_thumb.jpg']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="nesting-selectors">
+<span id="topics-selectors-nesting-selectors"></span><h3>Nesting selectors<a class="headerlink" href="#nesting-selectors" title="Permalink to this headline">¶</a></h3>
+<p>The selection methods (<code class="docutils literal notranslate"><span class="pre">.xpath()</span></code> or <code class="docutils literal notranslate"><span class="pre">.css()</span></code>) return a list of selectors
+of the same type, so you can call the selection methods for those selectors
+too. Here’s an example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">links</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">links</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'&lt;a href="image1.html"&gt;Name: My image 1 &lt;br&gt;&lt;img src="image1_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image2.html"&gt;Name: My image 2 &lt;br&gt;&lt;img src="image2_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image3.html"&gt;Name: My image 3 &lt;br&gt;&lt;img src="image3_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image4.html"&gt;Name: My image 4 &lt;br&gt;&lt;img src="image4_thumb.jpg"&gt;&lt;/a&gt;',</span>
+<span class="go"> u'&lt;a href="image5.html"&gt;Name: My image 5 &lt;br&gt;&lt;img src="image5_thumb.jpg"&gt;&lt;/a&gt;']</span>
+
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">index</span><span class="p">,</span> <span class="n">link</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">links</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="n">args</span> <span class="o">=</span> <span class="p">(</span><span class="n">index</span><span class="p">,</span> <span class="n">link</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">(),</span> <span class="n">link</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'img/@src'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">())</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s1">'Link number </span><span class="si">%d</span><span class="s1"> points to url </span><span class="si">%s</span><span class="s1"> and image </span><span class="si">%s</span><span class="s1">'</span> <span class="o">%</span> <span class="n">args</span>
+
+<span class="go">Link number 0 points to url [u'image1.html'] and image [u'image1_thumb.jpg']</span>
+<span class="go">Link number 1 points to url [u'image2.html'] and image [u'image2_thumb.jpg']</span>
+<span class="go">Link number 2 points to url [u'image3.html'] and image [u'image3_thumb.jpg']</span>
+<span class="go">Link number 3 points to url [u'image4.html'] and image [u'image4_thumb.jpg']</span>
+<span class="go">Link number 4 points to url [u'image5.html'] and image [u'image5_thumb.jpg']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="using-selectors-with-regular-expressions">
+<h3>Using selectors with regular expressions<a class="headerlink" href="#using-selectors-with-regular-expressions" title="Permalink to this headline">¶</a></h3>
+<p><a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> also has a <code class="docutils literal notranslate"><span class="pre">.re()</span></code> method for extracting
+data using regular expressions. However, unlike using <code class="docutils literal notranslate"><span class="pre">.xpath()</span></code> or
+<code class="docutils literal notranslate"><span class="pre">.css()</span></code> methods, <code class="docutils literal notranslate"><span class="pre">.re()</span></code> returns a list of unicode strings. So you
+can’t construct nested <code class="docutils literal notranslate"><span class="pre">.re()</span></code> calls.</p>
+<p>Here’s an example used to extract image names from the <a class="reference internal" href="#topics-selectors-htmlcode"><span class="std std-ref">HTML code</span></a> above:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">re</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Name:\s*(.*)'</span><span class="p">)</span>
+<span class="go">[u'My image 1',</span>
+<span class="go"> u'My image 2',</span>
+<span class="go"> u'My image 3',</span>
+<span class="go"> u'My image 4',</span>
+<span class="go"> u'My image 5']</span>
+</pre></div>
+</div>
+<p>There’s an additional helper reciprocating <code class="docutils literal notranslate"><span class="pre">.extract_first()</span></code> for <code class="docutils literal notranslate"><span class="pre">.re()</span></code>,
+named <code class="docutils literal notranslate"><span class="pre">.re_first()</span></code>. Use it to extract just the first matching string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a[contains(@href, "image")]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">re_first</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Name:\s*(.*)'</span><span class="p">)</span>
+<span class="go">u'My image 1'</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="working-with-relative-xpaths">
+<span id="topics-selectors-relative-xpaths"></span><h3>Working with relative XPaths<a class="headerlink" href="#working-with-relative-xpaths" title="Permalink to this headline">¶</a></h3>
+<p>Keep in mind that if you are nesting selectors and use an XPath that starts
+with <code class="docutils literal notranslate"><span class="pre">/</span></code>, that XPath will be absolute to the document and not relative to the
+<code class="docutils literal notranslate"><span class="pre">Selector</span></code> you’re calling it from.</p>
+<p>For example, suppose you want to extract all <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> elements inside <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code>
+elements. First, you would get all <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> elements:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">divs</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>At first, you may be tempted to use the following approach, which is wrong, as
+it actually extracts all <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> elements from the document, not only those
+inside <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> elements:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">divs</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//p'</span><span class="p">):</span>  <span class="c1"># this is wrong - gets all &lt;p&gt; from the whole document</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This is the proper way to do it (note the dot prefixing the <code class="docutils literal notranslate"><span class="pre">.//p</span></code> XPath):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">divs</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'.//p'</span><span class="p">):</span>  <span class="c1"># extracts all &lt;p&gt; inside</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>Another common case would be to extract all direct <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> children:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">p</span> <span class="ow">in</span> <span class="n">divs</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'p'</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="n">p</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>For more details about relative XPaths see the <a class="reference external" href="https://www.w3.org/TR/xpath#location-paths">Location Paths</a> section in the
+XPath specification.</p>
+</div>
+<div class="section" id="variables-in-xpath-expressions">
+<span id="topics-selectors-xpath-variables"></span><h3>Variables in XPath expressions<a class="headerlink" href="#variables-in-xpath-expressions" title="Permalink to this headline">¶</a></h3>
+<p>XPath allows you to reference variables in your XPath expressions, using
+the <code class="docutils literal notranslate"><span class="pre">$somevariable</span></code> syntax. This is somewhat similar to parameterized
+queries or prepared statements in the SQL world where you replace
+some arguments in your queries with placeholders like <code class="docutils literal notranslate"><span class="pre">?</span></code>,
+which are then substituted with values passed with the query.</p>
+<p>Here’s an example to match an element based on its “id” attribute value,
+without hard-coding it (that was shown previously):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># `$val` used in the expression, a `val` argument needs to be passed</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[@id=$val]/a/text()'</span><span class="p">,</span> <span class="n">val</span><span class="o">=</span><span class="s1">'images'</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
+<span class="go">u'Name: My image 1 '</span>
+</pre></div>
+</div>
+<p>Here’s another example, to find the “id” attribute of a <code class="docutils literal notranslate"><span class="pre">&lt;div&gt;</span></code> tag containing
+five <code class="docutils literal notranslate"><span class="pre">&lt;a&gt;</span></code> children (here we pass the value <code class="docutils literal notranslate"><span class="pre">5</span></code> as an integer):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[count(a)=$cnt]/@id'</span><span class="p">,</span> <span class="n">cnt</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span><span class="o">.</span><span class="n">extract_first</span><span class="p">()</span>
+<span class="go">u'images'</span>
+</pre></div>
+</div>
+<p>All variable references must have a binding value when calling <code class="docutils literal notranslate"><span class="pre">.xpath()</span></code>
+(otherwise you’ll get a <code class="docutils literal notranslate"><span class="pre">ValueError:</span> <span class="pre">XPath</span> <span class="pre">error:</span></code> exception).
+This is done by passing as many named arguments as necessary.</p>
+<p><a class="reference external" href="https://parsel.readthedocs.io/">parsel</a>, the library powering Scrapy selectors, has more details and examples
+on <a class="reference external" href="https://parsel.readthedocs.io/en/latest/usage.html#variables-in-xpath-expressions">XPath variables</a>.</p>
+</div>
+<div class="section" id="using-exslt-extensions">
+<h3>Using EXSLT extensions<a class="headerlink" href="#using-exslt-extensions" title="Permalink to this headline">¶</a></h3>
+<p>Being built atop <a class="reference external" href="http://lxml.de/">lxml</a>, Scrapy selectors also support some <a class="reference external" href="http://exslt.org/">EXSLT</a> extensions
+and come with these pre-registered namespaces to use in XPath expressions:</p>
+<div class="wy-table-responsive"><table border="1" class="docutils">
+<colgroup>
+<col width="9%" />
+<col width="56%" />
+<col width="35%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">prefix</th>
+<th class="head">namespace</th>
+<th class="head">usage</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>re</td>
+<td>http://exslt.org/regular-expressions</td>
+<td><a class="reference external" href="http://exslt.org/regexp/index.html">regular expressions</a></td>
+</tr>
+<tr class="row-odd"><td>set</td>
+<td>http://exslt.org/sets</td>
+<td><a class="reference external" href="http://exslt.org/set/index.html">set manipulation</a></td>
+</tr>
+</tbody>
+</table></div>
+<div class="section" id="regular-expressions">
+<h4>Regular expressions<a class="headerlink" href="#regular-expressions" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">test()</span></code> function, for example, can prove quite useful when XPath’s
+<code class="docutils literal notranslate"><span class="pre">starts-with()</span></code> or <code class="docutils literal notranslate"><span class="pre">contains()</span></code> are not sufficient.</p>
+<p>Example selecting links in list item with a “class” attribute ending with a digit:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="gp">... </span><span class="s2">&lt;div&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;ul&gt;</span>
+<span class="gp">... </span><span class="s2">        &lt;li class="item-0"&gt;&lt;a href="link1.html"&gt;first item&lt;/a&gt;&lt;/li&gt;</span>
+<span class="gp">... </span><span class="s2">        &lt;li class="item-1"&gt;&lt;a href="link2.html"&gt;second item&lt;/a&gt;&lt;/li&gt;</span>
+<span class="gp">... </span><span class="s2">        &lt;li class="item-inactive"&gt;&lt;a href="link3.html"&gt;third item&lt;/a&gt;&lt;/li&gt;</span>
+<span class="gp">... </span><span class="s2">        &lt;li class="item-1"&gt;&lt;a href="link4.html"&gt;fourth item&lt;/a&gt;&lt;/li&gt;</span>
+<span class="gp">... </span><span class="s2">        &lt;li class="item-0"&gt;&lt;a href="link5.html"&gt;fifth item&lt;/a&gt;&lt;/li&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;/ul&gt;</span>
+<span class="gp">... </span><span class="s2">&lt;/div&gt;</span>
+<span class="gp">... </span><span class="s2">"""</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">doc</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"html"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//li//@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'link1.html', u'link2.html', u'link3.html', u'link4.html', u'link5.html']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//li[re:test(@class, "item-\d$")]//@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'link1.html', u'link2.html', u'link4.html', u'link5.html']</span>
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">C library <code class="docutils literal notranslate"><span class="pre">libxslt</span></code> doesn’t natively support EXSLT regular
+expressions so <a class="reference external" href="http://lxml.de/">lxml</a>’s implementation uses hooks to Python’s <code class="docutils literal notranslate"><span class="pre">re</span></code> module.
+Thus, using regexp functions in your XPath expressions may add a small
+performance penalty.</p>
+</div>
+</div>
+<div class="section" id="set-operations">
+<h4>Set operations<a class="headerlink" href="#set-operations" title="Permalink to this headline">¶</a></h4>
+<p>These can be handy for excluding parts of a document tree before
+extracting text elements for example.</p>
+<p>Example extracting microdata (sample content taken from <a class="reference external" href="http://schema.org/Product">http://schema.org/Product</a>)
+with groups of itemscopes and corresponding itemprops:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span> <span class="o">=</span> <span class="s2">"""</span>
+<span class="gp">... </span><span class="s2">&lt;div itemscope itemtype="http://schema.org/Product"&gt;</span>
+<span class="gp">... </span><span class="s2">  &lt;span itemprop="name"&gt;Kenmore White 17" Microwave&lt;/span&gt;</span>
+<span class="gp">... </span><span class="s2">  &lt;img src="kenmore-microwave-17in.jpg" alt='Kenmore 17" Microwave' /&gt;</span>
+<span class="gp">... </span><span class="s2">  &lt;div itemprop="aggregateRating"</span>
+<span class="gp">... </span><span class="s2">    itemscope itemtype="http://schema.org/AggregateRating"&gt;</span>
+<span class="gp">... </span><span class="s2">   Rated &lt;span itemprop="ratingValue"&gt;3.5&lt;/span&gt;/5</span>
+<span class="gp">... </span><span class="s2">   based on &lt;span itemprop="reviewCount"&gt;11&lt;/span&gt; customer reviews</span>
+<span class="gp">... </span><span class="s2">  &lt;/div&gt;</span>
+<span class="gp">...</span><span class="s2"></span>
+<span class="gp">... </span><span class="s2">  &lt;div itemprop="offers" itemscope itemtype="http://schema.org/Offer"&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;span itemprop="price"&gt;$55.00&lt;/span&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;link itemprop="availability" href="http://schema.org/InStock" /&gt;In stock</span>
+<span class="gp">... </span><span class="s2">  &lt;/div&gt;</span>
+<span class="gp">...</span><span class="s2"></span>
+<span class="gp">... </span><span class="s2">  Product description:</span>
+<span class="gp">... </span><span class="s2">  &lt;span itemprop="description"&gt;0.7 cubic feet countertop microwave.</span>
+<span class="gp">... </span><span class="s2">  Has six preset cooking categories and convenience features like</span>
+<span class="gp">... </span><span class="s2">  Add-A-Minute and Child Lock.&lt;/span&gt;</span>
+<span class="gp">...</span><span class="s2"></span>
+<span class="gp">... </span><span class="s2">  Customer reviews:</span>
+<span class="gp">...</span><span class="s2"></span>
+<span class="gp">... </span><span class="s2">  &lt;div itemprop="review" itemscope itemtype="http://schema.org/Review"&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;span itemprop="name"&gt;Not a happy camper&lt;/span&gt; -</span>
+<span class="gp">... </span><span class="s2">    by &lt;span itemprop="author"&gt;Ellie&lt;/span&gt;,</span>
+<span class="gp">... </span><span class="s2">    &lt;meta itemprop="datePublished" content="2011-04-01"&gt;April 1, 2011</span>
+<span class="gp">... </span><span class="s2">    &lt;div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"&gt;</span>
+<span class="gp">... </span><span class="s2">      &lt;meta itemprop="worstRating" content = "1"&gt;</span>
+<span class="gp">... </span><span class="s2">      &lt;span itemprop="ratingValue"&gt;1&lt;/span&gt;/</span>
+<span class="gp">... </span><span class="s2">      &lt;span itemprop="bestRating"&gt;5&lt;/span&gt;stars</span>
+<span class="gp">... </span><span class="s2">    &lt;/div&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;span itemprop="description"&gt;The lamp burned out and now I have to replace</span>
+<span class="gp">... </span><span class="s2">    it. &lt;/span&gt;</span>
+<span class="gp">... </span><span class="s2">  &lt;/div&gt;</span>
+<span class="gp">...</span><span class="s2"></span>
+<span class="gp">... </span><span class="s2">  &lt;div itemprop="review" itemscope itemtype="http://schema.org/Review"&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;span itemprop="name"&gt;Value purchase&lt;/span&gt; -</span>
+<span class="gp">... </span><span class="s2">    by &lt;span itemprop="author"&gt;Lucas&lt;/span&gt;,</span>
+<span class="gp">... </span><span class="s2">    &lt;meta itemprop="datePublished" content="2011-03-25"&gt;March 25, 2011</span>
+<span class="gp">... </span><span class="s2">    &lt;div itemprop="reviewRating" itemscope itemtype="http://schema.org/Rating"&gt;</span>
+<span class="gp">... </span><span class="s2">      &lt;meta itemprop="worstRating" content = "1"/&gt;</span>
+<span class="gp">... </span><span class="s2">      &lt;span itemprop="ratingValue"&gt;4&lt;/span&gt;/</span>
+<span class="gp">... </span><span class="s2">      &lt;span itemprop="bestRating"&gt;5&lt;/span&gt;stars</span>
+<span class="gp">... </span><span class="s2">    &lt;/div&gt;</span>
+<span class="gp">... </span><span class="s2">    &lt;span itemprop="description"&gt;Great microwave for the price. It is small and</span>
+<span class="gp">... </span><span class="s2">    fits in my apartment.&lt;/span&gt;</span>
+<span class="gp">... </span><span class="s2">  &lt;/div&gt;</span>
+<span class="gp">... </span><span class="s2">  ...</span>
+<span class="gp">... </span><span class="s2">&lt;/div&gt;</span>
+<span class="gp">... </span><span class="s2">"""</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">doc</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s2">"html"</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">scope</span> <span class="ow">in</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[@itemscope]'</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s2">"current scope:"</span><span class="p">,</span> <span class="n">scope</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'@itemtype'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="n">props</span> <span class="o">=</span> <span class="n">scope</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'''</span>
+<span class="gp">... </span><span class="s1">                set:difference(./descendant::*/@itemprop,</span>
+<span class="gp">... </span><span class="s1">                               .//*[@itemscope]/*/@itemprop)'''</span><span class="p">)</span>
+<span class="gp">... </span>    <span class="k">print</span> <span class="s2">"    properties:"</span><span class="p">,</span> <span class="n">props</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="gp">... </span>    <span class="k">print</span>
+
+<span class="go">current scope: [u'http://schema.org/Product']</span>
+<span class="go">    properties: [u'name', u'aggregateRating', u'offers', u'description', u'review', u'review']</span>
+
+<span class="go">current scope: [u'http://schema.org/AggregateRating']</span>
+<span class="go">    properties: [u'ratingValue', u'reviewCount']</span>
+
+<span class="go">current scope: [u'http://schema.org/Offer']</span>
+<span class="go">    properties: [u'price', u'availability']</span>
+
+<span class="go">current scope: [u'http://schema.org/Review']</span>
+<span class="go">    properties: [u'name', u'author', u'datePublished', u'reviewRating', u'description']</span>
+
+<span class="go">current scope: [u'http://schema.org/Rating']</span>
+<span class="go">    properties: [u'worstRating', u'ratingValue', u'bestRating']</span>
+
+<span class="go">current scope: [u'http://schema.org/Review']</span>
+<span class="go">    properties: [u'name', u'author', u'datePublished', u'reviewRating', u'description']</span>
+
+<span class="go">current scope: [u'http://schema.org/Rating']</span>
+<span class="go">    properties: [u'worstRating', u'ratingValue', u'bestRating']</span>
+
+<span class="go">&gt;&gt;&gt;</span>
+</pre></div>
+</div>
+<p>Here we first iterate over <code class="docutils literal notranslate"><span class="pre">itemscope</span></code> elements, and for each one,
+we look for all <code class="docutils literal notranslate"><span class="pre">itemprops</span></code> elements and exclude those that are themselves
+inside another <code class="docutils literal notranslate"><span class="pre">itemscope</span></code>.</p>
+</div>
+</div>
+<div class="section" id="some-xpath-tips">
+<h3>Some XPath tips<a class="headerlink" href="#some-xpath-tips" title="Permalink to this headline">¶</a></h3>
+<p>Here are some tips that you may find useful when using XPath
+with Scrapy selectors, based on <a class="reference external" href="https://blog.scrapinghub.com/2014/07/17/xpath-tips-from-the-web-scraping-trenches/">this post from ScrapingHub’s blog</a>.
+If you are not much familiar with XPath yet,
+you may want to take a look first at this <a class="reference external" href="http://www.zvon.org/comp/r/tut-XPath_1.html">XPath tutorial</a>.</p>
+<div class="section" id="using-text-nodes-in-a-condition">
+<h4>Using text nodes in a condition<a class="headerlink" href="#using-text-nodes-in-a-condition" title="Permalink to this headline">¶</a></h4>
+<p>When you need to use the text content as argument to an <a class="reference external" href="https://www.w3.org/TR/xpath/#section-String-Functions">XPath string function</a>,
+avoid using <code class="docutils literal notranslate"><span class="pre">.//text()</span></code> and use just <code class="docutils literal notranslate"><span class="pre">.</span></code> instead.</p>
+<p>This is because the expression <code class="docutils literal notranslate"><span class="pre">.//text()</span></code> yields a collection of text elements – a <em>node-set</em>.
+And when a node-set is converted to a string, which happens when it is passed as argument to
+a string function like <code class="docutils literal notranslate"><span class="pre">contains()</span></code> or <code class="docutils literal notranslate"><span class="pre">starts-with()</span></code>, it results in the text for the first element only.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'&lt;a href="#"&gt;Click here to go to the &lt;strong&gt;Next Page&lt;/strong&gt;&lt;/a&gt;'</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Converting a <em>node-set</em> to string:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//a//text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span> <span class="c1"># take a peek at the node-set</span>
+<span class="go">[u'Click here to go to the ', u'Next Page']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"string(//a[1]//text())"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span> <span class="c1"># convert it to string</span>
+<span class="go">[u'Click here to go to the ']</span>
+</pre></div>
+</div>
+<p>A <em>node</em> converted to a string, however, puts together the text of itself plus of all its descendants:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//a[1]"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span> <span class="c1"># select the first node</span>
+<span class="go">[u'&lt;a href="#"&gt;Click here to go to the &lt;strong&gt;Next Page&lt;/strong&gt;&lt;/a&gt;']</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"string(//a[1])"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span> <span class="c1"># convert it to string</span>
+<span class="go">[u'Click here to go to the Next Page']</span>
+</pre></div>
+</div>
+<p>So, using the <code class="docutils literal notranslate"><span class="pre">.//text()</span></code> node-set won’t select anything in this case:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//a[contains(.//text(), 'Next Page')]"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>But using the <code class="docutils literal notranslate"><span class="pre">.</span></code> to mean the node, works:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//a[contains(., 'Next Page')]"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'&lt;a href="#"&gt;Click here to go to the &lt;strong&gt;Next Page&lt;/strong&gt;&lt;/a&gt;']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="beware-of-the-difference-between-node-1-and-node-1">
+<h4>Beware of the difference between //node[1] and (//node)[1]<a class="headerlink" href="#beware-of-the-difference-between-node-1-and-node-1" title="Permalink to this headline">¶</a></h4>
+<p><code class="docutils literal notranslate"><span class="pre">//node[1]</span></code> selects all the nodes occurring first under their respective parents.</p>
+<p><code class="docutils literal notranslate"><span class="pre">(//node)[1]</span></code> selects all the nodes in the document, and then gets only the first of them.</p>
+<p>Example:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s2">"""</span>
+<span class="go">....:     &lt;ul class="list"&gt;</span>
+<span class="go">....:         &lt;li&gt;1&lt;/li&gt;</span>
+<span class="go">....:         &lt;li&gt;2&lt;/li&gt;</span>
+<span class="go">....:         &lt;li&gt;3&lt;/li&gt;</span>
+<span class="go">....:     &lt;/ul&gt;</span>
+<span class="go">....:     &lt;ul class="list"&gt;</span>
+<span class="go">....:         &lt;li&gt;4&lt;/li&gt;</span>
+<span class="go">....:         &lt;li&gt;5&lt;/li&gt;</span>
+<span class="go">....:         &lt;li&gt;6&lt;/li&gt;</span>
+<span class="go">....:     &lt;/ul&gt;""")</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This gets all first <code class="docutils literal notranslate"><span class="pre">&lt;li&gt;</span></code>  elements under whatever it is its parent:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span><span class="p">(</span><span class="s2">"//li[1]"</span><span class="p">)</span>
+<span class="go">[u'&lt;li&gt;1&lt;/li&gt;', u'&lt;li&gt;4&lt;/li&gt;']</span>
+</pre></div>
+</div>
+<p>And this gets the first <code class="docutils literal notranslate"><span class="pre">&lt;li&gt;</span></code>  element in the whole document:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span><span class="p">(</span><span class="s2">"(//li)[1]"</span><span class="p">)</span>
+<span class="go">[u'&lt;li&gt;1&lt;/li&gt;']</span>
+</pre></div>
+</div>
+<p>This gets all first <code class="docutils literal notranslate"><span class="pre">&lt;li&gt;</span></code>  elements under an <code class="docutils literal notranslate"><span class="pre">&lt;ul&gt;</span></code>  parent:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span><span class="p">(</span><span class="s2">"//ul/li[1]"</span><span class="p">)</span>
+<span class="go">[u'&lt;li&gt;1&lt;/li&gt;', u'&lt;li&gt;4&lt;/li&gt;']</span>
+</pre></div>
+</div>
+<p>And this gets the first <code class="docutils literal notranslate"><span class="pre">&lt;li&gt;</span></code>  element under an <code class="docutils literal notranslate"><span class="pre">&lt;ul&gt;</span></code>  parent in the whole document:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">xp</span><span class="p">(</span><span class="s2">"(//ul/li)[1]"</span><span class="p">)</span>
+<span class="go">[u'&lt;li&gt;1&lt;/li&gt;']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="when-querying-by-class-consider-using-css">
+<h4>When querying by class, consider using CSS<a class="headerlink" href="#when-querying-by-class-consider-using-css" title="Permalink to this headline">¶</a></h4>
+<p>Because an element can contain multiple CSS classes, the XPath way to select elements
+by class is the rather verbose:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="o">*</span><span class="p">[</span><span class="n">contains</span><span class="p">(</span><span class="n">concat</span><span class="p">(</span><span class="s1">' '</span><span class="p">,</span> <span class="n">normalize</span><span class="o">-</span><span class="n">space</span><span class="p">(</span><span class="nd">@class</span><span class="p">),</span> <span class="s1">' '</span><span class="p">),</span> <span class="s1">' someclass '</span><span class="p">)]</span>
+</pre></div>
+</div>
+<p>If you use <code class="docutils literal notranslate"><span class="pre">@class='someclass'</span></code> you may end up missing elements that have
+other classes, and if you just use <code class="docutils literal notranslate"><span class="pre">contains(@class,</span> <span class="pre">'someclass')</span></code> to make up
+for that you may end up with more elements that you want, if they have a different
+class name that shares the string <code class="docutils literal notranslate"><span class="pre">someclass</span></code>.</p>
+<p>As it turns out, Scrapy selectors allow you to chain selectors, so most of the time
+you can just select by class using CSS and then switch to XPath when needed:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy</span> <span class="kn">import</span> <span class="n">Selector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="s1">'&lt;div class="hero shout"&gt;&lt;time datetime="2014-07-23 19:00"&gt;Special date&lt;/time&gt;&lt;/div&gt;'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">sel</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'.shout'</span><span class="p">)</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'./time/@datetime'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+<span class="go">[u'2014-07-23 19:00']</span>
+</pre></div>
+</div>
+<p>This is cleaner than using the verbose XPath trick shown above. Just remember
+to use the <code class="docutils literal notranslate"><span class="pre">.</span></code> in the XPath expressions that will follow.</p>
+</div>
+</div>
+</div>
+<div class="section" id="module-scrapy.selector">
+<span id="built-in-selectors-reference"></span><span id="topics-selectors-ref"></span><h2>Built-in Selectors reference<a class="headerlink" href="#module-scrapy.selector" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="selector-objects">
+<h3>Selector objects<a class="headerlink" href="#selector-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.selector.Selector">
+<em class="property">class </em><code class="descclassname">scrapy.selector.</code><code class="descname">Selector</code><span class="sig-paren">(</span><em>response=None</em>, <em>text=None</em>, <em>type=None</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector" title="Permalink to this definition">¶</a></dt>
+<dd><p>An instance of <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> is a wrapper over response to select
+certain parts of its content.</p>
+<p><code class="docutils literal notranslate"><span class="pre">response</span></code> is an <a class="reference internal" href="request-response.html#scrapy.http.HtmlResponse" title="scrapy.http.HtmlResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HtmlResponse</span></code></a> or an
+<a class="reference internal" href="request-response.html#scrapy.http.XmlResponse" title="scrapy.http.XmlResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlResponse</span></code></a> object that will be used for selecting and
+extracting data.</p>
+<p><code class="docutils literal notranslate"><span class="pre">text</span></code> is a unicode string or utf-8 encoded text for cases when a
+<code class="docutils literal notranslate"><span class="pre">response</span></code> isn’t available. Using <code class="docutils literal notranslate"><span class="pre">text</span></code> and <code class="docutils literal notranslate"><span class="pre">response</span></code> together is
+undefined behavior.</p>
+<p><code class="docutils literal notranslate"><span class="pre">type</span></code> defines the selector type, it can be <code class="docutils literal notranslate"><span class="pre">"html"</span></code>, <code class="docutils literal notranslate"><span class="pre">"xml"</span></code> or <code class="docutils literal notranslate"><span class="pre">None</span></code> (default).</p>
+<blockquote>
+<div><blockquote>
+<div><p>If <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code>, the selector automatically chooses the best type
+based on <code class="docutils literal notranslate"><span class="pre">response</span></code> type (see below), or defaults to <code class="docutils literal notranslate"><span class="pre">"html"</span></code> in case it
+is used together with <code class="docutils literal notranslate"><span class="pre">text</span></code>.</p>
+<p>If <code class="docutils literal notranslate"><span class="pre">type</span></code> is <code class="docutils literal notranslate"><span class="pre">None</span></code> and a <code class="docutils literal notranslate"><span class="pre">response</span></code> is passed, the selector type is
+inferred from the response type as follows:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal notranslate"><span class="pre">"html"</span></code> for <a class="reference internal" href="request-response.html#scrapy.http.HtmlResponse" title="scrapy.http.HtmlResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HtmlResponse</span></code></a> type</li>
+<li><code class="docutils literal notranslate"><span class="pre">"xml"</span></code> for <a class="reference internal" href="request-response.html#scrapy.http.XmlResponse" title="scrapy.http.XmlResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlResponse</span></code></a> type</li>
+<li><code class="docutils literal notranslate"><span class="pre">"html"</span></code> for anything else</li>
+</ul>
+</div></blockquote>
+</div></blockquote>
+<p>Otherwise, if <code class="docutils literal notranslate"><span class="pre">type</span></code> is set, the selector type will be forced and no
+detection will occur.</p>
+</div></blockquote>
+<dl class="method">
+<dt id="scrapy.selector.Selector.xpath">
+<code class="descname">xpath</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.xpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Find nodes matching the xpath <code class="docutils literal notranslate"><span class="pre">query</span></code> and return the result as a
+<a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a> instance with all elements flattened. List
+elements implement <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> interface too.</p>
+<p><code class="docutils literal notranslate"><span class="pre">query</span></code> is a string containing the XPATH query to apply.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For convenience, this method can be called as <code class="docutils literal notranslate"><span class="pre">response.xpath()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.Selector.css">
+<code class="descname">css</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply the given CSS selector and return a <a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a> instance.</p>
+<p><code class="docutils literal notranslate"><span class="pre">query</span></code> is a string containing the CSS selector to apply.</p>
+<p>In the background, CSS queries are translated into XPath queries using
+<a class="reference external" href="https://pypi.python.org/pypi/cssselect/">cssselect</a> library and run <code class="docutils literal notranslate"><span class="pre">.xpath()</span></code> method.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">For convenience this method can be called as <code class="docutils literal notranslate"><span class="pre">response.css()</span></code></p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.Selector.extract">
+<code class="descname">extract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Serialize and return the matched nodes as a list of unicode strings.
+Percent encoded content is unquoted.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.Selector.re">
+<code class="descname">re</code><span class="sig-paren">(</span><em>regex</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.re" title="Permalink to this definition">¶</a></dt>
+<dd><blockquote>
+<div><p>Apply the given regex and return a list of unicode strings with the
+matches.</p>
+<p><code class="docutils literal notranslate"><span class="pre">regex</span></code> can be either a compiled regular expression or a string which
+will be compiled to a regular expression using <code class="docutils literal notranslate"><span class="pre">re.compile(regex)</span></code></p>
+</div></blockquote>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Note that <code class="docutils literal notranslate"><span class="pre">re()</span></code> and <code class="docutils literal notranslate"><span class="pre">re_first()</span></code> both decode HTML entities (except <code class="docutils literal notranslate"><span class="pre">&amp;lt;</span></code> and <code class="docutils literal notranslate"><span class="pre">&amp;amp;</span></code>).</p>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.Selector.register_namespace">
+<code class="descname">register_namespace</code><span class="sig-paren">(</span><em>prefix</em>, <em>uri</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.register_namespace" title="Permalink to this definition">¶</a></dt>
+<dd><p>Register the given namespace to be used in this <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a>.
+Without registering namespaces you can’t select or extract data from
+non-standard namespaces. See examples below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.Selector.remove_namespaces">
+<code class="descname">remove_namespaces</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.remove_namespaces" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove all namespaces, allowing to traverse the document using
+namespace-less xpaths. See example below.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.Selector.__nonzero__">
+<code class="descname">__nonzero__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.Selector.__nonzero__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns <code class="docutils literal notranslate"><span class="pre">True</span></code> if there is any real content selected or <code class="docutils literal notranslate"><span class="pre">False</span></code>
+otherwise.  In other words, the boolean value of a <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> is
+given by the contents it selects.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="selectorlist-objects">
+<h3>SelectorList objects<a class="headerlink" href="#selectorlist-objects" title="Permalink to this headline">¶</a></h3>
+<dl class="class">
+<dt id="scrapy.selector.SelectorList">
+<em class="property">class </em><code class="descclassname">scrapy.selector.</code><code class="descname">SelectorList</code><a class="headerlink" href="#scrapy.selector.SelectorList" title="Permalink to this definition">¶</a></dt>
+<dd><p>The <a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a> class is a subclass of the builtin <code class="docutils literal notranslate"><span class="pre">list</span></code>
+class, which provides a few additional methods.</p>
+<dl class="method">
+<dt id="scrapy.selector.SelectorList.xpath">
+<code class="descname">xpath</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.SelectorList.xpath" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <code class="docutils literal notranslate"><span class="pre">.xpath()</span></code> method for each element in this list and return
+their results flattened as another <a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">query</span></code> is the same argument as the one in <a class="reference internal" href="#scrapy.selector.Selector.xpath" title="scrapy.selector.Selector.xpath"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Selector.xpath()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.SelectorList.css">
+<code class="descname">css</code><span class="sig-paren">(</span><em>query</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.SelectorList.css" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <code class="docutils literal notranslate"><span class="pre">.css()</span></code> method for each element in this list and return
+their results flattened as another <a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a>.</p>
+<p><code class="docutils literal notranslate"><span class="pre">query</span></code> is the same argument as the one in <a class="reference internal" href="#scrapy.selector.Selector.css" title="scrapy.selector.Selector.css"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Selector.css()</span></code></a></p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.SelectorList.extract">
+<code class="descname">extract</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.SelectorList.extract" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <code class="docutils literal notranslate"><span class="pre">.extract()</span></code> method for each element in this list and return
+their results flattened, as a list of unicode strings.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.selector.SelectorList.re">
+<code class="descname">re</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.selector.SelectorList.re" title="Permalink to this definition">¶</a></dt>
+<dd><p>Call the <code class="docutils literal notranslate"><span class="pre">.re()</span></code> method for each element in this list and return
+their results flattened, as a list of unicode strings.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="selector-examples-on-html-response">
+<h3>Selector examples on HTML response<a class="headerlink" href="#selector-examples-on-html-response" title="Permalink to this headline">¶</a></h3>
+<p>Here’s a couple of <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> examples to illustrate several concepts.
+In all cases, we assume there is already a <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> instantiated with
+a <a class="reference internal" href="request-response.html#scrapy.http.HtmlResponse" title="scrapy.http.HtmlResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">HtmlResponse</span></code></a> object like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">html_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">Select all <code class="docutils literal notranslate"><span class="pre">&lt;h1&gt;</span></code> elements from an HTML response body, returning a list of
+<a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> objects (ie. a <a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a> object):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//h1"</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Extract the text of all <code class="docutils literal notranslate"><span class="pre">&lt;h1&gt;</span></code> elements from an HTML response body,
+returning a list of unicode strings:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//h1"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>         <span class="c1"># this includes the h1 tag</span>
+<span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//h1/text()"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>  <span class="c1"># this excludes the h1 tag</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Iterate over all <code class="docutils literal notranslate"><span class="pre">&lt;p&gt;</span></code> tags and print their class attribute:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">node</span> <span class="ow">in</span> <span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//p"</span><span class="p">):</span>
+    <span class="k">print</span> <span class="n">node</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"@class"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="selector-examples-on-xml-response">
+<h3>Selector examples on XML response<a class="headerlink" href="#selector-examples-on-xml-response" title="Permalink to this headline">¶</a></h3>
+<p>Here’s a couple of examples to illustrate several concepts. In both cases we
+assume there is already a <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> instantiated with an
+<a class="reference internal" href="request-response.html#scrapy.http.XmlResponse" title="scrapy.http.XmlResponse"><code class="xref py py-class docutils literal notranslate"><span class="pre">XmlResponse</span></code></a> object like this:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sel</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">xml_response</span><span class="p">)</span>
+</pre></div>
+</div>
+<ol class="arabic">
+<li><p class="first">Select all <code class="docutils literal notranslate"><span class="pre">&lt;product&gt;</span></code> elements from an XML response body, returning a list
+of <a class="reference internal" href="#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> objects (ie. a <a class="reference internal" href="#scrapy.selector.SelectorList" title="scrapy.selector.SelectorList"><code class="xref py py-class docutils literal notranslate"><span class="pre">SelectorList</span></code></a> object):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//product"</span><span class="p">)</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Extract all prices from a <a class="reference external" href="https://support.google.com/merchants/answer/160589?hl=en&amp;ref_topic=2473799">Google Base XML feed</a> which requires registering
+a namespace:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">sel</span><span class="o">.</span><span class="n">register_namespace</span><span class="p">(</span><span class="s2">"g"</span><span class="p">,</span> <span class="s2">"http://base.google.com/ns/1.0"</span><span class="p">)</span>
+<span class="n">sel</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//g:price"</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+</pre></div>
+</div>
+</li>
+</ol>
+</div>
+<div class="section" id="removing-namespaces">
+<span id="id3"></span><h3>Removing namespaces<a class="headerlink" href="#removing-namespaces" title="Permalink to this headline">¶</a></h3>
+<p>When dealing with scraping projects, it is often quite convenient to get rid of
+namespaces altogether and just work with element names, to write more
+simple/convenient XPaths. You can use the
+<a class="reference internal" href="#scrapy.selector.Selector.remove_namespaces" title="scrapy.selector.Selector.remove_namespaces"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Selector.remove_namespaces()</span></code></a> method for that.</p>
+<p>Let’s show an example that illustrates this with GitHub blog atom feed.</p>
+<p>First, we open the shell with the url we want to scrape:</p>
+<div class="highlight-sh notranslate"><div class="highlight"><pre><span></span>$ scrapy shell https://github.com/blog.atom
+</pre></div>
+</div>
+<p>Once in the shell we can try selecting all <code class="docutils literal notranslate"><span class="pre">&lt;link&gt;</span></code> objects and see that it
+doesn’t work (because the Atom XML namespace is obfuscating those nodes):</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//link"</span><span class="p">)</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<p>But once we call the <a class="reference internal" href="#scrapy.selector.Selector.remove_namespaces" title="scrapy.selector.Selector.remove_namespaces"><code class="xref py py-meth docutils literal notranslate"><span class="pre">Selector.remove_namespaces()</span></code></a> method, all
+nodes can be accessed directly by their names:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">selector</span><span class="o">.</span><span class="n">remove_namespaces</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s2">"//link"</span><span class="p">)</span>
+<span class="go">[&lt;Selector xpath='//link' data=u'&lt;link xmlns="http://www.w3.org/2005/Atom'&gt;,</span>
+<span class="go"> &lt;Selector xpath='//link' data=u'&lt;link xmlns="http://www.w3.org/2005/Atom'&gt;,</span>
+<span class="go"> ...</span>
+</pre></div>
+</div>
+<p>If you wonder why the namespace removal procedure isn’t always called by default
+instead of having to call it manually, this is because of two reasons, which, in order
+of relevance, are:</p>
+<ol class="arabic simple">
+<li>Removing namespaces requires to iterate and modify all nodes in the
+document, which is a reasonably expensive operation to perform for all
+documents crawled by Scrapy</li>
+<li>There could be some cases where using namespaces is actually required, in
+case some element names clash between namespaces. These cases are very rare
+though.</li>
+</ol>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="items.html" class="btn btn-neutral float-right" title="Items" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spiders.html" class="btn btn-neutral" title="Spiders" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-g5t7dz3tk" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>2ff27774</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 1.5
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/selectors.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/selectors.html">1.6</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/selectors.html">1.5</a></dd>
+         </strong> 
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/selectors.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/selectors.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/selectors.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/selectors.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/selectors.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/selectors.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/selectors.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/selectors.html">0.20</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/master/topics/selectors.html">master</a></dd>
+        
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/1.5/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/1.5/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/1.5/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/1.5/docs/topics/selectors.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/1.5/docs/topics/selectors.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  
+
+    
+    
+      <script type="text/javascript">
+          var DOCUMENTATION_OPTIONS = {
+              URL_ROOT:'../',
+              VERSION:'1.5.2',
+              LANGUAGE:'en',
+              COLLAPSE_INDEX:false,
+              FILE_SUFFIX:'.html',
+              HAS_SOURCE:  true,
+              SOURCELINK_SUFFIX: '.txt'
+          };
+      </script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+
+  
+
+  <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-emcasp7e"></div></body></html>

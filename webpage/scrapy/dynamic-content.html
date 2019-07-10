@@ -1,0 +1,636 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Selecting dynamically-loaded content — Scrapy 1.6.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-doc-embed.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Debugging memory leaks" href="leaks.html" />
+    <link rel="prev" title="Using your browser’s Developer Tools for scraping" href="developer-tools.html" /> 
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="https://docs.scrapy.org/en/latest/topics/dynamic-content.html" />
+
+<link rel="stylesheet" href="https://assets.readthedocs.org/static/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = "topics/dynamic-content"
+READTHEDOCS_DATA['source_suffix'] = ".rst"
+</script>
+
+<script type="text/javascript" src="https://assets.readthedocs.org/static/javascript/readthedocs-analytics.js"></script>
+
+<!-- end RTD <extrahead> -->
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                master
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="developer-tools.html">Using your browser’s Developer Tools for scraping</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Selecting dynamically-loaded content</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#finding-the-data-source">Finding the data source</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#inspecting-the-source-code-of-a-webpage">Inspecting the source code of a webpage</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#reproducing-requests">Reproducing requests</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#handling-different-response-formats">Handling different response formats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parsing-javascript-code">Parsing JavaScript code</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#pre-rendering-javascript">Pre-rendering JavaScript</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#using-a-headless-browser">Using a headless browser</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-74pd349uj" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Selecting dynamically-loaded content</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/master/docs/topics/dynamic-content.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="selecting-dynamically-loaded-content">
+<span id="topics-dynamic-content"></span><h1>Selecting dynamically-loaded content<a class="headerlink" href="#selecting-dynamically-loaded-content" title="Permalink to this headline">¶</a></h1>
+<p>Some webpages show the desired data when you load them in a web browser.
+However, when you download them using Scrapy, you cannot reach the desired data
+using <a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a>.</p>
+<p>When this happens, the recommended approach is to
+<a class="reference internal" href="#topics-finding-data-source"><span class="std std-ref">find the data source</span></a> and extract the data
+from it.</p>
+<p>If you fail to do that, and you can nonetheless access the desired data through
+the <a class="reference internal" href="developer-tools.html#topics-livedom"><span class="std std-ref">DOM</span></a> from your web browser, see
+<a class="reference internal" href="#topics-javascript-rendering"><span class="std std-ref">Pre-rendering JavaScript</span></a>.</p>
+<div class="section" id="finding-the-data-source">
+<span id="topics-finding-data-source"></span><h2>Finding the data source<a class="headerlink" href="#finding-the-data-source" title="Permalink to this headline">¶</a></h2>
+<p>To extract the desired data, you must first find its source location.</p>
+<p>If the data is in a non-text-based format, such as an image or a PDF document,
+use the <a class="reference internal" href="developer-tools.html#topics-network-tool"><span class="std std-ref">network tool</span></a> of your web browser to find
+the corresponding request, and <a class="reference internal" href="#topics-reproducing-requests"><span class="std std-ref">reproduce it</span></a>.</p>
+<p>If your web browser lets you select the desired data as text, the data may be
+defined in embedded JavaScript code, or loaded from an external resource in a
+text-based format.</p>
+<p>In that case, you can use a tool like <a class="reference external" href="https://github.com/stav/wgrep">wgrep</a> to find the URL of that resource.</p>
+<p>If the data turns out to come from the original URL itself, you must
+<a class="reference internal" href="#topics-inspecting-source"><span class="std std-ref">inspect the source code of the webpage</span></a> to
+determine where the data is located.</p>
+<p>If the data comes from a different URL, you will need to <a class="reference internal" href="#topics-reproducing-requests"><span class="std std-ref">reproduce the
+corresponding request</span></a>.</p>
+</div>
+<div class="section" id="inspecting-the-source-code-of-a-webpage">
+<span id="topics-inspecting-source"></span><h2>Inspecting the source code of a webpage<a class="headerlink" href="#inspecting-the-source-code-of-a-webpage" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes you need to inspect the source code of a webpage (not the
+<a class="reference internal" href="developer-tools.html#topics-livedom"><span class="std std-ref">DOM</span></a>) to determine where some desired data is located.</p>
+<p>Use Scrapy’s <a class="reference internal" href="commands.html#std:command-fetch"><code class="xref std std-command docutils literal notranslate"><span class="pre">fetch</span></code></a> command to download the webpage contents as seen
+by Scrapy:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">scrapy</span> <span class="n">fetch</span> <span class="o">--</span><span class="n">nolog</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">example</span><span class="o">.</span><span class="n">com</span> <span class="o">&gt;</span> <span class="n">response</span><span class="o">.</span><span class="n">html</span>
+</pre></div>
+</div>
+<p>If the desired data is in embedded JavaScript code within a <code class="docutils literal notranslate"><span class="pre">&lt;script/&gt;</span></code>
+element, see <a class="reference internal" href="#topics-parsing-javascript"><span class="std std-ref">Parsing JavaScript code</span></a>.</p>
+<p>If you cannot find the desired data, first make sure it’s not just Scrapy:
+download the webpage with an HTTP client like <a class="reference external" href="https://curl.haxx.se/">curl</a> or <a class="reference external" href="https://www.gnu.org/software/wget/">wget</a> and see if the
+information can be found in the response they get.</p>
+<p>If they get a response with the desired data, modify your Scrapy
+<a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> to match that of the other HTTP client. For
+example, try using the same user-agent string (<a class="reference internal" href="settings.html#std:setting-USER_AGENT"><code class="xref std std-setting docutils literal notranslate"><span class="pre">USER_AGENT</span></code></a>) or the
+same <a class="reference internal" href="request-response.html#scrapy.http.Request.headers" title="scrapy.http.Request.headers"><code class="xref py py-attr docutils literal notranslate"><span class="pre">headers</span></code></a>.</p>
+<p>If they also get a response without the desired data, you’ll need to take
+steps to make your request more similar to that of the web browser. See
+<a class="reference internal" href="#topics-reproducing-requests"><span class="std std-ref">Reproducing requests</span></a>.</p>
+</div>
+<div class="section" id="reproducing-requests">
+<span id="topics-reproducing-requests"></span><h2>Reproducing requests<a class="headerlink" href="#reproducing-requests" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes we need to reproduce a request the way our web browser performs it.</p>
+<p>Use the <a class="reference internal" href="developer-tools.html#topics-network-tool"><span class="std std-ref">network tool</span></a> of your web browser to see
+how your web browser performs the desired request, and try to reproduce that
+request with Scrapy.</p>
+<p>It might be enough to yield a <a class="reference internal" href="request-response.html#scrapy.http.Request" title="scrapy.http.Request"><code class="xref py py-class docutils literal notranslate"><span class="pre">Request</span></code></a> with the same HTTP
+method and URL. However, you may also need to reproduce the body, headers and
+form parameters (see <a class="reference internal" href="request-response.html#scrapy.http.FormRequest" title="scrapy.http.FormRequest"><code class="xref py py-class docutils literal notranslate"><span class="pre">FormRequest</span></code></a>) of that request.</p>
+<p>Once you get the expected response, you can <a class="reference internal" href="#topics-handling-response-formats"><span class="std std-ref">extract the desired data from
+it</span></a>.</p>
+<p>You can reproduce any request with Scrapy. However, some times reproducing all
+necessary requests may not seem efficient in developer time. If that is your
+case, and crawling speed is not a major concern for you, you can alternatively
+consider <a class="reference internal" href="#topics-javascript-rendering"><span class="std std-ref">JavaScript pre-rendering</span></a>.</p>
+<p>If you get the expected response <cite>sometimes</cite>, but not always, the issue is
+probably not your request, but the target server. The target server might be
+buggy, overloaded, or <a class="reference internal" href="practices.html#bans"><span class="std std-ref">banning</span></a> some of your requests.</p>
+</div>
+<div class="section" id="handling-different-response-formats">
+<span id="topics-handling-response-formats"></span><h2>Handling different response formats<a class="headerlink" href="#handling-different-response-formats" title="Permalink to this headline">¶</a></h2>
+<p>Once you have a response with the desired data, how you extract the desired
+data from it depends on the type of response:</p>
+<ul>
+<li><p class="first">If the response is HTML or XML, use <a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a> as usual.</p>
+</li>
+<li><p class="first">If the response is JSON, use <a class="reference external" href="https://docs.python.org/library/json.html#json.loads">json.loads</a> to load the desired data from
+<a class="reference internal" href="request-response.html#scrapy.http.TextResponse.text" title="scrapy.http.TextResponse.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">response.text</span></code></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">response</span><span class="o">.</span><span class="n">text</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>If the desired data is inside HTML or XML code embedded within JSON data,
+you can load that HTML or XML code into a
+<a class="reference internal" href="selectors.html#scrapy.selector.Selector" title="scrapy.selector.Selector"><code class="xref py py-class docutils literal notranslate"><span class="pre">Selector</span></code></a> and then
+<a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">use it</span></a> as usual:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">'html'</span><span class="p">])</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">If the response is JavaScript, or HTML with a <code class="docutils literal notranslate"><span class="pre">&lt;script/&gt;</span></code> element
+containing the desired data, see <a class="reference internal" href="#topics-parsing-javascript"><span class="std std-ref">Parsing JavaScript code</span></a>.</p>
+</li>
+<li><p class="first">If the response is CSS, use a <a class="reference external" href="https://docs.python.org/library/re.html">regular expression</a> to extract the desired
+data from <a class="reference internal" href="request-response.html#scrapy.http.TextResponse.text" title="scrapy.http.TextResponse.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">response.text</span></code></a>.</p>
+</li>
+</ul>
+<ul id="topics-parsing-images">
+<li><p class="first">If the response is an image or another format based on images (e.g. PDF),
+read the response as bytes from
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">response.body</span></code> and use an OCR
+solution to extract the desired data as text.</p>
+<p>For example, you can use <a class="reference external" href="https://github.com/madmaze/pytesseract">pytesseract</a>. To read a table from a PDF,
+<a class="reference external" href="https://github.com/chezou/tabula-py">tabula-py</a> may be a better choice.</p>
+</li>
+<li><p class="first">If the response is SVG, or HTML with embedded SVG containing the desired
+data, you may be able to extract the desired data using
+<a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a>, since SVG is based on XML.</p>
+<p>Otherwise, you might need to convert the SVG code into a raster image, and
+<a class="reference internal" href="#topics-parsing-images"><span class="std std-ref">handle that raster image</span></a>.</p>
+</li>
+</ul>
+</div>
+<div class="section" id="parsing-javascript-code">
+<span id="topics-parsing-javascript"></span><h2>Parsing JavaScript code<a class="headerlink" href="#parsing-javascript-code" title="Permalink to this headline">¶</a></h2>
+<p>If the desired data is hardcoded in JavaScript, you first need to get the
+JavaScript code:</p>
+<ul class="simple">
+<li>If the JavaScript code is in a JavaScript file, simply read
+<a class="reference internal" href="request-response.html#scrapy.http.TextResponse.text" title="scrapy.http.TextResponse.text"><code class="xref py py-attr docutils literal notranslate"><span class="pre">response.text</span></code></a>.</li>
+<li>If the JavaScript code is within a <code class="docutils literal notranslate"><span class="pre">&lt;script/&gt;</span></code> element of an HTML page,
+use <a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a> to extract the text within that
+<code class="docutils literal notranslate"><span class="pre">&lt;script/&gt;</span></code> element.</li>
+</ul>
+<p>Once you have a string with the JavaScript code, you can extract the desired
+data from it:</p>
+<ul>
+<li><p class="first">You might be able to use a <a class="reference external" href="https://docs.python.org/library/re.html">regular expression</a> to extract the desired
+data in JSON format, which you can then parse with <a class="reference external" href="https://docs.python.org/library/json.html#json.loads">json.loads</a>.</p>
+<p>For example, if the JavaScript code contains a separate line like
+<code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">data</span> <span class="pre">=</span> <span class="pre">{"field":</span> <span class="pre">"value"};</span></code> you can extract that data as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">pattern</span> <span class="o">=</span> <span class="sa">r</span><span class="s1">'\bvar\s+data\s*=\s*(\{.*?\})\s*;\s*\n'</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json_data</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'script::text'</span><span class="p">)</span><span class="o">.</span><span class="n">re_first</span><span class="p">(</span><span class="n">pattern</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">json_data</span><span class="p">)</span>
+<span class="go">{'field': 'value'}</span>
+</pre></div>
+</div>
+</li>
+<li><p class="first">Otherwise, use <a class="reference external" href="https://github.com/scrapinghub/js2xml">js2xml</a> to convert the JavaScript code into an XML document
+that you can parse using <a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a>.</p>
+<p>For example, if the JavaScript code contains
+<code class="docutils literal notranslate"><span class="pre">var</span> <span class="pre">data</span> <span class="pre">=</span> <span class="pre">{field:</span> <span class="pre">"value"};</span></code> you can extract that data as follows:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">js2xml</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">lxml.etree</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">parsel</span> <span class="k">import</span> <span class="n">Selector</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">javascript</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'script::text'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">xml</span> <span class="o">=</span> <span class="n">lxml</span><span class="o">.</span><span class="n">etree</span><span class="o">.</span><span class="n">tostring</span><span class="p">(</span><span class="n">js2xml</span><span class="o">.</span><span class="n">parse</span><span class="p">(</span><span class="n">javascript</span><span class="p">),</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">'unicode'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selector</span> <span class="o">=</span> <span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">xml</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">selector</span><span class="o">.</span><span class="n">css</span><span class="p">(</span><span class="s1">'var[name="data"]'</span><span class="p">)</span><span class="o">.</span><span class="n">get</span><span class="p">()</span>
+<span class="go">'&lt;var name="data"&gt;&lt;object&gt;&lt;property name="field"&gt;&lt;string&gt;value&lt;/string&gt;&lt;/property&gt;&lt;/object&gt;&lt;/var&gt;'</span>
+</pre></div>
+</div>
+</li>
+</ul>
+</div>
+<div class="section" id="pre-rendering-javascript">
+<span id="topics-javascript-rendering"></span><h2>Pre-rendering JavaScript<a class="headerlink" href="#pre-rendering-javascript" title="Permalink to this headline">¶</a></h2>
+<p>On webpages that fetch data from additional requests, reproducing those
+requests that contain the desired data is the preferred approach. The effort is
+often worth the result: structured, complete data with minimum parsing time and
+network transfer.</p>
+<p>However, sometimes it can be really hard to reproduce certain requests. Or you
+may need something that no request can give you, such as a screenshot of a
+webpage as seen in a web browser.</p>
+<p>In these cases use the <a class="reference external" href="https://github.com/scrapinghub/splash">Splash</a> JavaScript-rendering service, along with
+<a class="reference external" href="https://github.com/scrapy-plugins/scrapy-splash">scrapy-splash</a> for seamless integration.</p>
+<p>Splash returns as HTML the <a class="reference internal" href="developer-tools.html#topics-livedom"><span class="std std-ref">DOM</span></a> of a webpage, so that
+you can parse it with <a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">selectors</span></a>. It provides great
+flexibility through <a class="reference external" href="https://splash.readthedocs.io/en/stable/api.html">configuration</a> or <a class="reference external" href="https://splash.readthedocs.io/en/stable/scripting-tutorial.html">scripting</a>.</p>
+<p>If you need something beyond what Splash offers, such as interacting with the
+DOM on-the-fly from Python code instead of using a previously-written script,
+or handling multiple web browser windows, you might need to
+<a class="reference internal" href="#topics-headless-browsing"><span class="std std-ref">use a headless browser</span></a> instead.</p>
+</div>
+<div class="section" id="using-a-headless-browser">
+<span id="topics-headless-browsing"></span><h2>Using a headless browser<a class="headerlink" href="#using-a-headless-browser" title="Permalink to this headline">¶</a></h2>
+<p>A <a class="reference external" href="https://en.wikipedia.org/wiki/Headless_browser">headless browser</a> is a special web browser that provides an API for
+automation.</p>
+<p>The easiest way to use a headless browser with Scrapy is to use <a class="reference external" href="https://www.seleniumhq.org/">Selenium</a>,
+along with <a class="reference external" href="https://github.com/clemfromspace/scrapy-selenium">scrapy-selenium</a> for seamless integration.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="leaks.html" class="btn btn-neutral float-right" title="Debugging memory leaks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="developer-tools.html" class="btn btn-neutral float-left" title="Using your browser’s Developer Tools for scraping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-w9hyaxwu" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008–2018, Scrapy developers
+      
+        <span class="commit">
+          Revision <code>68d898d4</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: master
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions"><!-- Inserted RTD Footer -->
+<div class="injected">
+
+  
+
+      
+      
+      
+      <dl>
+        <dt>Versions</dt>
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/latest/topics/dynamic-content.html">latest</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.6/topics/dynamic-content.html">1.6</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.5/topics/dynamic-content.html">1.5</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.4/topics/dynamic-content.html">1.4</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.3/topics/dynamic-content.html">1.3</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.2/topics/dynamic-content.html">1.2</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.1/topics/dynamic-content.html">1.1</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/1.0/topics/dynamic-content.html">1.0</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.24/topics/dynamic-content.html">0.24</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.22/topics/dynamic-content.html">0.22</a></dd>
+        
+        
+        
+        <dd><a href="https://docs.scrapy.org/en/0.20/topics/dynamic-content.html">0.20</a></dd>
+        
+        
+         <strong> 
+        <dd><a href="https://docs.scrapy.org/en/master/topics/dynamic-content.html">master</a></dd>
+         </strong> 
+        
+      </dl>
+      
+      
+
+      
+      
+      <dl>
+        <dt>Downloads</dt>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/master/">PDF</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/master/">HTML</a></dd>
+        
+        <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/master/">Epub</a></dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <!-- These are kept as relative links for internal installs that are http -->
+        <dt>On Read the Docs</dt>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/">Project Home</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/builds/">Builds</a>
+        </dd>
+        <dd>
+          <a href="//readthedocs.org/projects/scrapy/downloads/">Downloads</a>
+        </dd>
+      </dl>
+      
+
+      
+
+      
+      <dl>
+        <dt>On GitHub</dt>
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/blob/master/docs/topics/dynamic-content.rst">View</a>
+        </dd>
+        
+        <dd>
+          <a href="https://github.com/scrapy/scrapy/edit/master/docs/topics/dynamic-content.rst">Edit</a>
+        </dd>
+        
+      </dl>
+      
+      
+
+      
+      <dl>
+        <dt>Search</dt>
+        <dd>
+          <div style="padding: 6px;">
+            <form id="flyout-search-form" class="wy-form" target="_blank" action="//readthedocs.org/projects/scrapy/search/" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              </form>
+          </div>
+        </dd>
+      </dl>
+      
+
+
+
+      <hr />
+      
+        <small>
+          <span>Hosted by <a href="https://readthedocs.org">Read the Docs</a></span>
+          <span> · </span>
+          <a href="https://docs.readthedocs.io/page/privacy-policy.html">Privacy Policy</a>
+        </small>
+      
+
+      
+
+</div>
+</div>
+  </div>
+
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+ 
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-tzg25rcwh"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/548/tp9fw55OJKIj/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/548/tp9fw55OJKIj/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/548/tp9fw55OJKIj/" rel="nofollow" target="_blank">Hiring Python devs? Read the Docs can help!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

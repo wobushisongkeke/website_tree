@@ -1,0 +1,534 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Using Firebug for scraping — Scrapy 1.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Scrapy 1.4.0 documentation" href="../index.html" />
+        <link rel="next" title="Debugging memory leaks" href="leaks.html" />
+        <link rel="prev" title="Using Firefox for scraping" href="firefox.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/firebug.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/firebug' 		
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                xpath-tutorial
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>Using Firebug for scraping</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#getting-links-to-follow">Getting links to follow</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#extracting-the-data">Extracting the data</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="xpath-tutorial.html">XPath Tutorial</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-gku85gtt" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>Using Firebug for scraping</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/xpath-tutorial/docs/topics/firebug.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="using-firebug-for-scraping">
+<span id="topics-firebug"></span><h1>Using Firebug for scraping<a class="headerlink" href="#using-firebug-for-scraping" title="Permalink to this headline">¶</a></h1>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Google Directory, the example website used in this guide is no longer
+available as it <a class="reference external" href="https://searchenginewatch.com/sew/news/2096661/google-directory-shut">has been shut down by Google</a>. The concepts in this guide
+are still valid though. If you want to update this guide to use a new
+(working) site, your contribution will be more than welcome!. See <a class="reference internal" href="../contributing.html#topics-contributing"><span class="std std-ref">Contributing to Scrapy</span></a>
+for information on how to do so.</p>
+</div>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>This document explains how to use <a class="reference external" href="http://getfirebug.com">Firebug</a> (a Firefox add-on) to make the
+scraping process easier and more fun. For other useful Firefox add-ons see
+<a class="reference internal" href="firefox.html#topics-firefox-addons"><span class="std std-ref">Useful Firefox add-ons for scraping</span></a>. There are some caveats with using Firefox add-ons
+to inspect pages, see <a class="reference internal" href="firefox.html#topics-firefox-livedom"><span class="std std-ref">Caveats with inspecting the live browser DOM</span></a>.</p>
+<p>In this example, we’ll show how to use <a class="reference external" href="http://getfirebug.com">Firebug</a> to scrape data from the
+<a class="reference external" href="http://directory.google.com/">Google Directory</a>, which contains the same data as the <a class="reference external" href="http://www.dmoz.org">Open Directory
+Project</a> used in the <a class="reference internal" href="../intro/tutorial.html#intro-tutorial"><span class="std std-ref">tutorial</span></a> but with a different
+face.</p>
+<p>Firebug comes with a very useful feature called <a class="reference external" href="https://www.youtube.com/watch?v=-pT_pDe54aA">Inspect Element</a> which allows
+you to inspect the HTML code of the different page elements just by hovering
+your mouse over them. Otherwise you would have to search for the tags manually
+through the HTML body which can be a very tedious task.</p>
+<p>In the following screenshot you can see the <a class="reference external" href="https://www.youtube.com/watch?v=-pT_pDe54aA">Inspect Element</a> tool in action.</p>
+<a class="reference internal image-reference" href="../_images/firebug1.png"><img alt="Inspecting elements with Firebug" src="../_images/firebug1.png" style="width: 913px; height: 600px;" /></a>
+<p>At first sight, we can see that the directory is divided in categories, which
+are also divided in subcategories.</p>
+<p>However, it seems that there are more subcategories than the ones being shown
+in this page, so we’ll keep looking:</p>
+<a class="reference internal image-reference" href="../_images/firebug2.png"><img alt="Inspecting elements with Firebug" src="../_images/firebug2.png" style="width: 819px; height: 629px;" /></a>
+<p>As expected, the subcategories contain links to other subcategories, and also
+links to actual websites, which is the purpose of the directory.</p>
+</div>
+<div class="section" id="getting-links-to-follow">
+<h2>Getting links to follow<a class="headerlink" href="#getting-links-to-follow" title="Permalink to this headline">¶</a></h2>
+<p>By looking at the category URLs we can see they share a pattern:</p>
+<blockquote>
+<div><a class="reference external" href="http://directory.google.com/Category/Subcategory/Another_Subcategory">http://directory.google.com/Category/Subcategory/Another_Subcategory</a></div></blockquote>
+<p>Once we know that, we are able to construct a regular expression to follow
+those links. For example, the following one:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>directory\.google\.com/[A-Z][a-zA-Z_/]+$
+</pre></div>
+</div>
+<p>So, based on that regular expression we can create the first crawling rule:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">Rule</span><span class="p">(</span><span class="n">LinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="s1">'directory.google.com/[A-Z][a-zA-Z_/]+$'</span><span class="p">,</span> <span class="p">),</span>
+    <span class="s1">'parse_category'</span><span class="p">,</span>
+    <span class="n">follow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+<span class="p">),</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="spiders.html#scrapy.spiders.Rule" title="scrapy.spiders.Rule"><code class="xref py py-class docutils literal"><span class="pre">Rule</span></code></a> object instructs
+<a class="reference internal" href="spiders.html#scrapy.spiders.CrawlSpider" title="scrapy.spiders.CrawlSpider"><code class="xref py py-class docutils literal"><span class="pre">CrawlSpider</span></code></a> based spiders how to follow the
+category links. <code class="docutils literal"><span class="pre">parse_category</span></code> will be a method of the spider which will
+process and extract data from those pages.</p>
+<p>This is how the spider would look so far:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.linkextractors</span> <span class="k">import</span> <span class="n">LinkExtractor</span>
+<span class="kn">from</span> <span class="nn">scrapy.spiders</span> <span class="k">import</span> <span class="n">CrawlSpider</span><span class="p">,</span> <span class="n">Rule</span>
+
+<span class="k">class</span> <span class="nc">GoogleDirectorySpider</span><span class="p">(</span><span class="n">CrawlSpider</span><span class="p">):</span>
+    <span class="n">name</span> <span class="o">=</span> <span class="s1">'directory.google.com'</span>
+    <span class="n">allowed_domains</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'directory.google.com'</span><span class="p">]</span>
+    <span class="n">start_urls</span> <span class="o">=</span> <span class="p">[</span><span class="s1">'http://directory.google.com/'</span><span class="p">]</span>
+
+    <span class="n">rules</span> <span class="o">=</span> <span class="p">(</span>
+        <span class="n">Rule</span><span class="p">(</span><span class="n">LinkExtractor</span><span class="p">(</span><span class="n">allow</span><span class="o">=</span><span class="s1">'directory\.google\.com/[A-Z][a-zA-Z_/]+$'</span><span class="p">),</span>
+            <span class="s1">'parse_category'</span><span class="p">,</span> <span class="n">follow</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">parse_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+        <span class="c1"># write the category page data extraction code here</span>
+        <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="extracting-the-data">
+<h2>Extracting the data<a class="headerlink" href="#extracting-the-data" title="Permalink to this headline">¶</a></h2>
+<p>Now we’re going to write the code to extract data from those pages.</p>
+<p>With the help of Firebug, we’ll take a look at some page containing links to
+websites (say <a class="reference external" href="http://directory.google.com/Top/Arts/Awards/">http://directory.google.com/Top/Arts/Awards/</a>) and find out how we can
+extract those links using <a class="reference internal" href="selectors.html#topics-selectors"><span class="std std-ref">Selectors</span></a>. We’ll also
+use the <a class="reference internal" href="shell.html#topics-shell"><span class="std std-ref">Scrapy shell</span></a> to test those XPath’s and make sure
+they work as we expect.</p>
+<a class="reference internal image-reference" href="../_images/firebug3.png"><img alt="Inspecting elements with Firebug" src="../_images/firebug3.png" style="width: 965px; height: 751px;" /></a>
+<p>As you can see, the page markup is not very descriptive: the elements don’t
+contain <code class="docutils literal"><span class="pre">id</span></code>, <code class="docutils literal"><span class="pre">class</span></code> or any attribute that clearly identifies them, so
+we’ll use the ranking bars as a reference point to select the data to extract
+when we construct our XPaths.</p>
+<p>After using FireBug, we can see that each link is inside a <code class="docutils literal"><span class="pre">td</span></code> tag, which is
+itself inside a <code class="docutils literal"><span class="pre">tr</span></code> tag that also contains the link’s ranking bar (in
+another <code class="docutils literal"><span class="pre">td</span></code>).</p>
+<p>So we can select the ranking bar, then find its parent (the <code class="docutils literal"><span class="pre">tr</span></code>), and then
+finally, the link’s <code class="docutils literal"><span class="pre">td</span></code> (which contains the data we want to scrape).</p>
+<p>This results in the following XPath:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">td</span><span class="p">[</span><span class="n">descendant</span><span class="p">::</span><span class="n">a</span><span class="p">[</span><span class="n">contains</span><span class="p">(</span><span class="nd">@href</span><span class="p">,</span> <span class="s2">"#pagerank"</span><span class="p">)]]</span><span class="o">/</span><span class="n">following</span><span class="o">-</span><span class="n">sibling</span><span class="p">::</span><span class="n">td</span><span class="o">//</span><span class="n">a</span>
+</pre></div>
+</div>
+<p>It’s important to use the <a class="reference internal" href="shell.html#topics-shell"><span class="std std-ref">Scrapy shell</span></a> to test these
+complex XPath expressions and make sure they work as expected.</p>
+<p>Basically, that expression will look for the ranking bar’s <code class="docutils literal"><span class="pre">td</span></code> element, and
+then select any <code class="docutils literal"><span class="pre">td</span></code> element who has a descendant <code class="docutils literal"><span class="pre">a</span></code> element whose
+<code class="docutils literal"><span class="pre">href</span></code> attribute contains the string <code class="docutils literal"><span class="pre">#pagerank</span></code>“</p>
+<p>Of course, this is not the only XPath, and maybe not the simpler one to select
+that data. Another approach could be, for example, to find any <code class="docutils literal"><span class="pre">font</span></code> tags
+that have that grey colour of the links,</p>
+<p>Finally, we can write our <code class="docutils literal"><span class="pre">parse_category()</span></code> method:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">parse_category</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">response</span><span class="p">):</span>
+    <span class="c1"># The path to website links in directory page</span>
+    <span class="n">links</span> <span class="o">=</span> <span class="n">response</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//td[descendant::a[contains(@href, "#pagerank")]]/following-sibling::td/font'</span><span class="p">)</span>
+
+    <span class="k">for</span> <span class="n">link</span> <span class="ow">in</span> <span class="n">links</span><span class="p">:</span>
+        <span class="n">item</span> <span class="o">=</span> <span class="n">DirectoryItem</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'name'</span><span class="p">]</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'url'</span><span class="p">]</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'a/@href'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="n">item</span><span class="p">[</span><span class="s1">'description'</span><span class="p">]</span> <span class="o">=</span> <span class="n">link</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'font[2]/text()'</span><span class="p">)</span><span class="o">.</span><span class="n">extract</span><span class="p">()</span>
+        <span class="k">yield</span> <span class="n">item</span>
+</pre></div>
+</div>
+<p>Be aware that you may find some elements which appear in Firebug but
+not in the original HTML, such as the typical case of <code class="docutils literal"><span class="pre">&lt;tbody&gt;</span></code>
+elements.</p>
+<p>or tags which Therefer   in page HTML
+sources may on Firebug inspects the live DOM</p>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="leaks.html" class="btn btn-neutral float-right" title="Debugging memory leaks" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="firefox.html" class="btn btn-neutral" title="Using Firefox for scraping" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-8yhd4rhjg" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>12eea9e7</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: xpath-tutorial
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/1.4/">1.4</a></dd>
+        
+          <dd><a href="/en/1.3/">1.3</a></dd>
+        
+          <dd><a href="/en/1.2/">1.2</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/xpath-tutorial/">xpath-tutorial</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/xpath-tutorial/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/xpath-tutorial/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/xpath-tutorial/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.4.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript" src="../_static/jquery.xpath.min.js"></script>
+<script type="text/javascript" src="../_static/xpathdemo.js"></script>
+<link rel="stylesheet" href="../_static/xpathdemo.css" type="text/css" />
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-x777q4q8f"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/641/5tlvVS4WpztT/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/641/5tlvVS4WpztT/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/641/5tlvVS4WpztT/" rel="nofollow" target="_blank">Private repos and priority support. Try Read the Docs for Business Today!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>

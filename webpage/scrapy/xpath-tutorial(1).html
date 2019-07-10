@@ -1,0 +1,2935 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>XPath Tutorial — Scrapy 1.4.0 documentation</title>
+  
+
+  
+  
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+        <link rel="index" title="Index" href="../genindex.html" />
+        <link rel="search" title="Search" href="../search.html" />
+    <link rel="top" title="Scrapy 1.4.0 documentation" href="../index.html" />
+        <link rel="next" title="Architecture overview" href="architecture.html" />
+        <link rel="prev" title="Jobs: pausing and resuming crawls" href="jobs.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://www.google-analytics.com/plugins/ua/linkid.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" async="" src="https://cdn.segment.com/analytics.js/v1/8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA/analytics.min.js"></script><script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/xpath-tutorial.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/xpath-tutorial' 		
+READTHEDOCS_DATA['source_suffix'] = '.rst'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+   
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                xpath-tutorial
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">First steps</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Basic concepts</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Built-in services</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Solving specific problems</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="media-pipeline.html">Downloading and processing files and images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="deploy.html">Deploying Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="benchmarking.html">Benchmarking</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1 current"><a class="reference internal current" href="#"><span class="toctree-expand"></span>XPath Tutorial</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#part-1-what-is-xpath"><span class="toctree-expand"></span>Part 1: What is XPath?</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#xpath-is-a-language">XPath is a language</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#why-learn-xpath">Why learn XPath?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpath-data-model">XPath data model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#in-browser-widget-and-using-parsel">In-browser widget and using parsel</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpath-return-types">XPath return types</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#xpath-expressions"><span class="toctree-expand"></span>XPath expressions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-the-root-node-of-a-document-warning-special-case">Selecting the root node of a document (warning: special case)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-elements">Selecting elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-text-nodes">Selecting text nodes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-nodes-without-a-full-explicit-path">Selecting nodes without a full, explicit path</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#selecting-attributes">Selecting attributes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#get-a-string-representation-of-an-element">Get a string representation of an element</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#counting-elements">Counting elements</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boolean-operations">Boolean operations</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#part-2-location-paths-how-to-move-inside-the-document-tree"><span class="toctree-expand"></span>Part 2: Location Paths: how to move inside the document tree</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#relative-vs-absolute-paths">Relative vs. absolute paths</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abbreviated-syntax-vs-full-syntax">Abbreviated syntax vs. full syntax</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#axes-moving-around"><span class="toctree-expand"></span>Axes: moving around</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stay-where-you-are-self">Stay where you are: self</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#move-up-or-down-the-tree-child-descendant-parent-ancestor">Move up or down the tree: child, descendant, parent, ancestor</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#move-sideways-children-nodes-of-the-same-parent">Move “sideways”: children nodes of the same parent</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#attribute-axis">Attribute axis</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#node-tests">Node tests</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#abbreviation-cheatsheet">Abbreviation cheatsheet</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#predicates"><span class="toctree-expand"></span>Predicates</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#positional-predicates">Positional predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#location-paths-as-predicates">Location paths as predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boolean-predicates">Boolean predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#nested-predicates">Nested predicates</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#order-of-predicates-is-important">Order of predicates is important</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#string-functions">String functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#part-3-use-cases-for-web-scraping"><span class="toctree-expand"></span>Part 3: Use-cases for web scraping</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#text-extraction">Text extraction</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#attributes-extraction"><span class="toctree-expand"></span>Attributes extraction</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#attribute-names-extractions">Attribute names extractions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#css-selectors">CSS Selectors</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#loop-on-elements-table-rows-lists">Loop on elements (table rows, lists)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#element-boundaries-xpath-buckets-advanced">Element boundaries &amp; XPath buckets (advanced)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#exslt-extensions">EXSLT extensions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#summary-of-tips">Summary of tips</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Extending Scrapy</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<p class="caption"><span class="caption-text">All the rest</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-yptoz3bd" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/194/LlnaZdUAtpuF/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/english-house.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/194/LlnaZdUAtpuF/" rel="nofollow" target="_blank"><b>Reach over 7 million devs</b> each month when you advertise with Read the Docs</a>.</div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">Scrapy</a>
+        
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> »</li>
+        
+      <li>XPath Tutorial</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            
+              <a href="https://github.com/scrapy/scrapy/blob/xpath-tutorial/docs/topics/xpath-tutorial.rst" class="fa fa-github"> Edit on GitHub</a>
+            
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="xpath-tutorial">
+<h1>XPath Tutorial<a class="headerlink" href="#xpath-tutorial" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="part-1-what-is-xpath">
+<h2>Part 1: What is XPath?<a class="headerlink" href="#part-1-what-is-xpath" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="xpath-is-a-language">
+<h3>XPath is a language<a class="headerlink" href="#xpath-is-a-language" title="Permalink to this headline">¶</a></h3>
+<blockquote class="epigraph">
+<div><p><em>“XPath is a language for addressing parts of an XML document”</em></p>
+<p class="attribution">—<a class="reference external" href="https://www.w3.org/TR/xpath/">XML Path Language 1.0</a></p>
+</div></blockquote>
+<p>This abstract from the official specifications says it all:</p>
+<ul class="simple">
+<li><em>“XPath is a language”</em>: an XPath expression is a character string...</li>
+<li><em>“for addressing parts of an XML document”</em>: ...a string that that
+you pass to an XPath engine acting over an XML (or HTML) document,
+outputting parts of it, and following the data model explained below.</li>
+</ul>
+</div>
+<div class="section" id="why-learn-xpath">
+<h3>Why learn XPath?<a class="headerlink" href="#why-learn-xpath" title="Permalink to this headline">¶</a></h3>
+<ul class="simple">
+<li>with XPath, you can navigate <strong>everywhere</strong> inside a DOM tree</li>
+<li>it’s a must-have skill for accurate web data extraction</li>
+<li>XPath is more powerful than CSS selectors</li>
+<li>it allows selection and filtering with a fine-grained look at the
+text content</li>
+<li>XPath allows complex conditioning with axes</li>
+<li>XPath is extensible with custom functions (we won’t cover that in
+this tutorial though)</li>
+</ul>
+</div>
+<div class="section" id="xpath-data-model">
+<h3>XPath data model<a class="headerlink" href="#xpath-data-model" title="Permalink to this headline">¶</a></h3>
+<p>XPath’s <a class="reference external" href="http://www.w3.org/TR/xpath/#data-model">data model</a> is a
+tree of nodes representing a document. Nodes can be either:</p>
+<ul class="simple">
+<li><strong>element nodes</strong> (<code class="docutils literal"><span class="pre">&lt;p&gt;This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">paragraph&lt;/p&gt;</span></code>),</li>
+<li>or <strong>attribute nodes</strong> (<code class="docutils literal"><span class="pre">href="page.html"</span></code> inside an <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> tag),</li>
+<li>or <strong>text nodes</strong> (<code class="docutils literal"><span class="pre">"I</span> <span class="pre">have</span> <span class="pre">something</span> <span class="pre">to</span> <span class="pre">say"</span></code>),</li>
+<li>or <strong>comment nodes</strong> (<code class="docutils literal"><span class="pre">&lt;!--</span> <span class="pre">a</span> <span class="pre">comment</span> <span class="pre">--&gt;</span></code>),</li>
+<li>(or root nodes, or namespace nodes, or processing instructions nodes
+but we will not cover them here.)</li>
+</ul>
+<p>In XPath’s data model, everything is a node : elements, attributes,
+comments... (<strong>but not all nodes are elements.</strong>)</p>
+<p>And nodes have an order, the <strong>document order</strong>: the order in which they
+appear in the XML/HTML source.</p>
+<p>In effect, this data model allows you to represent everything inside an
+XML or HTML document, in a structured, ordered and hierarchical way.</p>
+<p>Throughout this tutorial, we’ll use the following sample HTML page to
+illustrate how XPath works:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</pre></div>
+</div>
+<p>Here is an ASCII tree representation of our toy HTML document for an
+XPath engine, according to the data model:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 0--(ROOT)</span>
+ <span class="o">+--</span> <span class="c1"># 1--&lt;html&gt;</span>
+     <span class="o">+--</span> <span class="c1"># 2--(TXT): '\n'</span>
+     <span class="o">+--</span> <span class="c1"># 3--&lt;head&gt;</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 4--(TXT): '\n  '</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 5--&lt;title&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 6--(TXT): 'This is a title'</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 7--(TXT): '\n  '</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 8--&lt;meta&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 9--(ATTR): content: 'text/html; charset=utf-8'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#10--(ATTR): http-equiv: 'content-type'</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#11--(TXT): '\n'</span>
+     <span class="o">+--</span> <span class="c1">#12--(TXT): '\n'</span>
+     <span class="o">+--</span> <span class="c1">#13--&lt;body&gt;</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#14--(TXT): '\n  '</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#15--&lt;div&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#16--(TXT): '\n    '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#17--&lt;div&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#18--(TXT): '\n      '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#19--&lt;p&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#20--(TXT): 'This is a paragraph.'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#21--(TXT): '\n      '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#22--&lt;p&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#23--(TXT): 'Is this '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#24--&lt;a&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#25--(ATTR): href: 'page2.html'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#26--(TXT): 'a link'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#27--(TXT): '?'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#28--(TXT): '\n      '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#29--&lt;br&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#30--(TXT): '\n      Apparently.\n    '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#31--(TXT): '\n    '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#32--&lt;div&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#33--(ATTR): class: 'second'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#34--(TXT): '\n      Nothing to add.\n      Except maybe this '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#35--&lt;a&gt;</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#36--(ATTR): href: 'page3.html'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#37--(TXT): 'other link'</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#38--(TXT): '. \n      '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#39--(COMM): ' And this comment '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#40--(TXT): '\n    '</span>
+     <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#41--(TXT): '\n  '</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#42--(TXT): '\n'</span>
+     <span class="o">+--</span> <span class="c1">#43--(TXT): '\n'</span>
+</pre></div>
+</div>
+<p>You can see various tree branches and leaves:</p>
+<ul class="simple">
+<li>e.g. <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> or <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code>: these are element nodes</li>
+<li><code class="docutils literal"><span class="pre">(TXT)</span></code> represent text nodes</li>
+<li><code class="docutils literal"><span class="pre">(ATTR)</span></code> represent attribute nodes</li>
+<li><code class="docutils literal"><span class="pre">(COMM)</span></code> represent comment nodes</li>
+</ul>
+<p>The <code class="docutils literal"><span class="pre">#&lt;number&gt;</span></code> are the document orders of each node.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">You can also notice that <strong>text with only whitespace</strong> (space and
+newlines in our example) <strong>are proper nodes</strong>, they do have their
+document order and can be selected with XPath.</p>
+</div>
+</div>
+<div class="section" id="in-browser-widget-and-using-parsel">
+<h3>In-browser widget and using parsel<a class="headerlink" href="#in-browser-widget-and-using-parsel" title="Permalink to this headline">¶</a></h3>
+<p>To illustrate and learn XPath, we will use an in-browser widget
+allowing you to play around with XPath expressions and see the output
+live.
+We will also illustrate some Python pattern for data extraction with
+XPath using the <a class="reference external" href="https://github.com/scrapy/parsel">parsel</a> library
+which powers Scrapy selectors under the hood.
+It is a Python module written on top of <a class="reference external" href="http://lxml.de/">lxml</a>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">lxml itself is built using the C library <a class="reference external" href="http://www.xmlsoft.org/">libxml2</a>,
+which has a conformant XPath 1.0 engine.
+You should be able to run the same XPath expressions with
+any XPath 1.0 engine, and get the same results.</p>
+</div>
+<p>This tutorial only showcases XPath 1.0. (<a class="reference external" href="https://www.w3.org/TR/xpath-3/">XPath has reached version 3</a>, but you can already do a
+lot with XPath 1.0 and Python. And there’s no XPath&gt;1.0 implementation
+in Python today.)</p>
+<p>When showing Python code snippets using Parsel, we assume that we have
+a <code class="docutils literal"><span class="pre">Selector</span></code> – called <code class="docutils literal"><span class="pre">doc</span></code> – created with the HTML content, similarly
+to the following:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">parsel</span>
+
+
+<span class="n">htmlsample</span> <span class="o">=</span> <span class="s1">'''&lt;html&gt;</span>
+<span class="s1">&lt;head&gt;</span>
+<span class="s1">  &lt;title&gt;This is a title&lt;/title&gt;</span>
+<span class="s1">  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;</span>
+<span class="s1">&lt;/head&gt;</span>
+<span class="s1">&lt;body&gt;</span>
+<span class="s1">  &lt;div&gt;</span>
+<span class="s1">    &lt;div&gt;</span>
+<span class="s1">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="s1">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="s1">      &lt;br /&gt;</span>
+<span class="s1">      Apparently.</span>
+<span class="s1">    &lt;/div&gt;</span>
+<span class="s1">    &lt;div class="second"&gt;</span>
+<span class="s1">      Nothing to add.</span>
+<span class="s1">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="s1">      &lt;!-- And this comment --&gt;</span>
+<span class="s1">    &lt;/div&gt;</span>
+<span class="s1">  &lt;/div&gt;</span>
+<span class="s1">&lt;/body&gt;</span>
+<span class="s1">&lt;/html&gt;'''</span>
+
+<span class="c1">#</span>
+<span class="c1"># Below is a small "hack" to change the representation of extracted</span>
+<span class="c1">#  nodes when using parsel.</span>
+<span class="c1"># This is to represent return values as serialized HTML element or</span>
+<span class="c1"># string, and not parsel's wrapper objects.</span>
+<span class="c1">#</span>
+<span class="n">parsel</span><span class="o">.</span><span class="n">Selector</span><span class="o">.</span><span class="fm">__str__</span> <span class="o">=</span> <span class="n">parsel</span><span class="o">.</span><span class="n">Selector</span><span class="o">.</span><span class="n">extract</span>
+<span class="n">parsel</span><span class="o">.</span><span class="n">Selector</span><span class="o">.</span><span class="fm">__repr__</span> <span class="o">=</span> <span class="n">parsel</span><span class="o">.</span><span class="n">Selector</span><span class="o">.</span><span class="fm">__str__</span>
+<span class="n">parsel</span><span class="o">.</span><span class="n">SelectorList</span><span class="o">.</span><span class="fm">__repr__</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="s1">'[</span><span class="si">{}</span><span class="s1">]'</span><span class="o">.</span><span class="n">format</span><span class="p">(</span>
+    <span class="s1">'</span><span class="se">\n</span><span class="s1"> '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="s2">"(</span><span class="si">{}</span><span class="s2">) </span><span class="si">{!r}</span><span class="s2">"</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">i</span><span class="p">,</span> <span class="nb">repr</span><span class="p">(</span><span class="n">s</span><span class="p">))</span>
+               <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">s</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">start</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+<span class="p">)</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="sa">r</span><span class="s1">'\n'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="n">doc</span> <span class="o">=</span> <span class="n">parsel</span><span class="o">.</span><span class="n">Selector</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">htmlsample</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="xpath-return-types">
+<h3>XPath return types<a class="headerlink" href="#xpath-return-types" title="Permalink to this headline">¶</a></h3>
+<p>When applied over a document, an XPath expression can return either:</p>
+<ul class="simple">
+<li>a node-set – this is the most common case, and often it’s a set of
+element nodes</li>
+<li>a string</li>
+<li>a number (floating point)</li>
+<li>a boolean</li>
+</ul>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last"><strong>When an XPath expression returns a node-set, you do get a set of
+nodes, even if there’s only one node in the set.</strong>
+With parsel, you get a <code class="docutils literal"><span class="pre">list</span></code> of nodes though, not a Python <code class="docutils literal"><span class="pre">set</span></code>.</p>
+</div>
+</div>
+<div class="section" id="xpath-expressions">
+<h3>XPath expressions<a class="headerlink" href="#xpath-expressions" title="Permalink to this headline">¶</a></h3>
+<p>We will now take a look at some example XPath expressions to get a
+feeling of how they work. We’ll explain the syntax in more details later
+on.</p>
+<p>XPath expressions are passed to an XPath engine as strings.</p>
+<div class="section" id="selecting-the-root-node-of-a-document-warning-special-case">
+<h4>Selecting the root node of a document (warning: special case)<a class="headerlink" href="#selecting-the-root-node-of-a-document-warning-special-case" title="Permalink to this headline">¶</a></h4>
+<p>The root node is a special node: this is a quote from XPath 1.0 specs:</p>
+<blockquote>
+<div><em>“The root node is the root of the tree. A root node does not occur
+except as the root of the tree. The element node for the document
+element is a child of the root node.”</em></div></blockquote>
+<p>Selecting the root node of a document with XPath is one of the shortest
+XPath expressions: <code class="docutils literal"><span class="pre">"/"</span></code> (a string with only a forward slash).</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187481870608" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187481870608" type="text" value="/" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187481870608" class="html_output"><div class="result_node">[object XMLDocument]</div></div>
+</div>
+<p>This is very similar to <code class="docutils literal"><span class="pre">cd</span> <span class="pre">/</span></code> in a shell within a Unix filesystem
+(going to the root directory).</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Unfortunately, this <code class="docutils literal"><span class="pre">"/"</span></code> expression does not work as expected
+with parsel. We get an empty list instead of the root node.</p>
+<p class="last">It is a limitation of lxml apparently, because
+it works with libxml2 directly. In practice though, this doesn’t matter
+much because the root node is virtually never used directly.</p>
+</div>
+</div>
+<div class="section" id="selecting-elements">
+<h4>Selecting elements<a class="headerlink" href="#selecting-elements" title="Permalink to this headline">¶</a></h4>
+<p>Elements build the structure and hierarchy of the document. An element
+in HTML (and XML) is what you see in the source code between an opening
+and corresponding closing tag, and everything in between.</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">&lt;title&gt;This</span> <span class="pre">is</span> <span class="pre">a</span> <span class="pre">title&lt;/title&gt;</span></code> is a <code class="docutils literal"><span class="pre">title</span></code> element,</li>
+<li><code class="docutils literal"><span class="pre">&lt;p&gt;Is</span> <span class="pre">this</span> <span class="pre">&lt;a</span> <span class="pre">href="page2.html"&gt;a</span> <span class="pre">link&lt;/a&gt;?&lt;/p&gt;</span></code> is a <code class="docutils literal"><span class="pre">p</span></code>
+(paragraph) element.</li>
+</ul>
+<p>Selecting elements is probably the most common use-case for XPath on
+HTML documents.</p>
+<p>Elements can have children – the root node being the ancestor of them
+all. Their children can also have children and so on. Sometimes,
+elements only have one child. This hierarchy forms a family tree of nodes.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Text nodes are not elements.</strong> (They are still nodes, obviously.)
+They do not have children nodes, but they are always children
+of some element.</p>
+<p class="last">Therefore, text nodes are always leaves of the document tree.</p>
+</div>
+<p>We said earlier that the document element is a child of the root node.
+In fact, the document element is the only child of the root node. And
+for our sample HTML document, it’s the top-level <code class="docutils literal"><span class="pre">&lt;html&gt;...&lt;/html&gt;</span></code> element.
+Still, selecting it will return a single-node node-set, the XPath expression
+being <code class="docutils literal"><span class="pre">/*</span></code>:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187478835728" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187478835728" type="text" value="/*" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187478835728" class="html_output"><div class="result_node">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type"/&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</div></div>
+</div>
+<p>The asterisk here, <code class="docutils literal"><span class="pre">*</span></code>, means “any element”. And <code class="docutils literal"><span class="pre">/*</span></code> means “any
+element under the root node”. HTML documents have only one element like
+this: the <code class="docutils literal"><span class="pre">&lt;html&gt;</span></code> element.</p>
+<p>Another example: how to get <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> elements? Use <code class="docutils literal"><span class="pre">/html/head/title</span></code>:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187484154128" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187484154128" type="text" value="/html/head/title" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187484154128" class="html_output"><div class="result_node">&lt;title&gt;This is a title&lt;/title&gt;</div></div>
+</div>
+<p>Again, if you are familiar with the Unix filesystem, you probably
+intuitively understand what this does:</p>
+<ul>
+<li><p class="first">start from the root (of the document)</p>
+<blockquote>
+<div><ul>
+<li><p class="first">select the <code class="docutils literal"><span class="pre">&lt;html&gt;</span></code> node (with <code class="docutils literal"><span class="pre">/html</span></code>)</p>
+<blockquote>
+<div><ul>
+<li><p class="first">select the <code class="docutils literal"><span class="pre">&lt;head&gt;</span></code> node under the <code class="docutils literal"><span class="pre">&lt;html&gt;</span></code> node
+(appending <code class="docutils literal"><span class="pre">/head</span></code>)</p>
+<blockquote>
+<div><ul class="simple">
+<li>select the <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> node under the <code class="docutils literal"><span class="pre">&lt;head&gt;</span></code> node
+(appending <code class="docutils literal"><span class="pre">/title</span></code>)</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<p>In other words, the XPath expression represents the path from the root
+node down to the target node(s). Parts of this path are read <strong>from left to right</strong>,
+and represent a top-to-bottom direction in the document tree.</p>
+<p>Much like a Unix filepath represents the path from the filesystem’s root
+to the target file(s) or directory(ies).
+There’s one major difference with a Unix filesystem though: in an HTML
+or XML document, an element can have multiple children with the same name.
+For example, the <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> just under the <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code> has 2 <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> children:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187484152016" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187484152016" type="text" value="/html/body/div/div" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187484152016" class="html_output"><div class="result_node">&lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;</div><div class="result_node">&lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;</div></div>
+</div>
+<p>Another example is getting the paragraphs inside the first child of that
+<code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> under <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code>, there are two of them:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187484153744" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187484153744" type="text" value="/html/body/div/div[1]/p" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187484153744" class="html_output"><div class="result_node">&lt;p&gt;This is a paragraph.&lt;/p&gt;</div><div class="result_node">&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</div></div>
+</div>
+<p>Here we’re introducing a <strong>positional predicate</strong>, <code class="docutils literal"><span class="pre">[1]</span></code>. The <code class="docutils literal"><span class="pre">div[1]</span></code>
+part means <em>“the first &lt;div&gt; child under its parent”</em>.</p>
+<p>If you recall, earlier we used a <code class="docutils literal"><span class="pre">*</span></code> asterisk to mean <em>any element</em>.
+There are other elements with those two paragraphs under that very
+<code class="docutils literal"><span class="pre">&lt;div&gt;</span></code>. Let’s try and select all of them, regardless of their name:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187484154192" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187484154192" type="text" value="/html/body/div/div[1]/*" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187484154192" class="html_output"><div class="result_node">&lt;p&gt;This is a paragraph.&lt;/p&gt;</div><div class="result_node">&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</div><div class="result_node">&lt;br/&gt;</div></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Continuing the filesystem anamogy, <code class="docutils literal"><span class="pre">*</span></code> is similar in effect to what
+you can do in a Unix shell to find files or directories without explicit
+full names.</p>
+</div>
+<p>See the <code class="docutils literal"><span class="pre">&lt;br/&gt;</span></code> being selected? It’s an empty element (i.e. with node children)
+but it is there nonetheless.</p>
+</div>
+<div class="section" id="selecting-text-nodes">
+<h4>Selecting text nodes<a class="headerlink" href="#selecting-text-nodes" title="Permalink to this headline">¶</a></h4>
+<p>If we stay around these <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> and <code class="docutils literal"><span class="pre">&lt;br&gt;</span></code> elements, you may have noticed
+that the ASCII tree representation from the beginning also shows some text after the
+<code class="docutils literal"><span class="pre">&lt;br/&gt;</span></code> break: the string <code class="docutils literal"><span class="pre">"Apparently."</span></code>. It is a text node.</p>
+<p>Selecting text nodes is a bit different than selecting elements:
+you use the special <code class="docutils literal"><span class="pre">text()</span></code> syntax. Let’s try it by replacing the last
+part of our last XPath expression, forming <code class="docutils literal"><span class="pre">/html/body/div/div[1]/text()</span></code>:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187478183568" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187478183568" type="text" value="/html/body/div/div[1]/text()" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187478183568" class="html_output"><div class="result_node">
+      </div><div class="result_node">
+      </div><div class="result_node">
+      </div><div class="result_node">
+      Apparently.
+    </div></div>
+</div>
+<p>You may have expected only one text result, the last one, <code class="docutils literal"><span class="pre">"Apparently."</span></code>.
+But we got four! And three of them are blank even. Why is that?</p>
+<p>In fact, HTML authors usually indent their tags with whitespace for
+readability. This does not usually change the layout in your browser.
+But this <strong>whitespace counts as text nodes</strong> for XPath’s data model,
+it is not stripped nor filtered.</p>
+<p>Let’s represent that <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> as a Python string as it appears in the
+HTML source:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1">#</span>
+<span class="c1">#   text node #1                       text node #2                                           text node #3</span>
+<span class="c1">#     &lt;------&gt;                           &lt;------&gt;                                               &lt;------&gt;</span>
+<span class="s1">'&lt;div&gt;</span><span class="se">\n</span><span class="s1">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span><span class="se">\n</span><span class="s1">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span><span class="se">\n</span><span class="s1">      &lt;br&gt;</span><span class="se">\n</span><span class="s1">  Apparently.</span><span class="se">\n</span><span class="s1">    &lt;/div&gt;'</span>
+</pre></div>
+</div>
+<p>We’ve marked the first three text nodes before the non-whitespace only
+text node.</p>
+<p>Another example is to get the text nodes of <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> elements
+(remember that <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> is an element, and that it happens it
+contains a text node, with the string content “This is a title”):</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187478179920" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187478179920" type="text" value="/html/head/title/text()" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187478179920" class="html_output"><div class="result_node">This is a title</div></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Again, there’s only one <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code>, and it contains only one text node,
+but selecting text nodes in <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> returns a single string-value
+in a list, not one string.</p>
+</div>
+</div>
+<div class="section" id="selecting-nodes-without-a-full-explicit-path">
+<h4>Selecting nodes without a full, explicit path<a class="headerlink" href="#selecting-nodes-without-a-full-explicit-path" title="Permalink to this headline">¶</a></h4>
+<p>What we did until now is tell the XPath engine how to get to nodes,
+node by node, from parent to child, from root node down to target nodes.
+This assumes that you know the hierarchy of nodes beforehand.
+This <em>can</em> be the case, but most often than not,
+either you do not know or you do not want to indicate all the steps from
+the root node down to the node(s) you are interested in (this can be
+very error prone – have you put enough <code class="docutils literal"><span class="pre">div/div/div...</span></code>?).</p>
+<p>XPath provides a handy shortcut when you do not know at what level you
+expect your target node to be.
+Say for example that we want to select all <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> paragraph elements
+inside the <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code>. We don’t <em>a-priori</em> know what their parent node is.
+(For all we know, they can be anywhere under the <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code> element.)
+The shortcut to use is <code class="docutils literal"><span class="pre">//</span></code> (two forward slashes).
+Let’s try this: <code class="docutils literal"><span class="pre">//body//p</span></code></p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470893520" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470893520" type="text" value="//body//p" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470893520" class="html_output"><div class="result_node">&lt;p&gt;This is a paragraph.&lt;/p&gt;</div><div class="result_node">&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</div></div>
+</div>
+<p>So we got 2 paragraphs, what we expected.</p>
+<p>This also works for text nodes (there are a lot of them in our sample
+document!). Try <code class="docutils literal"><span class="pre">//body//text()</span></code>:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470895312" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470895312" type="text" value="//body//text()" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470895312" class="html_output"><div class="result_node">
+  </div><div class="result_node">
+    </div><div class="result_node">
+      </div><div class="result_node">This is a paragraph.</div><div class="result_node">
+      </div><div class="result_node">Is this </div><div class="result_node">a link</div><div class="result_node">?</div><div class="result_node">
+      </div><div class="result_node">
+      Apparently.
+    </div><div class="result_node">
+    </div><div class="result_node">
+      Nothing to add.
+      Except maybe this </div><div class="result_node">other link</div><div class="result_node">.
+      </div><div class="result_node">
+    </div><div class="result_node">
+  </div><div class="result_node">
+</div></div>
+</div>
+</div>
+<div class="section" id="selecting-attributes">
+<h4>Selecting attributes<a class="headerlink" href="#selecting-attributes" title="Permalink to this headline">¶</a></h4>
+<p>Elements can also have attributes.
+In our sample document, we have two <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> elements, each with a
+<code class="docutils literal"><span class="pre">href</span></code> attribute. There’s also a <code class="docutils literal"><span class="pre">&lt;meta&gt;</span></code> element with two
+attributes: <code class="docutils literal"><span class="pre">content</span></code> and <code class="docutils literal"><span class="pre">http-equiv</span></code>.</p>
+<p>This is how you can select these attributes, with an <code class="docutils literal"><span class="pre">@</span></code> prefix before
+the attribute name:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470896464" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470896464" type="text" value="//a/@href" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470896464" class="html_output"><div class="result_node">page2.html</div><div class="result_node">page3.html</div></div>
+</div>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470893200" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470893200" type="text" value="//meta/@*" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470893200" class="html_output"><div class="result_node">text/html; charset=utf-8</div><div class="result_node">content-type</div></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">*</span></code> (asterisk) here after <code class="docutils literal"><span class="pre">@</span></code> means the same thing as in <code class="docutils literal"><span class="pre">/*</span></code>
+exept that this is for attributes, and not elements: meaning that you
+want any attributes, whatever their name.</p>
+</div>
+<div class="section" id="get-a-string-representation-of-an-element">
+<h4>Get a string representation of an element<a class="headerlink" href="#get-a-string-representation-of-an-element" title="Permalink to this headline">¶</a></h4>
+<p>The XPath language also comes with a few string functions, that you can
+wrap around an XPath expression selecting elements:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470896848" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470896848" type="text" value="string(/html/head/title)" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470896848" class="html_output"><div class="result_node">This is a title</div></div>
+</div>
+<p>This example uses <code class="docutils literal"><span class="pre">string(&lt;xpathexpression&gt;)</span></code>, one of several handy
+<a class="reference external" href="https://www.w3.org/TR/xpath/#section-String-Functions">functions</a> in XPath.
+<code class="docutils literal"><span class="pre">string()</span></code> will concatenate all text content from the selected node
+and all of its children, recursively, effectively stripping HTML tags.</p>
+<p>You may wonder what’s the difference between <code class="docutils literal"><span class="pre">string(/html/head/title)</span></code>
+and <code class="docutils literal"><span class="pre">/html/head/title/text()</span></code> from earlier? Here, in fact, you get the same
+result because <code class="docutils literal"><span class="pre">&lt;title&gt;</span></code> only has one child text node.
+(Concatenating this list of one text node is the same as getting it
+directly with <code class="docutils literal"><span class="pre">text()</span></code> at the end.)</p>
+<p>But string functions can be very handy when you apply them on nodes that
+have multiple children and multiple text node children or descendant.
+What happens when you apply <code class="docutils literal"><span class="pre">string()</span></code> on the document <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code> for example?
+You get a text representation of the document, without the tags:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470895440" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470895440" type="text" value="string(string(//body))" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470895440" class="html_output"><div class="result_node">
+  
+    
+      This is a paragraph.
+      Is this a link?
+      
+      Apparently.
+    
+    
+      Nothing to add.
+      Except maybe this other link.
+      
+    
+  
+</div></div>
+</div>
+</div>
+<div class="section" id="counting-elements">
+<h4>Counting elements<a class="headerlink" href="#counting-elements" title="Permalink to this headline">¶</a></h4>
+<p>We said earlier that XPath expressions could also return numbers.
+One example of this is counting the number of paragraphs in the
+document:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470895568" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470895568" type="text" value="count(//p)" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470895568" class="html_output"><div class="result_node">2</div></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">With parsel, you get a floating point number back, and in the form of a
+string. This is specific to parsel. Another XPath engine might return a
+native floating point number.</p>
+</div>
+<p>Another example: get the number of attributes in the document (whatever
+their parent element):</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187470894672" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187470894672" type="text" value="count(//@*)" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187470894672" class="html_output"><div class="result_node">5</div></div>
+</div>
+</div>
+<div class="section" id="boolean-operations">
+<h4>Boolean operations<a class="headerlink" href="#boolean-operations" title="Permalink to this headline">¶</a></h4>
+<p>XPath expressions can also return booleans. This is not that usueful
+by itself, but it becomes handy when used in predicates (that we will
+cover a bit later).</p>
+<p>For example, testing the number of paragraphs:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187483369104" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187483369104" type="text" value="count(//p) = 2" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187483369104" class="html_output"><div class="result_node">true</div></div>
+</div>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187483368080" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187483368080" type="text" value="count(//p) = 42" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187483368080" class="html_output"><div class="result_node">false</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="part-2-location-paths-how-to-move-inside-the-document-tree">
+<h2>Part 2: Location Paths: how to move inside the document tree<a class="headerlink" href="#part-2-location-paths-how-to-move-inside-the-document-tree" title="Permalink to this headline">¶</a></h2>
+<p>A <strong>Location path</strong> is the most common XPath expression.
+It is used to move in any direction from a starting point (<em>the context
+node</em>) to any node(s) in the tree:</p>
+<ul class="simple">
+<li>It is a string, with a series of <strong>“location steps”</strong>:
+<code class="docutils literal"><span class="pre">"step1</span> <span class="pre">/</span> <span class="pre">step2</span> <span class="pre">/</span> <span class="pre">step3</span> <span class="pre">..."</span></code>;</li>
+<li>It represents the <strong>selection and filtering of nodes</strong>, processed step by
+step, <strong>from left to right</strong>;</li>
+<li>Each step is of the form <code class="docutils literal"><span class="pre">axis</span> <span class="pre">::</span> <span class="pre">nodetest</span> <span class="pre">[predicate]*</span></code><ul>
+<li>an <em>axis</em> (implicit or explicit),</li>
+<li>a <em>node test</em>,</li>
+<li>zero or more <em>predicates</em>.</li>
+</ul>
+</li>
+</ul>
+<p>So the examples we saw earlier are (or contain) an XPath location path:
+<code class="docutils literal"><span class="pre">/html/head/title</span></code>, <code class="docutils literal"><span class="pre">//body//p</span></code> etc.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Whitespace does NOT matter in XPath.</p>
+<p>(Except for <code class="docutils literal"><span class="pre">“//”</span></code> and <code class="docutils literal"><span class="pre">“..”</span></code>;
+<code class="docutils literal"><span class="pre">“/</span>   <span class="pre">/”</span></code> and <code class="docutils literal"><span class="pre">“.</span>  <span class="pre">.”</span></code> are syntax errors.)</p>
+<p>For example, the following three expressions produce the same result:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'/html/head/title'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;title&gt;This is a title&lt;/title&gt;']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'/    html   / head   /title'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;title&gt;This is a title&lt;/title&gt;']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'''</span>
+<span class="gp">... </span><span class="s1">    /html</span>
+<span class="gp">... </span><span class="s1">        /head</span>
+<span class="gp">... </span><span class="s1">            /title'''</span><span class="p">)</span>
+<span class="go">[(1) '&lt;title&gt;This is a title&lt;/title&gt;']</span>
+</pre></div>
+</div>
+<p class="last">So <strong>don’t be afraid to indent your XPath expressions to improve
+readability.</strong></p>
+</div>
+<div class="section" id="relative-vs-absolute-paths">
+<h3>Relative vs. absolute paths<a class="headerlink" href="#relative-vs-absolute-paths" title="Permalink to this headline">¶</a></h3>
+<p>Location paths can be relative or absolute:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">"step1/step2/step3"</span></code> is relative</li>
+<li><code class="docutils literal"><span class="pre">"/step1/step2/step3"</span></code> is absolute</li>
+</ul>
+<p>In other words, an absolute path is a relative path starting with “/” (forward slash).
+Absolute paths are relative to the root node.</p>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<p>Use relative paths whenever possible. This prevents unexpected
+selection of duplicate nodes in loop iterations.</p>
+<p>For example, in our sample document, only one <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> contains
+paragraphs. Looping on each <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> and using the absolute location
+path <code class="docutils literal"><span class="pre">//p</span></code> will produce the same result for each iteration: returning
+ALL paragraphs in the document everytime.</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//body//div'</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//p'</span><span class="p">))</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;']</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;']</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;']</span>
+</pre></div>
+</div>
+<p>Compare this with using the relative <code class="docutils literal"><span class="pre">'p'</span></code> or <code class="docutils literal"><span class="pre">'./p'</span></code> expression
+that will only look at children <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> under each <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code>, and only
+one of those <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> will show having paragraphs as shown below:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//body//div'</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'p'</span><span class="p">))</span>
+<span class="go">[]</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;']</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+<div class="code pycon last highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">div</span> <span class="ow">in</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//body//div'</span><span class="p">):</span>
+<span class="gp">... </span>    <span class="nb">print</span><span class="p">(</span><span class="n">div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'./p'</span><span class="p">))</span>
+<span class="go">[]</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;']</span>
+<span class="go">[]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="abbreviated-syntax-vs-full-syntax">
+<h3>Abbreviated syntax vs. full syntax<a class="headerlink" href="#abbreviated-syntax-vs-full-syntax" title="Permalink to this headline">¶</a></h3>
+<p>What we’ve seen earlier is in fact the “<a class="reference external" href="https://www.w3.org/TR/xpath/#path-abbrev">abbreviated syntax</a>” for XPath
+expressions. The full syntax is quite verbose (but you sometimes need it):</p>
+<div class="wy-table-responsive"><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Abbreviated syntax</th>
+<th class="head">Full syntax</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">/html/head/title</span></code></td>
+<td><code class="docutils literal"><span class="pre">/child::html</span> <span class="pre">/child::</span> <span class="pre">head</span> <span class="pre">/child::</span> <span class="pre">title</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">//meta/@content</span></code></td>
+<td><code class="docutils literal"><span class="pre">/descendant-or-self::node()</span> <span class="pre">/child::meta</span> <span class="pre">/</span> <span class="pre">attribute::content</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">//div/div[@class="second"]</span></code></td>
+<td><code class="docutils literal"><span class="pre">/descendant-or-self::node()</span> <span class="pre">/child::div</span> <span class="pre">/child::div</span> <span class="pre">[attribute::class</span> <span class="pre">=</span> <span class="pre">"second"]</span></code></td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">//div/a/text()</span></code></td>
+<td><code class="docutils literal"><span class="pre">/descendant-or-self::node()</span> <span class="pre">/child::div</span> <span class="pre">/child::a</span> <span class="pre">/child::text()</span></code></td>
+</tr>
+</tbody>
+</table></div>
+<p>What are these <code class="docutils literal"><span class="pre">child::</span></code>, <code class="docutils literal"><span class="pre">descendant-or-self::</span></code> and
+<code class="docutils literal"><span class="pre">attribute::</span></code>, you may ask? They are axes.</p>
+</div>
+<div class="section" id="axes-moving-around">
+<h3>Axes: moving around<a class="headerlink" href="#axes-moving-around" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>Remember that each step of an XPath location path is of the form
+<code class="docutils literal"><span class="pre">AXIS</span> <span class="pre">::</span> <span class="pre">nodetest</span> <span class="pre">[predicate]*</span></code>.</p>
+<p>The “axis” is the first part of each location path step. It can be
+explicit, or implicit in abbreviated syntax. For example, in
+<code class="docutils literal"><span class="pre">/html/head/title</span></code>, the <code class="docutils literal"><span class="pre">child::</span></code> axis is omitted in each step.</p>
+<p class="last">In this section, we’ll use explicit axes as much as we can.</p>
+</div>
+<p><strong>Axes give the direction to go next, one location step at a time.</strong></p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">self</span></code> (where you are)</li>
+<li><code class="docutils literal"><span class="pre">parent</span></code>, <code class="docutils literal"><span class="pre">child</span></code> (direct hop up or down the document tree)</li>
+<li><code class="docutils literal"><span class="pre">ancestor</span></code>, <code class="docutils literal"><span class="pre">ancestor-or-self</span></code>, <code class="docutils literal"><span class="pre">descendant</span></code>,
+<code class="docutils literal"><span class="pre">descendant-or-self</span></code> (multi-hop)</li>
+<li><code class="docutils literal"><span class="pre">following</span></code>, <code class="docutils literal"><span class="pre">following-sibling</span></code>, <code class="docutils literal"><span class="pre">preceding</span></code>,
+<code class="docutils literal"><span class="pre">preceding-sibling</span></code> (document order)</li>
+<li><code class="docutils literal"><span class="pre">attribute</span></code>, <code class="docutils literal"><span class="pre">namespace</span></code> (non-element)</li>
+</ul>
+<div class="section" id="stay-where-you-are-self">
+<h4>Stay where you are: self<a class="headerlink" href="#stay-where-you-are-self" title="Permalink to this headline">¶</a></h4>
+<p>Let’s assume that we have selected the first <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> element in our
+sample document, the one just under the <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code> element:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span> <span class="o">=</span> <span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//body/div'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span>
+<span class="go">&lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;</span>
+</pre></div>
+</div>
+<p>The <code class="docutils literal"><span class="pre">self</span></code> axis represents <em>the context node</em>, i.e. where you are
+currently in the Location Path steps. (This may not sound very useful,
+but we will see later when this can be handy.)</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'self::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;']</span>
+</pre></div>
+</div>
+<p>If you chain <code class="docutils literal"><span class="pre">self::</span></code> steps, you’ll stay on the same context node:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'self::*/self::*/self::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;']</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">self::</span></code> is usually seen in abbreviated form, i.e. in ‘.’ (one dot)
+which means <code class="docutils literal"><span class="pre">self::node()</span></code>.
+So you could also use:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'.'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'././.'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="move-up-or-down-the-tree-child-descendant-parent-ancestor">
+<h4>Move up or down the tree: child, descendant, parent, ancestor<a class="headerlink" href="#move-up-or-down-the-tree-child-descendant-parent-ancestor" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal"><span class="pre">child</span></code> axis is for immediate children nodes of the context node.
+Here, our context node <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> has two <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> children:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'child::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;'</span>
+<span class="go"> (2) '&lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;']</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child</span></code> is in fact the default axis, hence it can be omitted (e.g. we
+saw that <code class="docutils literal"><span class="pre">/html/head/title</span></code> is equivalent of
+<code class="docutils literal"><span class="pre">/child::html/child::head/child::title</span></code>.)</p>
+<p>The <code class="docutils literal"><span class="pre">parent</span></code> axis is the dual of <code class="docutils literal"><span class="pre">child</span></code>: you go up one level in the
+document tree:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'parent::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;body&gt;</span>
+<span class="go">  &lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;</span>
+<span class="go">&lt;/body&gt;']</span>
+</pre></div>
+</div>
+<p>There’s an alias for <code class="docutils literal"><span class="pre">parent::</span></code>: it’s <code class="docutils literal"><span class="pre">..</span></code> (two dots, much like in a
+Unix filesystem):</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'..'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;body&gt;</span>
+<span class="go">  &lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;</span>
+<span class="go">&lt;/body&gt;']</span>
+</pre></div>
+</div>
+<p>Let’s simplify our ASCII tree representation from earlier to only
+consider element nodes:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="c1"># 0--(ROOT)</span>
+ <span class="o">+--</span> <span class="c1"># 1--&lt;html&gt;</span>
+     <span class="o">+--</span> <span class="c1"># 3--&lt;head&gt;</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 5--&lt;title&gt;</span>
+     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 8--&lt;meta&gt;</span>
+     <span class="o">+--</span> <span class="c1">#13--&lt;body&gt;</span>
+         <span class="o">+--</span> <span class="c1">#15--&lt;div&gt;</span>
+             <span class="o">+--</span> <span class="c1">#17--&lt;div&gt;</span>
+             <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#19--&lt;p&gt;</span>
+             <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#22--&lt;p&gt;</span>
+             <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#24--&lt;a&gt;</span>
+             <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#29--&lt;br&gt;</span>
+             <span class="o">+--</span> <span class="c1">#32--&lt;div&gt;</span>
+                 <span class="o">+--</span> <span class="c1">#35--&lt;a&gt;</span>
+</pre></div>
+</div>
+<p>With this simplified tree representation, this is what <code class="docutils literal"><span class="pre">self</span></code>,
+<code class="docutils literal"><span class="pre">child</span></code> and <code class="docutils literal"><span class="pre">parent</span></code> select:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>                <span class="c1"># 0--(ROOT)</span>
+                 <span class="o">+--</span> <span class="c1"># 1--&lt;html&gt;</span>
+                     <span class="o">+--</span> <span class="c1"># 3--&lt;head&gt;</span>
+                     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 5--&lt;title&gt;</span>
+                     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 8--&lt;meta&gt;</span>
+<span class="n">parent</span><span class="p">::</span><span class="o">*</span> <span class="o">---------&gt;</span> <span class="o">+--</span> <span class="c1">#13--&lt;body&gt;</span>
+                         <span class="o">|</span>
+<span class="bp">self</span><span class="p">::</span><span class="o">*</span> <span class="o">-------------&gt;</span>   <span class="o">+--</span> <span class="c1">#15--&lt;div&gt;</span>
+                             <span class="o">|</span>
+<span class="n">child</span><span class="p">::</span><span class="o">*----+-----------&gt;</span>    <span class="o">+--</span> <span class="c1">#17--&lt;div&gt;</span>
+            <span class="o">|</span>                <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#19--&lt;p&gt;</span>
+            <span class="o">|</span>                <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#22--&lt;p&gt;</span>
+            <span class="o">|</span>                <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#24--&lt;a&gt;</span>
+            <span class="o">|</span>                <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#29--&lt;br&gt;</span>
+            <span class="o">+-----------&gt;</span>    <span class="o">+--</span> <span class="c1">#32--&lt;div&gt;</span>
+                                 <span class="o">+--</span> <span class="c1">#35--&lt;a&gt;</span>
+</pre></div>
+</div>
+<div class="section" id="recursively-go-up-or-down">
+<h5>Recursively go up or down<a class="headerlink" href="#recursively-go-up-or-down" title="Permalink to this headline">¶</a></h5>
+<p>The <code class="docutils literal"><span class="pre">descendant</span></code> axis is similar to <code class="docutils literal"><span class="pre">child</span></code> but also goes deeper down
+the tree, looking at children of each child, recursively:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'descendant::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (3) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;'</span>
+<span class="go"> (4) '&lt;a href="page2.html"&gt;a link&lt;/a&gt;'</span>
+<span class="go"> (5) '&lt;br&gt;'</span>
+<span class="go"> (6) '&lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;'</span>
+<span class="go"> (7) '&lt;a href="page3.html"&gt;other link&lt;/a&gt;']</span>
+</pre></div>
+</div>
+<p>You might guess already what <code class="docutils literal"><span class="pre">ancestor</span></code> is for: it is the dual axis of
+<code class="docutils literal"><span class="pre">descendant</span></code>. It goes to the parent of the context node, the parent of
+this parent, the parent of the parent of this parent, etc.</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'ancestor::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;html&gt;</span>
+<span class="go">&lt;head&gt;</span>
+<span class="go">  &lt;title&gt;This is a title&lt;/title&gt;</span>
+<span class="go">  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;</span>
+<span class="go">&lt;/head&gt;</span>
+<span class="go">&lt;body&gt;</span>
+<span class="go">  &lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;</span>
+<span class="go">&lt;/body&gt;</span>
+<span class="go">&lt;/html&gt;'</span>
+<span class="go"> (2) '&lt;body&gt;</span>
+<span class="go">  &lt;div&gt;</span>
+<span class="go">    &lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">    &lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;</span>
+<span class="go">  &lt;/div&gt;</span>
+<span class="go">&lt;/body&gt;']</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="special-case-of-descendant-or-ancestor-or-self-axes">
+<h5>Special case of <code class="docutils literal"><span class="pre">descendant-or-/ancestor-or-self</span></code> axes<a class="headerlink" href="#special-case-of-descendant-or-ancestor-or-self-axes" title="Permalink to this headline">¶</a></h5>
+<p>The last axes to be aware of when you need to move up or down the document
+tree are <code class="docutils literal"><span class="pre">descendant-or-self</span></code> and <code class="docutils literal"><span class="pre">ancestor-or-self</span></code>.
+They are the same as <code class="docutils literal"><span class="pre">descendant</span></code> or <code class="docutils literal"><span class="pre">ancestor</span></code> except they also
+include the context node.</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'./descendant-or-self::node()/text()'</span><span class="p">)</span>
+<span class="go">[(1) '</span>
+<span class="go">    '</span>
+<span class="go"> (2) '</span>
+<span class="go">      '</span>
+<span class="go"> (3) 'This is a paragraph.'</span>
+<span class="go"> (4) '</span>
+<span class="go">      '</span>
+<span class="go"> (5) 'Is this '</span>
+<span class="go"> (6) 'a link'</span>
+<span class="go"> (7) '?'</span>
+<span class="go"> (8) '</span>
+<span class="go">      '</span>
+<span class="go"> (9) '</span>
+<span class="go">      Apparently.</span>
+<span class="go">    '</span>
+<span class="go"> (10) '</span>
+<span class="go">    '</span>
+<span class="go"> (11) '</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this '</span>
+<span class="go"> (12) 'other link'</span>
+<span class="go"> (13) '.</span>
+<span class="go">      '</span>
+<span class="go"> (14) '</span>
+<span class="go">    '</span>
+<span class="go"> (15) '</span>
+<span class="go">  ']</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="move-sideways-children-nodes-of-the-same-parent">
+<h4>Move “sideways”: children nodes of the same parent<a class="headerlink" href="#move-sideways-children-nodes-of-the-same-parent" title="Permalink to this headline">¶</a></h4>
+<p>If nodes can have parents, children, ancestors and descendants, they can
+also have siblings (to continue the family analogy). <strong>Siblings are
+nodes that have the same parent node.</strong></p>
+<p>Some siblings may come before the context node (they appear before in
+the document, their order is lower), or they can come after the context
+node. There are two axis for these two directions: <code class="docutils literal"><span class="pre">preceding-sibling</span></code> and
+<code class="docutils literal"><span class="pre">following-sibling</span></code>.</p>
+<p>Let’s first select this paragraph from our sample document:
+<code class="docutils literal"><span class="pre">&lt;p&gt;Is</span> <span class="pre">this</span> <span class="pre">&lt;a</span> <span class="pre">href="page2.html"&gt;a</span> <span class="pre">link&lt;/a&gt;?&lt;/p&gt;</span></code>. It’s the 2nd child
+of the 1st <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> of the <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> we used above:</p>
+<div class="code python highlight-default"><div class="highlight"><pre><span></span><span class="n">paragraph</span> <span class="o">=</span> <span class="n">first_div</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'child::div[1]/child::p[2]'</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>Here we started using 2 new patterns along with the axes:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">child::div</span></code> vs. <code class="docutils literal"><span class="pre">child::*</span></code>:<ul>
+<li><code class="docutils literal"><span class="pre">*</span></code> means “any element node” (this is a <em>node-test</em> that we’ll cover afterwards),</li>
+<li>while <code class="docutils literal"><span class="pre">child::div</span></code> means “any child that is a <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> element”.</li>
+</ul>
+</li>
+<li><code class="docutils literal"><span class="pre">[1]</span></code> and <code class="docutils literal"><span class="pre">[2]</span></code>: which mean <em>first</em> and <em>second</em> in the current
+step’s node-set (this is a kind of <em>predicate</em> that we’ll cover
+afterwards also)</li>
+</ul>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'preceding-sibling::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'following-sibling::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;br&gt;']</span>
+</pre></div>
+</div>
+<p>Again, let’s see which elements were selected in our ASCII tree
+representation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>                <span class="c1"># 0--(ROOT)</span>
+                 <span class="o">+--</span> <span class="c1"># 1--&lt;html&gt;</span>
+                     <span class="o">+--</span> <span class="c1"># 3--&lt;head&gt;</span>
+                     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 5--&lt;title&gt;</span>
+                     <span class="o">|</span>   <span class="o">+--</span> <span class="c1"># 8--&lt;meta&gt;</span>
+                     <span class="o">+--</span> <span class="c1">#13--&lt;body&gt;</span>
+                         <span class="o">|</span>
+                         <span class="o">+--</span> <span class="c1">#15--&lt;div&gt;</span>
+                             <span class="o">|</span>
+                             <span class="o">+--</span> <span class="c1">#17--&lt;div&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+<span class="n">preceding</span><span class="o">-</span><span class="n">sibling</span><span class="p">::</span><span class="o">*</span> <span class="o">----------&gt;</span> <span class="o">+--</span> <span class="c1">#19--&lt;p&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+<span class="bp">self</span><span class="p">::</span><span class="o">*</span> <span class="o">-----------------------&gt;</span> <span class="o">+--</span> <span class="c1">#22--&lt;p&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#24--&lt;a&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+<span class="n">following</span><span class="o">-</span><span class="n">sibling</span><span class="p">::</span><span class="o">*</span> <span class="o">----------&gt;</span> <span class="o">+--</span> <span class="c1">#29--&lt;br&gt;</span>
+                             <span class="o">|</span>
+                             <span class="o">|</span>
+                             <span class="o">+--</span> <span class="c1">#32--&lt;div&gt;</span>
+                                 <span class="o">+--</span> <span class="c1">#35--&lt;a&gt;</span>
+</pre></div>
+</div>
+<p>Earlier we were also able to get text nodes that were siblings of these
+<code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> elements. Why did they not get selected?</p>
+<p>The reason is that <code class="docutils literal"><span class="pre">child::*</span></code> means “any child <em>element</em>”, not “any node.”
+(Remember that text nodes are not elements.)</p>
+<p>To also get text node siblings, you need to use either <code class="docutils literal"><span class="pre">child::text()</span></code>
+or <code class="docutils literal"><span class="pre">child::node()</span></code>. (But we may be getting ahead of ourselves with <em>node tests</em>.)</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'following-sibling::node()'</span><span class="p">)</span>
+<span class="go">[(1) '</span>
+<span class="go">      '</span>
+<span class="go"> (2) '&lt;br&gt;'</span>
+<span class="go"> (3) '</span>
+<span class="go">      Apparently.</span>
+<span class="go">    ']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'following-sibling::text()'</span><span class="p">)</span>
+<span class="go">[(1) '</span>
+<span class="go">      '</span>
+<span class="go"> (2) '</span>
+<span class="go">      Apparently.</span>
+<span class="go">    ']</span>
+</pre></div>
+</div>
+<div class="section" id="nodes-before-and-after-in-document-order">
+<h5>Nodes before and after, in document order<a class="headerlink" href="#nodes-before-and-after-in-document-order" title="Permalink to this headline">¶</a></h5>
+<p><code class="docutils literal"><span class="pre">preceding</span></code> and <code class="docutils literal"><span class="pre">following</span></code> are two special axes that do not look at
+the tree hierarchy, but work on the document order of nodes.</p>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>Remember, all nodes in XPath data model have an order, called the
+<em>document order</em>. Node 1 is the first node in the HTML source, node 2 is
+the node appearing next etc.</p>
+<div class="last highlight-default"><div class="highlight"><pre><span></span>  <span class="c1">#1    #2    #3   ...</span>
+<span class="o">&lt;</span><span class="n">html</span><span class="o">&gt;&lt;</span><span class="n">head</span><span class="o">&gt;&lt;</span><span class="n">title</span><span class="o">&gt;...</span>
+</pre></div>
+</div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'preceding::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;head&gt;</span>
+<span class="go">  &lt;title&gt;This is a title&lt;/title&gt;</span>
+<span class="go">  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;</span>
+<span class="go">&lt;/head&gt;'</span>
+<span class="go"> (2) '&lt;title&gt;This is a title&lt;/title&gt;'</span>
+<span class="go"> (3) '&lt;meta content="text/html; charset=utf-8" http-equiv="content-type"&gt;'</span>
+<span class="go"> (4) '&lt;p&gt;This is a paragraph.&lt;/p&gt;']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'following::*'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;br&gt;'</span>
+<span class="go"> (2) '&lt;div class="second"&gt;</span>
+<span class="go">      Nothing to add.</span>
+<span class="go">      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.</span>
+<span class="go">      &lt;!-- And this comment --&gt;</span>
+<span class="go">    &lt;/div&gt;'</span>
+<span class="go"> (3) '&lt;a href="page3.html"&gt;other link&lt;/a&gt;']</span>
+</pre></div>
+</div>
+<p>This is what these axes select in our ASCII-tree representation:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>                <span class="c1"># 0--(ROOT)</span>
+                 <span class="o">+--</span> <span class="c1"># 1--&lt;html&gt;</span>
+                     <span class="o">|</span>   <span class="o">|</span>
+                <span class="o">+--&gt;</span> <span class="o">+--</span> <span class="c1"># 3--&lt;head&gt;</span>
+                <span class="o">|</span>    <span class="o">|</span>   <span class="o">|</span>
+                <span class="o">+------&gt;</span> <span class="o">+--</span> <span class="c1"># 5--&lt;title&gt;</span>
+                <span class="o">|</span>    <span class="o">|</span>   <span class="o">|</span>
+                <span class="o">+------&gt;</span> <span class="o">+--</span> <span class="c1"># 8--&lt;meta&gt;</span>
+                <span class="o">|</span>    <span class="o">|</span>
+                <span class="o">|</span>    <span class="o">+--</span> <span class="c1">#13--&lt;body&gt;</span>
+                <span class="o">|</span>        <span class="o">|</span>
+                <span class="o">|</span>        <span class="o">+--</span> <span class="c1">#15--&lt;div&gt;</span>
+                <span class="o">|</span>            <span class="o">|</span>
+                <span class="o">|</span>            <span class="o">+--</span> <span class="c1">#17--&lt;div&gt;</span>
+                <span class="o">|</span>            <span class="o">|</span>   <span class="o">|</span>
+                <span class="o">|</span>            <span class="o">|</span>   <span class="o">|</span>
+<span class="n">preceding</span><span class="p">::</span><span class="o">*</span> <span class="o">---+--------------&gt;</span> <span class="o">+--</span> <span class="c1">#19--&lt;p&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+<span class="bp">self</span><span class="p">::</span><span class="o">*</span> <span class="o">-----------------------&gt;</span> <span class="o">+--</span> <span class="c1">#22--&lt;p&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>   <span class="o">+--</span> <span class="c1">#24--&lt;a&gt;</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+                             <span class="o">|</span>   <span class="o">|</span>
+<span class="n">following</span><span class="p">::</span><span class="o">*</span> <span class="o">-----------+------&gt;</span> <span class="o">+--</span> <span class="c1">#29--&lt;br&gt;</span>
+                        <span class="o">|</span>    <span class="o">|</span>
+                        <span class="o">|</span>    <span class="o">|</span>
+                        <span class="o">+--&gt;</span> <span class="o">+--</span> <span class="c1">#32--&lt;div&gt;</span>
+                        <span class="o">|</span>        <span class="o">|</span>
+                        <span class="o">+------&gt;</span> <span class="o">+--</span> <span class="c1">#35--&lt;a&gt;</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Notice that <code class="docutils literal"><span class="pre">preceding</span></code> does not include ancestors and <code class="docutils literal"><span class="pre">following</span></code>
+does not include descendants.
+This property <a class="reference external" href="https://www.w3.org/TR/xpath/#axes">is mentioned in XPath specs</a>
+like this:</p>
+<blockquote>
+<div><em>“The ancestor, descendant, following, preceding and self axes
+partition a document (ignoring attribute and namespace nodes): they
+do not overlap and together they contain all the nodes in the
+document.”</em></div></blockquote>
+<p>In other words:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span>document == self ∪ (ancestor ∪ preceding) ∪ (descendant ∪ following)
+</pre></div>
+</div>
+<p class="last">(<code class="docutils literal"><span class="pre">∪</span></code> denoting the “union” for node-sets.)</p>
+</div>
+</div>
+</div>
+<div class="section" id="attribute-axis">
+<h4>Attribute axis<a class="headerlink" href="#attribute-axis" title="Permalink to this headline">¶</a></h4>
+<p>TODO.</p>
+</div>
+</div>
+<div class="section" id="node-tests">
+<h3>Node tests<a class="headerlink" href="#node-tests" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>A “node test” is the second part of each step in a location path.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">axis</span> <span class="p">::</span> <span class="n">NODETEST</span> <span class="p">[</span><span class="n">predicate</span><span class="p">]</span><span class="o">*</span>
+</pre></div>
+</div>
+<p class="last">Node tests select node types along the step’s axis.</p>
+</div>
+<p>a node test can be:</p>
+<ul>
+<li><p class="first">a <em>name test</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li>such as <code class="docutils literal"><span class="pre">p</span></code>, <code class="docutils literal"><span class="pre">title</span></code> or <code class="docutils literal"><span class="pre">a</span></code> for elements: <code class="docutils literal"><span class="pre">/html/head/title</span></code>
+contains 3 steps, each with a <em>name test</em> node-test</li>
+<li>or <code class="docutils literal"><span class="pre">href</span></code> or <code class="docutils literal"><span class="pre">src</span></code> for attributes: <code class="docutils literal"><span class="pre">/a/@href</span></code> selects “href”
+attributes of <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> elements</li>
+</ul>
+</div></blockquote>
+</li>
+<li><p class="first">a <em>node type test</em>:</p>
+<blockquote>
+<div><ul class="simple">
+<li><code class="docutils literal"><span class="pre">node()</span></code>: any node type</li>
+<li><code class="docutils literal"><span class="pre">text()</span></code>: text nodes</li>
+<li><code class="docutils literal"><span class="pre">comment()</span></code>: comment nodes</li>
+<li><code class="docutils literal"><span class="pre">*</span></code> (an asterisk): the meaning depends on the axis:<ul>
+<li>an <code class="docutils literal"><span class="pre">*</span></code> step alone selects any element node</li>
+<li>an <code class="docutils literal"><span class="pre">@*</span></code> selects any attribute node</li>
+</ul>
+</li>
+</ul>
+</div></blockquote>
+</li>
+</ul>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p><code class="docutils literal"><span class="pre">text()</span></code> is not a function call that converts a node to it’s
+text representation, it’s just a test on the node type.</p>
+<p>Compare these two expressions:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'child::text()'</span><span class="p">)</span>
+<span class="go">[(1) 'Is this '</span>
+<span class="go"> (2) '?']</span>
+</pre></div>
+</div>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">paragraph</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'string(self::*)'</span><span class="p">)</span>
+<span class="go">[(1) 'Is this a link?']</span>
+</pre></div>
+</div>
+<p><code class="docutils literal"><span class="pre">child::text()</span></code> selects all children nodes that are also text nodes.</p>
+<p>The “a” string is part of the <code class="docutils literal"><span class="pre">&lt;a&gt;</span></code> inside the paragraph, so it’s not selected.
+It is not a direct child of the <code class="docutils literal"><span class="pre">&lt;p&gt;</span></code> element.</p>
+<p class="last">Whereas <code class="docutils literal"><span class="pre">string(self::*)</span></code> applies to the paragraph (the context node,
+selected with <code class="docutils literal"><span class="pre">self::*</span></code>) and recursively gets text content of
+children, children of children and so on.</p>
+</div>
+</div>
+<div class="section" id="abbreviation-cheatsheet">
+<h3>Abbreviation cheatsheet<a class="headerlink" href="#abbreviation-cheatsheet" title="Permalink to this headline">¶</a></h3>
+<div class="wy-table-responsive"><table border="1" class="docutils">
+<colgroup>
+<col width="50%" />
+<col width="50%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Abbreviated step</th>
+<th class="head">Meaning</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">*</span></code> (asterisk)</td>
+<td><p class="first">all <strong>element</strong> nodes (i.e. not text nodes, not attribute nodes).</p>
+<p>Remember that <code class="docutils literal"><span class="pre">.//*</span></code> is not the same as <code class="docutils literal"><span class="pre">.//node()</span></code>.</p>
+<p class="last">Also, there’s no <code class="docutils literal"><span class="pre">element()</span></code> node test.</p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">@*</span></code></td>
+<td><code class="docutils literal"><span class="pre">attribute::*</span></code> (all attribute nodes)</td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">//</span></code></td>
+<td><p class="first"><code class="docutils literal"><span class="pre">/descendant-or-self::node()/</span></code> (exactly this, nothing more, nothing less)</p>
+<p class="last">so <code class="docutils literal"><span class="pre">//*</span></code> is not the same as <code class="docutils literal"><span class="pre">/descendant-or-self::*</span></code></p>
+</td>
+</tr>
+<tr class="row-odd"><td><code class="docutils literal"><span class="pre">.</span></code> (a single dot)</td>
+<td><code class="docutils literal"><span class="pre">self::node()</span></code>, the context node; useful for making XPaths relative,
+e.g. <code class="docutils literal"><span class="pre">.//tr</span></code></td>
+</tr>
+<tr class="row-even"><td><code class="docutils literal"><span class="pre">..</span></code> (2 dots)</td>
+<td><code class="docutils literal"><span class="pre">parent::node()</span></code></td>
+</tr>
+</tbody>
+</table></div>
+<p>TODO: explain why <code class="docutils literal"><span class="pre">//*</span></code> is not the same as <code class="docutils literal"><span class="pre">/descendant-or-self::*</span></code></p>
+</div>
+<div class="section" id="predicates">
+<h3>Predicates<a class="headerlink" href="#predicates" title="Permalink to this headline">¶</a></h3>
+<div class="admonition important">
+<p class="first admonition-title">Important</p>
+<p>Predicates are the last part of each step in a location path. Predicates
+are optional.</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="n">axis</span> <span class="p">::</span> <span class="n">nodetest</span> <span class="p">[</span><span class="n">PREDICATE</span><span class="p">]</span><span class="o">*</span>
+</pre></div>
+</div>
+<p class="last">They are used to further filter nodes on properties that cannot be
+expressed with the step’s axis and node test.</p>
+</div>
+<p>Remember that XPath location paths work step by step. Each step produces
+a node-set for each node from the previous step’s node-set, with
+possibly more than 1 node in each node set.</p>
+<p>You may not be interested in all nodes from a node test. And predicates
+are used to tell the XPath engine the condition(s) they should meet.</p>
+<p>The syntax for predicates is simple: just surround conditions within
+square brackets. What’s inside the square brackets can be:</p>
+<ul class="simple">
+<li>a number (see positional predicates below)</li>
+<li>a location path: the predicate will select nodes for which the
+location path matches at least a node</li>
+<li>a boolean operation: for example to test a condition on text content
+or count of children</li>
+</ul>
+<div class="section" id="positional-predicates">
+<h4>Positional predicates<a class="headerlink" href="#positional-predicates" title="Permalink to this headline">¶</a></h4>
+<p>The first use-case is selecting nodes based on their position in a
+node-set. (Node-sets order depends on the axis, but let’s consider that
+the order of a node in a node-set is the document order.)</p>
+<p>Remember the two paragraphs in the <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> we looked at
+earlier:</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//body/div/div/p'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;p&gt;This is a paragraph.&lt;/p&gt;'</span>
+<span class="go"> (2) '&lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;']</span>
+</pre></div>
+</div>
+<p>Let’s say that we are not interested in the two paragraphs but only
+the first one. You would use <code class="docutils literal"><span class="pre">[1]</span></code> as predicate:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187481975120" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187481975120" type="text" value="//body/div/div/p[1]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187481975120" class="html_output"><div class="result_node">&lt;p&gt;This is a paragraph.&lt;/p&gt;</div></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p class="last">Positions in XPath start from 1, not 0.</p>
+</div>
+<p>If you want the last node in a node-set, you can use <code class="docutils literal"><span class="pre">last()</span></code>:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187481976784" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187481976784" type="text" value="//body/div/div[last()]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187481976784" class="html_output"><div class="result_node">&lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;</div></div>
+</div>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Because location paths work step by step, from left to right,
+positional predicates are about the <strong>position of a node in a node-set
+produced by the current step</strong>,
+not about the position of the node in the document tree.</p>
+<p>For example, <code class="docutils literal"><span class="pre">//body//div[1]</span></code> is NOT the first <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> under the
+<code class="docutils literal"><span class="pre">&lt;body&gt;</span></code> element; it will select <strong>all</strong> <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> that are the first
+child of their parent:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187481973072" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187481973072" type="text" value="//body//div[1]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187481973072" class="html_output"><div class="result_node">&lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;</div><div class="result_node">&lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;</div></div>
+</div>
+<p>This becomes more apparent when you expand the expression to its
+full syntax:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">/</span><span class="n">descendant</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="bp">self</span><span class="p">::</span><span class="n">node</span><span class="p">()</span>
+    <span class="o">/</span><span class="n">child</span><span class="p">::</span><span class="n">body</span>
+        <span class="o">/</span><span class="n">descendant</span><span class="o">-</span><span class="ow">or</span><span class="o">-</span><span class="bp">self</span><span class="p">::</span><span class="n">node</span><span class="p">()</span>
+                               <span class="o">^</span>
+                               <span class="o">|</span>
+            <span class="c1"># first child of this parent</span>
+            <span class="o">/</span><span class="n">child</span><span class="p">::</span><span class="n">div</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>You can however select the first <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> (in document order)
+in a <code class="docutils literal"><span class="pre">&lt;body&gt;</span></code> using parentheses to group nodes into a new node-set:</p>
+<ul class="simple">
+<li>first select all <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code> elements – <code class="docutils literal"><span class="pre">//body//div</span></code>,</li>
+<li>then group them – <code class="docutils literal"><span class="pre">(</span> <span class="pre">//body//div</span> <span class="pre">)</span></code>,</li>
+<li>and finally select the first one – <code class="docutils literal"><span class="pre">(</span> <span class="pre">//body//div</span> <span class="pre">)</span> <span class="pre">[1]</span></code>,</li>
+</ul>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187481975696" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187481975696" type="text" value="( //body//div ) [1]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187481975696" class="html_output"><div class="result_node">&lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;</div></div>
+</div>
+</div>
+<div class="section" id="position-ranges">
+<h5>Position ranges<a class="headerlink" href="#position-ranges" title="Permalink to this headline">¶</a></h5>
+<p>Sometimes you need more than one node in a node-set but not all of them.
+For that you can use boolean expression in your predicate in conjunction
+with the <code class="docutils literal"><span class="pre">position()</span></code> function that returns the node’s position.</p>
+<p>Let’s change our sample HTML document a bit to include a list of five items.
+Say we need all but the 1st and last one.
+You can use <code class="docutils literal"><span class="pre">[position()&gt;1</span> <span class="pre">and</span> <span class="pre">position()&lt;last()]</span></code>:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187480869456" rows="10" class="form-control">&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;ol&gt;
+       &lt;li&gt;first item&lt;/li&gt;
+       &lt;li&gt;second item&lt;/li&gt;
+       &lt;li&gt;third item&lt;/li&gt;
+       &lt;li&gt;fourth item&lt;/li&gt;
+       &lt;li&gt;fifth item&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187480869456" type="text" value="//body//div//li[position()&gt;1 and position()&lt;last()]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187480869456" class="html_output"><div class="result_node">&lt;li&gt;second item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;third item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;fourth item&lt;/li&gt;</div></div>
+</div>
+<p><code class="docutils literal"><span class="pre">//body//div//li[position()&gt;1</span> <span class="pre">and</span> <span class="pre">position()&lt;last()]</span></code> correctly
+selects the 2nd, 3rd and 4th items.</p>
+</div>
+</div>
+<div class="section" id="location-paths-as-predicates">
+<h4>Location paths as predicates<a class="headerlink" href="#location-paths-as-predicates" title="Permalink to this headline">¶</a></h4>
+<p>Location paths can also serve as predicates within a parent location path.</p>
+<p>It can happen that your HTML mamrkup does not distinguish the elements
+you are after with any “class” or “id” attributes, but maybe these
+elements have a structural feature that you can use to identify them.</p>
+<p>For example, a <code class="docutils literal"><span class="pre">&lt;table&gt;</span></code> element may have rows – <code class="docutils literal"><span class="pre">table/tr</span></code> –
+with or without link anchors in them.
+Within each <code class="docutils literal"><span class="pre">&lt;tr&gt;</span></code> row, <code class="docutils literal"><span class="pre">td/a</span></code> selects something on some rows,
+nothing for others:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187480868432" rows="10" class="form-control">&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;table&gt;
+       &lt;tr&gt;&lt;td&gt;first row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row with &lt;a href="http://www.example.com/2"&gt;a link&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fourth row with &lt;a href="http://www.example.com/4"&gt;another link&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187480868432" type="text" value="//table/tr [ td/a ]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187480868432" class="html_output"><div class="result_node">&lt;tr&gt;&lt;td&gt;second row with &lt;a href="http://www.example.com/2"&gt;a link&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;</div><div class="result_node">&lt;tr&gt;&lt;td&gt;fourth row with &lt;a href="http://www.example.com/4"&gt;another link&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;</div></div>
+</div>
+</div>
+<div class="section" id="boolean-predicates">
+<h4>Boolean predicates<a class="headerlink" href="#boolean-predicates" title="Permalink to this headline">¶</a></h4>
+<p>We saw boolean predicates earlier with positional ranges. But you can
+craft complex boolean filters based on any features of nodes; structural
+information on children or parent nodes, text values, position, etc.</p>
+<p>A simple example could be selecting a <code class="docutils literal"><span class="pre">&lt;table&gt;</span></code> that has a specific
+number of rows, say, 5. You can simply count the number of rows:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187480869648" rows="10" class="form-control">&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;table&gt;
+       &lt;tr&gt;&lt;td&gt;first row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;table&gt;
+       &lt;tr&gt;&lt;td&gt;first row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fourth row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fifth row&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187480869648" type="text" value="//table[ count(tr)=5 ]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187480869648" class="html_output"><div class="result_node">&lt;table&gt;
+       &lt;tr&gt;&lt;td&gt;first row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fourth row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fifth row&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;</div></div>
+</div>
+<div class="section" id="special-case-of-string-value-tests">
+<h5>Special case of string value tests<a class="headerlink" href="#special-case-of-string-value-tests" title="Permalink to this headline">¶</a></h5>
+<p>XPath also allows comparing string values of nodes within predicates.
+If you use an equality operation with a location path and a string,
+each node of the location path will be converted to its string value
+and then compared with the string value to match.</p>
+<p>This may sound more obscure than it is. Say for example that you have
+two tables, with different headers. You know the string value
+of the header in the table you want, “The header I want.”</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">th</span><span class="o">&gt;</span><span class="n">The</span> <span class="n">header</span> <span class="n">I</span> <span class="n">want</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">second</span> <span class="n">row</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">third</span> <span class="n">row</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="n">div</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="n">table</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">th</span><span class="o">&gt;</span><span class="n">Another</span> <span class="n">header</span> <span class="n">I</span> <span class="n">do</span> <span class="n">NOT</span> <span class="n">want</span><span class="o">&lt;/</span><span class="n">th</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">second</span> <span class="n">row</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">third</span> <span class="n">row</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">fourth</span> <span class="n">row</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="n">tr</span><span class="o">&gt;&lt;</span><span class="n">td</span><span class="o">&gt;</span><span class="n">fifth</span> <span class="n">row</span><span class="o">&lt;/</span><span class="n">td</span><span class="o">&gt;&lt;/</span><span class="n">tr</span><span class="o">&gt;</span>
+  <span class="o">&lt;/</span><span class="n">table</span><span class="o">&gt;</span>
+<span class="o">&lt;/</span><span class="n">div</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+<p>To select the different headers, you would use <code class="docutils literal"><span class="pre">//table/tr/th</span></code>.
+You want the <code class="docutils literal"><span class="pre">&lt;table&gt;</span></code> so you can move the <code class="docutils literal"><span class="pre">tr/th</span></code> part inside
+a predicate and compare it with string “The header I want”.</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187480868240" rows="10" class="form-control">&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;table&gt;
+       &lt;tr&gt;&lt;th&gt;The header I want&lt;/th&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;table&gt;
+       &lt;tr&gt;&lt;th&gt;Another header I do NOT want&lt;/th&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fourth row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;fifth row&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187480868240" type="text" value="//table[ tr/th = &quot;The header I want&quot; ]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187480868240" class="html_output"><div class="result_node">&lt;table&gt;
+       &lt;tr&gt;&lt;th&gt;The header I want&lt;/th&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;second row&lt;/td&gt;&lt;/tr&gt;
+       &lt;tr&gt;&lt;td&gt;third row&lt;/td&gt;&lt;/tr&gt;
+      &lt;/table&gt;</div></div>
+</div>
+<p>This kind of predicates also works for attribute values, e.g. testing
+links to some website:</p>
+<div class="highlight-default"><div class="highlight"><pre><span></span><span class="o">//</span><span class="n">body</span><span class="o">//</span><span class="n">p</span> <span class="p">[</span> <span class="n">a</span><span class="o">/</span><span class="nd">@href</span><span class="o">=</span><span class="s2">"http://www.example.com"</span> <span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="special-trick-for-testing-multiple-node-names">
+<h5>Special trick for testing multiple node names<a class="headerlink" href="#special-trick-for-testing-multiple-node-names" title="Permalink to this headline">¶</a></h5>
+<p>In a predicate you can also test the current node of the node-set.
+For example if you want to test for several wanted element names.
+This is when <code class="docutils literal"><span class="pre">self::</span></code> axis can be helpful.</p>
+<p>One example is testing different kind of lists, ordered or unordered:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187487509776" rows="10" class="form-control">&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;ol&gt;
+       &lt;li&gt;first ordered item&lt;/li&gt;
+       &lt;li&gt;second ordered item&lt;/li&gt;
+       &lt;li&gt;third ordered item&lt;/li&gt;
+      &lt;/ol&gt;
+    &lt;/div&gt;
+    &lt;div&gt;
+      &lt;ul&gt;
+       &lt;li&gt;first unordered item&lt;/li&gt;
+       &lt;li&gt;second unordered item&lt;/li&gt;
+       &lt;li&gt;third unordered item&lt;/li&gt;
+      &lt;/ul&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187487509776" type="text" value="//body//*[self::ul or self::ol]//li" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187487509776" class="html_output"><div class="result_node">&lt;li&gt;first ordered item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;second ordered item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;third ordered item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;first unordered item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;second unordered item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;third unordered item&lt;/li&gt;</div></div>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">Here we saw that predicates can also appear in the middle of the location
+path. Indeed, predicates are (a optional) part of each location step.</p>
+</div>
+</div>
+</div>
+<div class="section" id="nested-predicates">
+<h4>Nested predicates<a class="headerlink" href="#nested-predicates" title="Permalink to this headline">¶</a></h4>
+<p>We said that location paths can be used as predicate. And location paths
+can have predicates. So it’s possible to end up with nested predicates.
+(And that’s ok.)</p>
+<div class="code pycon highlight-default"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1">#                &lt;------predicate ---------&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1">#                    &lt;-nested predicate-&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">doc</span><span class="o">.</span><span class="n">xpath</span><span class="p">(</span><span class="s1">'//div[p  [a/@href="page2.html"]  ]'</span><span class="p">)</span>
+<span class="go">[(1) '&lt;div&gt;</span>
+<span class="go">      &lt;p&gt;This is a paragraph.&lt;/p&gt;</span>
+<span class="go">      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;</span>
+<span class="go">      &lt;br&gt;</span>
+<span class="go">      Apparently.</span>
+<span class="go">    &lt;/div&gt;']</span>
+</pre></div>
+</div>
+<p>In fact, the above is equivalent to <code class="docutils literal"><span class="pre">//div[p/a/@href="page2.html"]</span></code>
+with no nesting:</p>
+<blockquote>
+<div><div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187482763600" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187482763600" type="text" value="//div[p  [a/@href=&quot;page2.html&quot;]  ]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187482763600" class="html_output"><div class="result_node">&lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;</div></div>
+</div>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187482765264" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187482765264" type="text" value="//div[p/a/@href=&quot;page2.html&quot;]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187482765264" class="html_output"><div class="result_node">&lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br/&gt;
+      Apparently.
+    &lt;/div&gt;</div></div>
+</div>
+</div></blockquote>
+</div>
+<div class="section" id="order-of-predicates-is-important">
+<h4>Order of predicates is important<a class="headerlink" href="#order-of-predicates-is-important" title="Permalink to this headline">¶</a></h4>
+<p>You can have multiple predicates in sequence per step, each within its
+<code class="docutils literal"><span class="pre">[]</span></code> brackets, i.e. steps in the form of
+<code class="docutils literal"><span class="pre">axis::nodetest[predicate#1][predicate#2][predicate#3]...</span></code>.</p>
+<p>Predicates are processed in order, from left to right. And the output of
+one predicate is fed into the next predicate filter, much like steps
+produce node-sets for the next step to process.</p>
+<p>So <strong>the order of predicates is important.</strong></p>
+<p>The following 2 location paths produce different results:</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">//div[@class="second"][2]</span></code>: will output one <code class="docutils literal"><span class="pre">&lt;div&gt;</span></code></li>
+<li><code class="docutils literal"><span class="pre">//div[2][@class="second"]</span></code>: will select <strong>nothing</strong></li>
+</ul>
+<p>See for yourself:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187482763984" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187482763984" type="text" value="//div[2][@class=&quot;second&quot;]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187482763984" class="html_output"><div class="result_node">&lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;</div></div>
+</div>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187482763856" rows="10" class="form-control">&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;This is a title&lt;/title&gt;
+  &lt;meta content="text/html; charset=utf-8" http-equiv="content-type" /&gt;
+&lt;/head&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;div&gt;
+      &lt;p&gt;This is a paragraph.&lt;/p&gt;
+      &lt;p&gt;Is this &lt;a href="page2.html"&gt;a link&lt;/a&gt;?&lt;/p&gt;
+      &lt;br /&gt;
+      Apparently.
+    &lt;/div&gt;
+    &lt;div class="second"&gt;
+      Nothing to add.
+      Except maybe this &lt;a href="page3.html"&gt;other link&lt;/a&gt;.
+      &lt;!-- And this comment --&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187482763856" type="text" value="//div[@class=&quot;second&quot;][2]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187482763856" class="html_output"></div>
+</div>
+<p>The second produces nothing indeed. Why is that?</p>
+<p><code class="docutils literal"><span class="pre">//div[2][@class="second"]</span></code> looks at <code class="docutils literal"><span class="pre">div</span></code> elements that are the 2nd
+child of their parent.
+<code class="docutils literal"><span class="pre">div</span></code> means <code class="docutils literal"><span class="pre">child::div</span></code>, and <code class="docutils literal"><span class="pre">[2]</span></code> will select the 2nd node in the current node-set.
+In our document this happens only once.
+The final predicate, <code class="docutils literal"><span class="pre">[@class="second"]</span></code>, filters nodes that have a
+“class” attribute with value “second”.
+This happens to be valid for that 2nd child <code class="docutils literal"><span class="pre">div</span></code>.</p>
+<p>On the contrary, <code class="docutils literal"><span class="pre">//div[@class="second"][2]</span></code> will first produce
+<code class="docutils literal"><span class="pre">//div[@class="second"]</span></code>, which only produces single-node node-sets
+(again, there’s only one <code class="docutils literal"><span class="pre">div</span></code> with “class” attribute with value
+“second”). So the subsequent <code class="docutils literal"><span class="pre">[2]</span></code> predicate will never match with
+single-node node-sets (you cannot select the 2nd element of a 1-element list)</p>
+<div class="admonition warning">
+<p class="first admonition-title">Warning</p>
+<p>Beware of <code class="docutils literal"><span class="pre">position()</span></code> in chained predicates.</p>
+<p>Much like <code class="docutils literal"><span class="pre">[...][2]</span></code> is different from <code class="docutils literal"><span class="pre">[2][...]</span></code>, if you chain
+positional predicates, remember that the position is relative to
+the node-set processed by the previous predicate.</p>
+<p>For example, we saw that <code class="docutils literal"><span class="pre">position()&gt;1</span></code> would filter out the first
+nodes in a node-set. Chaining <code class="docutils literal"><span class="pre">[position()&gt;1]</span></code> will remove the first
+node each time it’s used:</p>
+<div class="xpath_panel">
+    <label for="html_input">HTML Input</label>
+    <textarea id="html_input-140187500705936" rows="10" class="form-control">&lt;html&gt;
+&lt;body&gt;
+  &lt;div&gt;
+    &lt;ol&gt;
+      &lt;li&gt;first item&lt;/li&gt;
+      &lt;li&gt;second item&lt;/li&gt;
+      &lt;li&gt;third item&lt;/li&gt;
+      &lt;li&gt;fourth item&lt;/li&gt;
+      &lt;li&gt;fifth item&lt;/li&gt;
+    &lt;/ol&gt;
+  &lt;/div&gt;
+&lt;/body&gt;
+&lt;/html&gt;</textarea>
+
+    <label for="xpath_expression">XPath Expression</label>
+    <input class="form-control xpath_expression" data-target="140187500705936" type="text" value="//ol/li[position()&gt;1][position()&gt;1][position()&gt;1]" />
+
+    <label for="html_output">Result</label>
+    <div id="html_output-140187500705936" class="html_output"><div class="result_node">&lt;li&gt;fourth item&lt;/li&gt;</div><div class="result_node">&lt;li&gt;fifth item&lt;/li&gt;</div></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="string-functions">
+<h3>String functions<a class="headerlink" href="#string-functions" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+</div>
+<div class="section" id="part-3-use-cases-for-web-scraping">
+<h2>Part 3: Use-cases for web scraping<a class="headerlink" href="#part-3-use-cases-for-web-scraping" title="Permalink to this headline">¶</a></h2>
+<p>TODO</p>
+<div class="section" id="text-extraction">
+<h3>Text extraction<a class="headerlink" href="#text-extraction" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+<div class="section" id="attributes-extraction">
+<h3>Attributes extraction<a class="headerlink" href="#attributes-extraction" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+<div class="section" id="attribute-names-extractions">
+<h4>Attribute names extractions<a class="headerlink" href="#attribute-names-extractions" title="Permalink to this headline">¶</a></h4>
+<p>TODO</p>
+</div>
+</div>
+<div class="section" id="css-selectors">
+<h3>CSS Selectors<a class="headerlink" href="#css-selectors" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+<div class="section" id="loop-on-elements-table-rows-lists">
+<h3>Loop on elements (table rows, lists)<a class="headerlink" href="#loop-on-elements-table-rows-lists" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+<div class="section" id="element-boundaries-xpath-buckets-advanced">
+<h3>Element boundaries &amp; XPath buckets (advanced)<a class="headerlink" href="#element-boundaries-xpath-buckets-advanced" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+<div class="section" id="exslt-extensions">
+<h3>EXSLT extensions<a class="headerlink" href="#exslt-extensions" title="Permalink to this headline">¶</a></h3>
+<p>TODO</p>
+</div>
+</div>
+<div class="section" id="summary-of-tips">
+<h2>Summary of tips<a class="headerlink" href="#summary-of-tips" title="Permalink to this headline">¶</a></h2>
+<div class="admonition tip">
+<p class="first admonition-title">Tip</p>
+<ul class="last simple">
+<li>Use relative XPath expressions whenever possible</li>
+<li>Know your axes!</li>
+<li>Don’t forget that XPath has <code class="docutils literal"><span class="pre">string()</span></code> and <code class="docutils literal"><span class="pre">normalize-space()</span></code>
+functions</li>
+<li><strong>text() is a node test</strong>, not a function call</li>
+<li>CSS selectors are very handy, easier to maintain, but also less
+powerful than XPath</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           <div class="articleComments">
+            
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="architecture.html" class="btn btn-neutral float-right" title="Architecture overview" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="jobs.html" class="btn btn-neutral" title="Jobs: pausing and resuming crawls" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-6bfg0ty5" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2016, Scrapy developers.
+      
+        <span class="commit">
+          Revision <code>12eea9e7</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: xpath-tutorial
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/1.4/">1.4</a></dd>
+        
+          <dd><a href="/en/1.3/">1.3</a></dd>
+        
+          <dd><a href="/en/1.2/">1.2</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+          <dd><a href="/en/xpath-tutorial/">xpath-tutorial</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/xpath-tutorial/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/xpath-tutorial/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/xpath-tutorial/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'1.4.0',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true,
+            SOURCELINK_SUFFIX: '.txt'
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+  
+ 
+<script type="text/javascript" src="../_static/jquery.xpath.min.js"></script>
+<script type="text/javascript" src="../_static/xpathdemo.js"></script>
+<link rel="stylesheet" href="../_static/xpathdemo.css" type="text/css" />
+<script type="text/javascript">
+!function(){var analytics=window.analytics=window.analytics||[];if(!analytics.initialize)if(analytics.invoked)window.console&amp;&amp;console.error&amp;&amp;console.error("Segment snippet included twice.");else{analytics.invoked=!0;analytics.methods=["trackSubmit","trackClick","trackLink","trackForm","pageview","identify","reset","group","track","ready","alias","page","once","off","on"];analytics.factory=function(t){return function(){var e=Array.prototype.slice.call(arguments);e.unshift(t);analytics.push(e);return analytics}};for(var t=0;t&lt;analytics.methods.length;t++){var e=analytics.methods[t];analytics[e]=analytics.factory(e)}analytics.load=function(t){var e=document.createElement("script");e.type="text/javascript";e.async=!0;e.src=("https:"===document.location.protocol?"https://":"http://")+"cdn.segment.com/analytics.js/v1/"+t+"/analytics.min.js";var n=document.getElementsByTagName("script")[0];n.parentNode.insertBefore(e,n)};analytics.SNIPPET_VERSION="3.1.0";
+analytics.load("8UDQfnf3cyFSTsM4YANnW5sXmgZVILbA");
+analytics.page();
+}}();
+
+analytics.ready(function () {
+    ga('require', 'linker');
+    ga('linker:autoLink', ['scrapinghub.com', 'crawlera.com']);
+});
+</script>
+
+
+
+<div id="rtd-kkju0ze6"></div></body></html>

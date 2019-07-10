@@ -1,0 +1,604 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Debugging memory leaks — Scrapy 0.16.5 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.16.5 documentation" href="../index.html" />
+        <link rel="next" title="Downloading Item Images" href="images.html" />
+        <link rel="prev" title="Using Firebug for scraping" href="firebug.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/leaks.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/leaks'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.16
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/examples.html">Examples</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="commands.html">Command line tool</a></li>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+<li class="toctree-l1"><a class="reference internal" href="feed-exports.html">Feed exports</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="debug.html">Debugging Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="contracts.html">Spiders Contracts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="practices.html">Common Practices</a></li>
+<li class="toctree-l1"><a class="reference internal" href="broad-crawls.html">Broad Crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Debugging memory leaks</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#common-causes-of-memory-leaks">Common causes of memory leaks</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-memory-leaks-with-trackref"><span class="toctree-expand"></span>Debugging memory leaks with <code class="docutils literal"><span class="pre">trackref</span></code></a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#which-objects-are-tracked">Which objects are tracked?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#a-real-example">A real example</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#too-many-spiders">Too many spiders?</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#scrapy-utils-trackref-module">scrapy.utils.trackref module</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#debugging-memory-leaks-with-guppy">Debugging memory leaks with Guppy</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#leaks-without-leaks">Leaks without leaks</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+<li class="toctree-l1"><a class="reference internal" href="ubuntu.html">Ubuntu packages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="scrapyd.html">Scrapy Service (scrapyd)</a></li>
+<li class="toctree-l1"><a class="reference internal" href="autothrottle.html">AutoThrottle extension</a></li>
+<li class="toctree-l1"><a class="reference internal" href="jobs.html">Jobs: pausing and resuming crawls</a></li>
+<li class="toctree-l1"><a class="reference internal" href="djangoitem.html">DjangoItem</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="extensions.html">Extensions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api.html">Core API</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../news.html">Release notes</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../versioning.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-k17nulij" class="ethical-rtd ethical-dark-theme"><div class="ethical-sidebar"><div class="ethical-content"><a href="https://readthedocs.org/sustainability/click/305/NyDH45OfowYB/" rel="nofollow" target="_blank" class="ethical-image-link"><img src="https://assets.readthedocs.org/sustainability/readthedocs-logo-fs8.png" /></a><div class="ethical-text"><a href="https://readthedocs.org/sustainability/click/305/NyDH45OfowYB/" rel="nofollow" target="_blank">Private repos and priority support<br />Try Read the Docs for Business Today!</a></div></div><div class="ethical-callout"><small><em><a href="https://readthedocs.org/sustainability/advertising/">Sponsored</a><span> · </span><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html">Ads served ethically</a></em></small></div></div></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Debugging memory leaks</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.16/docs/topics/leaks.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="debugging-memory-leaks">
+<span id="topics-leaks"></span><h1>Debugging memory leaks<a class="headerlink" href="#debugging-memory-leaks" title="Permalink to this headline">¶</a></h1>
+<p>In Scrapy, objects such as Requests, Responses and Items have a finite
+lifetime: they are created, used for a while, and finally destroyed.</p>
+<p>From all those objects, the Request is probably the one with the longest
+lifetime, as it stays waiting in the Scheduler queue until it’s time to process
+it. For more info see <a class="reference internal" href="architecture.html#topics-architecture"><span>Architecture overview</span></a>.</p>
+<p>As these Scrapy objects have a (rather long) lifetime, there is always the risk
+of accumulating them in memory without releasing them properly and thus causing
+what is known as a “memory leak”.</p>
+<p>To help debugging memory leaks, Scrapy provides a built-in mechanism for
+tracking objects references called <a class="reference internal" href="#topics-leaks-trackrefs"><span>trackref</span></a>,
+and you can also use a third-party library called <a class="reference internal" href="#topics-leaks-guppy"><span>Guppy</span></a> for more advanced memory debugging (see below for more
+info). Both mechanisms must be used from the <a class="reference internal" href="telnetconsole.html#topics-telnetconsole"><span>Telnet Console</span></a>.</p>
+<div class="section" id="common-causes-of-memory-leaks">
+<h2>Common causes of memory leaks<a class="headerlink" href="#common-causes-of-memory-leaks" title="Permalink to this headline">¶</a></h2>
+<p>It happens quite often (sometimes by accident, sometimes on purpose) that the
+Scrapy developer passes objects referenced in Requests (for example, using the
+<a class="reference internal" href="request-response.html#scrapy.http.Request.meta" title="scrapy.http.Request.meta"><code class="xref py py-attr docutils literal"><span class="pre">meta</span></code></a> attribute or the request callback function)
+and that effectively bounds the lifetime of those referenced objects to the
+lifetime of the Request. This is, by far, the most common cause of memory leaks
+in Scrapy projects, and a quite difficult one to debug for newcomers.</p>
+<p>In big projects, the spiders are typically written by different people and some
+of those spiders could be “leaking” and thus affecting the rest of the other
+(well-written) spiders when they get to run concurrently, which, in turn,
+affects the whole crawling process.</p>
+<p>At the same time, it’s hard to avoid the reasons that cause these leaks
+without restricting the power of the framework, so we have decided not to
+restrict the functionally but provide useful tools for debugging these leaks,
+which quite often consist in an answer to the question: <em>which spider is leaking?</em>.</p>
+<p>The leak could also come from a custom middleware, pipeline or extension that
+you have written, if you are not releasing the (previously allocated) resources
+properly. For example, if you’re allocating resources on
+<a class="reference internal" href="signals.html#std:signal-spider_opened"><code class="xref std std-signal docutils literal"><span class="pre">spider_opened</span></code></a> but not releasing them on <a class="reference internal" href="signals.html#std:signal-spider_closed"><code class="xref std std-signal docutils literal"><span class="pre">spider_closed</span></code></a>.</p>
+</div>
+<div class="section" id="debugging-memory-leaks-with-trackref">
+<span id="topics-leaks-trackrefs"></span><h2>Debugging memory leaks with <code class="docutils literal"><span class="pre">trackref</span></code><a class="headerlink" href="#debugging-memory-leaks-with-trackref" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">trackref</span></code> is a module provided by Scrapy to debug the most common cases of
+memory leaks. It basically tracks the references to all live Requests,
+Responses, Item and Selector objects.</p>
+<p>You can enter the telnet console and inspect how many objects (of the classes
+mentioned above) are currently alive using the <code class="docutils literal"><span class="pre">prefs()</span></code> function which is an
+alias to the <a class="reference internal" href="#scrapy.utils.trackref.print_live_refs" title="scrapy.utils.trackref.print_live_refs"><code class="xref py py-func docutils literal"><span class="pre">print_live_refs()</span></code></a> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>telnet localhost 6023
+
+&gt;&gt;&gt; prefs()
+Live References
+
+ExampleSpider                       1   oldest: 15s ago
+HtmlResponse                       10   oldest: 1s ago
+XPathSelector                       2   oldest: 0s ago
+FormRequest                       878   oldest: 7s ago
+</pre></div>
+</div>
+<p>As you can see, that report also shows the “age” of the oldest object in each
+class.</p>
+<p>If you do have leaks, chances are you can figure out which spider is leaking by
+looking at the oldest request or response. You can get the oldest object of
+each class using the <a class="reference internal" href="#scrapy.utils.trackref.get_oldest" title="scrapy.utils.trackref.get_oldest"><code class="xref py py-func docutils literal"><span class="pre">get_oldest()</span></code></a> function like
+this (from the telnet console).</p>
+<div class="section" id="which-objects-are-tracked">
+<h3>Which objects are tracked?<a class="headerlink" href="#which-objects-are-tracked" title="Permalink to this headline">¶</a></h3>
+<p>The objects tracked by <code class="docutils literal"><span class="pre">trackrefs</span></code> are all from these classes (and all its
+subclasses):</p>
+<ul class="simple">
+<li><code class="docutils literal"><span class="pre">scrapy.http.Request</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.http.Response</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.item.Item</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.selector.XPathSelector</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.spider.BaseSpider</span></code></li>
+<li><code class="docutils literal"><span class="pre">scrapy.selector.document.Libxml2Document</span></code></li>
+</ul>
+</div>
+<div class="section" id="a-real-example">
+<h3>A real example<a class="headerlink" href="#a-real-example" title="Permalink to this headline">¶</a></h3>
+<p>Let’s see a concrete example of an hypothetical case of memory leaks.</p>
+<p>Suppose we have some spider with a line similar to this one:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>return Request("http://www.somenastyspider.com/product.php?pid=%d" % product_id,
+    callback=self.parse, meta={referer: response}")
+</pre></div>
+</div>
+<p>That line is passing a response reference inside a request which effectively
+ties the response lifetime to the requests’ one, and that would definitely
+cause memory leaks.</p>
+<p>Let’s see how we can discover which one is the nasty spider (without knowing it
+a-priori, of course) by using the <code class="docutils literal"><span class="pre">trackref</span></code> tool.</p>
+<p>After the crawler is running for a few minutes and we notice its memory usage
+has grown a lot, we can enter its telnet console and check the live
+references:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">prefs</span><span class="p">()</span>
+<span class="go">Live References</span>
+
+<span class="go">SomenastySpider                     1   oldest: 15s ago</span>
+<span class="go">HtmlResponse                     3890   oldest: 265s ago</span>
+<span class="go">XPathSelector                       2   oldest: 0s ago</span>
+<span class="go">Request                          3878   oldest: 250s ago</span>
+</pre></div>
+</div>
+<p>The fact that there are so many live responses (and that they’re so old) is
+definitely suspicious, as responses should have a relatively short lifetime
+compared to Requests. So let’s check the oldest response:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.utils.trackref</span> <span class="kn">import</span> <span class="n">get_oldest</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span> <span class="o">=</span> <span class="n">get_oldest</span><span class="p">(</span><span class="s1">'HtmlResponse'</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">r</span><span class="o">.</span><span class="n">url</span>
+<span class="go">'http://www.somenastyspider.com/product.php?pid=123'</span>
+</pre></div>
+</div>
+<p>There it is. By looking at the URL of the oldest response we can see it belongs
+to the <code class="docutils literal"><span class="pre">somenastyspider.com</span></code> spider. We can now go and check the code of that
+spider to discover the nasty line that is generating the leaks (passing
+response references inside requests).</p>
+<p>If you want to iterate over all objects, instead of getting the oldest one, you
+can use the <code class="xref py py-func docutils literal"><span class="pre">iter_all()</span></code> function:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.utils.trackref</span> <span class="kn">import</span> <span class="n">iter_all</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="p">[</span><span class="n">r</span><span class="o">.</span><span class="n">url</span> <span class="k">for</span> <span class="n">r</span> <span class="ow">in</span> <span class="n">iter_all</span><span class="p">(</span><span class="s1">'HtmlResponse'</span><span class="p">)]</span>
+<span class="go">['http://www.somenastyspider.com/product.php?pid=123',</span>
+<span class="go"> 'http://www.somenastyspider.com/product.php?pid=584',</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="too-many-spiders">
+<h3>Too many spiders?<a class="headerlink" href="#too-many-spiders" title="Permalink to this headline">¶</a></h3>
+<p>If your project has too many spiders, the output of <code class="docutils literal"><span class="pre">prefs()</span></code> can be
+difficult to read. For this reason, that function has a <code class="docutils literal"><span class="pre">ignore</span></code> argument
+which can be used to ignore a particular class (and all its subclases). For
+example, using:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.spider</span> <span class="kn">import</span> <span class="n">BaseSpider</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">prefs</span><span class="p">(</span><span class="n">ignore</span><span class="o">=</span><span class="n">BaseSpider</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Won’t show any live references to spiders.</p>
+<span class="target" id="module-scrapy.utils.trackref"></span></div>
+<div class="section" id="scrapy-utils-trackref-module">
+<h3>scrapy.utils.trackref module<a class="headerlink" href="#scrapy-utils-trackref-module" title="Permalink to this headline">¶</a></h3>
+<p>Here are the functions available in the <a class="reference internal" href="#module-scrapy.utils.trackref" title="scrapy.utils.trackref: Track references of live objects"><code class="xref py py-mod docutils literal"><span class="pre">trackref</span></code></a> module.</p>
+<dl class="class">
+<dt id="scrapy.utils.trackref.object_ref">
+<em class="property">class </em><code class="descclassname">scrapy.utils.trackref.</code><code class="descname">object_ref</code><a class="headerlink" href="#scrapy.utils.trackref.object_ref" title="Permalink to this definition">¶</a></dt>
+<dd><p>Inherit from this class (instead of object) if you want to track live
+instances with the <code class="docutils literal"><span class="pre">trackref</span></code> module.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scrapy.utils.trackref.print_live_refs">
+<code class="descclassname">scrapy.utils.trackref.</code><code class="descname">print_live_refs</code><span class="sig-paren">(</span><em>class_name</em>, <em>ignore=NoneType</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.utils.trackref.print_live_refs" title="Permalink to this definition">¶</a></dt>
+<dd><p>Print a report of live references, grouped by class name.</p>
+<table class="docutils field-list" frame="void" rules="none">
+<colgroup><col class="field-name" />
+<col class="field-body" />
+</colgroup><tbody valign="top">
+<tr class="field-odd field"><th class="field-name">Parameters:</th><td class="field-body"><strong>ignore</strong> (<em>class or classes tuple</em>) – if given, all objects from the specified class (or tuple of
+classes) will be ignored.</td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+<dl class="function">
+<dt id="scrapy.utils.trackref.get_oldest">
+<code class="descclassname">scrapy.utils.trackref.</code><code class="descname">get_oldest</code><span class="sig-paren">(</span><em>class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.utils.trackref.get_oldest" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return the oldest object alive with the given class name, or <code class="docutils literal"><span class="pre">None</span></code> if
+none is found. Use <a class="reference internal" href="#scrapy.utils.trackref.print_live_refs" title="scrapy.utils.trackref.print_live_refs"><code class="xref py py-func docutils literal"><span class="pre">print_live_refs()</span></code></a> first to get a list of all
+tracked live objects per class name.</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="scrapy.utils.trackref.iter_all">
+<code class="descclassname">scrapy.utils.trackref.</code><code class="descname">iter_all</code><span class="sig-paren">(</span><em>class_name</em><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.utils.trackref.iter_all" title="Permalink to this definition">¶</a></dt>
+<dd><p>Return an iterator over all objects alive with the given class name, or
+<code class="docutils literal"><span class="pre">None</span></code> if none is found. Use <a class="reference internal" href="#scrapy.utils.trackref.print_live_refs" title="scrapy.utils.trackref.print_live_refs"><code class="xref py py-func docutils literal"><span class="pre">print_live_refs()</span></code></a> first to get a list
+of all tracked live objects per class name.</p>
+</dd></dl>
+
+</div>
+</div>
+<div class="section" id="debugging-memory-leaks-with-guppy">
+<span id="topics-leaks-guppy"></span><h2>Debugging memory leaks with Guppy<a class="headerlink" href="#debugging-memory-leaks-with-guppy" title="Permalink to this headline">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">trackref</span></code> provides a very convenient mechanism for tracking down memory
+leaks, but it only keeps track of the objects that are more likely to cause
+memory leaks (Requests, Responses, Items, and Selectors). However, there are
+other cases where the memory leaks could come from other (more or less obscure)
+objects. If this is your case, and you can’t find your leaks using <code class="docutils literal"><span class="pre">trackref</span></code>,
+you still have another resource: the <a class="reference external" href="http://pypi.python.org/pypi/guppy">Guppy library</a>.</p>
+<p>If you use <code class="docutils literal"><span class="pre">setuptools</span></code>, you can install Guppy with the following command:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span>easy_install guppy
+</pre></div>
+</div>
+<p>The telnet console also comes with a built-in shortcut (<code class="docutils literal"><span class="pre">hpy</span></code>) for accessing
+Guppy heap objects. Here’s an example to view all Python objects available in
+the heap using Guppy:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span> <span class="o">=</span> <span class="n">hpy</span><span class="o">.</span><span class="n">heap</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">bytype</span>
+<span class="go">Partition of a set of 297033 objects. Total size = 52587824 bytes.</span>
+<span class="go"> Index  Count   %     Size   % Cumulative  % Type</span>
+<span class="go">     0  22307   8 16423880  31  16423880  31 dict</span>
+<span class="go">     1 122285  41 12441544  24  28865424  55 str</span>
+<span class="go">     2  68346  23  5966696  11  34832120  66 tuple</span>
+<span class="go">     3    227   0  5836528  11  40668648  77 unicode</span>
+<span class="go">     4   2461   1  2222272   4  42890920  82 type</span>
+<span class="go">     5  16870   6  2024400   4  44915320  85 function</span>
+<span class="go">     6  13949   5  1673880   3  46589200  89 types.CodeType</span>
+<span class="go">     7  13422   5  1653104   3  48242304  92 list</span>
+<span class="go">     8   3735   1  1173680   2  49415984  94 _sre.SRE_Pattern</span>
+<span class="go">     9   1209   0   456936   1  49872920  95 scrapy.http.headers.Headers</span>
+<span class="go">&lt;1676 more rows. Type e.g. '_.more' to view.&gt;</span>
+</pre></div>
+</div>
+<p>You can see that most space is used by dicts. Then, if you want to see from
+which attribute those dicts are referenced, you could do:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">x</span><span class="o">.</span><span class="n">bytype</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">byvia</span>
+<span class="go">Partition of a set of 22307 objects. Total size = 16423880 bytes.</span>
+<span class="go"> Index  Count   %     Size   % Cumulative  % Referred Via:</span>
+<span class="go">     0  10982  49  9416336  57   9416336  57 '.__dict__'</span>
+<span class="go">     1   1820   8  2681504  16  12097840  74 '.__dict__', '.func_globals'</span>
+<span class="go">     2   3097  14  1122904   7  13220744  80</span>
+<span class="go">     3    990   4   277200   2  13497944  82 "['cookies']"</span>
+<span class="go">     4    987   4   276360   2  13774304  84 "['cache']"</span>
+<span class="go">     5    985   4   275800   2  14050104  86 "['meta']"</span>
+<span class="go">     6    897   4   251160   2  14301264  87 '[2]'</span>
+<span class="go">     7      1   0   196888   1  14498152  88 "['moduleDict']", "['modules']"</span>
+<span class="go">     8    672   3   188160   1  14686312  89 "['cb_kwargs']"</span>
+<span class="go">     9     27   0   155016   1  14841328  90 '[1]'</span>
+<span class="go">&lt;333 more rows. Type e.g. '_.more' to view.&gt;</span>
+</pre></div>
+</div>
+<p>As you can see, the Guppy module is very powerful but also requires some deep
+knowledge about Python internals. For more info about Guppy, refer to the
+<a class="reference external" href="http://guppy-pe.sourceforge.net/">Guppy documentation</a>.</p>
+</div>
+<div class="section" id="leaks-without-leaks">
+<span id="topics-leaks-without-leaks"></span><h2>Leaks without leaks<a class="headerlink" href="#leaks-without-leaks" title="Permalink to this headline">¶</a></h2>
+<p>Sometimes, you may notice that the memory usage of your Scrapy process will
+only increase, but never decrease. Unfortunately, this could happen even
+though neither Scrapy nor your project are leaking memory. This is due to a
+(not so well) known problem of Python, which may not return released memory to
+the operating system in some cases. For more information on this issue see:</p>
+<ul class="simple">
+<li><a class="reference external" href="http://evanjones.ca/python-memory.html">Python Memory Management</a></li>
+<li><a class="reference external" href="http://evanjones.ca/python-memory-part2.html">Python Memory Management Part 2</a></li>
+<li><a class="reference external" href="http://evanjones.ca/python-memory-part3.html">Python Memory Management Part 3</a></li>
+</ul>
+<p>The improvements proposed by Evan Jones, which are detailed in <a class="reference external" href="http://evanjones.ca/memoryallocator/">this paper</a>,
+got merged in Python 2.5, but this only reduces the problem, it doesn’t fix it
+completely. To quote the paper:</p>
+<blockquote>
+<div><em>Unfortunately, this patch can only free an arena if there are no more
+objects allocated in it anymore. This means that fragmentation is a large
+issue. An application could have many megabytes of free memory, scattered
+throughout all the arenas, but it will be unable to free any of it. This is
+a problem experienced by all memory allocators. The only way to solve it is
+to move to a compacting garbage collector, which is able to move objects in
+memory. This would require significant changes to the Python interpreter.</em></div></blockquote>
+<p>This problem will be fixed in future Scrapy releases, where we plan to adopt a
+new process model and run spiders in a pool of recyclable sub-processes.</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="images.html" class="btn btn-neutral float-right" title="Downloading Item Images" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="firebug.html" class="btn btn-neutral" title="Using Firebug for scraping" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-2xes0rxw" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2012, Scrapinghub.
+      
+        <span class="commit">
+          Revision <code>c152682b</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.16
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.16/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.16/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.16/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.16.5',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-rpol5ve6"></div></body></html>

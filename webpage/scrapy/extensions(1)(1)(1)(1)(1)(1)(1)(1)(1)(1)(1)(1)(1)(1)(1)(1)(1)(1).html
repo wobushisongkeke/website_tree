@@ -1,0 +1,660 @@
+<!DOCTYPE html><!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]--><!--[if gt IE 8]><!--><html xmlns="http://www.w3.org/1999/xhtml" class=" js flexbox canvas canvastext webgl no-touch geolocation postmessage websqldatabase indexeddb hashchange history draganddrop websockets rgba hsla multiplebgs backgroundsize borderimage borderradius boxshadow textshadow opacity cssanimations csscolumns cssgradients cssreflections csstransforms csstransforms3d csstransitions fontface generatedcontent video audio localstorage sessionstorage webworkers applicationcache svg inlinesvg smil svgclippaths" lang="en" style=""><!--<![endif]--><head>
+  <meta charset="utf-8" />
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <title>Extensions — Scrapy 0.9 documentation</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+
+  
+    <link rel="stylesheet" href="https://media.readthedocs.org/css/sphinx_rtd_theme.css" type="text/css" />
+  
+
+  
+    <link rel="top" title="Scrapy 0.9 documentation" href="../index.html" />
+        <link rel="next" title="scrapy-ctl.py" href="scrapy-ctl.html" />
+        <link rel="prev" title="Spider Middleware" href="spider-middleware.html" /> 
+
+  
+  <script type="text/javascript" async="" src="https://ssl.google-analytics.com/ga.js"></script><script src="../_static/js/modernizr.min.js"></script>
+
+
+<!-- RTD Extra Head -->
+
+<!-- 
+Always link to the latest version, as canonical.
+http://docs.readthedocs.org/en/latest/canonical.html
+-->
+<link rel="canonical" href="http://doc.scrapy.org/en/latest/topics/extensions.html" />
+
+<link rel="stylesheet" href="https://media.readthedocs.org/css/readthedocs-doc-embed.css" type="text/css" />
+
+<script type="text/javascript" src="../_static/readthedocs-data.js"></script>
+
+<!-- Add page-specific data, which must exist in the page js, not global -->
+<script type="text/javascript">
+READTHEDOCS_DATA['page'] = 'topics/extensions'
+</script>
+
+<script type="text/javascript" src="../_static/readthedocs-dynamic-include.js"></script>
+
+<!-- end RTD <extrahead> --></head>
+
+<body class="wy-body-for-nav" role="document" style="">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> Scrapy
+          
+
+          
+          </a>
+
+          
+            
+            
+            
+              <div class="version">
+                0.9
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul>
+<li class="toctree-l1"><a class="reference internal" href="../intro/overview.html">Scrapy at a glance</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/install.html">Installation guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../intro/tutorial.html">Scrapy Tutorial</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="items.html">Items</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spiders.html">Spiders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="link-extractors.html">Link Extractors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="selectors.html">XPath Selectors</a></li>
+<li class="toctree-l1"><a class="reference internal" href="loaders.html">Item Loaders</a></li>
+<li class="toctree-l1"><a class="reference internal" href="shell.html">Scrapy shell</a></li>
+<li class="toctree-l1"><a class="reference internal" href="item-pipeline.html">Item Pipeline</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="logging.html">Logging</a></li>
+<li class="toctree-l1"><a class="reference internal" href="stats.html">Stats Collection</a></li>
+<li class="toctree-l1"><a class="reference internal" href="email.html">Sending e-mail</a></li>
+<li class="toctree-l1"><a class="reference internal" href="telnetconsole.html">Telnet Console</a></li>
+<li class="toctree-l1"><a class="reference internal" href="webservice.html">Web Service</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../faq.html">Frequently Asked Questions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firefox.html">Using Firefox for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="firebug.html">Using Firebug for scraping</a></li>
+<li class="toctree-l1"><a class="reference internal" href="leaks.html">Debugging memory leaks</a></li>
+<li class="toctree-l1"><a class="reference internal" href="images.html">Downloading Item Images</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="architecture.html">Architecture overview</a></li>
+<li class="toctree-l1"><a class="reference internal" href="downloader-middleware.html">Downloader Middleware</a></li>
+<li class="toctree-l1"><a class="reference internal" href="spider-middleware.html">Spider Middleware</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href=""><span class="toctree-expand"></span>Extensions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#extension-settings">Extension settings</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#loading-activating-extensions">Loading &amp; activating extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#available-enabled-and-disabled-extensions">Available, enabled and disabled extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#accessing-enabled-extensions">Accessing enabled extensions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#writing-your-own-extension">Writing your own extension</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-scrapy.extension">Extension Manager</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#built-in-extensions-reference"><span class="toctree-expand"></span>Built-in extensions reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#general-purpose-extensions"><span class="toctree-expand"></span>General purpose extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.contrib.corestats.corestats">Core Stats extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.webservice">Web service extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.telnet">Telnet console extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.contrib.memusage">Memory usage extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.contrib.memdebug">Memory debugger extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.contrib.closespider">Close spider extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-scrapy.contrib.statsmailer">StatsMailer extension</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#debugging-extensions"><span class="toctree-expand"></span>Debugging extensions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#stack-trace-dump-extension">Stack trace dump extension</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#debugger-extension">Debugger extension</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="scrapy-ctl.html">scrapy-ctl.py</a></li>
+<li class="toctree-l1"><a class="reference internal" href="request-response.html">Requests and Responses</a></li>
+<li class="toctree-l1"><a class="reference internal" href="settings.html">Settings</a></li>
+<li class="toctree-l1"><a class="reference internal" href="signals.html">Signals</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exceptions.html">Exceptions</a></li>
+<li class="toctree-l1"><a class="reference internal" href="exporters.html">Item Exporters</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../contributing.html">Contributing to Scrapy</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api-stability.html">Versioning and API Stability</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental/index.html">Experimental features</a></li>
+</ul>
+
+            
+          
+        </div>
+      <div id="rtd-2g5zzl67h" class="ethical-rtd ethical-dark-theme"></div></div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="../index.html">Scrapy</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="../index.html">Docs</a> »</li>
+      
+    <li>Extensions</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="https://github.com/scrapy/scrapy/blob/0.9/docs/topics/extensions.rst" class="fa fa-github"> Edit on GitHub</a>
+          
+        
+      </li>
+  </ul>
+  <hr />
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="extensions">
+<span id="topics-extensions"></span><h1>Extensions<a class="headerlink" href="#extensions" title="Permalink to this headline">¶</a></h1>
+<p>The extensions framework provides a mechanism for inserting your own
+custom functionality into Scrapy.</p>
+<p>Extensions are just regular classes that are instantiated at Scrapy startup,
+when extensions are initialized.</p>
+<div class="section" id="extension-settings">
+<h2>Extension settings<a class="headerlink" href="#extension-settings" title="Permalink to this headline">¶</a></h2>
+<p>Extensions use the <a class="reference internal" href="settings.html#topics-settings"><span>Scrapy settings</span></a> to manage their
+settings, just like any other Scrapy code.</p>
+<p>It is customary for extensions to prefix their settings with their own name, to
+avoid collision with existing (and future) extensions. For example, an
+hypothetic extension to handle <a class="reference external" href="http://en.wikipedia.org/wiki/Sitemaps">Google Sitemaps</a> would use settings like
+<cite>GOOGLESITEMAP_ENABLED</cite>, <cite>GOOGLESITEMAP_DEPTH</cite>, and so on.</p>
+</div>
+<div class="section" id="loading-activating-extensions">
+<h2>Loading &amp; activating extensions<a class="headerlink" href="#loading-activating-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Extensions are loaded and activated at startup by instantiating a single
+instance of the extension class. Therefore, all the extension initialization
+code must be performed in the class constructor (<code class="docutils literal"><span class="pre">__init__</span></code> method).</p>
+<p>To make an extension available, add it to the <a class="reference internal" href="settings.html#std:setting-EXTENSIONS"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS</span></code></a> setting in
+your Scrapy settings. In <a class="reference internal" href="settings.html#std:setting-EXTENSIONS"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS</span></code></a>, each extension is represented
+by a string: the full Python path to the extension’s class name. For example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="n">EXTENSIONS</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">'scrapy.contrib.corestats.CoreStats'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">'scrapy.webservice.WebService'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+    <span class="s1">'scrapy.telnet.TelnetConsole'</span><span class="p">:</span> <span class="mi">500</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+<p>As you can see, the <a class="reference internal" href="settings.html#std:setting-EXTENSIONS"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS</span></code></a> setting is a dict where the keys are
+the extension paths, and their values are the orders, which define the
+extension <em>loading</em> order. Extensions orders are not as important as middleware
+orders though, and they are typically irrelevant, ie. it doesn’t matter in
+which order the extensions are loaded because they don’t depend on each other
+[1].</p>
+<p>However, this feature can be exploited if you need to add an extension which
+depends on other extensions already loaded.</p>
+<p>[1] This is is why the <a class="reference internal" href="settings.html#std:setting-EXTENSIONS_BASE"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS_BASE</span></code></a> setting in Scrapy (which
+contains all built-in extensions enabled by default) defines all the extensions
+with the same order (<code class="docutils literal"><span class="pre">500</span></code>).</p>
+</div>
+<div class="section" id="available-enabled-and-disabled-extensions">
+<h2>Available, enabled and disabled extensions<a class="headerlink" href="#available-enabled-and-disabled-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Not all available extensions will be enabled. Some of them usually depend on a
+particular setting. For example, the HTTP Cache extension is available by default
+but disabled unless the <a class="reference internal" href="downloader-middleware.html#std:setting-HTTPCACHE_DIR"><code class="xref std std-setting docutils literal"><span class="pre">HTTPCACHE_DIR</span></code></a> setting is set.  Both enabled
+and disabled extensions can be accessed through the
+<a class="reference internal" href="#topics-extensions-ref-manager"><span>Extension Manager</span></a>.</p>
+</div>
+<div class="section" id="accessing-enabled-extensions">
+<h2>Accessing enabled extensions<a class="headerlink" href="#accessing-enabled-extensions" title="Permalink to this headline">¶</a></h2>
+<p>Even though it’s not usually needed, you can access extension objects through
+the <a class="reference internal" href="#topics-extensions-ref-manager"><span>Extension Manager</span></a> which is populated when extensions are
+loaded.  For example, to access the <code class="docutils literal"><span class="pre">WebService</span></code> extension:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.extension</span> <span class="kn">import</span> <span class="n">extensions</span>
+<span class="n">webservice_extension</span> <span class="o">=</span> <span class="n">extensions</span><span class="o">.</span><span class="n">enabled</span><span class="p">[</span><span class="s1">'WebService'</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="writing-your-own-extension">
+<h2>Writing your own extension<a class="headerlink" href="#writing-your-own-extension" title="Permalink to this headline">¶</a></h2>
+<p>Writing your own extension is easy. Each extension is a single Python class
+which doesn’t need to implement any particular method.</p>
+<p>All extension initialization code must be performed in the class constructor
+(<code class="docutils literal"><span class="pre">__init__</span></code> method). If that method raises the
+<a class="reference internal" href="exceptions.html#scrapy.core.exceptions.NotConfigured" title="scrapy.core.exceptions.NotConfigured"><code class="xref py py-exc docutils literal"><span class="pre">NotConfigured</span></code></a> exception, the extension will be
+disabled. Otherwise, the extension will be enabled.</p>
+<p>Let’s take a look at the following example extension which just logs a message
+every time a domain/spider is opened and closed:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.xlib.pydispatch</span> <span class="kn">import</span> <span class="n">dispatcher</span>
+<span class="kn">from</span> <span class="nn">scrapy.core</span> <span class="kn">import</span> <span class="n">signals</span>
+
+<span class="k">class</span> <span class="nc">SpiderOpenCloseLogging</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+
+    <span class="k">def</span> <span class="nf">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider_opened</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">signals</span><span class="o">.</span><span class="n">spider_opened</span><span class="p">)</span>
+        <span class="n">dispatcher</span><span class="o">.</span><span class="n">connect</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">spider_closed</span><span class="p">,</span> <span class="n">signal</span><span class="o">=</span><span class="n">signals</span><span class="o">.</span><span class="n">spider_closed</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">spider_opened</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s2">"opened spider </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">spider</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="nf">spider_closed</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">spider</span><span class="p">):</span>
+        <span class="n">log</span><span class="o">.</span><span class="n">msg</span><span class="p">(</span><span class="s2">"closed spider </span><span class="si">%s</span><span class="s2">"</span> <span class="o">%</span> <span class="n">spider</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="module-scrapy.extension">
+<span id="extension-manager"></span><span id="topics-extensions-ref-manager"></span><h2>Extension Manager<a class="headerlink" href="#module-scrapy.extension" title="Permalink to this headline">¶</a></h2>
+<p>The Extension Manager is responsible for loading and keeping track of installed
+extensions and it’s configured through the <a class="reference internal" href="settings.html#std:setting-EXTENSIONS"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS</span></code></a> setting which
+contains a dictionary of all available extensions and their order similar to
+how you <a class="reference internal" href="downloader-middleware.html#topics-downloader-middleware-setting"><span>configure the downloader middlewares</span></a>.</p>
+<dl class="class">
+<dt id="scrapy.extension.ExtensionManager">
+<em class="property">class </em><code class="descclassname">scrapy.extension.</code><code class="descname">ExtensionManager</code><a class="headerlink" href="#scrapy.extension.ExtensionManager" title="Permalink to this definition">¶</a></dt>
+<dd><p>The Extension Manager is a singleton object, which is instantiated at module
+loading time and can be accessed like this:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">scrapy.extension</span> <span class="kn">import</span> <span class="n">extensions</span>
+</pre></div>
+</div>
+<dl class="attribute">
+<dt id="scrapy.extension.ExtensionManager.loaded">
+<code class="descname">loaded</code><a class="headerlink" href="#scrapy.extension.ExtensionManager.loaded" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean which is True if extensions are already loaded or False if
+they’re not.</p>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.extension.ExtensionManager.enabled">
+<code class="descname">enabled</code><a class="headerlink" href="#scrapy.extension.ExtensionManager.enabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict with the enabled extensions. The keys are the extension class names,
+and the values are the extension objects. Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.extension</span> <span class="kn">import</span> <span class="n">extensions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extensions</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">extensions</span><span class="o">.</span><span class="n">enabled</span>
+<span class="go">{'CoreStats': &lt;scrapy.contrib.corestats.CoreStats object at 0x9e272ac&gt;,</span>
+<span class="go"> 'WebService': &lt;scrapy.management.telnet.TelnetConsole instance at 0xa05670c&gt;,</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="scrapy.extension.ExtensionManager.disabled">
+<code class="descname">disabled</code><a class="headerlink" href="#scrapy.extension.ExtensionManager.disabled" title="Permalink to this definition">¶</a></dt>
+<dd><p>A dict with the disabled extensions. The keys are the extension class names,
+and the values are the extension class paths (because objects are never
+instantiated for disabled extensions). Example:</p>
+<div class="highlight-python"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">scrapy.extension</span> <span class="kn">import</span> <span class="n">extensions</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">extensions</span><span class="o">.</span><span class="n">load</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">print</span> <span class="n">extensions</span><span class="o">.</span><span class="n">disabled</span>
+<span class="go">{'MemoryDebugger': 'scrapy.contrib.memdebug.MemoryDebugger',</span>
+<span class="go"> 'MyExtension': 'myproject.extensions.MyExtension',</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.extension.ExtensionManager.load">
+<code class="descname">load</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.extension.ExtensionManager.load" title="Permalink to this definition">¶</a></dt>
+<dd><p>Load the available extensions configured in the <a class="reference internal" href="settings.html#std:setting-EXTENSIONS"><code class="xref std std-setting docutils literal"><span class="pre">EXTENSIONS</span></code></a>
+setting. On a standard run, this method is usually called by the Execution
+Manager, but you may need to call it explicitly if you’re dealing with
+code outside Scrapy.</p>
+</dd></dl>
+
+<dl class="method">
+<dt id="scrapy.extension.ExtensionManager.reload">
+<code class="descname">reload</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#scrapy.extension.ExtensionManager.reload" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reload the available extensions. See <a class="reference internal" href="#scrapy.extension.ExtensionManager.load" title="scrapy.extension.ExtensionManager.load"><code class="xref py py-meth docutils literal"><span class="pre">load()</span></code></a>.</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="built-in-extensions-reference">
+<span id="topics-extensions-ref"></span><h2>Built-in extensions reference<a class="headerlink" href="#built-in-extensions-reference" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="general-purpose-extensions">
+<h3>General purpose extensions<a class="headerlink" href="#general-purpose-extensions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="module-scrapy.contrib.corestats.corestats">
+<span id="core-stats-extension"></span><h4>Core Stats extension<a class="headerlink" href="#module-scrapy.contrib.corestats.corestats" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.corestats.corestats.CoreStats">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.corestats.corestats.</code><code class="descname">CoreStats</code><a class="headerlink" href="#scrapy.contrib.corestats.corestats.CoreStats" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Enable the collection of core statistics, provided the stats collection is
+enabled (see <a class="reference internal" href="stats.html#topics-stats"><span>Stats Collection</span></a>).</p>
+</div>
+<div class="section" id="module-scrapy.webservice">
+<span id="web-service-extension"></span><span id="topics-extensions-ref-webservice"></span><h4>Web service extension<a class="headerlink" href="#module-scrapy.webservice" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.webservice.scrapy.webservice.WebService">
+<em class="property">class </em><code class="descclassname">scrapy.webservice.</code><code class="descname">WebService</code><a class="headerlink" href="#scrapy.webservice.scrapy.webservice.WebService" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>See <cite>topics-webservice</cite>.</p>
+</div>
+<div class="section" id="module-scrapy.telnet">
+<span id="telnet-console-extension"></span><span id="topics-extensions-ref-telnetconsole"></span><h4>Telnet console extension<a class="headerlink" href="#module-scrapy.telnet" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.telnet.scrapy.telnet.TelnetConsole">
+<em class="property">class </em><code class="descclassname">scrapy.telnet.</code><code class="descname">TelnetConsole</code><a class="headerlink" href="#scrapy.telnet.scrapy.telnet.TelnetConsole" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Provides a telnet console for getting into a Python interpreter inside the
+currently running Scrapy process, which can be very useful for debugging.</p>
+<p>The telnet console must be enabled by the <a class="reference internal" href="settings.html#std:setting-TELNETCONSOLE_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">TELNETCONSOLE_ENABLED</span></code></a>
+setting, and the server will listen in the port specified in
+<a class="reference internal" href="settings.html#std:setting-TELNETCONSOLE_PORT"><code class="xref std std-setting docutils literal"><span class="pre">TELNETCONSOLE_PORT</span></code></a>.</p>
+</div>
+<div class="section" id="module-scrapy.contrib.memusage">
+<span id="memory-usage-extension"></span><span id="topics-extensions-ref-memusage"></span><h4>Memory usage extension<a class="headerlink" href="#module-scrapy.contrib.memusage" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.memusage.scrapy.contrib.memusage.MemoryUsage">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.memusage.</code><code class="descname">MemoryUsage</code><a class="headerlink" href="#scrapy.contrib.memusage.scrapy.contrib.memusage.MemoryUsage" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">This extension does not work in Windows.</p>
+</div>
+<p>Allows monitoring the memory used by a Scrapy process and:</p>
+<p>1, send a notification e-mail when it exceeds a certain value
+2. terminate the Scrapy process when it exceeds a certain value</p>
+<p>The notification e-mails can be triggered when a certain warning value is
+reached (<a class="reference internal" href="settings.html#std:setting-MEMUSAGE_WARNING_MB"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_WARNING_MB</span></code></a>) and when the maximum value is reached
+(<a class="reference internal" href="settings.html#std:setting-MEMUSAGE_LIMIT_MB"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_LIMIT_MB</span></code></a>) which will also cause the Scrapy process to be
+terminated.</p>
+<p>This extension is enabled by the <a class="reference internal" href="settings.html#std:setting-MEMUSAGE_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_ENABLED</span></code></a> setting and
+can be configured with the following settings:</p>
+<ul class="simple">
+<li><a class="reference internal" href="settings.html#std:setting-MEMUSAGE_LIMIT_MB"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_LIMIT_MB</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-MEMUSAGE_WARNING_MB"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_WARNING_MB</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-MEMUSAGE_NOTIFY_MAIL"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_NOTIFY_MAIL</span></code></a></li>
+<li><a class="reference internal" href="settings.html#std:setting-MEMUSAGE_REPORT"><code class="xref std std-setting docutils literal"><span class="pre">MEMUSAGE_REPORT</span></code></a></li>
+</ul>
+</div>
+<div class="section" id="module-scrapy.contrib.memdebug">
+<span id="memory-debugger-extension"></span><h4>Memory debugger extension<a class="headerlink" href="#module-scrapy.contrib.memdebug" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.memdebug.scrapy.contrib.memdebug.MemoryDebugger">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.memdebug.</code><code class="descname">MemoryDebugger</code><a class="headerlink" href="#scrapy.contrib.memdebug.scrapy.contrib.memdebug.MemoryDebugger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>A memory debugger which collects some info about objects uncollected by the
+garbage collector and libxml2 memory leaks. To enable this extension, turn on
+the <a class="reference internal" href="settings.html#std:setting-MEMDEBUG_ENABLED"><code class="xref std std-setting docutils literal"><span class="pre">MEMDEBUG_ENABLED</span></code></a> setting. The report will be printed to standard
+output. If the <a class="reference internal" href="settings.html#std:setting-MEMDEBUG_NOTIFY"><code class="xref std std-setting docutils literal"><span class="pre">MEMDEBUG_NOTIFY</span></code></a> setting contains a list of e-mails the
+report will also be sent to those addresses.</p>
+</div>
+<div class="section" id="module-scrapy.contrib.closespider">
+<span id="close-spider-extension"></span><h4>Close spider extension<a class="headerlink" href="#module-scrapy.contrib.closespider" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.closespider.scrapy.contrib.closespider.CloseSpider">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.closespider.</code><code class="descname">CloseSpider</code><a class="headerlink" href="#scrapy.contrib.closespider.scrapy.contrib.closespider.CloseSpider" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Closes a spider automatically when some conditions are met, using a specific
+closing reason for each condition.</p>
+<p>The conditions for closing a spider can be configured through the following
+settings. Other conditions will be supported in the future.</p>
+<div class="section" id="closespider-timeout">
+<span id="std:setting-CLOSESPIDER_TIMEOUT"></span><h5>CLOSESPIDER_TIMEOUT<a class="headerlink" href="#closespider-timeout" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>An integer which specifies a number of seconds. If the spider remains open for
+more than that number of second, it will be automatically closed with the
+reason <code class="docutils literal"><span class="pre">closespider_timeout</span></code>. If zero (or non set), spiders won’t be closed by
+timeout.</p>
+</div>
+<div class="section" id="closespider-itempassed">
+<span id="std:setting-CLOSESPIDER_ITEMPASSED"></span><h5>CLOSESPIDER_ITEMPASSED<a class="headerlink" href="#closespider-itempassed" title="Permalink to this headline">¶</a></h5>
+<p>Default: <code class="docutils literal"><span class="pre">0</span></code></p>
+<p>An integer which specifies a number of items. If the spider scrapes more than
+that amount if items and those items are passed by the item pipeline, the
+spider will be closed with the reason <code class="docutils literal"><span class="pre">closespider_itempassed</span></code>. If zero (or
+non set), spiders won’t be closed by number of passed items.</p>
+</div>
+</div>
+<div class="section" id="module-scrapy.contrib.statsmailer">
+<span id="statsmailer-extension"></span><h4>StatsMailer extension<a class="headerlink" href="#module-scrapy.contrib.statsmailer" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.statsmailer.scrapy.contrib.statsmailer.StatsMailer">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.statsmailer.</code><code class="descname">StatsMailer</code><a class="headerlink" href="#scrapy.contrib.statsmailer.scrapy.contrib.statsmailer.StatsMailer" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>This simple extension can be used to send a notification e-mail every time a
+domain has finished scraping, including the Scrapy stats collected. The email
+will be sent to all recipients specified in the <a class="reference internal" href="settings.html#std:setting-STATSMAILER_RCPTS"><code class="xref std std-setting docutils literal"><span class="pre">STATSMAILER_RCPTS</span></code></a>
+setting.</p>
+<span class="target" id="module-scrapy.contrib.debug"></span></div>
+</div>
+<div class="section" id="debugging-extensions">
+<h3>Debugging extensions<a class="headerlink" href="#debugging-extensions" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="stack-trace-dump-extension">
+<h4>Stack trace dump extension<a class="headerlink" href="#stack-trace-dump-extension" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.debug.scrapy.contrib.debug.StackTraceDump">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.debug.</code><code class="descname">StackTraceDump</code><a class="headerlink" href="#scrapy.contrib.debug.scrapy.contrib.debug.StackTraceDump" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Dumps the stack trace of a runnning Scrapy process when a <a class="reference external" href="http://en.wikipedia.org/wiki/SIGUSR1_and_SIGUSR2">SIGUSR2</a> signal is
+received. After the stack trace is dumped, the Scrapy process continues running
+normally.</p>
+<p>The stack trace is sent to standard output.</p>
+<p>This extension only works on POSIX-compliant platforms (ie. not Windows).</p>
+</div>
+<div class="section" id="debugger-extension">
+<h4>Debugger extension<a class="headerlink" href="#debugger-extension" title="Permalink to this headline">¶</a></h4>
+<dl class="class">
+<dt id="scrapy.contrib.debug.scrapy.contrib.debug.Debugger">
+<em class="property">class </em><code class="descclassname">scrapy.contrib.debug.</code><code class="descname">Debugger</code><a class="headerlink" href="#scrapy.contrib.debug.scrapy.contrib.debug.Debugger" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<p>Invokes a <a class="reference external" href="http://docs.python.org/library/pdb.html">Python debugger</a> inside a running Scrapy process when a <a class="reference external" href="http://en.wikipedia.org/wiki/SIGUSR1_and_SIGUSR2">SIGUSR2</a>
+signal is received. After the debugger is exited, the Scrapy process continues
+running normally.</p>
+<p>For more info see <cite>Debugging in Python</cite>.</p>
+<p>This extension only works on POSIX-compliant platforms (ie. not Windows).</p>
+</div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="scrapy-ctl.html" class="btn btn-neutral float-right" title="scrapy-ctl.py" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="spider-middleware.html" class="btn btn-neutral" title="Spider Middleware" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr /><div><div id="rtd-4b3e9qin" class="ethical-rtd"></div></div>
+
+  <div role="contentinfo">
+    <p>
+        © Copyright 2008-2010, Insophia.
+      
+        <span class="commit">
+          Revision <code>6525d3fe</code>.
+        </span>
+      
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+  <div class="rst-versions" data-toggle="rst-versions" role="note" aria-label="versions">
+    <span class="rst-current-version" data-toggle="rst-current-version">
+      <span class="fa fa-book"> Read the Docs</span>
+      v: 0.9
+      <span class="fa fa-caret-down"></span>
+    </span>
+    <div class="rst-other-versions">
+      <dl>
+        <dt>Versions</dt>
+        
+          <dd><a href="/en/latest/">latest</a></dd>
+        
+          <dd><a href="/en/stable/">stable</a></dd>
+        
+          <dd><a href="/en/master/">master</a></dd>
+        
+          <dd><a href="/en/1.1/">1.1</a></dd>
+        
+          <dd><a href="/en/1.0/">1.0</a></dd>
+        
+          <dd><a href="/en/0.24/">0.24</a></dd>
+        
+          <dd><a href="/en/0.22/">0.22</a></dd>
+        
+          <dd><a href="/en/0.20/">0.20</a></dd>
+        
+          <dd><a href="/en/0.18/">0.18</a></dd>
+        
+          <dd><a href="/en/0.16/">0.16</a></dd>
+        
+          <dd><a href="/en/0.14/">0.14</a></dd>
+        
+          <dd><a href="/en/0.12/">0.12</a></dd>
+        
+          <dd><a href="/en/0.10.3/">0.10.3</a></dd>
+        
+          <dd><a href="/en/0.9/">0.9</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>Downloads</dt>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/pdf/0.9/">pdf</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/htmlzip/0.9/">htmlzip</a></dd>
+        
+          <dd><a href="//readthedocs.org/projects/scrapy/downloads/epub/0.9/">epub</a></dd>
+        
+      </dl>
+      <dl>
+        <dt>On Read the Docs</dt>
+          <dd>
+            <a href="//readthedocs.org/projects/scrapy/?fromdocs=scrapy">Project Home</a>
+          </dd>
+          <dd>
+            <a href="//readthedocs.org/builds/scrapy/?fromdocs=scrapy">Builds</a>
+          </dd>
+      </dl>
+      <hr />
+      Free document hosting provided by <a href="http://www.readthedocs.org">Read the Docs</a>.
+
+    </div>
+  </div>
+
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'../',
+            VERSION:'0.9',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-2.0.3.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/jquery/jquery-migrate-1.2.1.min.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/underscore.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/doctools.js"></script>
+      <script type="text/javascript" src="https://media.readthedocs.org/javascript/readthedocs-doc-embed.js"></script>
+
+  
+
+  
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+
+<div id="rtd-rnx3oh6u"><div class="ethical-fixedfooter"><div class="ethical-content"><div class="ethical-close"><a href="javascript:$('.ethical-fixedfooter').hide()" aria-label="Close Ad">×</a></div><img src="https://readthedocs.org/sustainability/view/548/Xp6yzaEJUwS4/" class="ethical-pixel" /><div><a href="https://readthedocs.org/sustainability/click/548/Xp6yzaEJUwS4/" rel="nofollow" target="_blank"><span class="ethical-text"></span></a><a href="https://readthedocs.org/sustainability/click/548/Xp6yzaEJUwS4/" rel="nofollow" target="_blank">Hiring Python devs? Read the Docs can help!</a><span class="ethical-callout"><small><em><a href="https://docs.readthedocs.io/en/latest/ethical-advertising.html" rel="nofollow" target="_blank">ads served ethically</a></em></small></span></div></div></div></div></body></html>
