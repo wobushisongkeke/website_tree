@@ -71,6 +71,7 @@ class UrlObject:
             up = urlparse(curr_url)
             if up.netloc not in DOMAIN:
                 DOMAIN.append(up.netloc)
+            self.url = curr_url
 
             url_list = self.browser.find_elements_by_xpath("//a")
             for url in url_list:
